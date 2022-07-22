@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "minecraft:purple_dye"
-    },
-    {
-      "item": "minecraft:white_dye"
-    },
-    {
       "item": "minecraft:black_dye"
+    },
+    {
+      "item": "minecraft:light_gray_dye"
+    },
+    {
+      "item": "minecraft:purple_dye"
     },
     {
       "item": "peculiarpieces:flag"
@@ -18,7 +18,7 @@
     "item": "peculiarpieces:flag",
     "data": {
         "BlockEntityTag": {
-            "Texture": "labrys",
+            "Texture": "demisexual",
             "id": "minecraft:flag"
         }
     }

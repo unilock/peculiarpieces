@@ -9,7 +9,8 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "peculiarpieces:pride_flag"
+      "recipe": "peculiarpieces:pride_flag",
+      "recipe2": "peculiarpieces:progress_flag"
     },
     {
       "type": "patchouli:crafting",
@@ -34,7 +35,7 @@
     {
       "type": "patchouli:crafting",
       "recipe": "peculiarpieces:inter_flag",
-      "recipe2": "peculiarpieces:labrys_flag"
+      "recipe2": "peculiarpieces:demisexual_flag"
     }
   ]
 }

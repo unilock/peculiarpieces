@@ -225,6 +225,7 @@ public class FlagBlock extends BlockWithEntity {
 
     public enum ExtraFlag implements StringIdentifiable {
         PRIDE("pride"),
+        PROGRESS("progress"),
         LESBIAN("lesbian"),
         GAY("gay"),
         BI("bi"),
@@ -233,8 +234,8 @@ public class FlagBlock extends BlockWithEntity {
         NB("nb"),
         ARO("aro"),
         ACE("ace"),
+        DEMISEXUAL("demisexual"),
         INTER("inter"),
-        LABRYS("labrys"),
         TEMPLATE("template");
 
         private final String name;

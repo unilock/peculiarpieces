@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "peculiarpieces:item/redstone_remote_button",
+    "layer1": "peculiarpieces:item/redstone_remote"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "parent": "item/generated",
+  "parent": "minecraft:item/handheld",
   "textures": {
     "layer0": "peculiarpieces:item/reaching_remote_button",
     "layer1": "peculiarpieces:item/reaching_remote"

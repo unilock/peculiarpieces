@@ -29,10 +29,8 @@ public class PositionPaperItem extends Item {
         PlayerEntity player = context.getPlayer();
         ItemStack stack = context.getStack();
         if (player != null && player.isSneaking()) {
-            if ((stack.getNbt() == null || NbtHelper.toBlockPos(stack.getNbt().getCompound("pp:stone")).equals(BlockPos.ORIGIN))) {
-                writeStone(stack, context.getBlockPos().add(0, 1, 0));
-                player.getItemCooldownManager().set(this, 20);
-            }
+            writeStone(stack, context.getBlockPos().add(0, 1, 0));
+            player.getItemCooldownManager().set(this, 20);
         }
         return super.useOnBlock(context);
     }

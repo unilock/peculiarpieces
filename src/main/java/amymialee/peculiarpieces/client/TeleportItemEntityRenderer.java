@@ -14,7 +14,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3f;
@@ -41,7 +40,7 @@ public class TeleportItemEntityRenderer extends EntityRenderer<TeleportItemEntit
             if (input != null && !input.isEmpty()) {
                 itemStack = itemEntity.getStack();
             } else {
-                itemStack = Items.DIAMOND.getDefaultStack();
+                itemStack = PeculiarItems.POS_PAPER.getDefaultStack();
             }
         }
         int j = itemStack.isEmpty() ? 187 : Item.getRawId(itemStack.getItem()) + itemStack.getDamage();

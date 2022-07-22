@@ -81,10 +81,10 @@ public class FlagBlockEntityRenderer implements BlockEntityRenderer<FlagBlockEnt
                         direction = direction.getOpposite();
                     }
                     matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(direction.asRotation() + 90));
-                    this.flag.yaw = (float) Math.toRadians(90f);
+                    this.flag.yaw = (float) Math.toRadians(270f);
                     this.flag.roll = (float) Math.toRadians(180f);
                     this.flag.pivotX = 7.5f;
-                    this.flag.pivotZ = 11f;
+                    this.flag.pivotZ = -11f;
                     walled = true;
                     this.pole.visible = false;
                 } else {

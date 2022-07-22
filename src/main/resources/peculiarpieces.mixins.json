@@ -29,7 +29,8 @@
     "ShearsItemMixin",
     "SheepEntityMixin",
     "SlimeEntityMixin",
-    "StatusEffectInstanceAccessor"
+    "StatusEffectInstanceAccessor",
+    "WorldMixin"
   ],
   "injectors": {
     "defaultRequire": 1

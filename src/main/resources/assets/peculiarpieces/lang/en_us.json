@@ -114,6 +114,7 @@
   "block.peculiarpieces.ace_flag" : "Asexual Flag",
   "block.peculiarpieces.aro_flag" : "Aromantic Flag",
   "block.peculiarpieces.bi_flag" : "Bisexual Flag",
+  "block.peculiarpieces.demisexual_flag" : "Demisexual Flag",
   "block.peculiarpieces.gay_flag" : "Gay Flag",
   "block.peculiarpieces.inter_flag" : "Intersex Flag",
   "block.peculiarpieces.labrys_flag" : "Labrys Flag",
@@ -121,6 +122,7 @@
   "block.peculiarpieces.nb_flag" : "Nonbinary Flag",
   "block.peculiarpieces.pan_flag" : "Pansexual Flag",
   "block.peculiarpieces.pride_flag" : "Pride Flag",
+  "block.peculiarpieces.progress_flag" : "Progress Flag",
   "block.peculiarpieces.template_flag" : "Template Flag",
   "block.peculiarpieces.trans_flag" : "Trans Flag",
 
@@ -159,7 +161,9 @@
   "item.peculiarpieces.bottomless_lava_bucket" : "Bottomless Lava Bucket",
   "item.peculiarpieces.bottomless_milk_bucket" : "Bottomless Milk Bucket",
   "item.peculiarpieces.player_compass" : "Player Compass",
+  "item.peculiarpieces.redstone_activator" : "Redstone Activator",
   "item.peculiarpieces.reaching_remote" : "Reaching Remote",
+  "item.peculiarpieces.redstone_remote" : "Redstone Remote",
 
   "item.peculiarpieces.hidden_potion.effect.empty": "Uncraftable Hidden Potion",
   "item.peculiarpieces.hidden_potion.effect.water": "Hidden Water Bottle",

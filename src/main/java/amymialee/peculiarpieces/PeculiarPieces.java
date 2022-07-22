@@ -14,6 +14,7 @@ import amymialee.peculiarpieces.screens.PedestalScreenHandler;
 import amymialee.peculiarpieces.screens.PotionPadScreenHandler;
 import amymialee.peculiarpieces.screens.WarpScreenHandler;
 import amymialee.peculiarpieces.util.ExtraPlayerDataWrapper;
+import amymialee.peculiarpieces.util.RedstoneManager;
 import amymialee.peculiarpieces.util.WarpManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -113,6 +114,7 @@ public class PeculiarPieces implements ModInitializer {
                                             return 0;
                                         })))));
         ServerTickEvents.END_WORLD_TICK.register(serverWorld -> WarpManager.tick());
+        ServerTickEvents.END_WORLD_TICK.register(serverWorld -> RedstoneManager.tick());
         PlayerCrouchCallback.EVENT.register((player, world) -> {
             BlockPos pos = player.getBlockPos().add(0, -1, 0);
             BlockState state = world.getBlockState(pos);

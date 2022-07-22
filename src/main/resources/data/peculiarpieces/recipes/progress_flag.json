@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:light_blue_dye"
+    },
+    {
+      "item": "minecraft:pink_dye"
+    },
+    {
+      "item": "minecraft:white_dye"
+    },
+    {
+      "item": "minecraft:black_dye"
+    },
+    {
+      "item": "minecraft:brown_dye"
+    },
+    {
+      "item": "peculiarpieces:flag",
+      "data": {
+        "BlockEntityTag": {
+          "Texture": "pride",
+          "id": "minecraft:flag"
+        }
+      }
+    }
+  ],
+  "result": {
+    "item": "peculiarpieces:flag",
+    "data": {
+        "BlockEntityTag": {
+            "Texture": "progress",
+            "id": "minecraft:flag"
+        }
+    }
+  }
+}
