@@ -42,26 +42,40 @@ public class RedstoneManager {
     }
 
     public static RedstoneInstance getInstance(World world, BlockPos pos) {
-        return redstoneInstances.get(world).get(pos);
+        LinkedHashMap<BlockPos, RedstoneInstance> map = redstoneInstances.get(world);
+        if (map != null) {
+            return map.get(pos);
+        }
+        return null;
     }
 
     public static boolean isPowered(World world, BlockPos pos) {
-        RedstoneInstance instance = redstoneInstances.get(world).get(pos);
-        return instance != null && instance.getLifetime() > 0;
+        LinkedHashMap<BlockPos, RedstoneInstance> map = redstoneInstances.get(world);
+        if (map != null) {
+            RedstoneInstance instance = map.get(pos);
+            return instance != null && instance.getLifetime() > 0;
+        }
+        return false;
     }
 
     public static boolean isStrong(World world, BlockPos pos) {
-        RedstoneInstance instance = redstoneInstances.get(world).get(pos);
-        if (instance != null && instance.getLifetime() > 0) {
-            return instance.isStrong();
+        LinkedHashMap<BlockPos, RedstoneInstance> map = redstoneInstances.get(world);
+        if (map != null) {
+            RedstoneInstance instance = map.get(pos);
+            if (instance != null && instance.getLifetime() > 0) {
+                return instance.isStrong();
+            }
         }
         return false;
     }
 
     public static int getPower(World world, BlockPos pos) {
-        RedstoneInstance instance = redstoneInstances.get(world).get(pos);
-        if (instance != null && instance.getLifetime() > 0) {
-            return instance.getPower();
+        LinkedHashMap<BlockPos, RedstoneInstance> map = redstoneInstances.get(world);
+        if (map != null) {
+            RedstoneInstance instance = map.get(pos);
+            if (instance != null && instance.getLifetime() > 0) {
+                return instance.getPower();
+            }
         }
         return 0;
     }

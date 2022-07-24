@@ -4,6 +4,7 @@
   "package": "amymialee.peculiarpieces.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ArrowEntityAccessor",
     "BeaconBlockMixin",
     "BoatEntityMixin",
     "BrewingRecipeRegistryMixin",
@@ -11,6 +12,7 @@
     "CapeFeatureRendererMixin",
     "ClientPlayNetworkHandlerMixin",
     "CreeperEntityMixin",
+    "EndermanEntityMixin",
     "EntityAccessor",
     "EntityMixin",
     "ExplosionMixin",
@@ -19,6 +21,7 @@
     "LivingEntityMixin",
     "LivingEntityRendererMixin",
     "MobEntityMixin",
+    "PersistentProjectileEntityMixin",
     "PlayerEntityMixin",
     "PlayerEntityModelMixin",
     "PlayerEntityRendererMixin",
