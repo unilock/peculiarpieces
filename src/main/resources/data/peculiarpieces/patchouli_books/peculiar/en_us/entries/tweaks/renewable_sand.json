@@ -1,0 +1,15 @@
+{
+  "name": "Renewable Sand",
+  "icon": "minecraft:sand",
+  "category": "peculiarpieces:tweaks",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Sand can be created by crushing cobblestone with an anvil."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:anvil"
+    }
+  ]
+}

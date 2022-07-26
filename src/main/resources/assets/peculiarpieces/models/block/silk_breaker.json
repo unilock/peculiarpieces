@@ -2,7 +2,7 @@
   "parent": "minecraft:block/orientable",
   "textures": {
     "top": "minecraft:block/blast_furnace_top",
-    "front": "peculiarpieces:block/block_breaker",
+    "front": "peculiarpieces:block/silk_breaker",
     "side": "minecraft:block/blast_furnace_side"
   }
 }

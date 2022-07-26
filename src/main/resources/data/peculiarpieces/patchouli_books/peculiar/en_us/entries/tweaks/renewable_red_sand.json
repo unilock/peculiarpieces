@@ -1,0 +1,15 @@
+{
+  "name": "Renewable Sand",
+  "icon": "minecraft:red_sand",
+  "category": "peculiarpieces:tweaks",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Red Sand can be created by crushing a pumpkin with an anvil."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:anvil"
+    }
+  ]
+}
