@@ -34,7 +34,7 @@ public class RedstoneRandomizerBlock extends AbstractRedstoneComparisonBlock {
         boolean bl = state.get(POWERED);
         boolean bl2 = this.hasPower(world, pos, state);
         if (!bl2) {
-            world.setBlockState(pos, state.with(POWERED, false).with(OUTPUT, 0), Block.NOTIFY_LISTENERS);
+            world.setBlockState(pos, state.with(POWERED, false), Block.NOTIFY_LISTENERS);
         } else if (!bl) {
             world.setBlockState(pos, state.with(POWERED, true).with(OUTPUT, random.nextBetween(1, getPower(world, pos, state))), Block.NOTIFY_LISTENERS);
             world.createAndScheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);

@@ -67,14 +67,13 @@ public class PotionPadBlock extends BlockWithEntity {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.isClient) {
             return ActionResult.SUCCESS;
-        } else {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof PotionPadBlockEntity potionPadBlockEntity) {
-                if (player.isSneaking() && player.getAbilities().allowModifyWorld) {
-                    player.openHandledScreen(potionPadBlockEntity);
-                } else if (!state.get(POWERED)) {
-                    potionPadBlockEntity.onEntityCollided(player);
-                }
+        }
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity instanceof PotionPadBlockEntity potionPadBlockEntity) {
+            if (player.isSneaking() && player.getAbilities().allowModifyWorld) {
+                player.openHandledScreen(potionPadBlockEntity);
+            } else if (!state.get(POWERED)) {
+                potionPadBlockEntity.onEntityCollided(player);
             }
         }
         return ActionResult.CONSUME;

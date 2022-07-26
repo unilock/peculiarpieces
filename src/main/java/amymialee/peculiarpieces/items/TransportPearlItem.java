@@ -59,12 +59,12 @@ public class TransportPearlItem extends Item {
     }
 
     public static void writeStone(ItemStack stack, BlockPos pos) {
-        stack.getOrCreateNbt().put("pp:stone_%d".formatted(getSlot(stack)), NbtHelper.fromBlockPos(pos));
+        stack.getOrCreateNbt().put("pp:target_%d".formatted(getSlot(stack)), NbtHelper.fromBlockPos(pos));
     }
 
     public static BlockPos readStone(ItemStack stack) {
         if (stack.hasNbt() && stack.getNbt() != null) {
-            return NbtHelper.toBlockPos(stack.getNbt().getCompound("pp:stone_%d".formatted(getSlot(stack))));
+            return NbtHelper.toBlockPos(stack.getNbt().getCompound("pp:target_%d".formatted(getSlot(stack))));
         }
         return BlockPos.ORIGIN;
     }
@@ -77,7 +77,7 @@ public class TransportPearlItem extends Item {
                 if (nbtCompound.contains("Name", NbtElement.STRING_TYPE)) {
                     MutableText text = Text.Serializer.fromJson(nbtCompound.getString("Name"));
                     if (text != null ) {
-                        mainCompound.putString("pp:stone_name_%d".formatted(getSlot(stack)), text.getString());
+                        mainCompound.putString("pp:target_name_%d".formatted(getSlot(stack)), text.getString());
                     }
                 }
                 nbtCompound.remove("Name");
@@ -88,8 +88,8 @@ public class TransportPearlItem extends Item {
         }
         stack.getOrCreateNbt().putInt("pp:selected", PeculiarHelper.clampLoop(0, 7, getSlot(stack) + 1));
         {
-            if (mainCompound.contains("pp:stone_name_%d".formatted(getSlot(stack)))) {
-                stack.setCustomName(Text.literal(mainCompound.getString("pp:stone_name_%d".formatted(getSlot(stack)))).fillStyle(Style.EMPTY.withItalic(false)));
+            if (mainCompound.contains("pp:target_name_%d".formatted(getSlot(stack)))) {
+                stack.setCustomName(Text.literal(mainCompound.getString("pp:target_name_%d".formatted(getSlot(stack)))).fillStyle(Style.EMPTY.withItalic(false)));
             } else {
                 stack.removeCustomName();
             }
@@ -104,16 +104,16 @@ public class TransportPearlItem extends Item {
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         NbtCompound compound = stack.getOrCreateNbt();
         for (int i = 0; i < 8; i++) {
-            BlockPos pos = NbtHelper.toBlockPos(compound.getCompound("pp:stone_%d".formatted(i)));
+            BlockPos pos = NbtHelper.toBlockPos(compound.getCompound("pp:target_%d".formatted(i)));
             if (!pos.equals(BlockPos.ORIGIN)) {
-                if (compound.contains("pp:stone_name_%d".formatted(i))) {
-                    tooltip.add(Text.translatable(compound.getString("pp:stone_name_%d".formatted(i)) + ": x%d, y%d, z%d".formatted(pos.getX(), pos.getY(), pos.getZ())).setStyle(Style.EMPTY.withColor(MathHelper.hsvToRgb(((float)(i + 1) / 8), 1.0f, 1.0f))));
+                if (compound.contains("pp:target_name_%d".formatted(i))) {
+                    tooltip.add(Text.translatable(compound.getString("pp:target_name_%d".formatted(i)) + ": x%d, y%d, z%d".formatted(pos.getX(), pos.getY(), pos.getZ())).setStyle(Style.EMPTY.withColor(MathHelper.hsvToRgb(((float)(i + 1) / 8), 1.0f, 1.0f))));
                 } else {
                     tooltip.add(Text.translatable((i + 1) + ": x%d, y%d, z%d".formatted(pos.getX(), pos.getY(), pos.getZ())).setStyle(Style.EMPTY.withColor(MathHelper.hsvToRgb(((float)(i + 1) / 8), 1.0f, 1.0f))));
                 }
             } else {
-                if (compound.contains("pp:stone_name_%d".formatted(i))) {
-                    tooltip.add(Text.translatable("peculiarpieces.transport_pearl.empty", compound.getString("pp:stone_name_%d".formatted(i))).setStyle(Style.EMPTY.withColor(MathHelper.hsvToRgb(((float)(i + 1) / 8), 1.0f, 1.0f))));
+                if (compound.contains("pp:target_name_%d".formatted(i))) {
+                    tooltip.add(Text.translatable("peculiarpieces.transport_pearl.empty", compound.getString("pp:target_name_%d".formatted(i))).setStyle(Style.EMPTY.withColor(MathHelper.hsvToRgb(((float)(i + 1) / 8), 1.0f, 1.0f))));
                 } else {
                     tooltip.add(Text.translatable("peculiarpieces.transport_pearl.empty", i + 1).setStyle(Style.EMPTY.withColor(MathHelper.hsvToRgb(((float)(i + 1) / 8), 1.0f, 1.0f))));
                 }

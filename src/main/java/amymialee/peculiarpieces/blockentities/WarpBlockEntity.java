@@ -42,7 +42,7 @@ public class WarpBlockEntity extends LootableContainerBlockEntity {
         ItemStack stack = inventory.get(0);
         if (stack.isOf(PeculiarItems.POS_PEARL) || stack.isOf(PeculiarItems.POS_PAPER)) {
             NbtCompound compound = stack.getNbt();
-            if (compound != null && compound.contains("pp:stone")) {
+            if (compound != null && compound.contains("pp:target")) {
                 BlockPos pos = PositionPearlItem.readStone(stack);
                 WarpManager.queueTeleport(WarpInstance.of(entity).position(pos).particles());
             }

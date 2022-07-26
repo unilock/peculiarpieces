@@ -1,5 +1,6 @@
 package amymialee.peculiarpieces.items;
 
+import amymialee.peculiarpieces.registry.PeculiarItems;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -37,14 +38,22 @@ public class GliderItem extends Item {
 
     public static ItemStack getGlider(PlayerEntity player) {
         ItemStack main = player.getMainHandStack();
-        if (main.getNbt() != null && main.getNbt().getBoolean("pp:gliding")) {
+        if (isActive(main)) {
             return main;
         }
         ItemStack off = player.getOffHandStack();
-        if (off.getNbt() != null && off.getNbt().getBoolean("pp:gliding")) {
+        if (isActive(off)) {
             return off;
         }
         return null;
+    }
+
+    public static boolean isActiveGlider(ItemStack stack) {
+        return stack.getItem() == PeculiarItems.HANG_GLIDER && isActive(stack);
+    }
+
+    public static boolean isActive(ItemStack stack) {
+        return stack.getNbt() != null && stack.getNbt().getBoolean("pp:gliding");
     }
 
     public static boolean isGliding(PlayerEntity player) {

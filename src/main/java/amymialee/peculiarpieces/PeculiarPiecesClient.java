@@ -1,20 +1,25 @@
 package amymialee.peculiarpieces;
 
+import amymialee.peculiarpieces.blockentities.FishTankBlockEntity;
 import amymialee.peculiarpieces.blockentities.FlagBlockEntity;
 import amymialee.peculiarpieces.blockentities.PedestalBlockEntity;
 import amymialee.peculiarpieces.blocks.RedstoneStaticBlock;
+import amymialee.peculiarpieces.client.FishTankBlockEntityRenderer;
 import amymialee.peculiarpieces.client.FlagBlockEntityRenderer;
 import amymialee.peculiarpieces.client.HangGliderEntityModel;
 import amymialee.peculiarpieces.client.PedestalBlockEntityRenderer;
+import amymialee.peculiarpieces.client.RedstoneTriggerBlockEntityRenderer;
 import amymialee.peculiarpieces.client.TeleportItemEntityRenderer;
 import amymialee.peculiarpieces.items.PlayerCompassItem;
 import amymialee.peculiarpieces.items.TransportPearlItem;
 import amymialee.peculiarpieces.registry.PeculiarBlocks;
 import amymialee.peculiarpieces.registry.PeculiarEntities;
 import amymialee.peculiarpieces.registry.PeculiarItems;
+import amymialee.peculiarpieces.screens.FishTankScreen;
 import amymialee.peculiarpieces.screens.PackedPouchScreen;
 import amymialee.peculiarpieces.screens.PedestalScreen;
 import amymialee.peculiarpieces.screens.PotionPadScreen;
+import amymialee.peculiarpieces.screens.RedstoneTriggerScreen;
 import amymialee.peculiarpieces.screens.WarpScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -57,6 +62,8 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.REDSTONE_STATIC, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.REDSTONE_MONO, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.REDSTONE_RANDOM, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.REDSTONE_FLIP, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.REDSTONE_TRIGGER, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.ADVENTURE_BARRIER, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.SURVIVOR_BARRIER, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.ADVENTURE_BLOCKER, RenderLayer.getTranslucent());
@@ -74,11 +81,14 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.TOUGHENED_SCAFFOLDING, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.ENTANGLED_SCAFFOLDING, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.POTION_PAD, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.FISH_TANK, RenderLayer.getCutout());
 
         HandledScreens.register(PeculiarPieces.WARP_SCREEN_HANDLER, WarpScreen::new);
         HandledScreens.register(PeculiarPieces.POTION_PAD_SCREEN_HANDLER, PotionPadScreen::new);
         HandledScreens.register(PeculiarPieces.BUSTLING_SCREEN_HANDLER, PackedPouchScreen::new);
         HandledScreens.register(PeculiarPieces.PEDESTAL_SCREEN_HANDLER, PedestalScreen::new);
+        HandledScreens.register(PeculiarPieces.FISH_TANK_SCREEN_HANDLER, FishTankScreen::new);
+        HandledScreens.register(PeculiarPieces.REDSTONE_TRIGGER_SCREEN_HANDLER, RedstoneTriggerScreen::new);
 
         EntityModelLayerRegistry.registerModelLayer(HANG_GLIDER, HangGliderEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(FLAG, FlagBlockEntityRenderer::getTexturedModelData);
@@ -94,7 +104,9 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : 16560501, PeculiarItems.PLAYER_COMPASS);
 
         BlockEntityRendererRegistry.register(PeculiarBlocks.PEDESTAL_BLOCK_ENTITY, ctx -> new PedestalBlockEntityRenderer());
+        BlockEntityRendererRegistry.register(PeculiarBlocks.FISH_TANK_BLOCK_ENTITY, ctx -> new FishTankBlockEntityRenderer());
         BlockEntityRendererRegistry.register(PeculiarBlocks.FLAG_BLOCK_ENTITY, FlagBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(PeculiarBlocks.REDSTONE_TRIGGER_BLOCK_ENTITY, ctx -> new RedstoneTriggerBlockEntityRenderer());
 
         ClientPlayNetworking.registerGlobalReceiver(PedestalBlockEntity.PEDESTAL_SYNC, ((client, handler, buf, responseSender) -> {
             BlockPos pos = buf.readBlockPos();
@@ -105,6 +117,17 @@ public class PeculiarPiecesClient implements ClientModInitializer {
                     if (client.world.getBlockEntity(pos) instanceof PedestalBlockEntity pedestal) {
                         pedestal.setStack(0, stack1);
                         pedestal.setStack(1, stack2);
+                    }
+                }
+            });
+        }));
+        ClientPlayNetworking.registerGlobalReceiver(FishTankBlockEntity.FISH_SYNC, ((client, handler, buf, responseSender) -> {
+            BlockPos pos = buf.readBlockPos();
+            ItemStack stack = buf.readItemStack();
+            client.execute(() -> {
+                if (client.world != null) {
+                    if (client.world.getBlockEntity(pos) instanceof FishTankBlockEntity fishTank) {
+                        fishTank.setStack(0, stack);
                     }
                 }
             });

@@ -54,25 +54,25 @@ public class PositionPaperItem extends Item {
     }
 
     public static void writeStone(ItemStack stack, BlockPos pos) {
-        stack.getOrCreateNbt().put("pp:stone", NbtHelper.fromBlockPos(pos));
+        stack.getOrCreateNbt().put("pp:target", NbtHelper.fromBlockPos(pos));
     }
 
     public static BlockPos readStone(ItemStack stack) {
         if (stack.getNbt() != null) {
-            return NbtHelper.toBlockPos(stack.getNbt().getCompound("pp:stone"));
+            return NbtHelper.toBlockPos(stack.getNbt().getCompound("pp:target"));
         }
         return BlockPos.ORIGIN;
     }
 
     @Override
     public boolean hasGlint(ItemStack stack) {
-        return (stack.getNbt() != null && stack.getNbt().contains("pp:stone")) || super.hasGlint(stack);
+        return (stack.getNbt() != null && stack.getNbt().contains("pp:target")) || super.hasGlint(stack);
     }
 
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         if (stack.getNbt() != null) {
-            BlockPos pos = NbtHelper.toBlockPos(stack.getNbt().getCompound("pp:stone"));
+            BlockPos pos = NbtHelper.toBlockPos(stack.getNbt().getCompound("pp:target"));
             if (!pos.equals(BlockPos.ORIGIN)) {
                 tooltip.add(Text.translatable("Position: x%d, y%d, z%d".formatted(pos.getX(), pos.getY(), pos.getZ())).formatted(Formatting.GRAY));
             } else {

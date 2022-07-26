@@ -40,12 +40,10 @@ public class RedstoneRemoteItem extends Item implements DyeableItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
         BlockPos pos = readTarget(stack);
-        if (pos.getSquaredDistance(0, 0, 0) > 1) {
-            if (!world.isClient && !pos.equals(BlockPos.ORIGIN)) {
-                RedstoneManager.addInstance(world, pos, new RedstoneInstance());
-            }
-            user.getItemCooldownManager().set(this, 1);
+        if (!world.isClient && !pos.equals(BlockPos.ORIGIN)) {
+            RedstoneManager.addInstance(world, pos, new RedstoneInstance());
         }
+        user.getItemCooldownManager().set(this, 1);
         user.incrementStat(Stats.USED.getOrCreateStat(this));
         return TypedActionResult.consume(stack);
     }

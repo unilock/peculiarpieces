@@ -1,34 +1,421 @@
 {
   "variants": {
-    "facing=east,powered=false": {
+    "facing=east,powered=false,clamp=0": {
       "y": 270,
-      "model": "minecraft:block/comparator"
+      "model": "peculiarpieces:block/redstone_clamp_0"
     },
-    "facing=east,powered=true": {
+    "facing=east,powered=true,clamp=0": {
       "y": 270,
-      "model": "minecraft:block/comparator_on"
+      "model": "peculiarpieces:block/redstone_clamp_powered_0"
+    },"facing=east,powered=false,clamp=1": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_1"
     },
-    "facing=north,powered=false": {
+    "facing=east,powered=true,clamp=1": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_powered_1"
+    },"facing=east,powered=false,clamp=2": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_2"
+    },
+    "facing=east,powered=true,clamp=2": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_powered_2"
+    },"facing=east,powered=false,clamp=3": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_3"
+    },
+    "facing=east,powered=true,clamp=3": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_powered_3"
+    },"facing=east,powered=false,clamp=4": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_4"
+    },
+    "facing=east,powered=true,clamp=4": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_powered_4"
+    },"facing=east,powered=false,clamp=5": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_5"
+    },
+    "facing=east,powered=true,clamp=5": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_powered_5"
+    },"facing=east,powered=false,clamp=6": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_6"
+    },
+    "facing=east,powered=true,clamp=6": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_powered_6"
+    },"facing=east,powered=false,clamp=7": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_7"
+    },
+    "facing=east,powered=true,clamp=7": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_powered_7"
+    },"facing=east,powered=false,clamp=8": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_8"
+    },
+    "facing=east,powered=true,clamp=8": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_powered_8"
+    },"facing=east,powered=false,clamp=9": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_9"
+    },
+    "facing=east,powered=true,clamp=9": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_powered_9"
+    },"facing=east,powered=false,clamp=10": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_10"
+    },
+    "facing=east,powered=true,clamp=10": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_powered_10"
+    },"facing=east,powered=false,clamp=11": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_11"
+    },
+    "facing=east,powered=true,clamp=11": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_powered_11"
+    },"facing=east,powered=false,clamp=12": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_12"
+    },
+    "facing=east,powered=true,clamp=12": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_powered_12"
+    },"facing=east,powered=false,clamp=13": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_13"
+    },
+    "facing=east,powered=true,clamp=13": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_powered_13"
+    },"facing=east,powered=false,clamp=14": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_14"
+    },
+    "facing=east,powered=true,clamp=14": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_powered_14"
+    },"facing=east,powered=false,clamp=15": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_15"
+    },
+    "facing=east,powered=true,clamp=15": {
+      "y": 270,
+      "model": "peculiarpieces:block/redstone_clamp_powered_15"
+    },"facing=north,powered=false,clamp=0": {
       "y": 180,
-      "model": "minecraft:block/comparator"
+      "model": "peculiarpieces:block/redstone_clamp_0"
     },
-    "facing=north,powered=true": {
+    "facing=north,powered=true,clamp=0": {
       "y": 180,
-      "model": "minecraft:block/comparator_on"
+      "model": "peculiarpieces:block/redstone_clamp_powered_0"
+    },"facing=north,powered=false,clamp=1": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_1"
     },
-    "facing=south,powered=false": {
-      "model": "minecraft:block/comparator"
+    "facing=north,powered=true,clamp=1": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_powered_1"
+    },"facing=north,powered=false,clamp=2": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_2"
     },
-    "facing=south,powered=true": {
-      "model": "minecraft:block/comparator_on"
+    "facing=north,powered=true,clamp=2": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_powered_2"
+    },"facing=north,powered=false,clamp=3": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_3"
     },
-    "facing=west,powered=false": {
+    "facing=north,powered=true,clamp=3": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_powered_3"
+    },"facing=north,powered=false,clamp=4": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_4"
+    },
+    "facing=north,powered=true,clamp=4": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_powered_4"
+    },"facing=north,powered=false,clamp=5": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_5"
+    },
+    "facing=north,powered=true,clamp=5": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_powered_5"
+    },"facing=north,powered=false,clamp=6": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_6"
+    },
+    "facing=north,powered=true,clamp=6": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_powered_6"
+    },"facing=north,powered=false,clamp=7": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_7"
+    },
+    "facing=north,powered=true,clamp=7": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_powered_7"
+    },"facing=north,powered=false,clamp=8": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_8"
+    },
+    "facing=north,powered=true,clamp=8": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_powered_8"
+    },"facing=north,powered=false,clamp=9": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_9"
+    },
+    "facing=north,powered=true,clamp=9": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_powered_9"
+    },"facing=north,powered=false,clamp=10": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_10"
+    },
+    "facing=north,powered=true,clamp=10": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_powered_10"
+    },"facing=north,powered=false,clamp=11": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_11"
+    },
+    "facing=north,powered=true,clamp=11": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_powered_11"
+    },"facing=north,powered=false,clamp=12": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_12"
+    },
+    "facing=north,powered=true,clamp=12": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_powered_12"
+    },"facing=north,powered=false,clamp=13": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_13"
+    },
+    "facing=north,powered=true,clamp=13": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_powered_13"
+    },"facing=north,powered=false,clamp=14": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_14"
+    },
+    "facing=north,powered=true,clamp=14": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_powered_14"
+    },"facing=north,powered=false,clamp=15": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_15"
+    },
+    "facing=north,powered=true,clamp=15": {
+      "y": 180,
+      "model": "peculiarpieces:block/redstone_clamp_powered_15"
+    },"facing=south,powered=false,clamp=0": {
+      "model": "peculiarpieces:block/redstone_clamp_0"
+    },
+    "facing=south,powered=true,clamp=0": {
+      "model": "peculiarpieces:block/redstone_clamp_powered_0"
+    },"facing=south,powered=false,clamp=1": {
+      "model": "peculiarpieces:block/redstone_clamp_1"
+    },
+    "facing=south,powered=true,clamp=1": {
+      "model": "peculiarpieces:block/redstone_clamp_powered_1"
+    },"facing=south,powered=false,clamp=2": {
+      "model": "peculiarpieces:block/redstone_clamp_2"
+    },
+    "facing=south,powered=true,clamp=2": {
+      "model": "peculiarpieces:block/redstone_clamp_powered_2"
+    },"facing=south,powered=false,clamp=3": {
+      "model": "peculiarpieces:block/redstone_clamp_3"
+    },
+    "facing=south,powered=true,clamp=3": {
+      "model": "peculiarpieces:block/redstone_clamp_powered_3"
+    },"facing=south,powered=false,clamp=4": {
+      "model": "peculiarpieces:block/redstone_clamp_4"
+    },
+    "facing=south,powered=true,clamp=4": {
+      "model": "peculiarpieces:block/redstone_clamp_powered_4"
+    },"facing=south,powered=false,clamp=5": {
+      "model": "peculiarpieces:block/redstone_clamp_5"
+    },
+    "facing=south,powered=true,clamp=5": {
+      "model": "peculiarpieces:block/redstone_clamp_powered_5"
+    },"facing=south,powered=false,clamp=6": {
+      "model": "peculiarpieces:block/redstone_clamp_6"
+    },
+    "facing=south,powered=true,clamp=6": {
+      "model": "peculiarpieces:block/redstone_clamp_powered_6"
+    },"facing=south,powered=false,clamp=7": {
+      "model": "peculiarpieces:block/redstone_clamp_7"
+    },
+    "facing=south,powered=true,clamp=7": {
+      "model": "peculiarpieces:block/redstone_clamp_powered_7"
+    },"facing=south,powered=false,clamp=8": {
+      "model": "peculiarpieces:block/redstone_clamp_8"
+    },
+    "facing=south,powered=true,clamp=8": {
+      "model": "peculiarpieces:block/redstone_clamp_powered_8"
+    },"facing=south,powered=false,clamp=9": {
+      "model": "peculiarpieces:block/redstone_clamp_9"
+    },
+    "facing=south,powered=true,clamp=9": {
+      "model": "peculiarpieces:block/redstone_clamp_powered_9"
+    },"facing=south,powered=false,clamp=10": {
+      "model": "peculiarpieces:block/redstone_clamp_10"
+    },
+    "facing=south,powered=true,clamp=10": {
+      "model": "peculiarpieces:block/redstone_clamp_powered_10"
+    },"facing=south,powered=false,clamp=11": {
+      "model": "peculiarpieces:block/redstone_clamp_11"
+    },
+    "facing=south,powered=true,clamp=11": {
+      "model": "peculiarpieces:block/redstone_clamp_powered_11"
+    },"facing=south,powered=false,clamp=12": {
+      "model": "peculiarpieces:block/redstone_clamp_12"
+    },
+    "facing=south,powered=true,clamp=12": {
+      "model": "peculiarpieces:block/redstone_clamp_powered_12"
+    },"facing=south,powered=false,clamp=13": {
+      "model": "peculiarpieces:block/redstone_clamp_13"
+    },
+    "facing=south,powered=true,clamp=13": {
+      "model": "peculiarpieces:block/redstone_clamp_powered_13"
+    },"facing=south,powered=false,clamp=14": {
+      "model": "peculiarpieces:block/redstone_clamp_14"
+    },
+    "facing=south,powered=true,clamp=14": {
+      "model": "peculiarpieces:block/redstone_clamp_powered_14"
+    },"facing=south,powered=false,clamp=15": {
+      "model": "peculiarpieces:block/redstone_clamp_15"
+    },
+    "facing=south,powered=true,clamp=15": {
+      "model": "peculiarpieces:block/redstone_clamp_powered_15"
+    },"facing=west,powered=false,clamp=0": {
       "y": 90,
-      "model": "minecraft:block/comparator"
+      "model": "peculiarpieces:block/redstone_clamp_0"
     },
-    "facing=west,powered=true": {
+    "facing=west,powered=true,clamp=0": {
       "y": 90,
-      "model": "minecraft:block/comparator_on"
+      "model": "peculiarpieces:block/redstone_clamp_powered_0"
+    },"facing=west,powered=false,clamp=1": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_1"
+    },
+    "facing=west,powered=true,clamp=1": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_powered_1"
+    },"facing=west,powered=false,clamp=2": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_2"
+    },
+    "facing=west,powered=true,clamp=2": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_powered_2"
+    },"facing=west,powered=false,clamp=3": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_3"
+    },
+    "facing=west,powered=true,clamp=3": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_powered_3"
+    },"facing=west,powered=false,clamp=4": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_4"
+    },
+    "facing=west,powered=true,clamp=4": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_powered_4"
+    },"facing=west,powered=false,clamp=5": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_5"
+    },
+    "facing=west,powered=true,clamp=5": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_powered_5"
+    },"facing=west,powered=false,clamp=6": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_6"
+    },
+    "facing=west,powered=true,clamp=6": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_powered_6"
+    },"facing=west,powered=false,clamp=7": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_7"
+    },
+    "facing=west,powered=true,clamp=7": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_powered_7"
+    },"facing=west,powered=false,clamp=8": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_8"
+    },
+    "facing=west,powered=true,clamp=8": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_powered_8"
+    },"facing=west,powered=false,clamp=9": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_9"
+    },
+    "facing=west,powered=true,clamp=9": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_powered_9"
+    },"facing=west,powered=false,clamp=10": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_10"
+    },
+    "facing=west,powered=true,clamp=10": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_powered_10"
+    },"facing=west,powered=false,clamp=11": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_11"
+    },
+    "facing=west,powered=true,clamp=11": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_powered_11"
+    },"facing=west,powered=false,clamp=12": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_12"
+    },
+    "facing=west,powered=true,clamp=12": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_powered_12"
+    },"facing=west,powered=false,clamp=13": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_13"
+    },
+    "facing=west,powered=true,clamp=13": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_powered_13"
+    },"facing=west,powered=false,clamp=14": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_14"
+    },
+    "facing=west,powered=true,clamp=14": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_powered_14"
+    },"facing=west,powered=false,clamp=15": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_15"
+    },
+    "facing=west,powered=true,clamp=15": {
+      "y": 90,
+      "model": "peculiarpieces:block/redstone_clamp_powered_15"
     }
   }
 }

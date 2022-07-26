@@ -1,0 +1,34 @@
+{
+	"variants": {
+		"facing=east,enabled=false": {
+			"y": 270,
+			"model": "peculiarpieces:block/redstone_flip_off"
+		},
+		"facing=east,enabled=true": {
+			"y": 270,
+			"model": "peculiarpieces:block/redstone_flip_on"
+		},
+		"facing=north,enabled=false": {
+			"y": 180,
+			"model": "peculiarpieces:block/redstone_flip_off"
+		},
+		"facing=north,enabled=true": {
+			"y": 180,
+			"model": "peculiarpieces:block/redstone_flip_on"
+		},
+		"facing=south,enabled=false": {
+			"model": "peculiarpieces:block/redstone_flip_off"
+		},
+		"facing=south,enabled=true": {
+			"model": "peculiarpieces:block/redstone_flip_on"
+		},
+		"facing=west,enabled=false": {
+			"y": 90,
+			"model": "peculiarpieces:block/redstone_flip_off"
+		},
+		"facing=west,enabled=true": {
+			"y": 90,
+			"model": "peculiarpieces:block/redstone_flip_on"
+		}
+	}
+}

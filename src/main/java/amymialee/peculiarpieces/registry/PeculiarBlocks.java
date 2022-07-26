@@ -5,9 +5,11 @@ import amymialee.peculiarpieces.blockentities.BigBarrelBlockEntity;
 import amymialee.peculiarpieces.blockentities.BigDispenserBlockEntity;
 import amymialee.peculiarpieces.blockentities.BigDropperBlockEntity;
 import amymialee.peculiarpieces.blockentities.EntangledScaffoldingBlockEntity;
+import amymialee.peculiarpieces.blockentities.FishTankBlockEntity;
 import amymialee.peculiarpieces.blockentities.FlagBlockEntity;
 import amymialee.peculiarpieces.blockentities.PedestalBlockEntity;
 import amymialee.peculiarpieces.blockentities.PotionPadBlockEntity;
+import amymialee.peculiarpieces.blockentities.RedstoneTriggerBlockEntity;
 import amymialee.peculiarpieces.blockentities.WarpBlockEntity;
 import amymialee.peculiarpieces.blocks.*;
 import amymialee.peculiarpieces.items.CustomScaffoldingItem;
@@ -54,12 +56,14 @@ public class PeculiarBlocks {
     public static final Block INVISIBLE_PLATE_HEAVY = registerBlock("invisible_plate_heavy", PeculiarItems.MOD_ITEMS, new OpenPressurePlate(true, 1, FabricBlockSettings.of(Material.STONE, Blocks.TINTED_GLASS.getDefaultMapColor()).noCollision().strength(0.5F).sounds(BlockSoundGroup.GLASS)));
     public static final Block INVISIBLE_PLAYER_PLATE = registerBlock("invisible_player_plate", PeculiarItems.MOD_ITEMS, new OpenPressurePlate(true, 2, FabricBlockSettings.of(Material.STONE, Blocks.TINTED_GLASS.getDefaultMapColor()).noCollision().strength(0.5F).sounds(BlockSoundGroup.GLASS)));
     //Redstone Items
-    public static final Block REDSTONE_CLAMP = registerBlock("redstone_clamp", PeculiarItems.CREATIVE_ITEMS, new RedstoneClampBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
-    public static final Block REDSTONE_FILTER = registerBlock("redstone_filter", PeculiarItems.CREATIVE_ITEMS, new RedstoneFilterBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
+    public static final Block REDSTONE_CLAMP = registerBlock("redstone_clamp", PeculiarItems.MOD_ITEMS, new RedstoneClampBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
+    public static final Block REDSTONE_FILTER = registerBlock("redstone_filter", PeculiarItems.MOD_ITEMS, new RedstoneFilterBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
     public static final Block REDSTONE_HURDLE = registerBlock("redstone_hurdle", PeculiarItems.MOD_ITEMS, new RedstoneHurdleBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
     public static final Block REDSTONE_STATIC = registerBlock("redstone_static", PeculiarItems.MOD_ITEMS, new RedstoneStaticBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
     public static final Block REDSTONE_MONO = registerBlock("redstone_mono", PeculiarItems.MOD_ITEMS, new RedstoneMonoBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
-    public static final Block REDSTONE_RANDOM = registerBlock("redstone_random", PeculiarItems.CREATIVE_ITEMS, new RedstoneRandomizerBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
+    public static final Block REDSTONE_RANDOM = registerBlock("redstone_random", PeculiarItems.MOD_ITEMS, new RedstoneRandomizerBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
+    public static final Block REDSTONE_FLIP = registerBlock("redstone_flip", PeculiarItems.MOD_ITEMS, new RedstoneFlipBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
+    public static final Block REDSTONE_TRIGGER = registerBlock("redstone_trigger", PeculiarItems.MOD_ITEMS, new RedstoneTriggerBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.5f).sounds(BlockSoundGroup.LODESTONE)));
     //Misc
     public static final Block TOUGHENED_SCAFFOLDING = registerBlock("toughened_scaffolding", PeculiarItems.MOD_ITEMS, new CustomScaffoldingItem(24, new ToughenedScaffoldingBlock(FabricBlockSettings.of(Material.DECORATION, MapColor.IRON_GRAY).noCollision().sounds(BlockSoundGroup.METAL).dynamicBounds()), new FabricItemSettings().rarity(Rarity.RARE).group(PeculiarPieces.PIECES_GROUP)));
     public static final Block ENTANGLED_SCAFFOLDING = registerBlock("entangled_scaffolding", PeculiarItems.MOD_ITEMS, new CustomScaffoldingItem(24, new EntangledScaffoldingBlock(FabricBlockSettings.of(Material.DECORATION, MapColor.PALE_PURPLE).noCollision().sounds(BlockSoundGroup.AMETHYST_CLUSTER).dynamicBounds()), new FabricItemSettings().rarity(Rarity.RARE).group(PeculiarPieces.PIECES_GROUP)));
@@ -83,6 +87,8 @@ public class PeculiarBlocks {
     public static final Block BIG_DISPENSER = registerBlock("big_dispenser", PeculiarItems.MOD_ITEMS, new BigDispenserBlock(FabricBlockSettings.copy(Blocks.DISPENSER)));
     public static final Block IGNITION = registerBlock("ignition", PeculiarItems.MOD_ITEMS, new IgnitionBlock(FabricBlockSettings.copy(Blocks.DROPPER)));
     public static final Block BLOCK_BREAKER = registerBlock("block_breaker", PeculiarItems.MOD_ITEMS, new BlockBreakerBlock(FabricBlockSettings.copy(Blocks.DISPENSER)));
+    //Fish Tank
+    public static final Block FISH_TANK = registerBlock("fish_tank", PeculiarItems.CREATIVE_ITEMS, new FishTankBlock(FabricBlockSettings.copy(Blocks.GLASS)));
     //Pedestals
     public static final Block OAK_PEDESTAL = registerBlock("oak_pedestal", PeculiarItems.MOD_ITEMS, new PedestalBlock(FabricBlockSettings.copy(Blocks.BARREL)));
     public static final Block BIRCH_PEDESTAL = registerBlock("birch_pedestal", PeculiarItems.MOD_ITEMS, new PedestalBlock(FabricBlockSettings.copy(Blocks.BARREL)));
@@ -158,7 +164,9 @@ public class PeculiarBlocks {
     public static BlockEntityType<BigDispenserBlockEntity> BIG_DISPENSER_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "big_dispenser", FabricBlockEntityTypeBuilder.create(BigDispenserBlockEntity::new, BIG_DISPENSER).build(null));
     public static BlockEntityType<PotionPadBlockEntity> POTION_PAD_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "potion_pad", FabricBlockEntityTypeBuilder.create(PotionPadBlockEntity::new, POTION_PAD).build(null));
     public static BlockEntityType<PedestalBlockEntity> PEDESTAL_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "pedestal", FabricBlockEntityTypeBuilder.create(PedestalBlockEntity::new, OAK_PEDESTAL, BIRCH_PEDESTAL, SPRUCE_PEDESTAL, JUNGLE_PEDESTAL, ACACIA_PEDESTAL, DARK_OAK_PEDESTAL, CRIMSON_PEDESTAL, WARPED_PEDESTAL, MANGROVE_PEDESTAL, STONE_PEDESTAL, DEEPSLATE_PEDESTAL, BLACKSTONE_PEDESTAL).build(null));
+    public static BlockEntityType<FishTankBlockEntity> FISH_TANK_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "fish_tank", FabricBlockEntityTypeBuilder.create(FishTankBlockEntity::new, FISH_TANK).build(null));
     public static BlockEntityType<FlagBlockEntity> FLAG_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "flag", FabricBlockEntityTypeBuilder.create(FlagBlockEntity::new, FLAG).build(null));
+    public static BlockEntityType<RedstoneTriggerBlockEntity> REDSTONE_TRIGGER_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "redstone_trigger", FabricBlockEntityTypeBuilder.create(RedstoneTriggerBlockEntity::new, REDSTONE_TRIGGER).build(null));
 
     public static void init() {}
 

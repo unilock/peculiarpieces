@@ -50,17 +50,17 @@ public class PositionPearlItem extends Item {
     }
 
     public static void writeStone(ItemStack stack, BlockPos pos) {
-        stack.getOrCreateNbt().put("pp:stone", NbtHelper.fromBlockPos(pos));
+        stack.getOrCreateNbt().put("pp:target", NbtHelper.fromBlockPos(pos));
     }
 
     public static BlockPos readStone(ItemStack stack) {
-        return NbtHelper.toBlockPos(stack.getOrCreateNbt().getCompound("pp:stone"));
+        return NbtHelper.toBlockPos(stack.getOrCreateNbt().getCompound("pp:target"));
     }
 
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         BlockPos pos;
-        if (stack.getNbt() != null && !(pos = NbtHelper.toBlockPos(stack.getNbt().getCompound("pp:stone"))).equals(BlockPos.ORIGIN)) {
+        if (stack.getNbt() != null && !(pos = NbtHelper.toBlockPos(stack.getNbt().getCompound("pp:target"))).equals(BlockPos.ORIGIN)) {
             tooltip.add(Text.translatable("Position: x%d, y%d, z%d".formatted(pos.getX(), pos.getY(), pos.getZ())).formatted(Formatting.GRAY));
         } else {
             tooltip.add(Text.translatable("peculiarpieces.pearl.empty").formatted(Formatting.GRAY));

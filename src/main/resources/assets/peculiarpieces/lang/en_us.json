@@ -125,6 +125,9 @@
   "block.peculiarpieces.progress_flag" : "Progress Flag",
   "block.peculiarpieces.template_flag" : "Template Flag",
   "block.peculiarpieces.trans_flag" : "Trans Flag",
+  "block.peculiarpieces.redstone_trigger" : "Redstone Trigger",
+  "block.peculiarpieces.redstone_flip" : "Redstone Flip",
+  "block.peculiarpieces.fish_tank" : "Fish Tank",
 
   "peculiarpieces.container.warp_block" : "Warp Block",
   "peculiarpieces.container.big_barrel" : "Deep Barrel",
@@ -132,6 +135,8 @@
   "peculiarpieces.container.big_dispenser" : "Deep Dispenser",
   "peculiarpieces.container.potion_pad" : "Potion Pad",
   "peculiarpieces.container.pedestal" : "Pedestal",
+  "peculiarpieces.container.redstone_trigger" : "Redstone Trigger",
+  "peculiarpieces.container.fish_tank" : "Fish Tank",
 
   "item.peculiarpieces.peculiar_book" : "Peculiar Pieces",
   "item.peculiarpieces.checkpoint_pearl" : "Checkpoint Pearl",

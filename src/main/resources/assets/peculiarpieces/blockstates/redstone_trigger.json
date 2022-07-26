@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"triggered=false": {
+			"model": "peculiarpieces:block/redstone_trigger_off"
+		},
+		"triggered=true": {
+			"model": "peculiarpieces:block/redstone_trigger_on"
+		}
+	}
+}

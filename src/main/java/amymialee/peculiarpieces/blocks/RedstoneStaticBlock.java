@@ -21,7 +21,7 @@ public class RedstoneStaticBlock extends AbstractRedstoneComparisonBlock {
 
     public RedstoneStaticBlock(FabricBlockSettings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(STATIC, 15).with(POWERED, false));
+        this.setDefaultState(this.stateManager.getDefaultState().with(STATIC, 0).with(POWERED, false));
     }
 
     @Override

@@ -21,7 +21,7 @@ public class RedstoneFilterBlock extends AbstractRedstoneComparisonBlock {
 
     public RedstoneFilterBlock(FabricBlockSettings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(FILTER, 15).with(POWERED, false));
+        this.setDefaultState(this.stateManager.getDefaultState().with(FILTER, 0).with(POWERED, false));
     }
 
     @Override

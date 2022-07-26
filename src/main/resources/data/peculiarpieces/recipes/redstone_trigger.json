@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " G ",
+    "#X#",
+    "III"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:redstone_torch"
+    },
+    "I": {
+      "item": "minecraft:stone"
+    },
+    "X": {
+      "item": "minecraft:redstone"
+    },
+    "G": {
+      "item": "minecraft:amethyst_shard"
+    }
+  },
+  "result": {
+    "item": "peculiarpieces:redstone_trigger"
+  }
+}
