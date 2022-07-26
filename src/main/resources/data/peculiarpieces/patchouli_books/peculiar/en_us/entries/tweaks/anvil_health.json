@@ -1,0 +1,15 @@
+{
+  "name": "Falling Anvils",
+  "icon": "minecraft:anvil",
+  "category": "peculiarpieces:tweaks",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Anvils won't take damage from falling."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "minecraft:anvil"
+    }
+  ]
+}

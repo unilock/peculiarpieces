@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AWS",
+    "WBW",
+    "SWA"
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "B": {
+      "item": "peculiarpieces:block_breaker"
+    }
+  },
+  "result": {
+    "item": "peculiarpieces:silk_breaker"
+  }
+}

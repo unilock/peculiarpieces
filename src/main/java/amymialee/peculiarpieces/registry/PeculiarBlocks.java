@@ -86,7 +86,8 @@ public class PeculiarBlocks {
     public static final Block BIG_DROPPER = registerBlock("big_dropper", PeculiarItems.MOD_ITEMS, new BigDropperBlock(FabricBlockSettings.copy(Blocks.DROPPER)));
     public static final Block BIG_DISPENSER = registerBlock("big_dispenser", PeculiarItems.MOD_ITEMS, new BigDispenserBlock(FabricBlockSettings.copy(Blocks.DISPENSER)));
     public static final Block IGNITION = registerBlock("ignition", PeculiarItems.MOD_ITEMS, new IgnitionBlock(FabricBlockSettings.copy(Blocks.DROPPER)));
-    public static final Block BLOCK_BREAKER = registerBlock("block_breaker", PeculiarItems.MOD_ITEMS, new BlockBreakerBlock(FabricBlockSettings.copy(Blocks.DISPENSER)));
+    public static final Block BLOCK_BREAKER = registerBlock("block_breaker", PeculiarItems.MOD_ITEMS, new BlockBreakerBlock(false, FabricBlockSettings.copy(Blocks.DISPENSER)));
+    public static final Block SILK_BREAKER = registerBlock("silk_breaker", PeculiarItems.MOD_ITEMS, new BlockBreakerBlock(true, FabricBlockSettings.copy(Blocks.DISPENSER)));
     //Fish Tank
     public static final Block FISH_TANK = registerBlock("fish_tank", PeculiarItems.CREATIVE_ITEMS, new FishTankBlock(FabricBlockSettings.copy(Blocks.GLASS)));
     //Pedestals

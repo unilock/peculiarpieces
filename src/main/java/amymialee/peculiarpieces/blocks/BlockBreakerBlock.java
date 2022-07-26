@@ -1,10 +1,15 @@
 package amymialee.peculiarpieces.blocks;
 
-import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FacingBlock;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -19,13 +24,19 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldEvents;
+import net.minecraft.world.event.GameEvent;
 
 public class BlockBreakerBlock extends Block {
     public static final DirectionProperty FACING = FacingBlock.FACING;
     public static final BooleanProperty TRIGGERED = Properties.TRIGGERED;
+    private final boolean silk;
+    private static final ItemStack pick = new ItemStack(Items.NETHERITE_PICKAXE);
+    private static final ItemStack pick_silk = new ItemStack(Items.NETHERITE_PICKAXE);
 
-    public BlockBreakerBlock(AbstractBlock.Settings settings) {
+    public BlockBreakerBlock(boolean silk, Settings settings) {
         super(settings);
+        this.silk = silk;
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH).with(TRIGGERED, false));
     }
 
@@ -45,11 +56,27 @@ public class BlockBreakerBlock extends Block {
         BlockState blockState = world.getBlockState(pos);
         if (blockState.getHardness(world, pos) != -1 && !blockState.isAir()) {
             world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 0.2f, (1.0f + world.random.nextFloat()) * 2f);
-            world.breakBlock(pos, true);
+            this.breakBlock(world, pos);
             if (world instanceof ServerWorld serverWorld) {
                 Vec3d vec3d = Vec3d.ofCenter(pos);
                 serverWorld.spawnParticles(ParticleTypes.EXPLOSION, vec3d.getX(), vec3d.getY(), vec3d.getZ(), 1, 0.0, 0.0, 0.0, 1.0);
             }
+        }
+    }
+
+    public void breakBlock(World world, BlockPos pos) {
+        BlockState blockState = world.getBlockState(pos);
+        if (blockState.isAir()) {
+            return;
+        }
+        FluidState fluidState = world.getFluidState(pos);
+        if (!(blockState.getBlock() instanceof AbstractFireBlock)) {
+            world.syncWorldEvent(WorldEvents.BLOCK_BROKEN, pos, Block.getRawIdFromState(blockState));
+        }
+        BlockEntity blockEntity = blockState.hasBlockEntity() ? world.getBlockEntity(pos) : null;
+        Block.dropStacks(blockState, world, pos, blockEntity, null, silk ? pick_silk : pick);
+        if (world.setBlockState(pos, fluidState.getBlockState(), Block.NOTIFY_ALL, 512)) {
+            world.emitGameEvent(GameEvent.BLOCK_DESTROY, pos, GameEvent.Emitter.of(null, blockState));
         }
     }
 
@@ -79,5 +106,9 @@ public class BlockBreakerBlock extends Block {
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(FACING, TRIGGERED);
+    }
+
+    static {
+        pick_silk.addEnchantment(Enchantments.SILK_TOUCH, 1);
     }
 }
