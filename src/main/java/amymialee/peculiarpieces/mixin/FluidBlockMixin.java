@@ -29,11 +29,41 @@ public abstract class FluidBlockMixin {
     @Inject(method = "receiveNeighborFluids", at = @At("HEAD"), cancellable = true)
     private void PeculiarPieces$RenewableDeepslate(World world, BlockPos pos, BlockState state, CallbackInfoReturnable<Boolean> cir) {
         if (this.fluid.isIn(FluidTags.LAVA)) {
-            if (world.getBlockState(pos.down()).isOf(Blocks.SCULK_CATALYST)) {
+            if (world.getBlockState(pos.down()).isOf(Blocks.DEEPSLATE)) {
                 for (Direction direction : FLOW_DIRECTIONS) {
                     BlockPos blockPos = pos.offset(direction.getOpposite());
                     if (world.getFluidState(blockPos).isIn(FluidTags.WATER) || world.getBlockState(blockPos).isOf(Blocks.BLUE_ICE)) {
                         Block block = world.getFluidState(pos).isStill() ? Blocks.OBSIDIAN : Blocks.DEEPSLATE;
+                        world.setBlockState(pos, block.getDefaultState());
+                        this.playExtinguishSound(world, pos);
+                        cir.setReturnValue(false);
+                    }
+                }
+            } else if (world.getBlockState(pos.down()).isOf(Blocks.GRANITE)) {
+                for (Direction direction : FLOW_DIRECTIONS) {
+                    BlockPos blockPos = pos.offset(direction.getOpposite());
+                    if (world.getFluidState(blockPos).isIn(FluidTags.WATER) || world.getBlockState(blockPos).isOf(Blocks.BLUE_ICE)) {
+                        Block block = world.getFluidState(pos).isStill() ? Blocks.OBSIDIAN : Blocks.GRANITE;
+                        world.setBlockState(pos, block.getDefaultState());
+                        this.playExtinguishSound(world, pos);
+                        cir.setReturnValue(false);
+                    }
+                }
+            } else if (world.getBlockState(pos.down()).isOf(Blocks.DIORITE)) {
+                for (Direction direction : FLOW_DIRECTIONS) {
+                    BlockPos blockPos = pos.offset(direction.getOpposite());
+                    if (world.getFluidState(blockPos).isIn(FluidTags.WATER) || world.getBlockState(blockPos).isOf(Blocks.BLUE_ICE)) {
+                        Block block = world.getFluidState(pos).isStill() ? Blocks.OBSIDIAN : Blocks.DIORITE;
+                        world.setBlockState(pos, block.getDefaultState());
+                        this.playExtinguishSound(world, pos);
+                        cir.setReturnValue(false);
+                    }
+                }
+            } else if (world.getBlockState(pos.down()).isOf(Blocks.ANDESITE)) {
+                for (Direction direction : FLOW_DIRECTIONS) {
+                    BlockPos blockPos = pos.offset(direction.getOpposite());
+                    if (world.getFluidState(blockPos).isIn(FluidTags.WATER) || world.getBlockState(blockPos).isOf(Blocks.BLUE_ICE)) {
+                        Block block = world.getFluidState(pos).isStill() ? Blocks.OBSIDIAN : Blocks.ANDESITE;
                         world.setBlockState(pos, block.getDefaultState());
                         this.playExtinguishSound(world, pos);
                         cir.setReturnValue(false);

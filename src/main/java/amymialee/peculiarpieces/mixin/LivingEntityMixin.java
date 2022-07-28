@@ -55,7 +55,7 @@ public abstract class LivingEntityMixin extends Entity {
                 return 1f / 0.91f;
             }
             if (optionalComponent.isPresent() && optionalComponent.get().isEquipped(PeculiarItems.STEADY_SNEAKERS)) {
-                return 0.5f;
+                return 0.1f;
             }
         }
         return p;

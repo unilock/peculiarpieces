@@ -5,11 +5,14 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Sand can be created by crushing cobblestone with an anvil."
+      "text": "Sand can be created by crushing cobblestone with an anvil, while Red Sand can be created by crushing pumpkins."
     },
     {
-      "type": "patchouli:spotlight",
-      "item": "minecraft:anvil"
+      "type": "peculiarpieces:quad_spotlight",
+      "item1": "minecraft:cobblestone",
+      "item2": "minecraft:sand",
+      "item3": "minecraft:pumpkin",
+      "item4": "minecraft:red_sand"
     }
   ]
 }

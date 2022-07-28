@@ -1,0 +1,6 @@
+{
+    "parent": "peculiarpieces:block/block_detector",
+    "textures": {
+        "bottom": "peculiarpieces:block/block_detector_back_on"
+    }
+}

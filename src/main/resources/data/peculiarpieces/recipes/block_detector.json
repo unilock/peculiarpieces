@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DDD",
+    "RRQ",
+    "DDD"
+  ],
+  "key": {
+    "D": {
+      "tag": "peculiarpieces:deepslate_blocks"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "result": {
+    "item": "peculiarpieces:block_detector",
+    "count": 1
+  }
+}

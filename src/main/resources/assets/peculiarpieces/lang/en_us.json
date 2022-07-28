@@ -129,6 +129,7 @@
   "block.peculiarpieces.redstone_trigger" : "Redstone Trigger",
   "block.peculiarpieces.redstone_flip" : "Redstone Flip",
   "block.peculiarpieces.fish_tank" : "Fish Tank",
+  "block.peculiarpieces.block_detector" : "Block Detector",
 
   "peculiarpieces.container.warp_block" : "Warp Block",
   "peculiarpieces.container.big_barrel" : "Deep Barrel",
