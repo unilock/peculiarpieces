@@ -1,8 +1,8 @@
 package amymialee.peculiarpieces.util;
 
 public class RedstoneInstance {
-    private boolean strong = false;
-    private int lifetime = 20;
+    private boolean strong = true;
+    private int lifetime = 4;
     private int power = 15;
 
     public RedstoneInstance setLifetime(int lifetime) {

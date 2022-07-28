@@ -100,7 +100,7 @@ public class RedstoneTriggerBlock extends BlockWithEntity {
                     ItemStack itemStack = redstoneTriggerEntity.getStack(bl ? 0 : 1);
                     BlockPos target = RedstoneRemoteItem.readTarget(itemStack);
                     if (target != BlockPos.ORIGIN) {
-                        RedstoneManager.addInstance(world, target, new RedstoneInstance().setStrong().setLifetime(1));
+                        RedstoneManager.addInstance(world, target, new RedstoneInstance());
                     }
                 }
             }

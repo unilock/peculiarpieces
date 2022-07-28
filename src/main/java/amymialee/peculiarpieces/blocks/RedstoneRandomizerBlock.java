@@ -22,11 +22,6 @@ public class RedstoneRandomizerBlock extends AbstractRedstoneComparisonBlock {
     }
 
     @Override
-    protected int getUpdateDelayInternal(BlockState state) {
-        return 1;
-    }
-
-    @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (this.isLocked(world, pos, state)) {
             return;

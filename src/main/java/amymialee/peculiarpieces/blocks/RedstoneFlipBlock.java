@@ -30,11 +30,6 @@ public class RedstoneFlipBlock extends AbstractRedstoneComparisonBlock {
     }
 
     @Override
-    protected int getUpdateDelayInternal(BlockState state) {
-        return 1;
-    }
-
-    @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.isClient) {
             return ActionResult.SUCCESS;

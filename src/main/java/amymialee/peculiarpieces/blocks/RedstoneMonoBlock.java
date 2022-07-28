@@ -23,7 +23,7 @@ public class RedstoneMonoBlock extends AbstractRedstoneComparisonBlock {
 
     @Override
     protected int getUpdateDelayInternal(BlockState state) {
-        return 1;
+        return 2;
     }
 
     @Override

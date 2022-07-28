@@ -108,20 +108,29 @@ public class FlagBlockEntityRenderer implements BlockEntityRenderer<FlagBlockEnt
             this.flag.pivotY = 0f;
             this.flag.pitch = (0.01f * MathHelper.cos((float) Math.PI * 2 * k)) * (float) Math.PI / 2;
         }
-        String textureName = flagBlockEntity.getTexture();
-        if (textureName != null) {
-            textureName = textureName.toLowerCase();
-        }
         float[] components = {1f, 1f, 1f};
-        DyeColor color = DyeColor.byName(textureName, null);
-        if (color != null) {
-            components = color.getColorComponents();
-        }
         Identifier flag = TEXTURE;
-        if (textureName != null && Identifier.isValid(textureName)) {
-            Identifier identifier = PeculiarPieces.id("textures/entity/flags/%s_flag.png".formatted(textureName));
-            if (MinecraftClient.getInstance().getResourceManager().getResource(identifier).isPresent()) {
-                flag = identifier;
+        String flagType = null;
+        if (flagBlockEntity.getCustomName() != null) {
+            String flagName = flagBlockEntity.getCustomName().getString().toLowerCase().split(" ")[0] + "_flag";
+            if (Identifier.isValid(flagName)) {
+                flagType = flagName;
+            }
+        }
+        if (flagType == null && flagBlockEntity.getTexture() != null) {
+            String flagName = flagBlockEntity.getTexture().toLowerCase().split(" ")[0] + "_flag";
+            if (Identifier.isValid(flagName)) {
+                flagType = flagName;
+            }
+            DyeColor color = DyeColor.byName(flagBlockEntity.getTexture(), null);
+            if (color != null) {
+                components = color.getColorComponents();
+            }
+        }
+        if (flagType != null) {
+            Identifier flagIdentifier = PeculiarPieces.id("textures/entity/flags/%s.png".formatted(flagType));
+            if (MinecraftClient.getInstance().getResourceManager().getResource(flagIdentifier).isPresent()) {
+                flag = flagIdentifier;
             }
         }
         {
