@@ -11,41 +11,27 @@ loom {
 }
 
 repositories {
-    mavenCentral()
-    maven { url = "https://api.modrinth.com/maven" }
-    maven { url = "https://cursemaven.com" }
-    maven { url = "https://maven.parchmentmc.org" }
-    maven { url = "https://maven.blamejared.com" }
-    maven { url = "https://maven.fabricmc.net/" }
-    maven { url = "https://maven.tterrag.com/" }
-    maven { url = "https://storage.googleapis.com/devan-maven/" }
-    maven { url = "https://maven.shedaniel.me/" }
-    maven { url = "https://aperlambda.github.io/maven" }
-    maven { url = "https://ladysnake.jfrog.io/artifactory/mods" }
-    maven { url = "https://maven.kotlindiscord.com/repository/terraformers/" }
-    maven { url = "https://mvn.devos.one/releases/" }
-    maven { url = "https://mvn.devos.one/snapshots/" }
-    maven { url = "https://maven.terraformersmc.com/" }
-    maven { url = "https://maven.cafeteria.dev" }
     maven { url = "https://jitpack.io/" }
-    maven { url = "https://maven.jamieswhiteshirt.com/libs-release" }
-    maven { url = "https://maven.gegy.dev" }
-    maven { url = "https://oss.sonatype.org/content/repositories/snapshots" }
-    maven { url = "https://modmaven.dev" }
+    maven { url = "https://ladysnake.jfrog.io/artifactory/mods" }
+    maven { url = "https://maven.blamejared.com" }
+    maven { url = "https://maven.terraformersmc.com/" }
     maven { url = "https://maven.willbl.dev/releases" }
     maven { url = "https://maven.siphalor.de" }
 }
 
 dependencies {
+    //Fabric
     minecraft ("com.mojang:minecraft:${project.minecraft_version}")
     mappings ("net.fabricmc:yarn:${project.yarn_mappings}:v2")
     modImplementation ("net.fabricmc:fabric-loader:${project.loader_version}")
     modImplementation ("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}")
-    modImplementation ("dev.emi:trinkets:${project.trinkets_version}")
+    //External
     modImplementation ("vazkii.patchouli:Patchouli:1.19-73-FABRIC-SNAPSHOT")
+    modImplementation ("dev.emi:trinkets:${project.trinkets_version}")
     modImplementation ("dev.emi:emi:0.3.0+1.19")
     modImplementation ("amymialee:visible-barriers:1.5.2+1.19")
     modImplementation ("amymialee:kofi-table:1.0.3+1.19")
+    //Include
     modImplementation include ("de.siphalor:nbtcrafting-1.19:2.1.3+mc1.19")
 }
 
