@@ -1,0 +1,7 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "peculiarpieces:block/living_ladder_core",
+		"layer1": "peculiarpieces:block/living_ladder_vines"
+	}
+}

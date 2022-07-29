@@ -1,0 +1,28 @@
+{
+    "ambientocclusion": false,
+    "textures": {
+        "particle": "peculiarpieces:block/living_ladder_core",
+        "texture": "peculiarpieces:block/living_ladder_core",
+        "vines": "peculiarpieces:block/living_ladder_vines"
+    },
+    "elements": [
+        {
+            "from": [ 0, 0, 15.2 ],
+            "to": [ 16, 16, 15.2 ],
+            "shade": false,
+            "faces": {
+                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture" },
+                "south": { "uv": [ 16, 0, 0, 16 ], "texture": "#texture" }
+            }
+        },
+        {
+            "from": [ 0, 0, 15.2 ],
+            "to": [ 16, 16, 15.2 ],
+            "shade": false,
+            "faces": {
+                "north": { "uv": [ 0, 0, 16, 16 ], "tintindex": 1, "texture": "#vines" },
+                "south": { "uv": [ 16, 0, 0, 16 ], "tintindex": 1, "texture": "#vines" }
+            }
+        }
+    ]
+}

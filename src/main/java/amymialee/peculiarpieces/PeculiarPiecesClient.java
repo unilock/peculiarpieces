@@ -15,6 +15,7 @@ import amymialee.peculiarpieces.items.TransportPearlItem;
 import amymialee.peculiarpieces.registry.PeculiarBlocks;
 import amymialee.peculiarpieces.registry.PeculiarEntities;
 import amymialee.peculiarpieces.registry.PeculiarItems;
+import amymialee.peculiarpieces.screens.CouriporterScreen;
 import amymialee.peculiarpieces.screens.FishTankScreen;
 import amymialee.peculiarpieces.screens.PackedPouchScreen;
 import amymialee.peculiarpieces.screens.PedestalScreen;
@@ -29,12 +30,16 @@ import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.color.world.BiomeColors;
+import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.item.CompassAnglePredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtil;
@@ -83,8 +88,13 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.ENTANGLED_SCAFFOLDING, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.POTION_PAD, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.FISH_TANK, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.HEAVY_GLASS, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.HEAVY_STONE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.LIVING_LADDER, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.COURIPORTER_BLOCK, RenderLayer.getCutout());
 
         HandledScreens.register(PeculiarPieces.WARP_SCREEN_HANDLER, WarpScreen::new);
+        HandledScreens.register(PeculiarPieces.COURIPORTER_SCREEN_HANDLER, CouriporterScreen::new);
         HandledScreens.register(PeculiarPieces.POTION_PAD_SCREEN_HANDLER, PotionPadScreen::new);
         HandledScreens.register(PeculiarPieces.BUSTLING_SCREEN_HANDLER, PackedPouchScreen::new);
         HandledScreens.register(PeculiarPieces.PEDESTAL_SCREEN_HANDLER, PedestalScreen::new);
@@ -97,6 +107,22 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         EntityRendererRegistry.register(PeculiarEntities.TELEPORT_ITEM_ENTITY, TeleportItemEntityRenderer::new);
 
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> tintIndex == 1 ? (state.get(RedstoneStaticBlock.POWERED) ? 16711680 : 2621440) : -1, PeculiarBlocks.REDSTONE_STATIC);
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {
+            if (tintIndex != 1) {
+                return -1;
+            }
+            if (world == null || pos == null) {
+                return FoliageColors.getDefaultColor();
+            }
+            return BiomeColors.getFoliageColor(world, pos);
+        }, PeculiarBlocks.LIVING_LADDER);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
+            if (tintIndex != 1) {
+                return -1;
+            }
+            BlockState blockState = ((BlockItem)stack.getItem()).getBlock().getDefaultState();
+            return MinecraftClient.getInstance().getBlockColors().getColor(blockState, null, null, tintIndex);
+        }, PeculiarBlocks.LIVING_LADDER);
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex != 1 ? -1 : 16711680, PeculiarBlocks.REDSTONE_STATIC);
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> MathHelper.hsvToRgb(((float)(TransportPearlItem.getSlot(stack) + 1) / 8), 1.0F, 1.0F), PeculiarItems.TRANS_PEARL);
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : 0xF800F8, PeculiarBlocks.POTION_PAD);

@@ -1,0 +1,15 @@
+{
+  "name": "Living Ladders",
+  "icon": "peculiarpieces:living_ladder",
+  "category": "peculiarpieces:features",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Living Ladders are an enhanced form of ladder which will grow upwards when given a secure wall, and can be boosted with bone meal.$(br)It only requires support somewhere above or below it, and will break similar to scaffolds if no part is secured to a block.$(br)You can place them below by placing more onto the same block, or upward if done while holding shift."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:living_ladder"
+    }
+  ]
+}

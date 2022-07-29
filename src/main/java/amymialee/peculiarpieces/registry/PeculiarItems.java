@@ -22,7 +22,7 @@ public class PeculiarItems {
     //Book
     public static final Item PECULIAR_BOOK = registerItem("peculiar_book", MOD_ITEMS, new PeculiarBookItem(new FabricItemSettings().maxCount(1).rarity(Rarity.RARE).group(PeculiarPieces.PIECES_GROUP)));
     //Misc
-    public static final Item SLIME = registerItem("slime", MOD_ITEMS, new SlimeItem(new FabricItemSettings().group(PeculiarPieces.PIECES_GROUP)));
+    public static final Item SLIME = registerItem("slime", MOD_ITEMS, new SlimeItem(new FabricItemSettings().rarity(Rarity.UNCOMMON).group(PeculiarPieces.PIECES_GROUP)));
     public static final Item CRAFTING_SLATE = registerItem("crafting_slate", MOD_ITEMS, new CraftingSlateItem(new FabricItemSettings().maxCount(1).rarity(Rarity.UNCOMMON).group(PeculiarPieces.PIECES_GROUP)));
     public static final Item GLIDER_WING = registerItem("glider_wing", MOD_ITEMS, new Item(new FabricItemSettings().maxCount(2).rarity(Rarity.UNCOMMON).group(PeculiarPieces.PIECES_GROUP)));
     public static final Item HANG_GLIDER = registerItem("hang_glider", MOD_ITEMS, new GliderItem(new FabricItemSettings().maxCount(1).rarity(Rarity.RARE).group(PeculiarPieces.PIECES_GROUP)));

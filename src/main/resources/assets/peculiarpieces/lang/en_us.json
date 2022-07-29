@@ -131,6 +131,10 @@
   "block.peculiarpieces.fish_tank" : "Fish Tank",
   "block.peculiarpieces.block_detector" : "Block Detector",
   "block.peculiarpieces.redstone_clock" : "Redstone Clock",
+  "block.peculiarpieces.living_ladder" : "Living Ladder",
+  "block.peculiarpieces.heavy_stone" : "Heavy Stone",
+  "block.peculiarpieces.heavy_glass" : "Heavy Glass",
+  "block.peculiarpieces.couriporter" : "Couriporter",
 
   "peculiarpieces.container.warp_block" : "Warp Block",
   "peculiarpieces.container.big_barrel" : "Deep Barrel",

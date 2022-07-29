@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S S",
+    "LLL",
+    "S S"
+  ],
+  "key": {
+    "S": {
+      "tag": "minecraft:saplings"
+    },
+    "L": {
+      "item": "minecraft:ladder"
+    }
+  },
+  "result": {
+    "item": "peculiarpieces:living_ladder",
+    "count": 3
+  }
+}

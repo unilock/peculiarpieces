@@ -4,6 +4,7 @@ import amymialee.peculiarpieces.PeculiarPieces;
 import amymialee.peculiarpieces.blockentities.BigBarrelBlockEntity;
 import amymialee.peculiarpieces.blockentities.BigDispenserBlockEntity;
 import amymialee.peculiarpieces.blockentities.BigDropperBlockEntity;
+import amymialee.peculiarpieces.blockentities.CouriporterBlockEntity;
 import amymialee.peculiarpieces.blockentities.EntangledScaffoldingBlockEntity;
 import amymialee.peculiarpieces.blockentities.FishTankBlockEntity;
 import amymialee.peculiarpieces.blockentities.FlagBlockEntity;
@@ -14,6 +15,7 @@ import amymialee.peculiarpieces.blockentities.WarpBlockEntity;
 import amymialee.peculiarpieces.blocks.*;
 import amymialee.peculiarpieces.items.CustomScaffoldingItem;
 import amymialee.peculiarpieces.items.FlagBlockItem;
+import amymialee.peculiarpieces.items.LivingLadderItem;
 import amymialee.peculiarpieces.items.MidairBlockItem;
 import amymialee.peculiarpieces.items.ToggleableBlockItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -64,13 +66,17 @@ public class PeculiarBlocks {
     public static final Block REDSTONE_RANDOM = registerBlock("redstone_random", PeculiarItems.MOD_ITEMS, new RedstoneRandomizerBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
     public static final Block REDSTONE_FLIP = registerBlock("redstone_flip", PeculiarItems.MOD_ITEMS, new RedstoneFlipBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
     public static final Block REDSTONE_CLOCK = registerBlock("redstone_clock", PeculiarItems.MOD_ITEMS, new RedstoneClockBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
-    public static final Block REDSTONE_TRIGGER = registerBlock("redstone_trigger", PeculiarItems.MOD_ITEMS, new RedstoneTriggerBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.5f).sounds(BlockSoundGroup.LODESTONE)));
+    public static final Block REDSTONE_TRIGGER = registerBlock("redstone_trigger", PeculiarItems.MOD_ITEMS, new RedstoneTriggerBlock(FabricBlockSettings.of(Material.STONE).strength(3.5f).sounds(BlockSoundGroup.LODESTONE)));
     //Misc
+    public static final Block LIVING_LADDER = registerBlock("living_ladder", PeculiarItems.MOD_ITEMS, new LivingLadderItem(new LivingLadderBlock(FabricBlockSettings.copy(Blocks.LADDER)), new FabricItemSettings().rarity(Rarity.UNCOMMON).group(PeculiarPieces.PIECES_GROUP)));
     public static final Block TOUGHENED_SCAFFOLDING = registerBlock("toughened_scaffolding", PeculiarItems.MOD_ITEMS, new CustomScaffoldingItem(24, new ToughenedScaffoldingBlock(FabricBlockSettings.of(Material.DECORATION, MapColor.IRON_GRAY).noCollision().sounds(BlockSoundGroup.METAL).dynamicBounds()), new FabricItemSettings().rarity(Rarity.RARE).group(PeculiarPieces.PIECES_GROUP)));
     public static final Block ENTANGLED_SCAFFOLDING = registerBlock("entangled_scaffolding", PeculiarItems.MOD_ITEMS, new CustomScaffoldingItem(24, new EntangledScaffoldingBlock(FabricBlockSettings.of(Material.DECORATION, MapColor.PALE_PURPLE).noCollision().sounds(BlockSoundGroup.AMETHYST_CLUSTER).dynamicBounds()), new FabricItemSettings().rarity(Rarity.RARE).group(PeculiarPieces.PIECES_GROUP)));
-    public static final Block SLIPPERY_STONE = registerBlock("slippery_stone", PeculiarItems.MOD_ITEMS, new Block(FabricBlockSettings.of(Material.STONE).requiresTool().strength(1.25F, 4.0F).slipperiness(1f / 0.91f)));
+    public static final Block SLIPPERY_STONE = registerBlock("slippery_stone", PeculiarItems.MOD_ITEMS, new Block(FabricBlockSettings.of(Material.STONE).strength(1.25F, 4.0F).slipperiness(1f / 0.91f)));
     public static final Block INVERTED_REDSTONE_LAMP = registerBlock("inverted_redstone_lamp", PeculiarItems.MOD_ITEMS, new InvertedRedstoneLampBlock(FabricBlockSettings.of(Material.REDSTONE_LAMP).luminance(state -> state.get(Properties.LIT) ? 15 : 0).strength(0.3f).sounds(BlockSoundGroup.GLASS).allowsSpawning((a, b, c, d) -> true)));
     public static final Block WARP_BLOCK = registerBlock("warp_block", PeculiarItems.MOD_ITEMS, new WarpBlock(FabricBlockSettings.copy(Blocks.LODESTONE)));
+    public static final Block COURIPORTER_BLOCK = registerBlock("couriporter", PeculiarItems.MOD_ITEMS, new CouriporterBlock(FabricBlockSettings.copy(Blocks.LODESTONE)));
+    public static final Block HEAVY_GLASS = registerBlock("heavy_glass", PeculiarItems.MOD_ITEMS, new HeavyGlassBlock(FabricBlockSettings.of(Material.GLASS).strength(5.0f, 6.0f).sounds(BlockSoundGroup.LODESTONE).nonOpaque().solidBlock(PeculiarBlocks::never).suffocates(PeculiarBlocks::never).blockVision(PeculiarBlocks::never)));
+    public static final Block HEAVY_STONE = registerBlock("heavy_stone", PeculiarItems.MOD_ITEMS, new HeavyBlock(FabricBlockSettings.of(Material.STONE).strength(5.0f, 6.0f).sounds(BlockSoundGroup.LODESTONE)));
     public static final Block SHOCK_ABSORBER = registerBlock("shock_absorber", PeculiarItems.MOD_ITEMS, new ShockAbsorberBlock(FabricBlockSettings.of(Material.WOOL, MapColor.LIGHT_BLUE).strength(0.8f).sounds(BlockSoundGroup.LODESTONE)));
     public static final Block BURNING_SPONGE = registerBlock("burning_sponge", PeculiarItems.MOD_ITEMS, new BurningSpongeBlock(FabricBlockSettings.of(Material.SPONGE).strength(0.6f).sounds(BlockSoundGroup.GRASS)));
     public static final Block MIDAIR_BLOCK = registerBlock("midair_block", PeculiarItems.MOD_ITEMS, new MidairBlockItem(new MidairBlock(FabricBlockSettings.of(Material.STONE).breakInstantly().luminance(3)), new FabricItemSettings().group(PeculiarPieces.PIECES_GROUP)));
@@ -161,6 +167,7 @@ public class PeculiarBlocks {
 
     // Block Entities
     public static BlockEntityType<WarpBlockEntity> WARP_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "warp_block", FabricBlockEntityTypeBuilder.create(WarpBlockEntity::new, WARP_BLOCK).build(null));
+    public static BlockEntityType<CouriporterBlockEntity> COURIPORTER_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "couriporter", FabricBlockEntityTypeBuilder.create(CouriporterBlockEntity::new, COURIPORTER_BLOCK).build(null));
     public static BlockEntityType<EntangledScaffoldingBlockEntity> ENTANGLED_SCAFFOLDING_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "entangled_scaffolding", FabricBlockEntityTypeBuilder.create(EntangledScaffoldingBlockEntity::new, ENTANGLED_SCAFFOLDING).build(null));
     public static BlockEntityType<BigBarrelBlockEntity> BIG_BARREL_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "big_barrel", FabricBlockEntityTypeBuilder.create(BigBarrelBlockEntity::new, BIG_BARREL).build(null));
     public static BlockEntityType<BigDropperBlockEntity> BIG_DROPPER_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "big_dropper", FabricBlockEntityTypeBuilder.create(BigDropperBlockEntity::new, BIG_DROPPER).build(null));

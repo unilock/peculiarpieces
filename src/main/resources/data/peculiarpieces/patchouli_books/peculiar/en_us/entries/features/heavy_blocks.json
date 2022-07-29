@@ -1,0 +1,16 @@
+{
+  "name": "Heavy Blocks",
+  "icon": "peculiarpieces:heavy_stone",
+  "category": "peculiarpieces:features",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Heavy Blocks act as normal blocks however are tougher and cannot be pushed or pulled with slime blocks."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:heavy_stone",
+      "recipe2": "peculiarpieces:heavy_glass"
+    }
+  ]
+}

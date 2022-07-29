@@ -1,0 +1,56 @@
+{
+	"variants": {
+		"facing=down,triggered=false": {
+			"model": "peculiarpieces:block/couriporter"
+		},
+		"facing=down,triggered=true": {
+			"model": "peculiarpieces:block/couriporter_on"
+		},
+		"facing=east,triggered=false": {
+			"model": "peculiarpieces:block/couriporter",
+			"x": 90,
+			"y": 270
+		},
+		"facing=east,triggered=true": {
+			"model": "peculiarpieces:block/couriporter_on",
+			"x": 90,
+			"y": 270
+		},
+		"facing=north,triggered=false": {
+			"model": "peculiarpieces:block/couriporter",
+			"x": 90,
+			"y": 180
+		},
+		"facing=north,triggered=true": {
+			"model": "peculiarpieces:block/couriporter_on",
+			"x": 90,
+			"y": 180
+		},
+		"facing=south,triggered=false": {
+			"model": "peculiarpieces:block/couriporter",
+			"x": 90
+		},
+		"facing=south,triggered=true": {
+			"model": "peculiarpieces:block/couriporter_on",
+			"x": 90
+		},
+		"facing=up,triggered=false": {
+			"model": "peculiarpieces:block/couriporter",
+			"x": 180
+		},
+		"facing=up,triggered=true": {
+			"model": "peculiarpieces:block/couriporter_on",
+			"x": 180
+		},
+		"facing=west,triggered=false": {
+			"model": "peculiarpieces:block/couriporter",
+			"x": 90,
+			"y": 90
+		},
+		"facing=west,triggered=true": {
+			"model": "peculiarpieces:block/couriporter_on",
+			"x": 90,
+			"y": 90
+		}
+	}
+}
