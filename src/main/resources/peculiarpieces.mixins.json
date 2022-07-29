@@ -33,7 +33,6 @@
     "PowderSnowBlockMixin",
     "RedstoneWireBlockMixin",
     "SculkShriekerBlockMixin",
-    "ServerPlayerInteractionManagerMixin",
     "SheepEntityMixin",
     "SlimeEntityMixin",
     "StatusEffectInstanceAccessor",

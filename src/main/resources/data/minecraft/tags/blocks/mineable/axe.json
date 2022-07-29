@@ -1,8 +1,11 @@
 {
   "replace": false,
   "values": [
+    "peculiarpieces:torch_lever",
+    "peculiarpieces:soul_torch_lever",
+    "peculiarpieces:invisible_plate_light",
+    "peculiarpieces:living_ladder",
     "peculiarpieces:big_barrel",
-    "peculiarpieces:flag",
     "peculiarpieces:oak_pedestal",
     "peculiarpieces:birch_pedestal",
     "peculiarpieces:spruce_pedestal",
@@ -11,6 +14,7 @@
     "peculiarpieces:dark_oak_pedestal",
     "peculiarpieces:crimson_pedestal",
     "peculiarpieces:warped_pedestal",
-    "peculiarpieces:mangrove_pedestal"
+    "peculiarpieces:mangrove_pedestal",
+    "peculiarpieces:flag"
   ]
 }
