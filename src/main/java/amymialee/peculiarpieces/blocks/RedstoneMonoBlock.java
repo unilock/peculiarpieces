@@ -12,6 +12,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.TickPriority;
+import net.minecraft.world.World;
 
 public class RedstoneMonoBlock extends AbstractRedstoneComparisonBlock {
     public static final BooleanProperty EXPIRED = BooleanProperty.of("expired");
@@ -44,6 +45,14 @@ public class RedstoneMonoBlock extends AbstractRedstoneComparisonBlock {
         } else {
             world.setBlockState(pos, state.with(POWERED, false).with(EXPIRED, false), Block.NOTIFY_LISTENERS);
         }
+    }
+
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        if (state.get(EXPIRED)) {
+            return;
+        }
+        super.randomDisplayTick(state, world, pos, random);
     }
 
     protected int getOutputLevel(BlockView world, BlockPos pos, BlockState state) {

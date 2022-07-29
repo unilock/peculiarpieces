@@ -130,6 +130,7 @@
   "block.peculiarpieces.redstone_flip" : "Redstone Flip",
   "block.peculiarpieces.fish_tank" : "Fish Tank",
   "block.peculiarpieces.block_detector" : "Block Detector",
+  "block.peculiarpieces.redstone_clock" : "Redstone Clock",
 
   "peculiarpieces.container.warp_block" : "Warp Block",
   "peculiarpieces.container.big_barrel" : "Deep Barrel",

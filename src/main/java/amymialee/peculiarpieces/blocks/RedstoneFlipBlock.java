@@ -70,6 +70,14 @@ public class RedstoneFlipBlock extends AbstractRedstoneComparisonBlock {
         return 0;
     }
 
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        if (!state.get(ENABLED)) {
+            return;
+        }
+        super.randomDisplayTick(state, world, pos, random);
+    }
+
     protected int getOutputLevel(BlockView world, BlockPos pos, BlockState state) {
         return 15;
     }

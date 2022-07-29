@@ -1,0 +1,15 @@
+{
+  "name": "Steady Sneakers",
+  "icon": "peculiarpieces:steady_sneakers",
+  "category": "peculiarpieces:features",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Steady Sneakers help you to avoid slipping on blocks such as ice, allowing you to walk on them as you would on steady ground."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:steady_sneakers"
+    }
+  ]
+}

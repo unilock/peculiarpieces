@@ -63,6 +63,7 @@ public class PeculiarBlocks {
     public static final Block REDSTONE_MONO = registerBlock("redstone_mono", PeculiarItems.MOD_ITEMS, new RedstoneMonoBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
     public static final Block REDSTONE_RANDOM = registerBlock("redstone_random", PeculiarItems.MOD_ITEMS, new RedstoneRandomizerBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
     public static final Block REDSTONE_FLIP = registerBlock("redstone_flip", PeculiarItems.MOD_ITEMS, new RedstoneFlipBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
+    public static final Block REDSTONE_CLOCK = registerBlock("redstone_clock", PeculiarItems.MOD_ITEMS, new RedstoneClockBlock(FabricBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)));
     public static final Block REDSTONE_TRIGGER = registerBlock("redstone_trigger", PeculiarItems.MOD_ITEMS, new RedstoneTriggerBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.5f).sounds(BlockSoundGroup.LODESTONE)));
     //Misc
     public static final Block TOUGHENED_SCAFFOLDING = registerBlock("toughened_scaffolding", PeculiarItems.MOD_ITEMS, new CustomScaffoldingItem(24, new ToughenedScaffoldingBlock(FabricBlockSettings.of(Material.DECORATION, MapColor.IRON_GRAY).noCollision().sounds(BlockSoundGroup.METAL).dynamicBounds()), new FabricItemSettings().rarity(Rarity.RARE).group(PeculiarPieces.PIECES_GROUP)));

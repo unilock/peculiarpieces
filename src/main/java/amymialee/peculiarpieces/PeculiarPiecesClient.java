@@ -63,6 +63,7 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.REDSTONE_MONO, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.REDSTONE_RANDOM, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.REDSTONE_FLIP, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.REDSTONE_CLOCK, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.REDSTONE_TRIGGER, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.ADVENTURE_BARRIER, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.SURVIVOR_BARRIER, RenderLayer.getTranslucent());

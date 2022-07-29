@@ -78,7 +78,7 @@ public class PackedPouchItem extends Item implements DyeableItem {
 
     @Override
     public int getItemBarColor(ItemStack stack) {
-        return ITEM_BAR_COLOR;
+        return 16777215 - ((DyeableItem) stack.getItem()).getColor(stack);
     }
 
     @Override

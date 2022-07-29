@@ -20,6 +20,7 @@
     "ExplosionMixin",
     "FluidBlockMixin",
     "InGameHudMixin",
+    "ItemEntityMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
     "LivingEntityRendererMixin",
