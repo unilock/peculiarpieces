@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SRS",
+    "RAR",
+    "SRS"
+  ],
+  "key": {
+    "S": {
+      "tag": "peculiarpieces:stone_blocks"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "A": {
+      "item": "minecraft:amethyst_block"
+    }
+  },
+  "result": {
+    "item": "peculiarpieces:stone_phasing_door",
+    "count": 8
+  }
+}

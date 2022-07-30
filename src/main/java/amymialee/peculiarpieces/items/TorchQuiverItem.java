@@ -6,6 +6,7 @@ import amymialee.peculiarpieces.util.PeculiarHelper;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -20,12 +21,15 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
 import net.minecraft.item.RangedWeaponItem;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
 
@@ -49,6 +53,9 @@ public class TorchQuiverItem extends RangedWeaponItem {
             NbtCompound compound = stack.getOrCreateNbt();
             stack.getOrCreateNbt().putInt("pp:setting", PeculiarHelper.clampLoop(0, 1, compound.getInt("pp:setting") + 1));
             user.getItemCooldownManager().set(this, 2);
+        }
+        if (stack.getOrCreateNbt().getBoolean("Unbreakable")) {
+            stack.getOrCreateNbt().remove("Unbreakable");
         }
         return TypedActionResult.fail(stack);
     }
@@ -82,6 +89,11 @@ public class TorchQuiverItem extends RangedWeaponItem {
     }
 
     @Override
+    public boolean isItemBarVisible(ItemStack stack) {
+        return stack.getDamage() > 0;
+    }
+
+    @Override
     public int getItemBarColor(ItemStack stack) {
         return switch (stack.getOrCreateNbt().getInt("pp:setting")) {
             case 1 -> 3336430;
@@ -103,6 +115,14 @@ public class TorchQuiverItem extends RangedWeaponItem {
                 }
             }
         }
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        if (!context.isAdvanced()) {
+            tooltip.add(Text.translatable("item.durability", stack.getMaxDamage() - stack.getDamage(), stack.getMaxDamage()));
+        }
+        super.appendTooltip(stack, world, tooltip, context);
     }
 
     @Override

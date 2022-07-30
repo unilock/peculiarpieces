@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SLS",
+    " B ",
+    "SLS"
+  ],
+  "key": {
+    "S": {
+      "tag": "peculiarpieces:quartz_slabs"
+    },
+    "L": {
+      "tag": "peculiarpieces:quartz_blocks"
+    },
+    "B": {
+      "item": "minecraft:barrel"
+    }
+  },
+  "result": {
+    "item": "peculiarpieces:quartz_pedestal"
+  }
+}

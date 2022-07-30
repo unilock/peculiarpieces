@@ -40,6 +40,7 @@ public class PeculiarItems {
     public static final Item REDSTONE_ACTIVATOR = registerItem("redstone_activator", MOD_ITEMS, new RedstoneActivatorItem(new FabricItemSettings().maxCount(1).rarity(Rarity.RARE).group(PeculiarPieces.PIECES_GROUP)));
     public static final Item REACHING_REMOTE = registerItem("reaching_remote", MOD_ITEMS, new ReachingRemoteItem(new FabricItemSettings().maxCount(1).rarity(Rarity.RARE).group(PeculiarPieces.PIECES_GROUP)));
     public static final Item REDSTONE_REMOTE = registerItem("redstone_remote", MOD_ITEMS, new RedstoneRemoteItem(new FabricItemSettings().maxCount(1).rarity(Rarity.RARE).group(PeculiarPieces.PIECES_GROUP)));
+    public static final Item LONG_STICK = registerItem("long_stick", MOD_ITEMS, new LongStickItem(new FabricItemSettings().maxCount(1).rarity(Rarity.UNCOMMON).group(PeculiarPieces.PIECES_GROUP)));
     public static final Item FLIGHT_RING = registerItem("flight_ring", MOD_ITEMS, new FlightRingItem(new FabricItemSettings().maxCount(1).rarity(Rarity.RARE).group(PeculiarPieces.PIECES_GROUP)));
     //Shoes
     public static final Item SLIPPERY_SHOES = registerItem("slippery_shoes", MOD_ITEMS, new DispensableTrinketItem(new FabricItemSettings().maxCount(1).rarity(Rarity.RARE).group(PeculiarPieces.PIECES_GROUP)));

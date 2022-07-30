@@ -31,6 +31,8 @@
     "peculiarpieces:block_detector",
     "peculiarpieces:stone_pedestal",
     "peculiarpieces:deepslate_pedestal",
-    "peculiarpieces:blackstone_pedestal"
+    "peculiarpieces:blackstone_pedestal",
+    "peculiarpieces:prismarine_pedestal",
+    "peculiarpieces:quartz_pedestal"
   ]
 }

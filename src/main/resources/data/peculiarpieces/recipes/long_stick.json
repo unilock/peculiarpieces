@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " SS",
+    "SBS",
+    "SS "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "B": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "result": {
+    "item": "peculiarpieces:long_stick"
+  }
+}

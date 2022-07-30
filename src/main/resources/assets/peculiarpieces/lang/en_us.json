@@ -135,6 +135,13 @@
   "block.peculiarpieces.heavy_stone" : "Heavy Stone",
   "block.peculiarpieces.heavy_glass" : "Heavy Glass",
   "block.peculiarpieces.couriporter" : "Couriporter",
+  "block.peculiarpieces.prismarine_pedestal" : "Prismarine Pedestal",
+  "block.peculiarpieces.quartz_pedestal" : "Quartz Pedestal",
+  "block.peculiarpieces.stone_phasing_door" : "Stone Phasing Door",
+  "block.peculiarpieces.deepslate_phasing_door" : "Deepslate Phasing Door",
+  "block.peculiarpieces.blackstone_phasing_door" : "Blackstone Phasing Door",
+  "block.peculiarpieces.quartz_phasing_door" : "Quartz Phasing Door",
+  "block.peculiarpieces.prismarine_phasing_door" : "Prismarine Phasing Door",
 
   "peculiarpieces.container.warp_block" : "Warp Block",
   "peculiarpieces.container.big_barrel" : "Deep Barrel",
@@ -144,6 +151,7 @@
   "peculiarpieces.container.pedestal" : "Pedestal",
   "peculiarpieces.container.redstone_trigger" : "Redstone Trigger",
   "peculiarpieces.container.fish_tank" : "Fish Tank",
+  "peculiarpieces.container.couriporter" : "Couriporter",
 
   "item.peculiarpieces.peculiar_book" : "Peculiar Pieces",
   "item.peculiarpieces.checkpoint_pearl" : "Checkpoint Pearl",
@@ -177,6 +185,7 @@
   "item.peculiarpieces.reaching_remote" : "Reaching Remote",
   "item.peculiarpieces.redstone_remote" : "Redstone Remote",
   "item.peculiarpieces.torch_quiver" : "Torch Quiver",
+  "item.peculiarpieces.long_stick" : "Long Stick",
 
   "item.peculiarpieces.hidden_potion.effect.empty": "Uncraftable Hidden Potion",
   "item.peculiarpieces.hidden_potion.effect.water": "Hidden Water Bottle",
@@ -256,6 +265,11 @@
   "tag.peculiarpieces.pelts" : "Pelts",
   "tag.peculiarpieces.stone_blocks" : "Stone Blocks",
   "tag.peculiarpieces.stone_slabs" : "Stone Slabs",
+  "tag.peculiarpieces.torches" : "Torch Quiver Ammo",
+  "tag.peculiarpieces.quartz_blocks" : "Quartz Blocks",
+  "tag.peculiarpieces.quartz_slabs" : "Quartz Slabs",
+  "tag.peculiarpieces.prismarine_blocks" : "Prismarine Blocks",
+  "tag.peculiarpieces.prismarine_slabs" : "Prismarine Slabs",
 
   "peculiarpieces.pearl.empty" : "Empty.",
   "peculiarpieces.transport_pearl.empty" : "%s: Empty.",

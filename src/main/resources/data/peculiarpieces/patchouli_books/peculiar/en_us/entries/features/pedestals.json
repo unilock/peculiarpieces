@@ -36,6 +36,11 @@
       "type": "patchouli:crafting",
       "recipe": "peculiarpieces:deepslate_pedestal",
       "recipe2": "peculiarpieces:blackstone_pedestal"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:prismarine_pedestal",
+      "recipe2": "peculiarpieces:quartz_pedestal"
     }
   ]
 }

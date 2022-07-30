@@ -108,9 +108,17 @@ public class PeculiarBlocks {
     public static final Block CRIMSON_PEDESTAL = registerBlock("crimson_pedestal", PeculiarItems.MOD_ITEMS, new PedestalBlock(FabricBlockSettings.copy(Blocks.BARREL)));
     public static final Block WARPED_PEDESTAL = registerBlock("warped_pedestal", PeculiarItems.MOD_ITEMS, new PedestalBlock(FabricBlockSettings.copy(Blocks.BARREL)));
     public static final Block MANGROVE_PEDESTAL = registerBlock("mangrove_pedestal", PeculiarItems.MOD_ITEMS, new PedestalBlock(FabricBlockSettings.copy(Blocks.BARREL)));
-    public static final Block STONE_PEDESTAL = registerBlock("stone_pedestal", PeculiarItems.MOD_ITEMS, new PedestalBlock(FabricBlockSettings.copy(Blocks.BARREL)));
-    public static final Block DEEPSLATE_PEDESTAL = registerBlock("deepslate_pedestal", PeculiarItems.MOD_ITEMS, new PedestalBlock(FabricBlockSettings.copy(Blocks.BARREL)));
-    public static final Block BLACKSTONE_PEDESTAL = registerBlock("blackstone_pedestal", PeculiarItems.MOD_ITEMS, new PedestalBlock(FabricBlockSettings.copy(Blocks.BARREL)));
+    public static final Block STONE_PEDESTAL = registerBlock("stone_pedestal", PeculiarItems.MOD_ITEMS, new PedestalBlock(FabricBlockSettings.copy(Blocks.BARREL).sounds(BlockSoundGroup.STONE)));
+    public static final Block DEEPSLATE_PEDESTAL = registerBlock("deepslate_pedestal", PeculiarItems.MOD_ITEMS, new PedestalBlock(FabricBlockSettings.copy(Blocks.BARREL).sounds(BlockSoundGroup.STONE)));
+    public static final Block BLACKSTONE_PEDESTAL = registerBlock("blackstone_pedestal", PeculiarItems.MOD_ITEMS, new PedestalBlock(FabricBlockSettings.copy(Blocks.BARREL).sounds(BlockSoundGroup.STONE)));
+    public static final Block QUARTZ_PEDESTAL = registerBlock("quartz_pedestal", PeculiarItems.MOD_ITEMS, new PedestalBlock(FabricBlockSettings.copy(Blocks.BARREL).sounds(BlockSoundGroup.STONE)));
+    public static final Block PRISMARINE_PEDESTAL = registerBlock("prismarine_pedestal", PeculiarItems.MOD_ITEMS, new PedestalBlock(FabricBlockSettings.copy(Blocks.BARREL).sounds(BlockSoundGroup.STONE)));
+    //Phasing Doors
+    public static final Block STONE_PHASING_DOOR = registerBlock("stone_phasing_door", PeculiarItems.MOD_ITEMS, new PhasingDoorBlock(FabricBlockSettings.of(Material.STONE).strength(3.0f).sounds(BlockSoundGroup.STONE).nonOpaque()));
+    public static final Block DEEPSLATE_PHASING_DOOR = registerBlock("deepslate_phasing_door", PeculiarItems.MOD_ITEMS, new PhasingDoorBlock(FabricBlockSettings.of(Material.STONE).strength(3.0f).sounds(BlockSoundGroup.STONE).nonOpaque()));
+    public static final Block BLACKSTONE_PHASING_DOOR = registerBlock("blackstone_phasing_door", PeculiarItems.MOD_ITEMS, new PhasingDoorBlock(FabricBlockSettings.of(Material.STONE).strength(3.0f).sounds(BlockSoundGroup.STONE).nonOpaque()));
+    public static final Block QUARTZ_PHASING_DOOR = registerBlock("quartz_phasing_door", PeculiarItems.MOD_ITEMS, new PhasingDoorBlock(FabricBlockSettings.of(Material.STONE).strength(3.0f).sounds(BlockSoundGroup.STONE).nonOpaque()));
+    public static final Block PRISMARINE_PHASING_DOOR = registerBlock("prismarine_phasing_door", PeculiarItems.MOD_ITEMS, new PhasingDoorBlock(FabricBlockSettings.of(Material.STONE).strength(3.0f).sounds(BlockSoundGroup.STONE).nonOpaque()));
     //Flags
     public static final Block FLAG = registerBlock("flag", PeculiarItems.MOD_ITEMS, new FlagBlockItem(new FlagBlock(FabricBlockSettings.of(Material.WOOD).noCollision().strength(1.0f).sounds(BlockSoundGroup.WOOD)), new FabricItemSettings().group(PeculiarPieces.PIECES_GROUP)));
     //Elevators

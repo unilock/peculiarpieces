@@ -94,6 +94,11 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.HEAVY_STONE, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.LIVING_LADDER, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.COURIPORTER_BLOCK, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.STONE_PHASING_DOOR, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.DEEPSLATE_PHASING_DOOR, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.BLACKSTONE_PHASING_DOOR, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.QUARTZ_PHASING_DOOR, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.PRISMARINE_PHASING_DOOR, RenderLayer.getCutout());
 
         HandledScreens.register(PeculiarPieces.WARP_SCREEN_HANDLER, WarpScreen::new);
         HandledScreens.register(PeculiarPieces.COURIPORTER_SCREEN_HANDLER, CouriporterScreen::new);

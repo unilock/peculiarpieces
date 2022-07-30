@@ -118,6 +118,7 @@ public class CouriporterBlock extends BlockWithEntity {
                             ((BlockEntityWrapper) entity).setPos(targetPos);
                             world.addBlockEntity(entity);
                         }
+                        world.createAndScheduleBlockTick(targetPos, movingState.getBlock(), 2);
                         world.setBlockState(movingPos, Blocks.AIR.getDefaultState());
                         world.playSound(null, movingPos, SoundEvents.ENTITY_SHULKER_TELEPORT, SoundCategory.BLOCKS, 1.0f, world.getRandom().nextFloat() * 0.4f + 0.8f);
                         world.playSound(null, targetPos, SoundEvents.ENTITY_SHULKER_TELEPORT, SoundCategory.BLOCKS, 1.0f, world.getRandom().nextFloat() * 0.4f + 0.8f);

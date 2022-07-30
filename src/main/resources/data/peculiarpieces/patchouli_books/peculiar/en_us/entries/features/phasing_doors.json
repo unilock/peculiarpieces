@@ -1,0 +1,25 @@
+{
+  "name": "Phasing Doors",
+  "icon": "peculiarpieces:stone_phasing_door",
+  "category": "peculiarpieces:features",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Phasing Doors are a special kind of block that will turn incorporeal when activated, either by using them or with redstone. They will come back after a few seconds."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:stone_phasing_door",
+      "recipe2": "peculiarpieces:deepslate_phasing_door"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:blackstone_phasing_door",
+      "recipe2": "peculiarpieces:prismarine_phasing_door"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:quartz_phasing_door"
+    }
+  ]
+}

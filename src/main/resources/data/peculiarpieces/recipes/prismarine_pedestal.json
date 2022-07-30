@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SLS",
+    " B ",
+    "SLS"
+  ],
+  "key": {
+    "S": {
+      "tag": "peculiarpieces:prismarine_slabs"
+    },
+    "L": {
+      "tag": "peculiarpieces:prismarine_blocks"
+    },
+    "B": {
+      "item": "minecraft:barrel"
+    }
+  },
+  "result": {
+    "item": "peculiarpieces:prismarine_pedestal"
+  }
+}

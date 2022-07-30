@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "solid=false,active=false": {
+      "model": "peculiarpieces:block/phasing_door"
+    },
+    "solid=false,active=true": {
+      "model": "peculiarpieces:block/phasing_door_active"
+    },
+    "solid=true,active=false": {
+      "model": "peculiarpieces:block/blackstone_phasing_door"
+    },
+    "solid=true,active=true": {
+      "model": "peculiarpieces:block/blackstone_phasing_door_active"
+    }
+  }
+}
