@@ -111,7 +111,7 @@ public class CouriporterBlock extends BlockWithEntity {
                     BlockPos movingPos = pos.add(state.get(FACING).getVector());
                     BlockState movingState = world.getBlockState(movingPos);
                     if (movingState.getHardness(world, pos) != -1 && !movingState.isAir()) {
-                        world.setBlockState(targetPos, movingState);
+                        world.setBlockState(targetPos, movingState, NOTIFY_ALL);
                         BlockEntity entity = world.getBlockEntity(movingPos);
                         if (entity != null) {
                             world.removeBlockEntity(movingPos);
