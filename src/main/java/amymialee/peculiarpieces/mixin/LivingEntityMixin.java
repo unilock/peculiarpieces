@@ -16,8 +16,10 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Pair;
+import net.minecraft.util.UseAction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -26,6 +28,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
@@ -43,8 +46,20 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Shadow public abstract boolean isHoldingOntoLadder();
 
+    @Shadow protected abstract SoundEvent getDrinkSound(ItemStack stack);
+
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
+    }
+
+    @Inject(method = "spawnConsumptionEffects", at = @At("HEAD"), cancellable = true)
+    protected void spawnConsumptionEffects(ItemStack stack, int particleCount, CallbackInfo ci) {
+        if (stack.getItem() == PeculiarItems.HIDDEN_POTION) {
+            if (stack.getUseAction() == UseAction.DRINK) {
+                this.playSound(this.getDrinkSound(stack), 0.1f, this.world.random.nextFloat() * 0.1f + 0.95f);
+            }
+            ci.cancel();
+        }
     }
 
     @ModifyVariable(method = "travel", at = @At("STORE"))

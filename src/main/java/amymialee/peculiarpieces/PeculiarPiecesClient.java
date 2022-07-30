@@ -42,6 +42,8 @@ import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -116,6 +118,7 @@ public class PeculiarPiecesClient implements ClientModInitializer {
             }
             return BiomeColors.getFoliageColor(world, pos);
         }, PeculiarBlocks.LIVING_LADDER);
+
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
             if (tintIndex != 1) {
                 return -1;
@@ -127,7 +130,9 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> MathHelper.hsvToRgb(((float)(TransportPearlItem.getSlot(stack) + 1) / 8), 1.0F, 1.0F), PeculiarItems.TRANS_PEARL);
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : 0xF800F8, PeculiarBlocks.POTION_PAD);
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : PotionUtil.getColor(stack), PeculiarItems.HIDDEN_POTION);
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem) stack.getItem()).getColor(stack), PeculiarItems.PACKED_POUCH, PeculiarItems.REACHING_REMOTE, PeculiarItems.REDSTONE_REMOTE);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : getColorOr(stack, 10511680), PeculiarItems.PACKED_POUCH);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : getColorOr(stack, 3655735), PeculiarItems.REACHING_REMOTE);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : getColorOr(stack, 13121335), PeculiarItems.REDSTONE_REMOTE);
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : 16560501, PeculiarItems.PLAYER_COMPASS);
 
         BlockEntityRendererRegistry.register(PeculiarBlocks.PEDESTAL_BLOCK_ENTITY, ctx -> new PedestalBlockEntityRenderer());
@@ -164,6 +169,14 @@ public class PeculiarPiecesClient implements ClientModInitializer {
             this.renderFlag.readFrom(stack);
             MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(renderFlag, matrixStack, vertexConsumerProvider, light, overlay);
         });
+    }
+
+    public int getColorOr(ItemStack stack, int base) {
+        NbtCompound nbtCompound = stack.getSubNbt(DyeableItem.DISPLAY_KEY);
+        if (nbtCompound != null && nbtCompound.contains(DyeableItem.COLOR_KEY, NbtElement.NUMBER_TYPE)) {
+            return nbtCompound.getInt(DyeableItem.COLOR_KEY);
+        }
+        return base;
     }
 
     static {

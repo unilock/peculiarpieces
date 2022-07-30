@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Hidden Potions are a form of drinkable potion that does not show particles of any potions drank.$(br)They are created by using an amethyst shard in a brewing stand on any ordinary (not splash or lingering) potion.$(br)They are also drank much faster."
+      "text": "Hidden Potions are a form of drinkable potion that does not show particles of any potions drank.$(br)They are created by using an amethyst shard in a brewing stand on any ordinary (not splash or lingering) potion.$(br)They're also drank slower but make less noise."
     },
     {
       "type": "patchouli:spotlight",

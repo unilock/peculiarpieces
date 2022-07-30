@@ -15,7 +15,6 @@ import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -56,13 +55,12 @@ public class HiddenPotionItem extends PotionItem {
                 player.getInventory().insertStack(new ItemStack(Items.GLASS_BOTTLE));
             }
         }
-        user.emitGameEvent(GameEvent.DRINK);
         return stack;
     }
 
     @Override
     public int getMaxUseTime(ItemStack stack) {
-        return 12;
+        return 36;
     }
 
     @Override
