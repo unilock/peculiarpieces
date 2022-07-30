@@ -184,5 +184,6 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         ModelPredicateProviderRegistry.register(PeculiarBlocks.PUSH_PAD.asItem(), new Identifier("variant"), (stack, world, entity, number) -> stack.getNbt() == null ? 0 : (float) stack.getNbt().getInt("pp:variant") / 3);
         ModelPredicateProviderRegistry.register(PeculiarItems.HANG_GLIDER, new Identifier("active"), (stack, world, entity, number) -> stack.getNbt() == null || !stack.getNbt().getBoolean("pp:gliding") ? 0 : 1);
         ModelPredicateProviderRegistry.register(PeculiarItems.PLAYER_COMPASS, new Identifier("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> PlayerCompassItem.createPlayerPos(world, stack.getOrCreateNbt())));
+        ModelPredicateProviderRegistry.register(PeculiarItems.TORCH_QUIVER, new Identifier("setting"), (stack, world, entity, number) -> stack.getOrCreateNbt().getInt("pp:setting"));
     }
 }

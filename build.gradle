@@ -17,6 +17,7 @@ repositories {
     maven { url = "https://maven.terraformersmc.com/" }
     maven { url = "https://maven.willbl.dev/releases" }
     maven { url = "https://maven.siphalor.de" }
+    maven { url = "https://maven.jamieswhiteshirt.com/libs-release" }
 }
 
 dependencies {
@@ -34,6 +35,7 @@ dependencies {
     //Include
     modImplementation include ("de.siphalor:nbtcrafting-1.19:2.1.3+mc1.19")
     modImplementation include ("io.github.ladysnake:PlayerAbilityLib:1.6.0")
+    modImplementation include ("com.jamieswhiteshirt:reach-entity-attributes:2.3.0")
 }
 
 processResources {

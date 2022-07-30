@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " IC",
+    "PBI",
+    "LP "
+  ],
+  "key": {
+    "P": {
+      "tag": "peculiarpieces:pelts"
+    },
+    "L": {
+      "tag": "minecraft:logs"
+    },
+    "B": {
+      "item": "minecraft:barrel"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "minecraft:coal_block"
+    }
+  },
+  "result": {
+    "item": "peculiarpieces:torch_quiver",
+    "data": {
+      "Damage": 512
+    }
+  }
+}

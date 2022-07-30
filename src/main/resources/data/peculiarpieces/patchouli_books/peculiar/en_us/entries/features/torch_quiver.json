@@ -1,0 +1,15 @@
+{
+  "name": "Torch Quiver",
+  "icon": "peculiarpieces:torch_quiver",
+  "category": "peculiarpieces:features",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A Torch Quiver is an incredibly useful tool while mining, it allows you to store up to 8 stacks of torches and allows you to place them as either ordinary or soul torches."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:torch_quiver"
+    }
+  ]
+}

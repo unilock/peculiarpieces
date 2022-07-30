@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "peculiarpieces:item/torch_quiver"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "setting": 1
+      },
+      "model": "peculiarpieces:item/torch_quiver_soul"
+    }
+  ]
+}

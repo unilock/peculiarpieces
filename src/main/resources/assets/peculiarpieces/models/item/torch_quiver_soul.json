@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "peculiarpieces:item/torch_quiver_soul"
+  }
+}

@@ -23,6 +23,7 @@
     "InGameHudMixin",
     "ItemEntityMixin",
     "ItemStackMixin",
+    "ItemUsageContextAccessor",
     "LivingEntityMixin",
     "LivingEntityRendererMixin",
     "MobEntityMixin",

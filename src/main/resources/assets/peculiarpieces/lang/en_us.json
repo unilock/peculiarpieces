@@ -176,6 +176,7 @@
   "item.peculiarpieces.redstone_activator" : "Redstone Activator",
   "item.peculiarpieces.reaching_remote" : "Reaching Remote",
   "item.peculiarpieces.redstone_remote" : "Redstone Remote",
+  "item.peculiarpieces.torch_quiver" : "Torch Quiver",
 
   "item.peculiarpieces.hidden_potion.effect.empty": "Uncraftable Hidden Potion",
   "item.peculiarpieces.hidden_potion.effect.water": "Hidden Water Bottle",
