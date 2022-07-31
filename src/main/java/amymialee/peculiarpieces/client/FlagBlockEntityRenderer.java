@@ -122,7 +122,7 @@ public class FlagBlockEntityRenderer implements BlockEntityRenderer<FlagBlockEnt
             if (Identifier.isValid(flagName)) {
                 flagType = flagName;
             }
-            DyeColor color = DyeColor.byName(flagBlockEntity.getTexture(), null);
+            DyeColor color = DyeColor.byName(flagBlockEntity.getTexture().toLowerCase(), null);
             if (color != null) {
                 components = color.getColorComponents();
             }

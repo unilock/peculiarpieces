@@ -1,5 +1,6 @@
 package amymialee.peculiarpieces.blocks;
 
+import amymialee.visiblebarriers.VisibleBarriers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -53,8 +54,11 @@ public class PhasingDoorBlock extends Block {
 
     @Override
     public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
+        if (!VisibleBarriers.isVisible() && !state.get(SOLID) && state.get(ACTIVE)) {
+            return true;
+        }
         if (stateFrom.getBlock() instanceof PhasingDoorBlock) {
-            return !stateFrom.get(SOLID);
+            return !state.get(SOLID);
         }
         return super.isSideInvisible(state, stateFrom, direction);
     }

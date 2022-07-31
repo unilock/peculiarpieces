@@ -34,6 +34,11 @@
     "peculiarpieces:deepslate_pedestal",
     "peculiarpieces:blackstone_pedestal",
     "peculiarpieces:prismarine_pedestal",
-    "peculiarpieces:quartz_pedestal"
+    "peculiarpieces:quartz_pedestal",
+    "peculiarpieces:stone_phasing_door",
+    "peculiarpieces:deepslate_phasing_door",
+    "peculiarpieces:blackstone_phasing_door",
+    "peculiarpieces:prismarine_phasing_door",
+    "peculiarpieces:quartz_phasing_door"
   ]
 }
