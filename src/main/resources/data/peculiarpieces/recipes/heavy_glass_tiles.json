@@ -3,7 +3,7 @@
   "ingredients": [
     {
       "item": "peculiarpieces:heavy_glass"
-    },
+    }
   ],
   "result": {
     "item": "peculiarpieces:heavy_glass_tiles",
