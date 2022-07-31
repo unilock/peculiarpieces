@@ -95,7 +95,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
         PlayerEntity this2 = ((PlayerEntity) ((Object) this));
         Vec3d velocity = getVelocity();
         if (getBouncePower() > 0) {
-            float f = this.getYaw() * ((float)Math.PI / 180);
+            float f = this.headYaw * ((float)Math.PI / 180);
             this.setVelocity(this.getVelocity().add(-MathHelper.sin(f) * (velocity.horizontalLength() * getBouncePower() * 4) * (isSprinting() ? 1.5f : 0.5f), getBouncePower(), MathHelper.cos(f) * (velocity.horizontalLength() * getBouncePower() * 4) * (isSprinting() ? 1.5f : 0.5f)));
             setBouncePower(0);
             this.velocityDirty = true;
