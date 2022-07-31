@@ -1,9 +1,11 @@
 package amymialee.peculiarpieces;
 
+import amymialee.peculiarpieces.blockentities.CreativeBarrelBlockEntity;
 import amymialee.peculiarpieces.blockentities.FishTankBlockEntity;
 import amymialee.peculiarpieces.blockentities.FlagBlockEntity;
 import amymialee.peculiarpieces.blockentities.PedestalBlockEntity;
 import amymialee.peculiarpieces.blocks.RedstoneStaticBlock;
+import amymialee.peculiarpieces.client.CreativeBarrelBlockEntityRenderer;
 import amymialee.peculiarpieces.client.FishTankBlockEntityRenderer;
 import amymialee.peculiarpieces.client.FlagBlockEntityRenderer;
 import amymialee.peculiarpieces.client.HangGliderEntityModel;
@@ -16,6 +18,7 @@ import amymialee.peculiarpieces.registry.PeculiarBlocks;
 import amymialee.peculiarpieces.registry.PeculiarEntities;
 import amymialee.peculiarpieces.registry.PeculiarItems;
 import amymialee.peculiarpieces.screens.CouriporterScreen;
+import amymialee.peculiarpieces.screens.CreativeBarrelScreen;
 import amymialee.peculiarpieces.screens.FishTankScreen;
 import amymialee.peculiarpieces.screens.PackedPouchScreen;
 import amymialee.peculiarpieces.screens.PedestalScreen;
@@ -80,9 +83,9 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.SURVIVOR_SETTER, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.TORCH_LEVER, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.SOUL_TORCH_LEVER, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.ENTITY_GLASS, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.ENTITY_GLASS, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.TINTED_ENTITY_GLASS, RenderLayer.getTranslucent());
-        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.PLAYER_GLASS, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.PLAYER_GLASS, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.TINTED_PLAYER_GLASS, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.ENTITY_BARRIER, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.PLAYER_BARRIER, RenderLayer.getTranslucent());
@@ -90,7 +93,7 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.ENTANGLED_SCAFFOLDING, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.POTION_PAD, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.FISH_TANK, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.HEAVY_GLASS, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.HEAVY_GLASS, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.HEAVY_STONE, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.LIVING_LADDER, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.COURIPORTER_BLOCK, RenderLayer.getCutout());
@@ -99,6 +102,8 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.BLACKSTONE_PHASING_DOOR, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.QUARTZ_PHASING_DOOR, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.PRISMARINE_PHASING_DOOR, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.CREATIVE_BARREL, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PeculiarBlocks.HEAVY_GLASS_TILES, RenderLayer.getCutout());
 
         HandledScreens.register(PeculiarPieces.WARP_SCREEN_HANDLER, WarpScreen::new);
         HandledScreens.register(PeculiarPieces.COURIPORTER_SCREEN_HANDLER, CouriporterScreen::new);
@@ -107,6 +112,7 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         HandledScreens.register(PeculiarPieces.PEDESTAL_SCREEN_HANDLER, PedestalScreen::new);
         HandledScreens.register(PeculiarPieces.FISH_TANK_SCREEN_HANDLER, FishTankScreen::new);
         HandledScreens.register(PeculiarPieces.REDSTONE_TRIGGER_SCREEN_HANDLER, RedstoneTriggerScreen::new);
+        HandledScreens.register(PeculiarPieces.CREATIVE_BARREL_SCREEN_HANDLER, CreativeBarrelScreen::new);
 
         EntityModelLayerRegistry.registerModelLayer(HANG_GLIDER, HangGliderEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(FLAG, FlagBlockEntityRenderer::getTexturedModelData);
@@ -144,6 +150,7 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         BlockEntityRendererRegistry.register(PeculiarBlocks.FISH_TANK_BLOCK_ENTITY, ctx -> new FishTankBlockEntityRenderer());
         BlockEntityRendererRegistry.register(PeculiarBlocks.FLAG_BLOCK_ENTITY, FlagBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(PeculiarBlocks.REDSTONE_TRIGGER_BLOCK_ENTITY, ctx -> new RedstoneTriggerBlockEntityRenderer());
+        BlockEntityRendererRegistry.register(PeculiarBlocks.CREATIVE_BARREL_BLOCK_ENTITY, ctx -> new CreativeBarrelBlockEntityRenderer());
 
         ClientPlayNetworking.registerGlobalReceiver(PedestalBlockEntity.PEDESTAL_SYNC, ((client, handler, buf, responseSender) -> {
             BlockPos pos = buf.readBlockPos();
@@ -165,6 +172,17 @@ public class PeculiarPiecesClient implements ClientModInitializer {
                 if (client.world != null) {
                     if (client.world.getBlockEntity(pos) instanceof FishTankBlockEntity fishTank) {
                         fishTank.setStack(0, stack);
+                    }
+                }
+            });
+        }));
+        ClientPlayNetworking.registerGlobalReceiver(CreativeBarrelBlockEntity.BARREL_SYNC, ((client, handler, buf, responseSender) -> {
+            BlockPos pos = buf.readBlockPos();
+            ItemStack stack = buf.readItemStack();
+            client.execute(() -> {
+                if (client.world != null) {
+                    if (client.world.getBlockEntity(pos) instanceof CreativeBarrelBlockEntity barrel) {
+                        barrel.setStack(0, stack);
                     }
                 }
             });

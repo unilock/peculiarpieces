@@ -11,6 +11,11 @@
       "type": "patchouli:crafting",
       "recipe": "peculiarpieces:heavy_stone",
       "recipe2": "peculiarpieces:heavy_glass"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:heavy_glass_tiles",
+      "recipe2": "peculiarpieces:heavy_glass_from_tiles"
     }
   ]
 }

@@ -1,0 +1,16 @@
+{
+  "name": "Creative Barrel",
+  "icon": "peculiarpieces:creative_barrel",
+  "category": "peculiarpieces:creative",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Creative Barrels act as an infinite source of any item placed inside of it."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "peculiarpieces:creative_barrel",
+      "link_recipe": true
+    }
+  ]
+}

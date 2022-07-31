@@ -142,6 +142,8 @@
   "block.peculiarpieces.blackstone_phasing_door" : "Blackstone Phasing Door",
   "block.peculiarpieces.quartz_phasing_door" : "Quartz Phasing Door",
   "block.peculiarpieces.prismarine_phasing_door" : "Prismarine Phasing Door",
+  "block.peculiarpieces.creative_barrel" : "Creative Barrel",
+  "block.peculiarpieces.heavy_glass_tiles" : "Heavy Glass Tiles",
 
   "peculiarpieces.container.warp_block" : "Warp Block",
   "peculiarpieces.container.big_barrel" : "Deep Barrel",
@@ -152,6 +154,7 @@
   "peculiarpieces.container.redstone_trigger" : "Redstone Trigger",
   "peculiarpieces.container.fish_tank" : "Fish Tank",
   "peculiarpieces.container.couriporter" : "Couriporter",
+  "peculiarpieces.container.creative_barrel" : "Creative Barrel",
 
   "item.peculiarpieces.peculiar_book" : "Peculiar Pieces",
   "item.peculiarpieces.checkpoint_pearl" : "Checkpoint Pearl",

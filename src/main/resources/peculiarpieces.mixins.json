@@ -20,6 +20,7 @@
     "EntityMixin",
     "ExplosionMixin",
     "FluidBlockMixin",
+    "HopperBlockEntityMixin",
     "InGameHudMixin",
     "ItemEntityMixin",
     "ItemStackMixin",
