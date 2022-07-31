@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -16,6 +17,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -102,6 +104,8 @@ public class PhasingDoorBlock extends Block {
         if (active && solid) {
             world.setBlockState(pos, state.cycle(SOLID));
             world.createAndScheduleBlockTick(pos, this.asBlock(), 140);
+            Vec3d particlePos = Vec3d.ofCenter(pos);
+            world.spawnParticles(DustParticleEffect.DEFAULT, particlePos.getX(), particlePos.getY(), particlePos.getZ(), 6, 0.4, 0.4, 0.4, 0.1f);
             world.playSound(null, pos, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.5f, 0.5f * (1 + nearbyActive(world, pos)));
         } else if (active) {
             world.setBlockState(pos, state.cycle(ACTIVE));
