@@ -44,6 +44,7 @@
     "defaultRequire": 1
   },
   "client": [
+    "ParticleManagerMixin",
     "PlayerHeldItemFeatureRendererMixin"
   ]
 }

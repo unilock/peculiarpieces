@@ -36,12 +36,18 @@ public class PhasingDoorBlock extends Block {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return !state.get(SOLID) ? VoxelShapes.empty() : super.getOutlineShape(state, world, pos, context);
+        boolean held = context.isHolding(this.asItem());
+        return state.get(SOLID) || held || VisibleBarriers.isVisible() ? VoxelShapes.fullCube() : VoxelShapes.empty();
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return state.get(SOLID) ? super.getCollisionShape(state, world, pos, context) : VoxelShapes.empty();
     }
 
     @Override
     public VoxelShape getCameraCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return !state.get(SOLID) ? VoxelShapes.empty() : super.getCameraCollisionShape(state, world, pos, context);
+        return state.get(SOLID) ? super.getCollisionShape(state, world, pos, context) : VoxelShapes.empty();
     }
 
     @Override
@@ -89,11 +95,12 @@ public class PhasingDoorBlock extends Block {
         if (world.isClient) {
             return;
         }
-        boolean bl = state.get(ACTIVE);
-        if (!bl && world.isReceivingRedstonePower(pos)) {
+        boolean active = state.get(ACTIVE);
+        boolean solid = state.get(SOLID);
+        if (!active && solid && world.isReceivingRedstonePower(pos)) {
             world.setBlockState(pos, state.cycle(ACTIVE));
             activateNearby(world, pos, world.random);
-            world.createAndScheduleBlockTick(pos, this.asBlock(), 4);
+            world.createAndScheduleBlockTick(pos, this.asBlock(), 8);
         }
     }
 
