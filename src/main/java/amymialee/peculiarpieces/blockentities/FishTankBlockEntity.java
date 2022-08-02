@@ -1,6 +1,7 @@
 package amymialee.peculiarpieces.blockentities;
 
 import amymialee.peculiarpieces.PeculiarPieces;
+import amymialee.peculiarpieces.blocks.FishTankBlock;
 import amymialee.peculiarpieces.registry.PeculiarBlocks;
 import amymialee.peculiarpieces.screens.FishTankScreenHandler;
 import io.netty.buffer.Unpooled;
@@ -30,6 +31,7 @@ import java.util.Collection;
 public class FishTankBlockEntity extends LockableContainerBlockEntity {
     public static final Identifier FISH_SYNC = PeculiarPieces.id("fish_sync");
     private DefaultedList<ItemStack> inventory;
+    private float yaw;
 
     public FishTankBlockEntity(BlockPos pos, BlockState state) {
         super(PeculiarBlocks.FISH_TANK_BLOCK_ENTITY, pos, state);
@@ -40,11 +42,13 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
         super.readNbt(nbt);
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
         Inventories.readNbt(nbt, this.inventory);
+        this.yaw = nbt.getFloat("pp:yaw");
     }
 
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         Inventories.writeNbt(nbt, this.inventory);
+        nbt.putFloat("pp:yaw", yaw);
     }
 
     @Nullable
@@ -57,6 +61,8 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
     public NbtCompound toInitialChunkDataNbt() {
         NbtCompound nbtCompound = super.toInitialChunkDataNbt();
         Inventories.writeNbt(nbtCompound, this.inventory, true);
+        nbtCompound.putFloat("pp:yaw", yaw);
+        updateState();
         return nbtCompound;
     }
 
@@ -123,13 +129,27 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
         updateState();
     }
 
+    public float getYaw() {
+        return yaw;
+    }
+
+    public void setYaw(float yaw) {
+        this.yaw = yaw;
+    }
+
     public void updateState() {
         if (world != null && !world.isClient()) {
             Collection<ServerPlayerEntity> viewers = PlayerLookup.tracking(this);
             PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
             buf.writeBlockPos(pos);
-            buf.writeItemStack(getStack(0));
+            ItemStack stacked = getStack(0);
+            stacked.getOrCreateNbt().putFloat("pp:yaw", yaw);
+            buf.writeItemStack(stacked);
             viewers.forEach(player -> ServerPlayNetworking.send(player, FISH_SYNC, buf));
+            boolean present = !getStack(0).isEmpty();
+            if (world.getBlockState(getPos()).get(FishTankBlock.FILLED) != present) {
+                world.setBlockState(getPos(), world.getBlockState(getPos()).with(FishTankBlock.FILLED, present));
+            }
         }
     }
 }

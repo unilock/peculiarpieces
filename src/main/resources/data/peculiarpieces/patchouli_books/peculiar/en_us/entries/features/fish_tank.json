@@ -1,0 +1,15 @@
+{
+  "name": "Fish Tank",
+  "icon": "peculiarpieces:fish_tank",
+  "category": "peculiarpieces:features",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Allows you to display your tropical fish collection! Access it's inventory with a shift right click and insert a tropical fish bucket."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:fish_tank"
+    }
+  ]
+}

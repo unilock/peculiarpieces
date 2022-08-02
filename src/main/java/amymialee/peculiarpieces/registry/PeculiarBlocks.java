@@ -72,14 +72,11 @@ public class PeculiarBlocks {
     public static final Block LIVING_LADDER = registerBlock("living_ladder", PeculiarItems.MOD_ITEMS, new LivingLadderItem(new LivingLadderBlock(FabricBlockSettings.copy(Blocks.LADDER)), new FabricItemSettings().rarity(Rarity.UNCOMMON).group(PeculiarPieces.PIECES_GROUP)));
     public static final Block TOUGHENED_SCAFFOLDING = registerBlock("toughened_scaffolding", PeculiarItems.MOD_ITEMS, new CustomScaffoldingItem(24, new ToughenedScaffoldingBlock(FabricBlockSettings.of(Material.DECORATION, MapColor.IRON_GRAY).noCollision().sounds(BlockSoundGroup.METAL).dynamicBounds()), new FabricItemSettings().rarity(Rarity.RARE).group(PeculiarPieces.PIECES_GROUP)));
     public static final Block ENTANGLED_SCAFFOLDING = registerBlock("entangled_scaffolding", PeculiarItems.MOD_ITEMS, new CustomScaffoldingItem(24, new EntangledScaffoldingBlock(FabricBlockSettings.of(Material.DECORATION, MapColor.PALE_PURPLE).noCollision().sounds(BlockSoundGroup.AMETHYST_CLUSTER).dynamicBounds()), new FabricItemSettings().rarity(Rarity.RARE).group(PeculiarPieces.PIECES_GROUP)));
-    public static final Block SLIPPERY_STONE = registerBlock("slippery_stone", PeculiarItems.MOD_ITEMS, new Block(FabricBlockSettings.of(Material.STONE).strength(1.25F, 4.0F).slipperiness(1f / 0.91f)));
-    public static final Block INVERTED_REDSTONE_LAMP = registerBlock("inverted_redstone_lamp", PeculiarItems.MOD_ITEMS, new InvertedRedstoneLampBlock(FabricBlockSettings.of(Material.REDSTONE_LAMP).luminance(state -> state.get(Properties.LIT) ? 15 : 0).strength(0.3f).sounds(BlockSoundGroup.GLASS).allowsSpawning((a, b, c, d) -> true)));
-    public static final Block WARP_BLOCK = registerBlock("warp_block", PeculiarItems.MOD_ITEMS, new WarpBlock(FabricBlockSettings.copy(Blocks.LODESTONE)));
-    public static final Block COURIPORTER_BLOCK = registerBlock("couriporter", PeculiarItems.MOD_ITEMS, new CouriporterBlock(FabricBlockSettings.copy(Blocks.LODESTONE)));
+    public static final Block FISH_TANK = registerBlock("fish_tank", PeculiarItems.MOD_ITEMS, new FishTankBlock(FabricBlockSettings.copy(Blocks.GLASS).luminance(state -> state.get(FishTankBlock.POWERED) ? 2 : 11)));
     public static final Block HEAVY_GLASS = registerBlock("heavy_glass", PeculiarItems.MOD_ITEMS, new HeavyGlassBlock(FabricBlockSettings.of(Material.GLASS).strength(5.0f, 6.0f).sounds(BlockSoundGroup.LODESTONE).nonOpaque().solidBlock(PeculiarBlocks::never).suffocates(PeculiarBlocks::never).blockVision(PeculiarBlocks::never)));
     public static final Block HEAVY_GLASS_TILES = registerBlock("heavy_glass_tiles", PeculiarItems.MOD_ITEMS, new HeavyGlassBlock(FabricBlockSettings.of(Material.GLASS).strength(5.0f, 6.0f).sounds(BlockSoundGroup.LODESTONE).nonOpaque().solidBlock(PeculiarBlocks::never).suffocates(PeculiarBlocks::never).blockVision(PeculiarBlocks::never)));
     public static final Block HEAVY_STONE = registerBlock("heavy_stone", PeculiarItems.MOD_ITEMS, new HeavyBlock(FabricBlockSettings.of(Material.STONE).strength(5.0f, 6.0f).sounds(BlockSoundGroup.LODESTONE)));
-    public static final Block SHOCK_ABSORBER = registerBlock("shock_absorber", PeculiarItems.MOD_ITEMS, new ShockAbsorberBlock(FabricBlockSettings.of(Material.WOOL, MapColor.LIGHT_BLUE).strength(0.8f).sounds(BlockSoundGroup.LODESTONE)));
+    public static final Block COURIPORTER_BLOCK = registerBlock("couriporter", PeculiarItems.MOD_ITEMS, new CouriporterBlock(FabricBlockSettings.copy(Blocks.LODESTONE)));
     public static final Block BURNING_SPONGE = registerBlock("burning_sponge", PeculiarItems.MOD_ITEMS, new BurningSpongeBlock(FabricBlockSettings.of(Material.SPONGE).strength(0.6f).sounds(BlockSoundGroup.GRASS)));
     public static final Block MIDAIR_BLOCK = registerBlock("midair_block", PeculiarItems.MOD_ITEMS, new MidairBlockItem(new MidairBlock(FabricBlockSettings.of(Material.STONE).breakInstantly().luminance(3)), new FabricItemSettings().group(PeculiarPieces.PIECES_GROUP)));
     //Glass
@@ -91,6 +88,9 @@ public class PeculiarBlocks {
     public static final Block FAST_TARGET_BLOCK = registerBlock("fast_target", PeculiarItems.MOD_ITEMS, new FastTargetBlock(FabricBlockSettings.of(Material.SOLID_ORGANIC, MapColor.OFF_WHITE).strength(0.5f).sounds(BlockSoundGroup.GRASS)));
     public static final Block DARK_FAST_TARGET_BLOCK = registerBlock("dark_fast_target", PeculiarItems.MOD_ITEMS, new FastTargetBlock(FabricBlockSettings.of(Material.SOLID_ORGANIC, MapColor.OFF_WHITE).strength(0.5f).sounds(BlockSoundGroup.GRASS)));
     //Gadgets
+    public static final Block SLIPPERY_STONE = registerBlock("slippery_stone", PeculiarItems.MOD_ITEMS, new Block(FabricBlockSettings.of(Material.STONE).strength(1.25F, 4.0F).slipperiness(1f / 0.91f)));
+    public static final Block SHOCK_ABSORBER = registerBlock("shock_absorber", PeculiarItems.MOD_ITEMS, new ShockAbsorberBlock(FabricBlockSettings.of(Material.WOOL, MapColor.LIGHT_BLUE).strength(0.8f).sounds(BlockSoundGroup.LODESTONE)));
+    public static final Block INVERTED_REDSTONE_LAMP = registerBlock("inverted_redstone_lamp", PeculiarItems.MOD_ITEMS, new InvertedRedstoneLampBlock(FabricBlockSettings.of(Material.REDSTONE_LAMP).luminance(state -> state.get(Properties.LIT) ? 15 : 0).strength(0.3f).sounds(BlockSoundGroup.GLASS).allowsSpawning((a, b, c, d) -> true)));
     public static final Block BIG_BARREL = registerBlock("big_barrel", PeculiarItems.MOD_ITEMS, new BigBarrelBlock(FabricBlockSettings.copy(Blocks.BARREL)));
     public static final Block BIG_DROPPER = registerBlock("big_dropper", PeculiarItems.MOD_ITEMS, new BigDropperBlock(FabricBlockSettings.copy(Blocks.DROPPER)));
     public static final Block BIG_DISPENSER = registerBlock("big_dispenser", PeculiarItems.MOD_ITEMS, new BigDispenserBlock(FabricBlockSettings.copy(Blocks.DISPENSER)));
@@ -98,8 +98,7 @@ public class PeculiarBlocks {
     public static final Block BLOCK_BREAKER = registerBlock("block_breaker", PeculiarItems.MOD_ITEMS, new BlockBreakerBlock(false, FabricBlockSettings.copy(Blocks.DISPENSER)));
     public static final Block SILK_BREAKER = registerBlock("silk_breaker", PeculiarItems.MOD_ITEMS, new BlockBreakerBlock(true, FabricBlockSettings.copy(Blocks.DISPENSER)));
     public static final Block BLOCK_DETECTOR = registerBlock("block_detector", PeculiarItems.MOD_ITEMS, new BlockDetectorBlock(FabricBlockSettings.copy(Blocks.OBSERVER)));
-    //Fish Tank
-    public static final Block FISH_TANK = registerBlock("fish_tank", PeculiarItems.CREATIVE_ITEMS, new FishTankBlock(FabricBlockSettings.copy(Blocks.GLASS)));
+    public static final Block WARP_BLOCK = registerBlock("warp_block", PeculiarItems.MOD_ITEMS, new WarpBlock(FabricBlockSettings.copy(Blocks.LODESTONE)));
     //Pedestals
     public static final Block OAK_PEDESTAL = registerBlock("oak_pedestal", PeculiarItems.MOD_ITEMS, new PedestalBlock(FabricBlockSettings.copy(Blocks.BARREL)));
     public static final Block BIRCH_PEDESTAL = registerBlock("birch_pedestal", PeculiarItems.MOD_ITEMS, new PedestalBlock(FabricBlockSettings.copy(Blocks.BARREL)));

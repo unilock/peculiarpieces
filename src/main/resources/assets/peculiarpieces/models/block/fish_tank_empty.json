@@ -7,7 +7,7 @@
 		"2": "block/sand",
 		"3": "block/polished_deepslate",
 		"4": "block/deepslate_tiles",
-		"5": "peculiarpieces:block/fishgrass",
+		"5": "peculiarpieces:block/fishgrass_still",
 		"particle": "peculiarpieces:block/heavy_glass"
 	},
 	"elements": [

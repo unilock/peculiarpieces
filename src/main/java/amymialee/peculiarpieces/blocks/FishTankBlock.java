@@ -9,6 +9,8 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
@@ -29,10 +31,11 @@ import org.jetbrains.annotations.Nullable;
 
 public class FishTankBlock extends BlockWithEntity {
     public static final BooleanProperty POWERED = Properties.POWERED;
+    public static final BooleanProperty FILLED = BooleanProperty.of("filled");
 
     public FishTankBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(POWERED, false));
+        this.setDefaultState(this.stateManager.getDefaultState().with(POWERED, false).with(FILLED, false));
     }
 
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
@@ -41,10 +44,12 @@ public class FishTankBlock extends BlockWithEntity {
 
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (itemStack.hasCustomName()) {
-            if (blockEntity instanceof FishTankBlockEntity fishTank) {
+        if (blockEntity instanceof FishTankBlockEntity fishTank) {
+            if (itemStack.hasCustomName()) {
                 fishTank.setCustomName(itemStack.getName());
             }
+            fishTank.setYaw(placer.getYaw());
+            fishTank.updateState();
         }
     }
 
@@ -64,6 +69,13 @@ public class FishTankBlock extends BlockWithEntity {
             }
         }
         return ActionResult.CONSUME;
+    }
+
+    public FluidState getFluidState(BlockState state) {
+        if (state.get(FILLED)) {
+            return Fluids.WATER.getDefaultState();
+        }
+        return Fluids.EMPTY.getDefaultState();
     }
 
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
@@ -115,6 +127,6 @@ public class FishTankBlock extends BlockWithEntity {
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(POWERED);
+        builder.add(POWERED, FILLED);
     }
 }

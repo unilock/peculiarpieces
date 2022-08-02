@@ -1,7 +1,10 @@
 {
 	"variants": {
-		"": {
+		"filled=true": {
 			"model": "peculiarpieces:block/fish_tank"
+		},
+		"filled=false": {
+			"model": "peculiarpieces:block/fish_tank_empty"
 		}
 	}
 }

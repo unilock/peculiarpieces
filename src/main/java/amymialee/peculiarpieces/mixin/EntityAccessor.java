@@ -9,4 +9,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface EntityAccessor {
     @Accessor
     EntityDimensions getDimensions();
+    @Accessor
+    void setTouchingWater(boolean value);
 }
