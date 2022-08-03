@@ -1,7 +1,7 @@
 {
   "name": "Boat Spin Cap",
   "icon": "minecraft:dark_oak_boat",
-  "category": "peculiarpieces:tweaks",
+  "category": "peculiarpieces:features",
   "pages": [
     {
       "type": "patchouli:text",

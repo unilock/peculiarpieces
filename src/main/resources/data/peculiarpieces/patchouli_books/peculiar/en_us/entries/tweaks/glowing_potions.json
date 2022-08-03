@@ -1,7 +1,7 @@
 {
   "name": "Glowing Potions",
   "icon": "minecraft:splash_potion{Potion:\"peculiarpieces:glowing\"}",
-  "category": "peculiarpieces:tweaks",
+  "category": "peculiarpieces:features",
   "pages": [
     {
       "type": "patchouli:text",

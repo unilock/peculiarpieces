@@ -17,7 +17,7 @@ public class SlimeItem extends Item {
         SlimeEntity slime = EntityType.SLIME.create(context.getWorld());
         if (slime != null) {
             slime.setSize(0, true);
-            slime.setPosition(Vec3d.ofBottomCenter(context.getBlockPos()));
+            slime.setPosition(Vec3d.ofBottomCenter(context.getBlockPos().add(context.getSide().getVector())));
             if (context.getWorld().spawnEntity(slime)) {
                 context.getStack().decrement(1);
             }

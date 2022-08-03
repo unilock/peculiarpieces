@@ -8,10 +8,10 @@
       "item": "minecraft:amethyst_shard"
     },
     {
-      "item": "minecraft:lapis_lazuli"
+      "item": "minecraft:redstone"
     }
   ],
   "result": {
-    "item": "peculiarpieces:peculiar_book"
+    "item": "peculiarpieces:creative_book"
   }
 }

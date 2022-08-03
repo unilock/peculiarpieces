@@ -1,0 +1,12 @@
+{
+  "name": "item.peculiarpieces.creative_book",
+  "landing_text": "peculiarpieces.creative_book.landing",
+  "model": "peculiarpieces:creative_book",
+  "book_texture": "patchouli:textures/gui/book_red.png",
+  "creative_tab": "peculiarpieces.peculiarpieces_creative_group",
+  "pause_game": true,
+  "show_progress": false,
+  "dont_generate_book": true,
+  "pamphlet": true,
+  "custom_book_item": "peculiarpieces:creative_book"
+}

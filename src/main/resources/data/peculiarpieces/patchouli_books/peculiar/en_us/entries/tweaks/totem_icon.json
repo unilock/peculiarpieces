@@ -1,7 +1,7 @@
 {
   "name": "Totem Icons",
   "icon": "minecraft:totem_of_undying",
-  "category": "peculiarpieces:tweaks",
+  "category": "peculiarpieces:features",
   "pages": [
     {
       "type": "patchouli:text",

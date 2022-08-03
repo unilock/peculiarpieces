@@ -1,7 +1,7 @@
 {
   "name": "Stronger Leads",
   "icon": "minecraft:lead",
-  "category": "peculiarpieces:tweaks",
+  "category": "peculiarpieces:features",
   "pages": [
     {
       "type": "patchouli:text",

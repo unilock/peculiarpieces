@@ -27,9 +27,8 @@ dependencies {
     modImplementation ("net.fabricmc:fabric-loader:${project.loader_version}")
     modImplementation ("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}")
     //External
-    modImplementation ("vazkii.patchouli:Patchouli:1.19-73-FABRIC-SNAPSHOT")
+    modImplementation ("vazkii.patchouli:Patchouli:1.19-75-FABRIC-SNAPSHOT")
     modImplementation ("dev.emi:trinkets:${project.trinkets_version}")
-    modImplementation ("dev.emi:emi:0.3.0+1.19")
     modImplementation ("amymialee:visible-barriers:1.5.2+1.19")
     modImplementation ("amymialee:kofi-table:1.0.3+1.19")
     //Include

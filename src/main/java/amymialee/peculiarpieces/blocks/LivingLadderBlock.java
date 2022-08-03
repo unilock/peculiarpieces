@@ -167,7 +167,7 @@ public class LivingLadderBlock extends Block implements Fertilizable, Waterlogga
         }
         blockState = this.getDefaultState();
         FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
-        return blockState.with(FACING, dir).with(SECURE, isSecurePlacement(world, pos, blockState.get(FACING))).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+        return blockState.with(FACING, dir).with(SECURE, isSecurePlacement(world, pos, blockState.get(FACING).getOpposite())).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
     }
 
     private boolean isSecurePlacement(BlockView world, BlockPos pos, Direction side) {

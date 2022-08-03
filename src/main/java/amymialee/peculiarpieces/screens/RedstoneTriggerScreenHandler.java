@@ -1,7 +1,6 @@
 package amymialee.peculiarpieces.screens;
 
 import amymialee.peculiarpieces.PeculiarPieces;
-import amymialee.peculiarpieces.registry.PeculiarItems;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -24,11 +23,7 @@ public class RedstoneTriggerScreenHandler extends ScreenHandler {
             this.addSlot(new Slot(inventory, j, 71 + (j * 18), 20) {
                 @Override
                 public boolean canInsert(ItemStack stack) {
-                    return stack.isOf(PeculiarItems.REDSTONE_REMOTE) ||
-                            stack.isOf(PeculiarItems.REACHING_REMOTE) ||
-                            stack.isOf(PeculiarItems.POS_PAPER) ||
-                            stack.isOf(PeculiarItems.POS_TRAP) ||
-                            stack.isOf(PeculiarItems.POS_PEARL);
+                    return stack.getNbt() != null && stack.getNbt().contains("pp:target");
                 }
             });
         }

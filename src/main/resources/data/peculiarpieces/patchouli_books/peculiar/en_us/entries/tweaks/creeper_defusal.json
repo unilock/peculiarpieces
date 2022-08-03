@@ -1,7 +1,7 @@
 {
   "name": "Creeper Defusal",
   "icon": "minecraft:creeper_spawn_egg",
-  "category": "peculiarpieces:tweaks",
+  "category": "peculiarpieces:features",
   "pages": [
     {
       "type": "patchouli:spotlight",

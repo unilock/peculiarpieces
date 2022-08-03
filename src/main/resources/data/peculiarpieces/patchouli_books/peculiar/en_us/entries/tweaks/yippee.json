@@ -1,7 +1,7 @@
 {
   "name": "Yippee!",
   "icon": "minecraft:sheep_spawn_egg",
-  "category": "peculiarpieces:tweaks",
+  "category": "peculiarpieces:features",
   "pages": [
     {
       "type": "patchouli:entity",

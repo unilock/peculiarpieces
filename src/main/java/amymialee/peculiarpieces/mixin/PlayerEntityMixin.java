@@ -112,12 +112,14 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
     @Unique
     protected void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
         Optional<TrinketComponent> optionalComponent = TrinketsApi.getTrinketComponent(this);
-        if (!isSneaking() && optionalComponent.isPresent() && optionalComponent.get().isEquipped(PeculiarItems.BOUNCY_BOOTS)) {
-            airStrafingSpeed *= 4;
-            if (onGround) {
-                if (this.fallDistance > 0.0f) {
-                    setBouncePower(Math.pow(Math.abs(getVelocity().getY()), 1.5) - 0.05);
-                    return;
+        if (optionalComponent.isPresent() && optionalComponent.get().isEquipped(PeculiarItems.BOUNCY_BOOTS)) {
+            if (!isSneaking()) {
+                airStrafingSpeed *= 4;
+                if (onGround) {
+                    if (this.fallDistance > 0.0f) {
+                        setBouncePower(Math.pow(Math.abs(getVelocity().getY()), 1.5) - 0.05);
+                        return;
+                    }
                 }
             }
             fallDistance = 0;

@@ -1,7 +1,7 @@
 {
   "name": "Explosion Gamerules",
   "icon": "minecraft:tnt",
-  "category": "peculiarpieces:tweaks",
+  "category": "peculiarpieces:features",
   "pages": [
     {
       "type": "patchouli:spotlight",

@@ -12,8 +12,6 @@
     "BoatEntityMixin",
     "BrewingRecipeRegistryMixin",
     "BundleItemMixin",
-    "CapeFeatureRendererMixin",
-    "ClientPlayNetworkHandlerMixin",
     "CreeperEntityMixin",
     "EndermanEntityMixin",
     "EntityAccessor",
@@ -22,17 +20,13 @@
     "ExplosionMixin",
     "FluidBlockMixin",
     "HopperBlockEntityMixin",
-    "InGameHudMixin",
     "ItemEntityMixin",
     "ItemStackMixin",
     "ItemUsageContextAccessor",
     "LivingEntityMixin",
-    "LivingEntityRendererMixin",
     "MobEntityMixin",
     "PersistentProjectileEntityMixin",
     "PlayerEntityMixin",
-    "PlayerEntityModelMixin",
-    "PlayerEntityRendererMixin",
     "PowderSnowBlockMixin",
     "RedstoneWireBlockMixin",
     "SculkShriekerBlockMixin",
@@ -47,6 +41,12 @@
   "client": [
     "EntityRenderDispatcherMixin",
     "ParticleManagerMixin",
-    "PlayerHeldItemFeatureRendererMixin"
+    "ClientPlayNetworkHandlerMixin",
+    "InGameHudMixin",
+    "PlayerHeldItemFeatureRendererMixin",
+    "PlayerEntityModelMixin",
+    "CapeFeatureRendererMixin",
+    "LivingEntityRendererMixin",
+    "PlayerEntityRendererMixin"
   ]
 }

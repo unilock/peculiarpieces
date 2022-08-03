@@ -17,7 +17,7 @@ public class CouriporterScreenHandler extends ScreenHandler {
     }
 
     public CouriporterScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
-        super(PeculiarPieces.WARP_SCREEN_HANDLER, syncId);
+        super(PeculiarPieces.COURIPORTER_SCREEN_HANDLER, syncId);
         this.inventory = inventory;
         this.addSlot(new Slot(inventory, 0, 80, 20) {
             @Override

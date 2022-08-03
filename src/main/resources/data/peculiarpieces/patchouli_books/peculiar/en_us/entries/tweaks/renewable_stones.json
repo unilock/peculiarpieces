@@ -1,7 +1,7 @@
 {
   "name": "Renewable Stones",
   "icon": "minecraft:deepslate",
-  "category": "peculiarpieces:tweaks",
+  "category": "peculiarpieces:features",
   "pages": [
     {
       "type": "patchouli:text",

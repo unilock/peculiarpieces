@@ -157,6 +157,7 @@
   "peculiarpieces.container.creative_barrel" : "Creative Barrel",
 
   "item.peculiarpieces.peculiar_book" : "Peculiar Pieces",
+  "item.peculiarpieces.creative_book" : "Peculiar Creative",
   "item.peculiarpieces.checkpoint_pearl" : "Checkpoint Pearl",
   "item.peculiarpieces.transport_pearl" : "Transport Pearl",
   "item.peculiarpieces.position_pearl" : "Position Pearl",
@@ -250,6 +251,7 @@
   "peculiarpieces.potion.hidden.description" : "Won't show Particles.",
 
   "peculiarpieces.book.landing" : "Peculiar Pieces is a mod that adds a bunch of random features and interactions to the game, with varying levels of balance and vanilla stylings.$(br)All features of the mod are listed here within this book.",
+  "peculiarpieces.creative_book.landing" : "Peculiar Pieces is a mod that adds a bunch of random features and interactions to the game, with varying levels of balance and vanilla stylings.$(br)All creative only features are listed here within this book.",
 
   "trinkets.slot.ring.flight_ring" : "Flight Ring",
   "trinkets.slot.chest.undying_charm" : "Undying Charm",

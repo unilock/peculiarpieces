@@ -53,7 +53,7 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @Inject(method = "spawnConsumptionEffects", at = @At("HEAD"), cancellable = true)
-    protected void spawnConsumptionEffects(ItemStack stack, int particleCount, CallbackInfo ci) {
+    protected void PeculiarPieces$QuietHiddenPotions(ItemStack stack, int particleCount, CallbackInfo ci) {
         if (stack.getItem() == PeculiarItems.HIDDEN_POTION) {
             if (stack.getUseAction() == UseAction.DRINK) {
                 this.playSound(this.getDrinkSound(stack), 0.1f, this.world.random.nextFloat() * 0.1f + 0.95f);

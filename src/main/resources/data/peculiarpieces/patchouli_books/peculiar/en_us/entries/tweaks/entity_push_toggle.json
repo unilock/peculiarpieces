@@ -1,7 +1,7 @@
 {
   "name": "Entity Push Toggle",
   "icon": "minecraft:piston",
-  "category": "peculiarpieces:tweaks",
+  "category": "peculiarpieces:features",
   "pages": [
     {
       "type": "patchouli:text",

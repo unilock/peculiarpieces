@@ -99,9 +99,8 @@ public class BlockDetectorBlock extends FacingBlock {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState()
-                .with(FACING, ctx.getPlayerLookDirection().getOpposite().getOpposite())
-                .with(POWERED, ctx.getWorld().getBlockState(ctx.getBlockPos().add(ctx.getPlayerLookDirection().getOpposite().getOpposite().getVector())).isFullCube(ctx.getWorld(), ctx.getBlockPos()));
+        ctx.getWorld().createAndScheduleBlockTick(ctx.getBlockPos(), this, 4);
+        return this.getDefaultState().with(FACING, ctx.getPlayerLookDirection().getOpposite().getOpposite());
     }
 
     @Override

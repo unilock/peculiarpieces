@@ -1,7 +1,7 @@
 {
   "name": "Shrieker Repair",
   "icon": "minecraft:sculk_shrieker",
-  "category": "peculiarpieces:tweaks",
+  "category": "peculiarpieces:features",
   "pages": [
     {
       "type": "patchouli:text",

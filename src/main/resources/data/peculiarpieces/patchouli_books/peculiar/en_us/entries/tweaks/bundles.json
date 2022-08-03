@@ -1,7 +1,7 @@
 {
   "name": "Bundles",
   "icon": "minecraft:bundle",
-  "category": "peculiarpieces:tweaks",
+  "category": "peculiarpieces:features",
   "pages": [
     {
       "type": "patchouli:text",
