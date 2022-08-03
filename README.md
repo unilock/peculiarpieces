@@ -2,7 +2,7 @@
 Peculiar Pieces is a fun mod which adds a wide assortment of random useful blocks and items to the game, such as pouches to carry your items in or hang gliders to travel long distances with ease.  
 Included in the mod is an expansive book with details about every feature in the mod.
 
-<img src="https://github.com/AmyMialeeMods/peculiar-pieces/raw/main/assets/blocks.png">  
+<img src="https://github.com/AmyMialeeMods/peculiar-pieces/raw/main/assets/blocksitems.png">  
 <img src="https://github.com/AmyMialeeMods/peculiar-pieces/raw/main/assets/concealment.png">  
 <img src="https://github.com/AmyMialeeMods/peculiar-pieces/raw/main/assets/glider.png">  
 <img src="https://github.com/AmyMialeeMods/peculiar-pieces/raw/main/assets/slimes.png">  
