@@ -1,10 +1,13 @@
 package amymialee.peculiarpieces.blockentities;
 
 import amymialee.peculiarpieces.registry.PeculiarBlocks;
-import amymialee.peculiarpieces.screens.PedestalScreenHandler;
+import amymialee.peculiarpieces.screens.EquipmentStandScreenHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
@@ -17,14 +20,31 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 
-public class PedestalBlockEntity extends LockableContainerBlockEntity {
+public class EquipmentStandBlockEntity extends LockableContainerBlockEntity {
     private DefaultedList<ItemStack> inventory;
+    private LivingEntity cachedEntity;
 
-    public PedestalBlockEntity(BlockPos pos, BlockState state) {
-        super(PeculiarBlocks.PEDESTAL_BLOCK_ENTITY, pos, state);
-        this.inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
+    public EquipmentStandBlockEntity(BlockPos pos, BlockState state) {
+        super(PeculiarBlocks.EQUIPMENT_STAND_BLOCK_ENTITY, pos, state);
+        this.inventory = DefaultedList.ofSize(6, ItemStack.EMPTY);
+    }
+
+    public LivingEntity getCachedEntity() {
+        if (cachedEntity == null) {
+            cachedEntity = EntityType.SKELETON.create(getWorld());
+        }
+        if (cachedEntity != null) {
+            cachedEntity.setInvisible(true);
+            cachedEntity.setPosition(Vec3d.of(getPos()));
+            for (int i = 0; i < EquipmentSlot.values().length; i++) {
+                EquipmentSlot slot = EquipmentSlot.values()[i];
+                cachedEntity.equipStack(slot, getStack(i));
+            }
+        }
+        return cachedEntity;
     }
 
     public void readNbt(NbtCompound nbt) {
@@ -57,11 +77,11 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity {
     }
 
     protected Text getContainerName() {
-        return Text.translatable("peculiarpieces.container.pedestal");
+        return Text.translatable("peculiarpieces.container.equipment_stand");
     }
 
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-        return new PedestalScreenHandler(syncId, playerInventory, this);
+        return new EquipmentStandScreenHandler(syncId, playerInventory, this);
     }
 
     @Override
@@ -117,6 +137,7 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity {
     public void updateState() {
         if (world != null && !world.isClient()) {
             BlockState state = world.getBlockState(pos);
+            cachedEntity = null;
             world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
         }
     }

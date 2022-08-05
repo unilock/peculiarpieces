@@ -1,11 +1,9 @@
 package amymialee.peculiarpieces;
 
-import amymialee.peculiarpieces.blockentities.CreativeBarrelBlockEntity;
-import amymialee.peculiarpieces.blockentities.FishTankBlockEntity;
 import amymialee.peculiarpieces.blockentities.FlagBlockEntity;
-import amymialee.peculiarpieces.blockentities.PedestalBlockEntity;
 import amymialee.peculiarpieces.blocks.RedstoneStaticBlock;
 import amymialee.peculiarpieces.client.CreativeBarrelBlockEntityRenderer;
+import amymialee.peculiarpieces.client.EquipmentStandBlockEntityRenderer;
 import amymialee.peculiarpieces.client.FishTankBlockEntityRenderer;
 import amymialee.peculiarpieces.client.FlagBlockEntityRenderer;
 import amymialee.peculiarpieces.client.HangGliderEntityModel;
@@ -19,6 +17,7 @@ import amymialee.peculiarpieces.registry.PeculiarEntities;
 import amymialee.peculiarpieces.registry.PeculiarItems;
 import amymialee.peculiarpieces.screens.CouriporterScreen;
 import amymialee.peculiarpieces.screens.CreativeBarrelScreen;
+import amymialee.peculiarpieces.screens.EquipmentStandScreen;
 import amymialee.peculiarpieces.screens.FishTankScreen;
 import amymialee.peculiarpieces.screens.PackedPouchScreen;
 import amymialee.peculiarpieces.screens.PedestalScreen;
@@ -27,7 +26,6 @@ import amymialee.peculiarpieces.screens.RedstoneTriggerScreen;
 import amymialee.peculiarpieces.screens.WarpScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
@@ -113,6 +111,7 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         HandledScreens.register(PeculiarPieces.FISH_TANK_SCREEN_HANDLER, FishTankScreen::new);
         HandledScreens.register(PeculiarPieces.REDSTONE_TRIGGER_SCREEN_HANDLER, RedstoneTriggerScreen::new);
         HandledScreens.register(PeculiarPieces.CREATIVE_BARREL_SCREEN_HANDLER, CreativeBarrelScreen::new);
+        HandledScreens.register(PeculiarPieces.EQUIPMENT_STAND_SCREEN_HANDLER, EquipmentStandScreen::new);
 
         EntityModelLayerRegistry.registerModelLayer(HANG_GLIDER, HangGliderEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(FLAG, FlagBlockEntityRenderer::getTexturedModelData);
@@ -151,42 +150,7 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         BlockEntityRendererRegistry.register(PeculiarBlocks.FLAG_BLOCK_ENTITY, FlagBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(PeculiarBlocks.REDSTONE_TRIGGER_BLOCK_ENTITY, ctx -> new RedstoneTriggerBlockEntityRenderer());
         BlockEntityRendererRegistry.register(PeculiarBlocks.CREATIVE_BARREL_BLOCK_ENTITY, ctx -> new CreativeBarrelBlockEntityRenderer());
-
-        ClientPlayNetworking.registerGlobalReceiver(PedestalBlockEntity.PEDESTAL_SYNC, ((client, handler, buf, responseSender) -> {
-            BlockPos pos = buf.readBlockPos();
-            ItemStack stack1 = buf.readItemStack();
-            ItemStack stack2 = buf.readItemStack();
-            client.execute(() -> {
-                if (client.world != null) {
-                    if (client.world.getBlockEntity(pos) instanceof PedestalBlockEntity pedestal) {
-                        pedestal.setStack(0, stack1);
-                        pedestal.setStack(1, stack2);
-                    }
-                }
-            });
-        }));
-        ClientPlayNetworking.registerGlobalReceiver(FishTankBlockEntity.FISH_SYNC, ((client, handler, buf, responseSender) -> {
-            BlockPos pos = buf.readBlockPos();
-            ItemStack stack = buf.readItemStack();
-            client.execute(() -> {
-                if (client.world != null) {
-                    if (client.world.getBlockEntity(pos) instanceof FishTankBlockEntity fishTank) {
-                        fishTank.setStack(0, stack);
-                    }
-                }
-            });
-        }));
-        ClientPlayNetworking.registerGlobalReceiver(CreativeBarrelBlockEntity.BARREL_SYNC, ((client, handler, buf, responseSender) -> {
-            BlockPos pos = buf.readBlockPos();
-            ItemStack stack = buf.readItemStack();
-            client.execute(() -> {
-                if (client.world != null) {
-                    if (client.world.getBlockEntity(pos) instanceof CreativeBarrelBlockEntity barrel) {
-                        barrel.setStack(0, stack);
-                    }
-                }
-            });
-        }));
+        BlockEntityRendererRegistry.register(PeculiarBlocks.EQUIPMENT_STAND_BLOCK_ENTITY, ctx -> new EquipmentStandBlockEntityRenderer());
 
         BuiltinItemRendererRegistry.INSTANCE.register(PeculiarBlocks.FLAG, (stack, mode, matrixStack, vertexConsumerProvider, light, overlay) -> {
             this.renderFlag.readFrom(stack);

@@ -7,6 +7,7 @@ import amymialee.peculiarpieces.blockentities.BigDropperBlockEntity;
 import amymialee.peculiarpieces.blockentities.CouriporterBlockEntity;
 import amymialee.peculiarpieces.blockentities.CreativeBarrelBlockEntity;
 import amymialee.peculiarpieces.blockentities.EntangledScaffoldingBlockEntity;
+import amymialee.peculiarpieces.blockentities.EquipmentStandBlockEntity;
 import amymialee.peculiarpieces.blockentities.FishTankBlockEntity;
 import amymialee.peculiarpieces.blockentities.FlagBlockEntity;
 import amymialee.peculiarpieces.blockentities.PedestalBlockEntity;
@@ -77,6 +78,7 @@ public class PeculiarBlocks {
     public static final Block HEAVY_GLASS_TILES = registerBlock("heavy_glass_tiles", PeculiarItems.MOD_ITEMS, new HeavyGlassBlock(FabricBlockSettings.of(Material.GLASS).strength(5.0f, 6.0f).sounds(BlockSoundGroup.LODESTONE).nonOpaque().solidBlock(PeculiarBlocks::never).suffocates(PeculiarBlocks::never).blockVision(PeculiarBlocks::never)));
     public static final Block HEAVY_STONE = registerBlock("heavy_stone", PeculiarItems.MOD_ITEMS, new HeavyBlock(FabricBlockSettings.of(Material.STONE).strength(5.0f, 6.0f).sounds(BlockSoundGroup.LODESTONE)));
     public static final Block COURIPORTER_BLOCK = registerBlock("couriporter", PeculiarItems.MOD_ITEMS, new CouriporterBlock(FabricBlockSettings.copy(Blocks.LODESTONE)));
+    public static final Block EQUIPMENT_STAND = registerBlock("equipment_stand", PeculiarItems.CREATIVE_ITEMS, new EquipmentStandBlock(FabricBlockSettings.of(Material.STONE).strength(1.5f, 6.0f).nonOpaque().solidBlock(PeculiarBlocks::never).suffocates(PeculiarBlocks::never).blockVision(PeculiarBlocks::never)));
     public static final Block BURNING_SPONGE = registerBlock("burning_sponge", PeculiarItems.MOD_ITEMS, new BurningSpongeBlock(FabricBlockSettings.of(Material.SPONGE).strength(0.6f).sounds(BlockSoundGroup.GRASS)));
     public static final Block MIDAIR_BLOCK = registerBlock("midair_block", PeculiarItems.MOD_ITEMS, new MidairBlockItem(new MidairBlock(FabricBlockSettings.of(Material.STONE).breakInstantly().luminance(3)), new FabricItemSettings().group(PeculiarPieces.PIECES_GROUP)));
     //Glass
@@ -189,6 +191,7 @@ public class PeculiarBlocks {
     public static BlockEntityType<FlagBlockEntity> FLAG_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "flag", FabricBlockEntityTypeBuilder.create(FlagBlockEntity::new, FLAG).build(null));
     public static BlockEntityType<RedstoneTriggerBlockEntity> REDSTONE_TRIGGER_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "redstone_trigger", FabricBlockEntityTypeBuilder.create(RedstoneTriggerBlockEntity::new, REDSTONE_TRIGGER).build(null));
     public static BlockEntityType<CreativeBarrelBlockEntity> CREATIVE_BARREL_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "creative_barrel", FabricBlockEntityTypeBuilder.create(CreativeBarrelBlockEntity::new, CREATIVE_BARREL).build(null));
+    public static BlockEntityType<EquipmentStandBlockEntity> EQUIPMENT_STAND_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "equipment_stand", FabricBlockEntityTypeBuilder.create(EquipmentStandBlockEntity::new, EQUIPMENT_STAND).build(null));
 
     public static void init() {}
 

@@ -1,12 +1,9 @@
 package amymialee.peculiarpieces.blockentities;
 
-import amymialee.peculiarpieces.PeculiarPieces;
 import amymialee.peculiarpieces.registry.PeculiarBlocks;
 import amymialee.peculiarpieces.screens.CreativeBarrelScreenHandler;
-import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BarrelBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.block.entity.ViewerCountManager;
@@ -17,27 +14,21 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
-
 public class CreativeBarrelBlockEntity extends LootableContainerBlockEntity {
-    public static final Identifier BARREL_SYNC = PeculiarPieces.id("barrel_sync");
     private final ViewerCountManager stateManager = new CreativeBarrelViewerManager();
     private DefaultedList<ItemStack> inventory;
 
@@ -81,11 +72,8 @@ public class CreativeBarrelBlockEntity extends LootableContainerBlockEntity {
 
     public void updateState() {
         if (world != null && !world.isClient()) {
-            Collection<ServerPlayerEntity> viewers = PlayerLookup.tracking(this);
-            PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-            buf.writeBlockPos(pos);
-            buf.writeItemStack(getStack(0));
-            viewers.forEach(player -> ServerPlayNetworking.send(player, BARREL_SYNC, buf));
+            BlockState state = world.getBlockState(pos);
+            world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
         }
     }
 

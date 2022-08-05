@@ -1,41 +1,66 @@
 package amymialee.peculiarpieces.blockentities;
 
-import amymialee.peculiarpieces.PeculiarPieces;
 import amymialee.peculiarpieces.blocks.FishTankBlock;
+import amymialee.peculiarpieces.mixin.EntityAccessor;
+import amymialee.peculiarpieces.mixin.EntityBucketItemAccessor;
 import amymialee.peculiarpieces.registry.PeculiarBlocks;
 import amymialee.peculiarpieces.screens.FishTankScreenHandler;
-import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.FishEntity;
+import net.minecraft.entity.passive.TropicalFishEntity;
+import static net.minecraft.entity.passive.TropicalFishEntity.BUCKET_VARIANT_TAG_KEY;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.item.EntityBucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
-
 public class FishTankBlockEntity extends LockableContainerBlockEntity {
-    public static final Identifier FISH_SYNC = PeculiarPieces.id("fish_sync");
     private DefaultedList<ItemStack> inventory;
+    private FishEntity cachedEntity;
+    private ItemStack cachedStack;
     private float yaw;
 
     public FishTankBlockEntity(BlockPos pos, BlockState state) {
         super(PeculiarBlocks.FISH_TANK_BLOCK_ENTITY, pos, state);
         this.inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
+    }
+
+    public FishEntity getCachedEntity() {
+        if (getStack(0) != cachedStack) {
+            cachedEntity = null;
+            cachedStack = getStack(0);
+        }
+        if (cachedEntity == null) {
+            if (cachedStack.getItem() instanceof EntityBucketItem bucket) {
+                Entity entity = ((EntityBucketItemAccessor) bucket).getEntityType().create(getWorld());
+                if (entity instanceof FishEntity fish) {
+                    cachedEntity = fish;
+                }
+            } else {
+                return null;
+            }
+            cachedEntity.setPosition(Vec3d.of(getPos()));
+            ((EntityAccessor) cachedEntity).setTouchingWater(true);
+            cachedEntity.setFromBucket(true);
+            if (cachedEntity instanceof TropicalFishEntity tropicalFish) {
+                tropicalFish.setVariant(cachedStack.getOrCreateNbt().getInt(BUCKET_VARIANT_TAG_KEY));
+            }
+        }
+        return cachedEntity;
     }
 
     public void readNbt(NbtCompound nbt) {
@@ -60,9 +85,7 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
     @Override
     public NbtCompound toInitialChunkDataNbt() {
         NbtCompound nbtCompound = super.toInitialChunkDataNbt();
-        Inventories.writeNbt(nbtCompound, this.inventory, true);
-        nbtCompound.putFloat("pp:yaw", yaw);
-        updateState();
+        writeNbt(nbtCompound);
         return nbtCompound;
     }
 
@@ -139,17 +162,12 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
 
     public void updateState() {
         if (world != null && !world.isClient()) {
-            Collection<ServerPlayerEntity> viewers = PlayerLookup.tracking(this);
-            PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-            buf.writeBlockPos(pos);
-            ItemStack stacked = getStack(0);
-            stacked.getOrCreateNbt().putFloat("pp:yaw", yaw);
-            buf.writeItemStack(stacked);
-            viewers.forEach(player -> ServerPlayNetworking.send(player, FISH_SYNC, buf));
             boolean present = !getStack(0).isEmpty();
-            if (world.getBlockState(getPos()).get(FishTankBlock.FILLED) != present) {
-                world.setBlockState(getPos(), world.getBlockState(getPos()).with(FishTankBlock.FILLED, present));
+            BlockState oldState = world.getBlockState(pos);
+            if (oldState.get(FishTankBlock.FILLED) != present) {
+                world.setBlockState(pos, world.getBlockState(pos).with(FishTankBlock.FILLED, present));
             }
+            world.updateListeners(pos, oldState, world.getBlockState(pos), Block.NOTIFY_LISTENERS);
         }
     }
 }

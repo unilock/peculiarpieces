@@ -144,6 +144,7 @@
   "block.peculiarpieces.prismarine_phasing_door" : "Prismarine Phasing Door",
   "block.peculiarpieces.creative_barrel" : "Creative Barrel",
   "block.peculiarpieces.heavy_glass_tiles" : "Heavy Glass Tiles",
+  "block.peculiarpieces.equipment_stand" : "Equipment Stand",
 
   "peculiarpieces.container.warp_block" : "Warp Block",
   "peculiarpieces.container.big_barrel" : "Deep Barrel",
@@ -155,6 +156,7 @@
   "peculiarpieces.container.fish_tank" : "Fish Tank",
   "peculiarpieces.container.couriporter" : "Couriporter",
   "peculiarpieces.container.creative_barrel" : "Creative Barrel",
+  "peculiarpieces.container.equipment_stand" : "Equipment Stand",
 
   "item.peculiarpieces.peculiar_book" : "Peculiar Pieces",
   "item.peculiarpieces.creative_book" : "Peculiar Creative",

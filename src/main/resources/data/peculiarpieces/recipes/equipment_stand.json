@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    " S ",
+    "SBS"
+  ],
+  "key": {
+    "S": {
+      "tag": "peculiarpieces:stone_slabs"
+    },
+    "B": {
+      "tag": "peculiarpieces:stone_blocks"
+    }
+  },
+  "result": {
+    "item": "peculiarpieces:equipment_stand"
+  }
+}

@@ -11,6 +11,7 @@ import amymialee.peculiarpieces.registry.PeculiarEntities;
 import amymialee.peculiarpieces.registry.PeculiarItems;
 import amymialee.peculiarpieces.screens.CouriporterScreenHandler;
 import amymialee.peculiarpieces.screens.CreativeBarrelScreenHandler;
+import amymialee.peculiarpieces.screens.EquipmentStandScreenHandler;
 import amymialee.peculiarpieces.screens.FishTankScreenHandler;
 import amymialee.peculiarpieces.screens.PackedPouchScreenHandler;
 import amymialee.peculiarpieces.screens.PedestalScreenHandler;
@@ -71,6 +72,7 @@ public class PeculiarPieces implements ModInitializer {
     public static final ScreenHandlerType<FishTankScreenHandler> FISH_TANK_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, "fish_tank", new ScreenHandlerType<>(FishTankScreenHandler::new));
     public static final ScreenHandlerType<RedstoneTriggerScreenHandler> REDSTONE_TRIGGER_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, "redstone_trigger", new ScreenHandlerType<>(RedstoneTriggerScreenHandler::new));
     public static final ScreenHandlerType<CreativeBarrelScreenHandler> CREATIVE_BARREL_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, "creative_barrel", new ScreenHandlerType<>(CreativeBarrelScreenHandler::new));
+    public static final ScreenHandlerType<EquipmentStandScreenHandler> EQUIPMENT_STAND_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, "equipment_stand", new ScreenHandlerType<>(EquipmentStandScreenHandler::new));
     //Tags
     public static final TagKey<EntityType<?>> MOUNT_BLACKLIST = TagKey.of(Registry.ENTITY_TYPE_KEY, id("mount_blacklist"));
     public static final TagKey<EntityType<?>> UNGRABBABLE = TagKey.of(Registry.ENTITY_TYPE_KEY, id("ungrabbable"));
