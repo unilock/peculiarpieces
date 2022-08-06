@@ -53,12 +53,10 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.GameRules;
 
 import java.util.Collection;
-import java.util.Random;
 
 @SuppressWarnings("unused")
 public class PeculiarPieces implements ModInitializer {
     public static final String MOD_ID = "peculiarpieces";
-    public static final Random RANDOM = new Random();
     //ItemGroups
     public static final ItemGroup PIECES_GROUP = FabricItemGroupBuilder.create(id("peculiarpieces_group")).icon(PeculiarItems::getPeculiarIcon).build();
     public static final ItemGroup CREATIVE_GROUP = FabricItemGroupBuilder.create(id("peculiarpieces_creative_group")).icon(PeculiarItems::getCreativeIcon).build();

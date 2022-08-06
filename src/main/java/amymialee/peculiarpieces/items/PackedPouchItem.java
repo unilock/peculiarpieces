@@ -19,7 +19,6 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -27,8 +26,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class PackedPouchItem extends Item implements DyeableItem {
-    private static final int ITEM_BAR_COLOR = MathHelper.packRgb(1.0f, 0.4f, 0.4f);
-
     public PackedPouchItem(FabricItemSettings settings) {
         super(settings);
     }
