@@ -2,5 +2,13 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "peculiarpieces:item/slime"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "chunked": 1
+      },
+      "model": "peculiarpieces:item/slime_chunked"
+    }
+  ]
 }
