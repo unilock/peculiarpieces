@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-	modImplementation "amymialee:peculiarpieces:1.2.1+1.19"
+	modImplementation "amymialee:peculiarpieces:1.2.3+1.19.x"
 }
 ```
 
