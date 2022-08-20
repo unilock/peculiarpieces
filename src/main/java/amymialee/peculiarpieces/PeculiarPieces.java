@@ -90,6 +90,10 @@ public class PeculiarPieces implements ModInitializer {
     public static final StatusEffect CONCEALMENT_EFFECT = Registry.register(Registry.STATUS_EFFECT, id("concealment"), new OpenStatusEffect(StatusEffectCategory.BENEFICIAL, 8356754));
     public static final Potion CONCEALMENT = Registry.register(Registry.POTION, id("concealment"), new Potion(new StatusEffectInstance(CONCEALMENT_EFFECT, 3600)));
     public static final Potion LONG_CONCEALMENT = Registry.register(Registry.POTION, id("long_concealment"), new Potion("concealment", new StatusEffectInstance(CONCEALMENT_EFFECT, 9600)));
+    //Impervious
+    public static final StatusEffect INVULNERABILITY_EFFECT = Registry.register(Registry.STATUS_EFFECT, id("invulnerability"), new OpenStatusEffect(StatusEffectCategory.BENEFICIAL, 16772864));
+    public static final Potion INVULNERABILITY = Registry.register(Registry.POTION, id("invulnerability"), new Potion(new StatusEffectInstance(INVULNERABILITY_EFFECT, 3600)));
+    public static final Potion LONG_INVULNERABILITY = Registry.register(Registry.POTION, id("long_invulnerability"), new Potion("invulnerability", new StatusEffectInstance(INVULNERABILITY_EFFECT, 9600)));
     //Gamerules
     public static final GameRules.Key<GameRules.BooleanRule> DO_EXPLOSIONS_BREAK = GameRuleRegistry.register("pp:explosionsBreakBlocks", GameRules.Category.MOBS, GameRuleFactory.createBooleanRule(true));
     public static final GameRules.Key<GameRules.BooleanRule> DO_EXPLOSIONS_ALWAYS_DROP = GameRuleRegistry.register("pp:explosionsAlwaysDrop", GameRules.Category.MOBS, GameRuleFactory.createBooleanRule(true));

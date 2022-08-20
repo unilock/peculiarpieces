@@ -14,7 +14,7 @@ public class EquipmentStandBlockEntityRenderer implements BlockEntityRenderer<Eq
         LivingEntity cachedEntity = blockEntity.getCachedEntity();
         if (cachedEntity != null) {
             matrices.translate(0.5f, 0, 0.5f);
-            MinecraftClient.getInstance().getEntityRenderDispatcher().render(cachedEntity, 0f, 0.2f, 0f, 0f, tickDelta, matrices, vertexConsumers, light);
+            MinecraftClient.getInstance().getEntityRenderDispatcher().render(cachedEntity, 0f, 0.2f, 0f, 0f, 1f, matrices, vertexConsumers, light);
         }
         matrices.pop();
     }

@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -48,8 +49,24 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Shadow protected abstract SoundEvent getDrinkSound(ItemStack stack);
 
+    @Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
+
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
+    }
+
+    @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
+    public void PeculiarPieces$DamageInvulnerability(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+        if (this.hasStatusEffect(PeculiarPieces.INVULNERABILITY_EFFECT)) {
+            cir.setReturnValue(false);
+        }
+    }
+
+    @Inject(method = "applyDamage", at = @At("HEAD"), cancellable = true)
+    public void PeculiarPieces$ApplyInvulnerability(DamageSource source, float amount, CallbackInfo ci) {
+        if (this.hasStatusEffect(PeculiarPieces.INVULNERABILITY_EFFECT)) {
+            ci.cancel();
+        }
     }
 
     @Inject(method = "spawnConsumptionEffects", at = @At("HEAD"), cancellable = true)
