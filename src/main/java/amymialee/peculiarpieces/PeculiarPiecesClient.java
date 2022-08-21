@@ -12,6 +12,7 @@ import amymialee.peculiarpieces.client.RedstoneTriggerBlockEntityRenderer;
 import amymialee.peculiarpieces.client.TeleportItemEntityRenderer;
 import amymialee.peculiarpieces.items.PlayerCompassItem;
 import amymialee.peculiarpieces.items.TransportPearlItem;
+import amymialee.peculiarpieces.particles.WardingParticle;
 import amymialee.peculiarpieces.registry.PeculiarBlocks;
 import amymialee.peculiarpieces.registry.PeculiarEntities;
 import amymialee.peculiarpieces.registry.PeculiarItems;
@@ -26,11 +27,13 @@ import amymialee.peculiarpieces.screens.RedstoneTriggerScreen;
 import amymialee.peculiarpieces.screens.WarpScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
@@ -46,6 +49,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.potion.PotionUtil;
+import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -117,6 +121,9 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(FLAG, FlagBlockEntityRenderer::getTexturedModelData);
 
         EntityRendererRegistry.register(PeculiarEntities.TELEPORT_ITEM_ENTITY, TeleportItemEntityRenderer::new);
+
+        ClientSpriteRegistryCallback.event(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).register(((atlasTexture, registry) -> registry.register(PeculiarPieces.id("particle/warding_aura"))));
+        ParticleFactoryRegistry.getInstance().register(PeculiarPieces.WARDING_AURA, WardingParticle.Factory::new);
 
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> tintIndex == 1 ? (state.get(RedstoneStaticBlock.POWERED) ? 16711680 : 2621440) : -1, PeculiarBlocks.REDSTONE_STATIC);
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {

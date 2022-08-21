@@ -29,6 +29,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
+import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.command.argument.EntityArgumentType;
@@ -40,6 +41,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.potion.Potion;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.command.CommandManager;
@@ -104,12 +106,15 @@ public class PeculiarPieces implements ModInitializer {
     //SoundEvents
     public static final SoundEvent ENTITY_SHEEP_YIPPEE = Registry.register(Registry.SOUND_EVENT, "peculiarpieces.sheep.yippee", new SoundEvent(id("peculiarpieces.sheep.yippee")));
     public static final SoundEvent ENTITY_SHEEP_YIPPEE_ENGINEER = Registry.register(Registry.SOUND_EVENT, "peculiarpieces.sheep.yippee_engineer", new SoundEvent(id("peculiarpieces.sheep.yippee_engineer")));
+    //Particles
+    public static final DefaultParticleType WARDING_AURA = FabricParticleTypes.simple();
 
     @Override
     public void onInitialize() {
         PeculiarItems.init();
         PeculiarBlocks.init();
         PeculiarEntities.init();
+        Registry.register(Registry.PARTICLE_TYPE, PeculiarPieces.id("warding_aura"), WARDING_AURA);
         CommandRegistrationCallback.EVENT.register((dispatcher, access, environment) -> {
             LiteralArgumentBuilder<ServerCommandSource> literalArgumentBuilder = CommandManager.literal("peculiar").requires(source -> source.hasPermissionLevel(2));
             for (GameMode gameMode : GameMode.values()) {

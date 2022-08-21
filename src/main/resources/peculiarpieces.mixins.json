@@ -39,14 +39,15 @@
     "defaultRequire": 1
   },
   "client": [
-    "EntityRenderDispatcherMixin",
-    "ParticleManagerMixin",
-    "ClientPlayNetworkHandlerMixin",
-    "InGameHudMixin",
-    "PlayerHeldItemFeatureRendererMixin",
-    "PlayerEntityModelMixin",
     "CapeFeatureRendererMixin",
+    "ClientPlayNetworkHandlerMixin",
+    "ClientWorldMixin",
+    "EntityRenderDispatcherMixin",
+    "InGameHudMixin",
     "LivingEntityRendererMixin",
-    "PlayerEntityRendererMixin"
+    "ParticleManagerMixin",
+    "PlayerEntityModelMixin",
+    "PlayerEntityRendererMixin",
+    "PlayerHeldItemFeatureRendererMixin"
   ]
 }
