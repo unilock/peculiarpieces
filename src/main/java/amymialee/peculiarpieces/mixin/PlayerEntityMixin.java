@@ -2,14 +2,16 @@ package amymialee.peculiarpieces.mixin;
 
 import amymialee.peculiarpieces.callbacks.PlayerCrouchCallback;
 import amymialee.peculiarpieces.callbacks.PlayerJumpCallback;
+import amymialee.peculiarpieces.component.PeculiarComponentInitializer;
+import amymialee.peculiarpieces.component.WardingComponent;
 import amymialee.peculiarpieces.items.GliderItem;
 import amymialee.peculiarpieces.registry.PeculiarItems;
 import amymialee.peculiarpieces.util.ExtraPlayerDataWrapper;
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
@@ -20,15 +22,19 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPlayerDataWrapper {
+public abstract class PlayerEntityMixin extends LivingEntityMixin implements ExtraPlayerDataWrapper {
+    @Shadow public abstract EntityDimensions getDimensions(EntityPose pose);
+
     @Unique private Vec3d checkpointPos;
     @Unique private boolean wasSneaky = false;
     @Unique private int gameModeDuration = 0;
@@ -36,8 +42,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
     @Unique private Vec3d velocityOld = new Vec3d(0, 0, 0);
     @Unique private double bouncePower = 0;
 
-    protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
-        super(entityType, world);
+    @Inject(method = "isBlockBreakingRestricted", at = @At("HEAD"), cancellable = true)
+    public void PeculiarPieces$RestrictWardedBlock(World world, BlockPos pos, GameMode gameMode, CallbackInfoReturnable<Boolean> cir) {
+        Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
+        if (component.isPresent()) {
+            WardingComponent wardingComponent = component.get();
+            if (wardingComponent.getWard(pos)) {
+                cir.setReturnValue(true);
+            }
+        }
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
@@ -96,58 +109,54 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
         Vec3d velocity = getVelocity();
         if (getBouncePower() > 0) {
             float f = this.headYaw * ((float)Math.PI / 180);
-            this.setVelocity(this.getVelocity().add(-MathHelper.sin(f) * (velocity.horizontalLength() * getBouncePower() * 4) * (isSprinting() ? 1.5f : 0.5f), getBouncePower(), MathHelper.cos(f) * (velocity.horizontalLength() * getBouncePower() * 4) * (isSprinting() ? 1.5f : 0.5f)));
+            this.setVelocity(this.getVelocity().add(-MathHelper.sin(f) * (velocity.horizontalLength() * getBouncePower() * 4) * (this.isSprinting() ? 1.5f : 0.5f), getBouncePower(), MathHelper.cos(f) * (velocity.horizontalLength() * getBouncePower() * 4) * (isSprinting() ? 1.5f : 0.5f)));
             setBouncePower(0);
             this.velocityDirty = true;
         } else if (GliderItem.isGliding(this2) && GliderItem.isDescending(this2) && velocity.getY() < velocityOld.getY()) {
             double horizontalSpeed = !isSneaking() ? 0.03 : 0.1;
             double xSpeed = Math.cos(Math.toRadians(headYaw + 90)) * horizontalSpeed;
             double zSpeed = Math.sin(Math.toRadians(headYaw + 90)) * horizontalSpeed;
-            setVelocity(velocity.x + xSpeed, !isSneaking() ? -0.052 : -0.176, velocity.z + zSpeed);
-            fallDistance = 0;
+            this.setVelocity(velocity.x + xSpeed, !isSneaking() ? -0.052 : -0.176, velocity.z + zSpeed);
+            this.fallDistance = 0;
         }
         velocityOld = getVelocity();
     }
 
-    @Unique
-    protected void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
-        Optional<TrinketComponent> optionalComponent = TrinketsApi.getTrinketComponent(this);
+    @Override
+    public void PeculiarPieces$FallHead(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition, CallbackInfo ci) {
+        Optional<TrinketComponent> optionalComponent = TrinketsApi.getTrinketComponent(((PlayerEntity) ((Object) this)));
         if (optionalComponent.isPresent() && optionalComponent.get().isEquipped(PeculiarItems.BOUNCY_BOOTS)) {
-            if (!isSneaking()) {
-                airStrafingSpeed *= 4;
+            if (!this.isSneaking()) {
+                this.airStrafingSpeed *= 4;
                 if (onGround) {
                     if (this.fallDistance > 0.0f) {
-                        setBouncePower(Math.pow(Math.abs(getVelocity().getY()), 1.5) - 0.05);
+                        this.setBouncePower(Math.pow(Math.abs(getVelocity().getY()), 1.5) - 0.05);
                         return;
                     }
                 }
             }
-            fallDistance = 0;
+            this.fallDistance = 0;
         }
-        super.fall(heightDifference, onGround, state, landedPosition);
     }
 
-    @Unique
-    public boolean isSneaking() {
+    @Override
+    public void PeculiarPieces$IsSneakingHead(CallbackInfoReturnable<Boolean> cir) {
         if (!world.isClient()) {
-            boolean sneaking = super.isSneaking();
-            if (sneaking != wasSneaky) {
+            boolean sneaking = this.getFlag(1);
+            if (sneaking != this.wasSneaky) {
                 if (sneaking) {
-                    wasSneaky = true;
+                    this.wasSneaky = true;
                     PlayerCrouchCallback.EVENT.invoker().onCrouch(((PlayerEntity) ((Object) this)), world);
                 } else {
-                    wasSneaky = false;
+                    this.wasSneaky = false;
                 }
             }
-            return sneaking;
-        } else {
-            return super.isSneaking();
         }
     }
 
-    @Unique
-    public double getMountedHeightOffset() {
-        return ((EntityAccessor) this).getDimensions().height;
+    @Override
+    public void PeculiarPieces$MountedHeightOffsetHead(CallbackInfoReturnable<Double> cir) {
+        cir.setReturnValue((double) this.getDimensions(EntityPose.STANDING).height);
     }
 
     @Override public Vec3d getCheckpointPos() {

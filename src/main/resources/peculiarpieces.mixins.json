@@ -9,6 +9,7 @@
     "ArrowEntityAccessor",
     "BeaconBlockMixin",
     "BlockEntityMixin",
+    "AbstractBlockMixin",
     "BoatEntityMixin",
     "BrewingRecipeRegistryMixin",
     "BundleItemMixin",

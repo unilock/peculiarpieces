@@ -6,9 +6,9 @@ import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.advancement.criterion.Criteria;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
@@ -21,9 +21,9 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Pair;
 import net.minecraft.util.UseAction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -36,24 +36,19 @@ import java.util.List;
 import java.util.Optional;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity {
+public abstract class LivingEntityMixin extends EntityMixin {
     @Shadow public abstract void setHealth(float health);
-
     @Shadow public abstract boolean clearStatusEffects();
-
     @Shadow public abstract boolean addStatusEffect(StatusEffectInstance effect);
-
     @Shadow public abstract boolean isClimbing();
-
     @Shadow public abstract boolean isHoldingOntoLadder();
-
     @Shadow protected abstract SoundEvent getDrinkSound(ItemStack stack);
-
     @Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
+    @Shadow public float airStrafingSpeed;
+    @Shadow public float headYaw;
 
-    public LivingEntityMixin(EntityType<?> type, World world) {
-        super(type, world);
-    }
+    @Inject(method = "fall", at = @At("HEAD"))
+    public void PeculiarPieces$FallHead(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition, CallbackInfo ci) {}
 
     @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
     public void PeculiarPieces$DamageInvulnerability(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
@@ -81,7 +76,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @ModifyVariable(method = "travel", at = @At("STORE"))
     public float PeculiarPieces$SlipperyShoesSlipping(float p) {
-        if (((Entity) this) instanceof LivingEntity livingEntity) {
+        if (((Object) this) instanceof LivingEntity livingEntity) {
             Optional<TrinketComponent> optionalComponent = TrinketsApi.getTrinketComponent(livingEntity);
             if (optionalComponent.isPresent() && optionalComponent.get().isEquipped(PeculiarItems.SLIPPERY_SHOES)) {
                 return 1f / 0.91f;
@@ -114,7 +109,7 @@ public abstract class LivingEntityMixin extends Entity {
             if (source.isOutOfWorld()) {
                 return;
             }
-            if (((Entity) this) instanceof LivingEntity livingEntity) {
+            if (((Object) this) instanceof LivingEntity livingEntity) {
                 Optional<TrinketComponent> optionalComponent = TrinketsApi.getTrinketComponent(livingEntity);
                 if (optionalComponent.isPresent()) {
                     if (optionalComponent.get().isEquipped(PeculiarItems.TOKEN_OF_UNDYING)) {
@@ -147,6 +142,6 @@ public abstract class LivingEntityMixin extends Entity {
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 10 * 20, 3));
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 16 * 20, 3));
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 32 * 20, 0));
-        this.world.sendEntityStatus(this, EntityStatuses.USE_TOTEM_OF_UNDYING);
+        this.world.sendEntityStatus(((Entity) ((Object) this)), EntityStatuses.USE_TOTEM_OF_UNDYING);
     }
 }

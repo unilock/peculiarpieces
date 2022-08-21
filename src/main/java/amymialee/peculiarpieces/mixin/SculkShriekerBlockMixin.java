@@ -16,14 +16,14 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SculkShriekerBlock.class)
-public class SculkShriekerBlockMixin {
+public class SculkShriekerBlockMixin extends AbstractBlockMixin {
     @Shadow @Final public static BooleanProperty CAN_SUMMON;
 
-    @Unique
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult ignoredHit) {
+    @Override
+    public void PeculiarPieces$OnUseHead(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
         if (!state.get(CAN_SUMMON) && player.getAbilities().allowModifyWorld) {
             ItemStack stack = player.getStackInHand(hand);
             if (stack.isOf(Items.ECHO_SHARD)) {
@@ -32,6 +32,6 @@ public class SculkShriekerBlockMixin {
                 world.playSound(player, pos, SoundEvents.ENTITY_WARDEN_HEARTBEAT, SoundCategory.BLOCKS, 2f, (world.random.nextFloat() - world.random.nextFloat()) * 0.2f + 1.0f);
             }
         }
-        return ActionResult.success(world.isClient);
+        cir.setReturnValue(ActionResult.success(world.isClient));
     }
 }
