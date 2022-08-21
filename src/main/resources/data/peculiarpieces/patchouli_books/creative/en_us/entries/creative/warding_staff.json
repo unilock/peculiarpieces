@@ -1,0 +1,16 @@
+{
+  "name": "Warding Staff",
+  "icon": "peculiarpieces:warding_staff",
+  "category": "peculiarpieces:creative",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "When you wish to create blocks that cannot be broken, but also looking a bit better than bedrock, you can use a Warding Staff.$(br)This Staff will allow you to ward blocks, making them immune from destruction, only being destroyed with commands or by removing the ward."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "peculiarpieces:warding_staff",
+      "link_recipe": true
+    }
+  ]
+}
