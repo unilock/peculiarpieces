@@ -251,8 +251,10 @@
   "peculiarpieces.subtitle.sheep.yippee" : "Yippee!",
   "peculiarpieces.subtitle.sheep.yippee_engineer" : "Yippee!",
 
-  "commands.checkpoint.success.single" : "Set checkpoint to %s, %s, %s for %s",
-  "commands.checkpoint.success.multiple" : "Set checkpoint to %s, %s, %s for %s players",
+  "peculiar.commands.checkpoint.success.single" : "Set checkpoint to %s, %s, %s for %s",
+  "peculiar.commands.checkpoint.success.multiple" : "Set checkpoint to %s, %s, %s for %s players",
+  "peculiar.commands.gamemode.success.single" : "Set gamemode to %s for %s",
+  "peculiar.commands.gamemode.success.multiple" : "Set gamemode to %s for %s players",
 
   "peculiarpieces.potion.hidden.name" : "Hidden",
   "peculiarpieces.potion.hidden.description" : "Won't show Particles.",

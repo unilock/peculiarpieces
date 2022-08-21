@@ -21,6 +21,8 @@ import amymialee.peculiarpieces.screens.WarpScreenHandler;
 import amymialee.peculiarpieces.util.ExtraPlayerDataWrapper;
 import amymialee.peculiarpieces.util.RedstoneManager;
 import amymialee.peculiarpieces.util.WarpManager;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -40,8 +42,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.potion.Potion;
 import net.minecraft.screen.ScreenHandlerType;
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
+import net.minecraft.server.command.CommandManager;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.tag.TagKey;
@@ -50,6 +52,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.GameMode;
 import net.minecraft.world.GameRules;
 
 import java.util.Collection;
@@ -107,25 +110,61 @@ public class PeculiarPieces implements ModInitializer {
         PeculiarItems.init();
         PeculiarBlocks.init();
         PeculiarEntities.init();
-        CommandRegistrationCallback.EVENT.register((dispatcher, access, environment) -> dispatcher.register(
-                literal("peculiar")
-                        .then(literal("checkpoint"))
-                        .requires(source -> source.hasPermissionLevel(2))
-                        .then(argument("targets", EntityArgumentType.players())
-                                .then(argument("location", Vec3ArgumentType.vec3())
-                                        .executes(ctx -> {
-                                            Collection<ServerPlayerEntity> targets = EntityArgumentType.getPlayers(ctx, "targets");
-                                            Vec3d pos = Vec3ArgumentType.getPosArgument(ctx, "location").toAbsolutePos(ctx.getSource());
-                                            for (ServerPlayerEntity target : targets) {
-                                                ((ExtraPlayerDataWrapper) target).setCheckpointPos(pos);
-                                            }
-                                            if (targets.size() == 1) {
-                                                ctx.getSource().sendFeedback(Text.translatable("commands.checkpoint.success.single", pos.getX(), pos.getY(), pos.getZ(), targets.iterator().next().getDisplayName()), true);
-                                            } else {
-                                                ctx.getSource().sendFeedback(Text.translatable("commands.checkpoint.success.multiple", pos.getX(), pos.getY(), pos.getZ(), targets.size()), true);
-                                            }
-                                            return 0;
-                                        })))));
+        CommandRegistrationCallback.EVENT.register((dispatcher, access, environment) -> {
+            LiteralArgumentBuilder<ServerCommandSource> literalArgumentBuilder = CommandManager.literal("peculiar").requires(source -> source.hasPermissionLevel(2));
+            for (GameMode gameMode : GameMode.values()) {
+                literalArgumentBuilder
+                        .then(CommandManager.literal("tempgamemode")
+                                .then(CommandManager.argument("targets", EntityArgumentType.players())
+                                        .then((CommandManager.literal(gameMode.getName())
+                                                .then(CommandManager.argument("ticks", IntegerArgumentType.integer())
+                                                        .executes(ctx -> {
+                                                            Collection<ServerPlayerEntity> targets = EntityArgumentType.getPlayers(ctx, "targets");
+                                                            int ticks = IntegerArgumentType.getInteger(ctx, "ticks");
+                                                            for (ServerPlayerEntity target : targets) {
+                                                                if (target instanceof ExtraPlayerDataWrapper wrapper) {
+                                                                    if (gameMode == wrapper.getStoredGameMode()) {
+                                                                        continue;
+                                                                    }
+                                                                    GameMode playerMode = target.interactionManager.getGameMode();
+                                                                    if (playerMode != gameMode) {
+                                                                        if (wrapper.getGameModeDuration() == 0) {
+                                                                            wrapper.setStoredGameMode(playerMode);
+                                                                        }
+                                                                        target.changeGameMode(gameMode);
+                                                                        wrapper.setGameModeDuration(ticks);
+                                                                    } else if (wrapper.getGameModeDuration() > 0) {
+                                                                        wrapper.setGameModeDuration(ticks);
+                                                                    }
+                                                                }
+                                                            }
+                                                            if (targets.size() == 1) {
+                                                                ctx.getSource().sendFeedback(Text.translatable("peculiar.commands.gamemode.success.single", gameMode.getName(), targets.iterator().next().getDisplayName()), true);
+                                                            } else {
+                                                                ctx.getSource().sendFeedback(Text.translatable("peculiar.commands.gamemode.success.multiple", gameMode.getName(), targets.size()), true);
+                                                            }
+                                                            return 0;
+                                                        }))))));
+            }
+            literalArgumentBuilder
+                    .then(CommandManager.literal("checkpoint")
+                            .then(CommandManager.argument("targets", EntityArgumentType.players())
+                                    .then(CommandManager.argument("location", Vec3ArgumentType.vec3())
+                                            .executes(ctx -> {
+                                                Collection<ServerPlayerEntity> targets = EntityArgumentType.getPlayers(ctx, "targets");
+                                                Vec3d pos = Vec3ArgumentType.getPosArgument(ctx, "location").toAbsolutePos(ctx.getSource());
+                                                for (ServerPlayerEntity target : targets) {
+                                                    ((ExtraPlayerDataWrapper) target).setCheckpointPos(pos);
+                                                }
+                                                if (targets.size() == 1) {
+                                                    ctx.getSource().sendFeedback(Text.translatable("peculiar.commands.checkpoint.success.single", pos.getX(), pos.getY(), pos.getZ(), targets.iterator().next().getDisplayName()), true);
+                                                } else {
+                                                    ctx.getSource().sendFeedback(Text.translatable("peculiar.commands.checkpoint.success.multiple", pos.getX(), pos.getY(), pos.getZ(), targets.size()), true);
+                                                }
+                                                return 0;
+                                            }))));
+            dispatcher.register(literalArgumentBuilder);
+        });
         ServerTickEvents.END_WORLD_TICK.register(serverWorld -> WarpManager.tick());
         ServerTickEvents.END_WORLD_TICK.register(serverWorld -> RedstoneManager.tick());
         PlayerCrouchCallback.EVENT.register((player, world) -> {
