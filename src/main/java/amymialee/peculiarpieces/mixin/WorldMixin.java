@@ -5,7 +5,6 @@ import amymialee.peculiarpieces.component.WardingComponent;
 import amymialee.peculiarpieces.util.RedstoneInstance;
 import amymialee.peculiarpieces.util.RedstoneManager;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
@@ -30,7 +29,7 @@ public abstract class WorldMixin implements WorldAccess {
         if (component.isPresent()) {
             WardingComponent wardingComponent = component.get();
             if (wardingComponent.getWard(pos)) {
-                if (!(this.getBlockState(pos).isOf(Blocks.REDSTONE_WIRE) && state.isOf(Blocks.REDSTONE_WIRE))) {
+                if (this.getBlockState(pos).getBlock() != state.getBlock()) {
                     cir.setReturnValue(false);
                 }
             }
