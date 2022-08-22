@@ -20,6 +20,6 @@ public abstract class MobEntityMixin extends LivingEntityMixin {
         }
     }
 
-    @Inject(method = "interactMob", at = @At("HEAD"))
+    @Inject(method = "interactMob", at = @At("HEAD"), cancellable = true)
     public void PeculiarPieces$InteractMobHead(CallbackInfoReturnable<ActionResult> cir) {}
 }

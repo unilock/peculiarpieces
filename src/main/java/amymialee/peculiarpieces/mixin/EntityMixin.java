@@ -39,9 +39,9 @@ public abstract class EntityMixin {
         }
     }
 
-    @Inject(method = "isSneaking", at = @At("HEAD"))
+    @Inject(method = "isSneaking", at = @At("HEAD"), cancellable = true)
     public void PeculiarPieces$IsSneakingHead(CallbackInfoReturnable<Boolean> cir) {}
 
-    @Inject(method = "getMountedHeightOffset", at = @At("HEAD"))
+    @Inject(method = "getMountedHeightOffset", at = @At("HEAD"), cancellable = true)
     public void PeculiarPieces$MountedHeightOffsetHead(CallbackInfoReturnable<Double> cir) {}
 }

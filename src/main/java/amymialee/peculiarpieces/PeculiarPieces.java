@@ -4,6 +4,8 @@ import amymialee.peculiarpieces.callbacks.PlayerCrouchCallback;
 import amymialee.peculiarpieces.callbacks.PlayerCrouchConsumingBlock;
 import amymialee.peculiarpieces.callbacks.PlayerJumpCallback;
 import amymialee.peculiarpieces.callbacks.PlayerJumpConsumingBlock;
+import amymialee.peculiarpieces.component.PeculiarComponentInitializer;
+import amymialee.peculiarpieces.component.WardingComponent;
 import amymialee.peculiarpieces.effects.FlightStatusEffect;
 import amymialee.peculiarpieces.effects.OpenStatusEffect;
 import amymialee.peculiarpieces.registry.PeculiarBlocks;
@@ -21,6 +23,7 @@ import amymialee.peculiarpieces.screens.WarpScreenHandler;
 import amymialee.peculiarpieces.util.ExtraPlayerDataWrapper;
 import amymialee.peculiarpieces.util.RedstoneManager;
 import amymialee.peculiarpieces.util.WarpManager;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.api.ModInitializer;
@@ -32,6 +35,7 @@ import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.Vec3ArgumentType;
 import net.minecraft.entity.EntityType;
@@ -47,10 +51,12 @@ import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
@@ -58,6 +64,7 @@ import net.minecraft.world.GameMode;
 import net.minecraft.world.GameRules;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @SuppressWarnings("unused")
 public class PeculiarPieces implements ModInitializer {
@@ -168,6 +175,52 @@ public class PeculiarPieces implements ModInitializer {
                                                 }
                                                 return 0;
                                             }))));
+            literalArgumentBuilder
+                    .then(CommandManager.literal("wardarea")
+                            .then(CommandManager.argument("set", BoolArgumentType.bool())
+                                    .then(CommandManager.argument("from", BlockPosArgumentType.blockPos())
+                                            .then(CommandManager.argument("to", BlockPosArgumentType.blockPos())
+                                                    .executes(context -> {
+                                                        BlockBox range = BlockBox.create(BlockPosArgumentType.getLoadedBlockPos(context, "from"), BlockPosArgumentType.getLoadedBlockPos(context, "to"));
+                                                        ServerCommandSource source = context.getSource();
+                                                        int i = range.getBlockCountX() * range.getBlockCountY() * range.getBlockCountZ();
+                                                        if (i > 32768 * 8) {
+                                                            source.sendFeedback(Text.translatable("commands.fill.toobig", 32768 * 8, i), false);
+                                                            return 0;
+                                                        }
+                                                        ServerWorld serverWorld = source.getWorld();
+                                                        int j = 0;
+                                                        boolean ward = BoolArgumentType.getBool(context, "set");
+                                                        for (BlockPos blockPos : BlockPos.iterate(range.getMinX(), range.getMinY(), range.getMinZ(), range.getMaxX(), range.getMaxY(), range.getMaxZ())) {
+                                                            Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(serverWorld.getChunk(blockPos));
+                                                            if (component.isPresent()) {
+                                                                WardingComponent wardingComponent = component.get();
+                                                                wardingComponent.setWard(blockPos, ward);
+                                                                j++;
+                                                            }
+                                                        }
+                                                        source.sendFeedback(Text.translatable("peculiar.commands.wardarea.success", ward ? "Warded" : "Unwarded", j), true);
+                                                        return j;
+                                                    })))));
+            literalArgumentBuilder
+                    .then(CommandManager.literal("ward")
+                            .then(CommandManager.argument("set", BoolArgumentType.bool())
+                                    .then(CommandManager.argument("pos", BlockPosArgumentType.blockPos())
+                                                    .executes(context -> {
+                                                        ServerCommandSource source = context.getSource();
+                                                        ServerWorld serverWorld = source.getWorld();
+                                                        BlockPos pos = BlockPosArgumentType.getLoadedBlockPos(context, "pos");
+                                                        Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(serverWorld.getChunk(pos));
+                                                        boolean ward = BoolArgumentType.getBool(context, "set");
+                                                        if (component.isPresent()) {
+                                                            WardingComponent wardingComponent = component.get();
+                                                            wardingComponent.setWard(pos, ward);
+                                                        } else {
+                                                            source.sendFeedback(Text.translatable("peculiar.commands.ward.failure"), true);
+                                                        }
+                                                        source.sendFeedback(Text.translatable("peculiar.commands.ward.success", ward ? "Warded" : "Unwarded", pos.getX(), pos.getY(), pos.getZ()), true);
+                                                        return 0;
+                                                    }))));
             dispatcher.register(literalArgumentBuilder);
         });
         ServerTickEvents.END_WORLD_TICK.register(serverWorld -> WarpManager.tick());

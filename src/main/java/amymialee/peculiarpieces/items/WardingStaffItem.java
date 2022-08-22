@@ -17,13 +17,16 @@ public class WardingStaffItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        World world = context.getWorld();
-        BlockPos pos = context.getBlockPos();
-        Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
-        if (component.isPresent()) {
-            WardingComponent wardingComponent = component.get();
-            wardingComponent.setWard(pos, !wardingComponent.getWard(pos));
+        if (context.getPlayer() != null && context.getPlayer().isCreative()) {
+            World world = context.getWorld();
+            BlockPos pos = context.getBlockPos();
+            Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
+            if (component.isPresent()) {
+                WardingComponent wardingComponent = component.get();
+                wardingComponent.setWard(pos, !wardingComponent.getWard(pos));
+            }
+            return ActionResult.success(world.isClient);
         }
-        return ActionResult.success(world.isClient);
+        return super.useOnBlock(context);
     }
 }

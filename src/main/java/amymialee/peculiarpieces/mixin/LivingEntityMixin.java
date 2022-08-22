@@ -47,7 +47,7 @@ public abstract class LivingEntityMixin extends EntityMixin {
     @Shadow public float airStrafingSpeed;
     @Shadow public float headYaw;
 
-    @Inject(method = "fall", at = @At("HEAD"))
+    @Inject(method = "fall", at = @At("HEAD"), cancellable = true)
     public void PeculiarPieces$FallHead(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition, CallbackInfo ci) {}
 
     @Inject(method = "damage", at = @At("HEAD"), cancellable = true)

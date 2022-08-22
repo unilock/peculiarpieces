@@ -256,6 +256,9 @@
   "peculiar.commands.checkpoint.success.multiple" : "Set checkpoint to %s, %s, %s for %s players",
   "peculiar.commands.gamemode.success.single" : "Set gamemode to %s for %s",
   "peculiar.commands.gamemode.success.multiple" : "Set gamemode to %s for %s players",
+  "peculiar.commands.wardarea.success": "Successfully %s %s blocks",
+  "peculiar.commands.ward.success": "%s the block at %s, %s, %s",
+  "peculiar.commands.ward.failure": "Failed to set ward",
 
   "peculiarpieces.potion.hidden.name" : "Hidden",
   "peculiarpieces.potion.hidden.description" : "Won't show Particles.",
