@@ -62,6 +62,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.chunk.Chunk;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -192,10 +193,12 @@ public class PeculiarPieces implements ModInitializer {
                                                         int j = 0;
                                                         boolean ward = BoolArgumentType.getBool(context, "set");
                                                         for (BlockPos blockPos : BlockPos.iterate(range.getMinX(), range.getMinY(), range.getMinZ(), range.getMaxX(), range.getMaxY(), range.getMaxZ())) {
-                                                            Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(serverWorld.getChunk(blockPos));
+                                                            Chunk chunk = serverWorld.getChunk(blockPos);
+                                                            Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(chunk);
                                                             if (component.isPresent()) {
                                                                 WardingComponent wardingComponent = component.get();
                                                                 wardingComponent.setWard(blockPos, ward);
+                                                                PeculiarComponentInitializer.WARDING.sync(chunk);
                                                                 j++;
                                                             }
                                                         }
@@ -210,11 +213,13 @@ public class PeculiarPieces implements ModInitializer {
                                                         ServerCommandSource source = context.getSource();
                                                         ServerWorld serverWorld = source.getWorld();
                                                         BlockPos pos = BlockPosArgumentType.getLoadedBlockPos(context, "pos");
-                                                        Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(serverWorld.getChunk(pos));
+                                                        Chunk chunk = serverWorld.getChunk(pos);
+                                                        Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(chunk);
                                                         boolean ward = BoolArgumentType.getBool(context, "set");
                                                         if (component.isPresent()) {
                                                             WardingComponent wardingComponent = component.get();
                                                             wardingComponent.setWard(pos, ward);
+                                                            PeculiarComponentInitializer.WARDING.sync(chunk);
                                                         } else {
                                                             source.sendFeedback(Text.translatable("peculiar.commands.ward.failure"), true);
                                                         }
