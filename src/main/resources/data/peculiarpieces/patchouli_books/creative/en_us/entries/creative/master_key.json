@@ -1,0 +1,16 @@
+{
+  "name": "Master Key",
+  "icon": "peculiarpieces:master_key",
+  "category": "peculiarpieces:creative",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "For unlimited access to any container, a Master Key can be used.$(br)This key when held acts as a working key for any container you can find."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "peculiarpieces:master_key",
+      "link_recipe": true
+    }
+  ]
+}

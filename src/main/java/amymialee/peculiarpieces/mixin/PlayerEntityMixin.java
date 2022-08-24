@@ -112,7 +112,7 @@ public abstract class PlayerEntityMixin extends LivingEntityMixin implements Ext
             this.setVelocity(this.getVelocity().add(-MathHelper.sin(f) * (velocity.horizontalLength() * getBouncePower() * 4) * (this.isSprinting() ? 1.5f : 0.5f), getBouncePower(), MathHelper.cos(f) * (velocity.horizontalLength() * getBouncePower() * 4) * (isSprinting() ? 1.5f : 0.5f)));
             setBouncePower(0);
             this.velocityDirty = true;
-        } else if (GliderItem.isGliding(this2) && GliderItem.isDescending(this2) && velocity.getY() < velocityOld.getY()) {
+        } else if (GliderItem.isGliding(this2)) {
             double horizontalSpeed = !isSneaking() ? 0.03 : 0.1;
             double xSpeed = Math.cos(Math.toRadians(headYaw + 90)) * horizontalSpeed;
             double zSpeed = Math.sin(Math.toRadians(headYaw + 90)) * horizontalSpeed;

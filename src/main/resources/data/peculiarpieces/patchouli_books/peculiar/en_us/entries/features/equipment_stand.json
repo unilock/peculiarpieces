@@ -1,0 +1,15 @@
+{
+  "name": "Equipment Stand",
+  "icon": "peculiarpieces:equipment_stand",
+  "category": "peculiarpieces:features",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "An Equipment Stand acts similarly to an Armour Stand, however it functions as a block rather than as an entity.$(br)This means it cannot be moved, it can be locked and can cause less lag when many are used."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:equipment_stand"
+    }
+  ]
+}

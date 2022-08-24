@@ -1,0 +1,16 @@
+{
+  "name": "Locking Key",
+  "icon": "peculiarpieces:locking_key",
+  "category": "peculiarpieces:creative",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "When a container needs to be securely locked, you can use a Locking Key.$(br)This key gives any lockable container a secure lock that only a Master Key can open."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "peculiarpieces:locking_key",
+      "link_recipe": true
+    }
+  ]
+}

@@ -11,7 +11,6 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,8 +31,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 
     @Inject(method = "setupTransforms(Lnet/minecraft/client/network/AbstractClientPlayerEntity;Lnet/minecraft/client/util/math/MatrixStack;FFF)V", at = @At("HEAD"), cancellable = true)
     protected void PeculiarPieces$GlidingHeadClip(AbstractClientPlayerEntity player, MatrixStack matrixStack, float f, float g, float h, CallbackInfo ci) {
-        Vec3d velocity = player.getVelocity();
-        if (GliderItem.isGliding(player) && velocity.getY() < 0) {
+        if (GliderItem.isGliding(player)) {
             player.bodyYaw = player.headYaw;
             player.prevBodyYaw = player.prevHeadYaw;
             super.setupTransforms(player, matrixStack, f, g, h);

@@ -58,6 +58,8 @@ public class PeculiarItems {
     //Creative Items
     public static final Item CHECKPOINT_PEARL = registerItem("checkpoint_pearl", CREATIVE_ITEMS, new CheckpointPearlItem(new FabricItemSettings().maxCount(1).rarity(Rarity.RARE).group(PeculiarPieces.CREATIVE_GROUP)));
     public static final Item WARDING_STAFF = registerItem("warding_staff", CREATIVE_ITEMS, new WardingStaffItem(new FabricItemSettings().maxCount(1).rarity(Rarity.EPIC).group(PeculiarPieces.CREATIVE_GROUP)));
+    public static final Item LOCKING_KEY = registerItem("locking_key", CREATIVE_ITEMS, new LockingKeyItem(new FabricItemSettings().maxCount(1).rarity(Rarity.EPIC).group(PeculiarPieces.CREATIVE_GROUP)));
+    public static final Item MASTER_KEY = registerItem("master_key", CREATIVE_ITEMS, new Item(new FabricItemSettings().maxCount(1).rarity(Rarity.EPIC).group(PeculiarPieces.CREATIVE_GROUP)));
     //Potions
     public static final Item HIDDEN_POTION = registerItem("hidden_potion", POTION_ITEMS, new HiddenPotionItem(new FabricItemSettings().maxCount(1).group(PeculiarPieces.POTION_GROUP)));
 

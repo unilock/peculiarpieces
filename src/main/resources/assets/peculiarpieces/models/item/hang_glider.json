@@ -6,9 +6,17 @@
   "overrides": [
     {
       "predicate": {
-        "active": 1
+        "active": 1,
+        "gliding": 0
       },
       "model": "peculiarpieces:item/hang_glider_active"
+    },
+    {
+      "predicate": {
+        "active": 1,
+        "gliding": 1
+      },
+      "model": "peculiarpieces:item/hang_glider_gliding"
     }
   ]
 }

@@ -1,6 +1,7 @@
 package amymialee.peculiarpieces.items;
 
 import amymialee.peculiarpieces.registry.PeculiarItems;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,7 +28,7 @@ public class GliderItem extends Item {
         compound.putBoolean("pp:gliding", !compound.getBoolean("pp:gliding"));
     }
 
-    public static boolean hasGlider(PlayerEntity player) {
+    public static boolean hasGlider(LivingEntity player) {
         ItemStack main = player.getMainHandStack();
         if (main.getNbt() != null && main.getNbt().getBoolean("pp:gliding")) {
             return true;
@@ -36,7 +37,7 @@ public class GliderItem extends Item {
         return off.getNbt() != null && off.getNbt().getBoolean("pp:gliding");
     }
 
-    public static ItemStack getGlider(PlayerEntity player) {
+    public static ItemStack getGlider(LivingEntity player) {
         ItemStack main = player.getMainHandStack();
         if (isActive(main)) {
             return main;
@@ -56,15 +57,11 @@ public class GliderItem extends Item {
         return stack.getNbt() != null && stack.getNbt().getBoolean("pp:gliding");
     }
 
-    public static boolean isGliding(PlayerEntity player) {
+    public static boolean isGliding(LivingEntity player) {
         if (!player.isOnGround() && !player.isSubmergedInWater() && !player.isSleeping()) {
-            return hasGlider(player);
+            Vec3d velocity = player.getVelocity();
+            return hasGlider(player) && velocity.getY() < 0;
         }
         return false;
-    }
-
-    public static boolean isDescending(PlayerEntity player) {
-        Vec3d velocity = player.getVelocity();
-        return velocity.getY() < 0;
     }
 }

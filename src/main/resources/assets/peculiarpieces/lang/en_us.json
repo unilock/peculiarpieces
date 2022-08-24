@@ -193,6 +193,8 @@
   "item.peculiarpieces.torch_quiver" : "Torch Quiver",
   "item.peculiarpieces.long_stick" : "Long Stick",
   "item.peculiarpieces.warding_staff" : "Warding Staff",
+  "item.peculiarpieces.locking_key" : "Locking Key",
+  "item.peculiarpieces.master_key" : "Master Key",
 
   "item.peculiarpieces.hidden_potion.effect.empty": "Uncraftable Hidden Potion",
   "item.peculiarpieces.hidden_potion.effect.water": "Hidden Water Bottle",

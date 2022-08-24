@@ -1,13 +1,13 @@
 package amymialee.peculiarpieces.blockentities;
 
+import amymialee.peculiarpieces.entity.EquipmentStandEntity;
 import amymialee.peculiarpieces.registry.PeculiarBlocks;
+import amymialee.peculiarpieces.registry.PeculiarEntities;
 import amymialee.peculiarpieces.screens.EquipmentStandScreenHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
@@ -25,24 +25,24 @@ import org.jetbrains.annotations.Nullable;
 
 public class EquipmentStandBlockEntity extends LockableContainerBlockEntity {
     private DefaultedList<ItemStack> inventory;
-    private LivingEntity cachedEntity;
+    private EquipmentStandEntity cachedEntity;
 
     public EquipmentStandBlockEntity(BlockPos pos, BlockState state) {
         super(PeculiarBlocks.EQUIPMENT_STAND_BLOCK_ENTITY, pos, state);
-        this.inventory = DefaultedList.ofSize(6, ItemStack.EMPTY);
+        this.inventory = DefaultedList.ofSize(7, ItemStack.EMPTY);
     }
 
-    public LivingEntity getCachedEntity() {
+    public EquipmentStandEntity getCachedEntity() {
         if (cachedEntity == null) {
-            cachedEntity = EntityType.SKELETON.create(getWorld());
+            cachedEntity = PeculiarEntities.EQUIPMENT_STAND_ENTITY.create(getWorld());
         }
         if (cachedEntity != null) {
-            cachedEntity.setInvisible(true);
             cachedEntity.setPosition(Vec3d.of(getPos()));
             for (int i = 0; i < EquipmentSlot.values().length; i++) {
                 EquipmentSlot slot = EquipmentSlot.values()[i];
                 cachedEntity.equipStack(slot, getStack(i));
             }
+            cachedEntity.equipGliderStack(getStack(6));
         }
         return cachedEntity;
     }

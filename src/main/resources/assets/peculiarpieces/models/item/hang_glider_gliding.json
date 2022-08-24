@@ -1,0 +1,19 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "peculiarpieces:item/hang_glider_active"
+	},
+	"display": {
+		"firstperson_righthand": {
+			"rotation": [-70, 0, 0],
+			"translation": [-9, 20, 0.5],
+			"scale": [4, 4, 4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-70, 0, 0],
+			"translation": [-9, 20, 0.5],
+			"scale": [4, 4, 4]
+		}
+	}
+}

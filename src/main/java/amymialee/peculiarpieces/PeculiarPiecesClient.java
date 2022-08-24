@@ -4,12 +4,14 @@ import amymialee.peculiarpieces.blockentities.FlagBlockEntity;
 import amymialee.peculiarpieces.blocks.RedstoneStaticBlock;
 import amymialee.peculiarpieces.client.CreativeBarrelBlockEntityRenderer;
 import amymialee.peculiarpieces.client.EquipmentStandBlockEntityRenderer;
+import amymialee.peculiarpieces.client.EquipmentStandEntityRenderer;
 import amymialee.peculiarpieces.client.FishTankBlockEntityRenderer;
 import amymialee.peculiarpieces.client.FlagBlockEntityRenderer;
 import amymialee.peculiarpieces.client.HangGliderEntityModel;
 import amymialee.peculiarpieces.client.PedestalBlockEntityRenderer;
 import amymialee.peculiarpieces.client.RedstoneTriggerBlockEntityRenderer;
 import amymialee.peculiarpieces.client.TeleportItemEntityRenderer;
+import amymialee.peculiarpieces.items.GliderItem;
 import amymialee.peculiarpieces.items.PlayerCompassItem;
 import amymialee.peculiarpieces.items.TransportPearlItem;
 import amymialee.peculiarpieces.particles.WardingParticle;
@@ -41,6 +43,8 @@ import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.item.CompassAnglePredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
+import net.minecraft.client.model.ModelData;
+import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.item.BlockItem;
@@ -57,6 +61,7 @@ import net.minecraft.util.math.MathHelper;
 public class PeculiarPiecesClient implements ClientModInitializer {
     public static final EntityModelLayer HANG_GLIDER = new EntityModelLayer(PeculiarPieces.id("hang_glider"), "main");
     public static final EntityModelLayer FLAG = new EntityModelLayer(PeculiarPieces.id("flag"), "main");
+    public static final EntityModelLayer EMPTY = new EntityModelLayer(PeculiarPieces.id("empty"), "main");
     private final FlagBlockEntity renderFlag = new FlagBlockEntity(BlockPos.ORIGIN, PeculiarBlocks.FLAG.getDefaultState());
 
     @Override
@@ -119,8 +124,10 @@ public class PeculiarPiecesClient implements ClientModInitializer {
 
         EntityModelLayerRegistry.registerModelLayer(HANG_GLIDER, HangGliderEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(FLAG, FlagBlockEntityRenderer::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(EMPTY, () -> TexturedModelData.of(new ModelData(), 16, 16));
 
         EntityRendererRegistry.register(PeculiarEntities.TELEPORT_ITEM_ENTITY, TeleportItemEntityRenderer::new);
+        EntityRendererRegistry.register(PeculiarEntities.EQUIPMENT_STAND_ENTITY, EquipmentStandEntityRenderer::new);
 
         ClientSpriteRegistryCallback.event(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).register(((atlasTexture, registry) -> registry.register(PeculiarPieces.id("particle/warding_aura"))));
         ParticleFactoryRegistry.getInstance().register(PeculiarPieces.WARDING_AURA, WardingParticle.Factory::new);
@@ -176,7 +183,8 @@ public class PeculiarPiecesClient implements ClientModInitializer {
     static {
         ModelPredicateProviderRegistry.register(PeculiarBlocks.JUMP_PAD.asItem(), new Identifier("variant"), (stack, world, entity, number) -> stack.getNbt() == null ? 0 : (float) stack.getNbt().getInt("pp:variant") / 3);
         ModelPredicateProviderRegistry.register(PeculiarBlocks.PUSH_PAD.asItem(), new Identifier("variant"), (stack, world, entity, number) -> stack.getNbt() == null ? 0 : (float) stack.getNbt().getInt("pp:variant") / 3);
-        ModelPredicateProviderRegistry.register(PeculiarItems.HANG_GLIDER, new Identifier("active"), (stack, world, entity, number) -> stack.getNbt() == null || !stack.getNbt().getBoolean("pp:gliding") ? 0 : 1);
+        ModelPredicateProviderRegistry.register(PeculiarItems.HANG_GLIDER, new Identifier("active"), (stack, world, entity, number) -> stack.getNbt() != null && stack.getNbt().getBoolean("pp:gliding") ? 1 : 0);
+        ModelPredicateProviderRegistry.register(PeculiarItems.HANG_GLIDER, new Identifier("gliding"), (stack, world, entity, number) -> entity != null && GliderItem.isGliding(entity) ? 1 : 0);
         ModelPredicateProviderRegistry.register(PeculiarItems.PLAYER_COMPASS, new Identifier("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> PlayerCompassItem.createPlayerPos(world, stack.getOrCreateNbt())));
         ModelPredicateProviderRegistry.register(PeculiarItems.TORCH_QUIVER, new Identifier("setting"), (stack, world, entity, number) -> stack.getOrCreateNbt().getInt("pp:setting"));
         ModelPredicateProviderRegistry.register(PeculiarItems.SLIME, new Identifier("chunked"), (stack, world, entity, number) -> stack.getNbt() == null || !stack.getNbt().getBoolean("pp:chunked") ? 0 : 1);
