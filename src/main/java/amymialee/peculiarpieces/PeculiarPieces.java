@@ -38,11 +38,13 @@ import net.minecraft.block.BlockState;
 import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.Vec3ArgumentType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.particle.DefaultParticleType;
@@ -209,23 +211,47 @@ public class PeculiarPieces implements ModInitializer {
                     .then(CommandManager.literal("ward")
                             .then(CommandManager.argument("set", BoolArgumentType.bool())
                                     .then(CommandManager.argument("pos", BlockPosArgumentType.blockPos())
-                                                    .executes(context -> {
-                                                        ServerCommandSource source = context.getSource();
-                                                        ServerWorld serverWorld = source.getWorld();
-                                                        BlockPos pos = BlockPosArgumentType.getLoadedBlockPos(context, "pos");
-                                                        Chunk chunk = serverWorld.getChunk(pos);
-                                                        Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(chunk);
-                                                        boolean ward = BoolArgumentType.getBool(context, "set");
-                                                        if (component.isPresent()) {
-                                                            WardingComponent wardingComponent = component.get();
-                                                            wardingComponent.setWard(pos, ward);
-                                                            PeculiarComponentInitializer.WARDING.sync(chunk);
-                                                        } else {
-                                                            source.sendFeedback(Text.translatable("peculiar.commands.ward.failure"), true);
-                                                        }
-                                                        source.sendFeedback(Text.translatable("peculiar.commands.ward.success", ward ? "Warded" : "Unwarded", pos.getX(), pos.getY(), pos.getZ()), true);
-                                                        return 0;
-                                                    }))));
+                                            .executes(context -> {
+                                                ServerCommandSource source = context.getSource();
+                                                ServerWorld serverWorld = source.getWorld();
+                                                BlockPos pos = BlockPosArgumentType.getLoadedBlockPos(context, "pos");
+                                                Chunk chunk = serverWorld.getChunk(pos);
+                                                Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(chunk);
+                                                boolean ward = BoolArgumentType.getBool(context, "set");
+                                                if (component.isPresent()) {
+                                                    WardingComponent wardingComponent = component.get();
+                                                    wardingComponent.setWard(pos, ward);
+                                                    PeculiarComponentInitializer.WARDING.sync(chunk);
+                                                } else {
+                                                    source.sendFeedback(Text.translatable("peculiar.commands.ward.failure"), true);
+                                                }
+                                                source.sendFeedback(Text.translatable("peculiar.commands.ward.success", ward ? "Warded" : "Unwarded", pos.getX(), pos.getY(), pos.getZ()), true);
+                                                return 0;
+                                            }))));
+            literalArgumentBuilder
+                    .then(CommandManager.literal("discard")
+                            .then(CommandManager.argument("targets", EntityArgumentType.entities())
+                                    .executes(context -> {
+                                        Collection<? extends Entity> targets = EntityArgumentType.getEntities(context, "targets");
+                                        int total = 0;
+                                        for (Entity entity : targets) {
+                                            if (!(entity instanceof PlayerEntity)) {
+                                                entity.discard();
+                                                total++;
+                                            }
+                                        }
+                                        if (targets.size() == 1) {
+                                            Entity first = targets.iterator().next();
+                                            if (first instanceof PlayerEntity) {
+                                                context.getSource().sendFeedback(Text.translatable("peculiar.commands.discard.failure.single"), true);
+                                            } else {
+                                                context.getSource().sendFeedback(Text.translatable("peculiar.commands.discard.success.single", first.getDisplayName()), true);
+                                            }
+                                        } else {
+                                            context.getSource().sendFeedback(Text.translatable("peculiar.commands.discard.success.multiple", total), true);
+                                        }
+                                        return targets.size();
+                                    })));
             dispatcher.register(literalArgumentBuilder);
         });
         ServerTickEvents.END_WORLD_TICK.register(serverWorld -> WarpManager.tick());

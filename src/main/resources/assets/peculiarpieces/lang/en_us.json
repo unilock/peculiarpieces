@@ -261,6 +261,9 @@
   "peculiar.commands.wardarea.success": "Successfully %s %s blocks",
   "peculiar.commands.ward.success": "%s the block at %s, %s, %s",
   "peculiar.commands.ward.failure": "Failed to set ward",
+  "peculiar.commands.discard.failure.single": "Cannot discard players",
+  "peculiar.commands.discard.success.single": "Discarded %s",
+  "peculiar.commands.discard.success.multiple": "Discarded %s entities",
 
   "peculiarpieces.potion.hidden.name" : "Hidden",
   "peculiarpieces.potion.hidden.description" : "Won't show Particles.",

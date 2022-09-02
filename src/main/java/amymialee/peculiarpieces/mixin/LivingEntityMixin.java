@@ -2,6 +2,7 @@ package amymialee.peculiarpieces.mixin;
 
 import amymialee.peculiarpieces.PeculiarPieces;
 import amymialee.peculiarpieces.registry.PeculiarItems;
+import amymialee.peculiarpieces.util.ExtraPlayerDataWrapper;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
@@ -9,6 +10,7 @@ import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
@@ -24,6 +26,7 @@ import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -35,8 +38,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends EntityMixin {
+public abstract class LivingEntityMixin extends Entity {
+    public LivingEntityMixin(EntityType<?> type, World world) {
+        super(type, world);
+    }
+
     @Shadow public abstract void setHealth(float health);
     @Shadow public abstract boolean clearStatusEffects();
     @Shadow public abstract boolean addStatusEffect(StatusEffectInstance effect);
@@ -45,10 +53,25 @@ public abstract class LivingEntityMixin extends EntityMixin {
     @Shadow protected abstract SoundEvent getDrinkSound(ItemStack stack);
     @Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
     @Shadow public float airStrafingSpeed;
-    @Shadow public float headYaw;
 
-    @Inject(method = "fall", at = @At("HEAD"), cancellable = true)
-    public void PeculiarPieces$FallHead(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition, CallbackInfo ci) {}
+    @Inject(method = "fall", at = @At("HEAD"))
+    public void PeculiarPieces$FallHead(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition, CallbackInfo ci) {
+        if ((Object) this instanceof PlayerEntity player && player instanceof ExtraPlayerDataWrapper extraPlayerDataWrapper) {
+            Optional<TrinketComponent> optionalComponent = TrinketsApi.getTrinketComponent(player);
+            if (optionalComponent.isPresent() && optionalComponent.get().isEquipped(PeculiarItems.BOUNCY_BOOTS)) {
+                if (!this.isSneaking()) {
+                    this.airStrafingSpeed *= 4;
+                    if (onGround) {
+                        if (this.fallDistance > 0.0f) {
+                            extraPlayerDataWrapper.setBouncePower(Math.pow(Math.abs(getVelocity().getY()), 1.5) - 0.05);
+                            return;
+                        }
+                    }
+                }
+                this.fallDistance = 0;
+            }
+        }
+    }
 
     @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
     public void PeculiarPieces$DamageInvulnerability(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
@@ -68,7 +91,7 @@ public abstract class LivingEntityMixin extends EntityMixin {
     protected void PeculiarPieces$QuietHiddenPotions(ItemStack stack, int particleCount, CallbackInfo ci) {
         if (stack.getItem() == PeculiarItems.HIDDEN_POTION) {
             if (stack.getUseAction() == UseAction.DRINK) {
-                this.playSound(this.getDrinkSound(stack), 0.1f, this.world.random.nextFloat() * 0.1f + 0.95f);
+                this.playSound(this.getDrinkSound(stack), 0.1f, this.getWorld().random.nextFloat() * 0.1f + 0.95f);
             }
             ci.cancel();
         }
@@ -142,6 +165,6 @@ public abstract class LivingEntityMixin extends EntityMixin {
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 10 * 20, 3));
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 16 * 20, 3));
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 32 * 20, 0));
-        this.world.sendEntityStatus(((Entity) ((Object) this)), EntityStatuses.USE_TOTEM_OF_UNDYING);
+        this.getWorld().sendEntityStatus(this, EntityStatuses.USE_TOTEM_OF_UNDYING);
     }
 }

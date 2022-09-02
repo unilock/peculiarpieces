@@ -31,7 +31,7 @@ public class EquipmentStandEntity extends MobEntity {
     }
 
     @Override
-    public Iterable<ItemStack> getItemsHand() {
+    public Iterable<ItemStack> getHandItems() {
         return this.heldItems;
     }
 
@@ -120,7 +120,7 @@ public class EquipmentStandEntity extends MobEntity {
     }
 
     @Override
-    public boolean collides() {
+    public boolean isCollidable() {
         return false;
     }
 

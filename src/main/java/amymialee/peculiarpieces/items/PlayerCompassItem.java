@@ -47,7 +47,7 @@ public class PlayerCompassItem extends Item {
                 Vec3d vec3d2 = user.getRotationVec(1.0f);
                 Vec3d vec3d3 = vec3d.add(vec3d2.x * 8, vec3d2.y * 8, vec3d2.z * 8);
                 Box box = user.getBoundingBox().stretch(vec3d2.multiply(8)).expand(1.0, 1.0, 1.0);
-                EntityHitResult entityHitResult = ProjectileUtil.raycast(user, vec3d, vec3d3, box, entity -> entity instanceof PlayerEntity && !entity.isSpectator() && entity.collides(), 8);
+                EntityHitResult entityHitResult = ProjectileUtil.raycast(user, vec3d, vec3d3, box, entity -> entity instanceof PlayerEntity && !entity.isSpectator() && entity.isCollidable(), 8);
                 if (entityHitResult != null) {
                     if (entityHitResult.getEntity() instanceof PlayerEntity player) {
                         if (!world.isClient()) {

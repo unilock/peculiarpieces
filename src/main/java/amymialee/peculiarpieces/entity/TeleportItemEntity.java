@@ -23,13 +23,11 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.text.Text;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -62,12 +60,6 @@ public class TeleportItemEntity extends Entity {
 
     public TeleportItemEntity(World world, double x, double y, double z, ItemStack stack, ItemStack pearl) {
         this(world, x, y, z, stack, pearl, world.random.nextDouble() * 0.2 - 0.1, 0.2, world.random.nextDouble() * 0.2 - 0.1);
-    }
-
-    @Override
-    @Nullable
-    public Entity getEventSource() {
-        return Util.map(this.thrower, this.world::getPlayerByUuid);
     }
 
     @Override
