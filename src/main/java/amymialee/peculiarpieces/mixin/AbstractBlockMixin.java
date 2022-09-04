@@ -56,5 +56,16 @@ public class AbstractBlockMixin {
                 }
             }
         }
+
+        @Inject(method = "canPlaceAt", at = @At("HEAD"), cancellable = true)
+        public void canPlaceAt(WorldView world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+            Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
+            if (component.isPresent()) {
+                WardingComponent wardingComponent = component.get();
+                if (wardingComponent.getWard(pos)) {
+                    cir.setReturnValue(true);
+                }
+            }
+        }
     }
 }
