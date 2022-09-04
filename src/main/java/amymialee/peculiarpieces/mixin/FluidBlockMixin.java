@@ -21,9 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(FluidBlock.class)
 public abstract class FluidBlockMixin {
     @Shadow @Final protected FlowableFluid fluid;
-
     @Shadow @Final public static ImmutableList<Direction> FLOW_DIRECTIONS;
-
     @Shadow protected abstract void playExtinguishSound(WorldAccess world, BlockPos pos);
 
     @Inject(method = "receiveNeighborFluids", at = @At("HEAD"), cancellable = true)

@@ -30,6 +30,7 @@
     "LockableContainerBlockEntityMixin",
     "MobEntityMixin",
     "PersistentProjectileEntityMixin",
+    "PistonBlockMixin",
     "PlayerEntityMixin",
     "PowderSnowBlockMixin",
     "RedstoneWireBlockMixin",

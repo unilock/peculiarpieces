@@ -17,9 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
     @Shadow public abstract Item getItem();
-
     @Shadow public abstract NbtCompound getOrCreateNbt();
-
     @Shadow public abstract @Nullable NbtCompound getNbt();
 
     @Inject(method = "setCustomName", at = @At("TAIL"))

@@ -20,7 +20,6 @@ import java.util.Optional;
 @Mixin(World.class)
 public abstract class WorldMixin implements WorldAccess {
     @Shadow public abstract WorldChunk getChunk(int i, int j);
-
     @Shadow public abstract BlockState getBlockState(BlockPos pos);
 
     @Inject(method = "setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;II)Z", at = @At("HEAD"), cancellable = true)
@@ -28,8 +27,9 @@ public abstract class WorldMixin implements WorldAccess {
         Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(this.getChunk(pos));
         if (component.isPresent()) {
             WardingComponent wardingComponent = component.get();
-            if (wardingComponent.getWard(pos)) {
-                if (this.getBlockState(pos).getBlock() != state.getBlock()) {
+            BlockState current = this.getBlockState(pos);
+            if (wardingComponent.getWard(this, pos)) {
+                if (current.getBlock() != state.getBlock()) {
                     cir.setReturnValue(false);
                 }
             }

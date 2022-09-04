@@ -20,9 +20,7 @@ import java.util.List;
 @Mixin(BrewingRecipeRegistry.class)
 public class BrewingRecipeRegistryMixin {
     @Shadow @Final private static List<BrewingRecipeRegistry.Recipe<Item>> ITEM_RECIPES;
-
     @Shadow @Final private static List<Ingredient> POTION_TYPES;
-
     @Shadow @Final private static List<BrewingRecipeRegistry.Recipe<Potion>> POTION_RECIPES;
 
     @Inject(method = "registerDefaults", at = @At("TAIL"))

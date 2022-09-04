@@ -42,7 +42,6 @@ public class AbstractBlockMixin {
     @Mixin(AbstractBlock.AbstractBlockState.class)
     static abstract class AbstractBlockStateMixin {
         @Shadow public abstract Block getBlock();
-
         @Shadow protected abstract BlockState asBlockState();
 
         @Inject(method = "getStateForNeighborUpdate", at = @At("HEAD"), cancellable = true)

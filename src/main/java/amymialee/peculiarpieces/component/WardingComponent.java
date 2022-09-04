@@ -1,11 +1,14 @@
 package amymialee.peculiarpieces.component;
 
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldView;
 import net.minecraft.world.chunk.Chunk;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,6 +21,11 @@ public class WardingComponent implements AutoSyncedComponent {
 
     public WardingComponent(Chunk chunk) {
         this.chunk = chunk;
+    }
+
+    public boolean getWard(WorldView world, BlockPos pos) {
+        BlockState block = world.getBlockState(pos);
+        return !block.isAir() && !(block.isOf(Blocks.PISTON) || block.isOf(Blocks.STICKY_PISTON) || block.isOf(Blocks.MOVING_PISTON) || block.isOf(Blocks.PISTON_HEAD)) && getWard(pos);
     }
 
     public boolean getWard(BlockPos pos) {
