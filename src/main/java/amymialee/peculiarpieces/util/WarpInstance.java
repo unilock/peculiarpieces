@@ -3,12 +3,16 @@ package amymialee.peculiarpieces.util;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class WarpInstance {
     private final Entity entity;
     @Nullable
     private Vec3d position;
+    @Nullable
+    private RegistryKey<World> world;
     private boolean hasPitch;
     private float pitch;
     private boolean hasYaw;
@@ -21,6 +25,11 @@ public class WarpInstance {
 
     public static WarpInstance of(Entity entity) {
         return new WarpInstance(entity);
+    }
+
+    public WarpInstance world(RegistryKey<World> world) {
+        this.world = world;
+        return this;
     }
 
     public WarpInstance position(Vec3d position) {
@@ -103,5 +112,9 @@ public class WarpInstance {
 
     public boolean hasParticles() {
         return particles;
+    }
+
+    public @Nullable RegistryKey<World> getWorld() {
+        return world;
     }
 }

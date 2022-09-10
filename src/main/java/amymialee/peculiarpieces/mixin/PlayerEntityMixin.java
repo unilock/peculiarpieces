@@ -10,10 +10,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,6 +30,7 @@ import java.util.Optional;
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPlayerDataWrapper {
     @Unique private Vec3d checkpointPos;
+    @Unique private RegistryKey<World> checkpointWorld;
     @Unique private int gameModeDuration = 0;
     @Unique private GameMode storedGameMode = null;
     @Unique private double bouncePower = 0;
@@ -52,6 +55,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
         if (checkpointPos != null && checkpointPos.distanceTo(Vec3d.ZERO) > 1) {
             nbt.put("pp:checkpos", NbtHelper.fromBlockPos(new BlockPos(checkpointPos)));
         }
+        if (checkpointWorld != null) {
+            World.CODEC.encodeStart(NbtOps.INSTANCE, checkpointWorld).resultOrPartial(error -> {}).ifPresent(nbtElement -> nbt.put("CheckpointDimension", nbtElement));
+        }
         if (storedGameMode != null) {
             nbt.putInt("pp:gamemode", storedGameMode.getId() + 1);
         }
@@ -66,6 +72,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
         if (vec3d.distanceTo(Vec3d.ZERO) > 1) {
             checkpointPos = vec3d;
         }
+        Optional<RegistryKey<World>> worldKey = getCheckpointDimension(nbt);
+        worldKey.ifPresent(worldRegistryKey -> checkpointWorld = worldRegistryKey);
         int gameMode = nbt.getInt("pp:gamemode");
         if (gameMode != 0) {
             storedGameMode = GameMode.byId(gameMode - 1);
@@ -73,6 +81,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
             storedGameMode = null;
         }
         gameModeDuration = nbt.getInt("pp:gamemode_duration");
+    }
+
+    private static Optional<RegistryKey<World>> getCheckpointDimension(NbtCompound nbt) {
+        return World.CODEC.parse(NbtOps.INSTANCE, nbt.get("CheckpointDimension")).result();
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
@@ -145,5 +157,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
 
     @Override public void setBouncePower(double bouncePower) {
         this.bouncePower = bouncePower;
+    }
+
+    @Override
+    public RegistryKey<World> getCheckpointWorld() {
+        return checkpointWorld;
+    }
+
+    @Override
+    public void setCheckpointWorld(RegistryKey<World> world) {
+        this.checkpointWorld = world;
     }
 }

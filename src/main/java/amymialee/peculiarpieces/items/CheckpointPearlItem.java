@@ -12,6 +12,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 
 public class CheckpointPearlItem extends Item {
@@ -24,7 +25,12 @@ public class CheckpointPearlItem extends Item {
         if (user instanceof ExtraPlayerDataWrapper checkPlayer) {
             Vec3d checkpointPos = checkPlayer.getCheckpointPos();
             if (checkpointPos != null) {
-                WarpManager.queueTeleport(WarpInstance.of(user).position(checkpointPos).particles());
+                WarpInstance instance = WarpInstance.of(user).position(checkpointPos).particles();
+                RegistryKey<World> worldRegistryKey = checkPlayer.getCheckpointWorld();
+                if (worldRegistryKey != null) {
+                    instance.world(worldRegistryKey);
+                }
+                WarpManager.queueTeleport(instance);
                 user.getItemCooldownManager().set(this, 4);
                 user.sendMessage(Text.translatable("%s.checkpoint_returned".formatted(PeculiarPieces.MOD_ID)).formatted(Formatting.GRAY), true);
                 return TypedActionResult.success(user.getStackInHand(hand));

@@ -11,6 +11,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 
 public class CheckpointReturnerBlock extends AbstractStructureVoidBlock {
@@ -24,7 +25,12 @@ public class CheckpointReturnerBlock extends AbstractStructureVoidBlock {
         if (!world.isClient() && entity instanceof PlayerEntity player && player instanceof ExtraPlayerDataWrapper checkPlayer) {
             Vec3d checkpointPos = checkPlayer.getCheckpointPos();
             if (checkpointPos != null && checkpointPos.distanceTo(entity.getPos()) > 2) {
-                WarpManager.queueTeleport(WarpInstance.of(player).position(checkpointPos).particles());
+                WarpInstance instance = WarpInstance.of(player).position(checkpointPos).particles();
+                RegistryKey<World> worldRegistryKey = checkPlayer.getCheckpointWorld();
+                if (worldRegistryKey != null) {
+                    instance.world(worldRegistryKey);
+                }
+                WarpManager.queueTeleport(instance);
                 player.sendMessage(Text.translatable("%s.checkpoint_returned".formatted(PeculiarPieces.MOD_ID)).formatted(Formatting.GRAY), true);
             }
         }

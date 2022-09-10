@@ -169,7 +169,10 @@ public class PeculiarPieces implements ModInitializer {
                                                 Collection<ServerPlayerEntity> targets = EntityArgumentType.getPlayers(ctx, "targets");
                                                 Vec3d pos = Vec3ArgumentType.getPosArgument(ctx, "location").toAbsolutePos(ctx.getSource());
                                                 for (ServerPlayerEntity target : targets) {
-                                                    ((ExtraPlayerDataWrapper) target).setCheckpointPos(pos);
+                                                    if (target instanceof ExtraPlayerDataWrapper wrapper) {
+                                                        wrapper.setCheckpointPos(pos);
+                                                        wrapper.setCheckpointWorld(ctx.getSource().getWorld().getRegistryKey());
+                                                    }
                                                 }
                                                 if (targets.size() == 1) {
                                                     ctx.getSource().sendFeedback(Text.translatable("peculiar.commands.checkpoint.success.single", pos.getX(), pos.getY(), pos.getZ(), targets.iterator().next().getDisplayName()), true);

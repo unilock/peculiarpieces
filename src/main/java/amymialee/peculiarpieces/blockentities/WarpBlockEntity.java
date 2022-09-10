@@ -50,7 +50,12 @@ public class WarpBlockEntity extends LootableContainerBlockEntity {
             if (entity instanceof PlayerEntity player && player instanceof ExtraPlayerDataWrapper checkPlayer) {
                 Vec3d checkpointPos = checkPlayer.getCheckpointPos();
                 if (checkpointPos != null) {
-                    WarpManager.queueTeleport(WarpInstance.of(entity).position(checkpointPos).particles());
+                    WarpInstance instance = WarpInstance.of(entity).position(checkpointPos).particles();
+                    RegistryKey<World> worldRegistryKey = checkPlayer.getCheckpointWorld();
+                    if (worldRegistryKey != null) {
+                        instance.world(worldRegistryKey);
+                    }
+                    WarpManager.queueTeleport(instance);
                     player.sendMessage(Text.translatable("%s.checkpoint_returned".formatted(PeculiarPieces.MOD_ID)).formatted(Formatting.GRAY), true);
                 }
             }

@@ -17,9 +17,10 @@ public class CheckpointRemoverBlock extends AbstractStructureVoidBlock {
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if (entity instanceof PlayerEntity player) {
-            if (((ExtraPlayerDataWrapper) player).getCheckpointPos() != null) {
-                ((ExtraPlayerDataWrapper) player).setCheckpointPos(null);
+        if (entity instanceof PlayerEntity player && player instanceof ExtraPlayerDataWrapper wrapper) {
+            if (wrapper.getCheckpointPos() != null) {
+                wrapper.setCheckpointPos(null);
+                wrapper.setCheckpointWorld(null);
                 player.sendMessage(Text.translatable("%s.checkpoint_cleared".formatted(PeculiarPieces.MOD_ID)).formatted(Formatting.GRAY), true);
             }
         }

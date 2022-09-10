@@ -4,8 +4,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,8 +20,15 @@ public class WarpManager {
         for (int i = 0; i < dueTeleports.size();) {
             WarpInstance instance = dueTeleports.get(i);
             Entity entity = instance.getEntity();
-            if (instance.getPosition() != null) {
-                Vec3d pos = instance.getPosition();
+            RegistryKey<World> world = instance.getWorld();
+            if (world != null) {
+                MinecraftServer server = instance.getEntity().getServer();
+                if (server != null) {
+                    entity.moveToWorld(server.getWorld(world));
+                }
+            }
+            Vec3d pos = instance.getPosition();
+            if (pos != null) {
                 entity.dismountVehicle();
                 if (entity instanceof LivingEntity livingEntity) {
                     teleport(livingEntity, pos.x, pos.y, pos.z, instance.hasParticles());
@@ -30,9 +40,9 @@ public class WarpManager {
                 if (instance.hasYaw()) entity.setHeadYaw(instance.getYaw());
                 if (instance.hasPitch()) entity.setHeadYaw(instance.getPitch());
                 if (entity instanceof ServerPlayerEntity playerEntity) {
-                    Vec3d pos = playerEntity.getPos();
+                    Vec3d playerPos = playerEntity.getPos();
                     playerEntity.networkHandler.sendPacket(
-                            new PlayerPositionLookS2CPacket(pos.x, pos.y, pos.z,
+                            new PlayerPositionLookS2CPacket(playerPos.x, playerPos.y, playerPos.z,
                                     instance.hasYaw() ? instance.getYaw() : playerEntity.getYaw(),
                                     instance.hasPitch() ? instance.getPitch() : playerEntity.getPitch(),
                                     Collections.emptySet(), 0, true)
