@@ -126,6 +126,7 @@
   "block.peculiarpieces.progress_flag" : "Progress Flag",
   "block.peculiarpieces.template_flag" : "Template Flag",
   "block.peculiarpieces.trans_flag" : "Trans Flag",
+  "block.peculiarpieces.empty_flag" : "Flagless Flag",
   "block.peculiarpieces.redstone_trigger" : "Redstone Trigger",
   "block.peculiarpieces.redstone_flip" : "Redstone Flip",
   "block.peculiarpieces.fish_tank" : "Fish Tank",

@@ -236,7 +236,8 @@ public class FlagBlock extends BlockWithEntity {
         ACE("ace"),
         DEMISEXUAL("demisexual"),
         INTER("inter"),
-        TEMPLATE("template");
+        TEMPLATE("template"),
+        EMPTY("flagless");
 
         private final String name;
 

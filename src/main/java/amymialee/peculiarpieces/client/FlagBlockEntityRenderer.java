@@ -134,7 +134,7 @@ public class FlagBlockEntityRenderer implements BlockEntityRenderer<FlagBlockEnt
             }
         }
         {
-            VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getEntitySolid(flag), true, false);
+            VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getEntityCutout(flag), true, false);
             this.flag.render(matrixStack, vertexConsumer, light, overlay, components[0], components[1], components[2], 1.0f);
         }
         {

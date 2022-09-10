@@ -43,10 +43,12 @@ import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.item.CompassAnglePredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
+import net.minecraft.client.model.Dilation;
 import net.minecraft.client.model.ModelData;
 import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
@@ -62,6 +64,7 @@ public class PeculiarPiecesClient implements ClientModInitializer {
     public static final EntityModelLayer HANG_GLIDER = new EntityModelLayer(PeculiarPieces.id("hang_glider"), "main");
     public static final EntityModelLayer FLAG = new EntityModelLayer(PeculiarPieces.id("flag"), "main");
     public static final EntityModelLayer EMPTY = new EntityModelLayer(PeculiarPieces.id("empty"), "main");
+    public static final EntityModelLayer EQUIPMENT_STAND = new EntityModelLayer(PeculiarPieces.id("equipment_stand"), "main");
     private final FlagBlockEntity renderFlag = new FlagBlockEntity(BlockPos.ORIGIN, PeculiarBlocks.FLAG.getDefaultState());
 
     @Override
@@ -125,6 +128,7 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(HANG_GLIDER, HangGliderEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(FLAG, FlagBlockEntityRenderer::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(EMPTY, () -> TexturedModelData.of(new ModelData(), 16, 16));
+        EntityModelLayerRegistry.registerModelLayer(EQUIPMENT_STAND, () -> TexturedModelData.of(PlayerEntityModel.getTexturedModelData(Dilation.NONE, true), 64, 64));
 
         EntityRendererRegistry.register(PeculiarEntities.TELEPORT_ITEM_ENTITY, TeleportItemEntityRenderer::new);
         EntityRendererRegistry.register(PeculiarEntities.EQUIPMENT_STAND_ENTITY, EquipmentStandEntityRenderer::new);
