@@ -39,7 +39,7 @@ public class RedstoneClockBlock extends AbstractRedstoneComparisonBlock {
         if (!player.getAbilities().allowModifyWorld) {
             return ActionResult.PASS;
         }
-        int filter = PeculiarHelper.clampLoop(1, 4, state.get(DELAY) + (player.isSneaking() ? -1 : 1));
+        int filter = PeculiarHelper.clampLoop(0, 4, state.get(DELAY) + (player.isSneaking() ? -1 : 1));
         world.setBlockState(pos, state.with(DELAY, filter), Block.NOTIFY_ALL);
         world.playSound(player, pos, SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3f, (float) (3 * filter) / 15);
         return ActionResult.success(world.isClient);

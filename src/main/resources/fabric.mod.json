@@ -44,6 +44,10 @@
     },
     "cardinal-components": [
       "peculiarpieces:warding"
-    ]
+    ],
+    "waila:plugins" : {
+      "id": "peculiarpieces:peculiar_plugin",
+      "initializer": "amymialee.peculiarpieces.compat.PeculiarWaliaPlugin"
+    }
   }
 }

@@ -19,6 +19,7 @@ repositories {
     maven { url = "https://maven.willbl.dev/releases" }
     maven { url = "https://maven.siphalor.de" }
     maven { url = "https://maven.jamieswhiteshirt.com/libs-release" }
+    maven { url = "https://maven.bai.lol" }
 }
 
 dependencies {
@@ -33,6 +34,9 @@ dependencies {
     modImplementation ("amymialee:visible-barriers:1.5.2+1.19")
     modImplementation ("amymialee:kofi-table:1.0.4+1.19.x")
     modImplementation ("com.terraformersmc:modmenu:4.0.6")
+    modCompileOnly "mcp.mobius.waila:wthit-api:fabric-5.12.0"
+    modRuntimeOnly "mcp.mobius.waila:wthit:fabric-5.12.0"
+    modRuntimeOnly "lol.bai:badpackets:fabric-0.2.0"
     //Include
     modImplementation include ("de.siphalor:nbtcrafting-1.19:2.1.3+mc1.19")
     modImplementation include ("io.github.ladysnake:PlayerAbilityLib:1.6.0")
