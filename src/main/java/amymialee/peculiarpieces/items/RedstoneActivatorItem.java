@@ -14,7 +14,7 @@ public class RedstoneActivatorItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        RedstoneManager.addInstance(context.getWorld(), context.getBlockPos(), new RedstoneInstance());
+        RedstoneManager.addInstance(context.getWorld(), context.getBlockPos(), new RedstoneInstance().setLifetime(20));
         PlayerEntity player = context.getPlayer();
         if (player != null) {
             player.getItemCooldownManager().set(this, 2);
