@@ -23,7 +23,7 @@ public class WarpManager {
             RegistryKey<World> world = instance.getWorld();
             if (world != null) {
                 MinecraftServer server = instance.getEntity().getServer();
-                if (server != null) {
+                if (server != null && entity.getWorld() != server.getWorld(world)) {
                     entity.moveToWorld(server.getWorld(world));
                 }
             }
