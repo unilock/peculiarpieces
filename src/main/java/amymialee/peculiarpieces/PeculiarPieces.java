@@ -198,6 +198,9 @@ public class PeculiarPieces implements ModInitializer {
                                                         int j = 0;
                                                         boolean ward = BoolArgumentType.getBool(context, "set");
                                                         for (BlockPos blockPos : BlockPos.iterate(range.getMinX(), range.getMinY(), range.getMinZ(), range.getMaxX(), range.getMaxY(), range.getMaxZ())) {
+                                                            if (ward && serverWorld.getBlockState(blockPos).isAir()) {
+                                                                continue;
+                                                            }
                                                             Chunk chunk = serverWorld.getChunk(blockPos);
                                                             Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(chunk);
                                                             if (component.isPresent()) {

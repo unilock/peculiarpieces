@@ -41,6 +41,6 @@ public class ElevatorBlock extends Block implements PlayerCrouchConsumingBlock, 
     }
 
     public void receiveTeleport(BlockState state, BlockPos pos, PlayerEntity player) {
-        WarpManager.queueTeleport(WarpInstance.of(player).position(pos.add(0, 1, 0)).particles());
+        WarpManager.queueTeleport(WarpInstance.of(player).y(pos.getY() + 1).particles());
     }
 }

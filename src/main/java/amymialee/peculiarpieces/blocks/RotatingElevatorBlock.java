@@ -25,7 +25,7 @@ public class RotatingElevatorBlock extends ElevatorBlock {
 
     @Override
     public void receiveTeleport(BlockState state, BlockPos pos, PlayerEntity player) {
-        WarpManager.queueTeleport(WarpInstance.of(player).position(pos.add(0, 1, 0)).yaw(state.get(FACING).getOpposite().asRotation()).particles());
+        WarpManager.queueTeleport(WarpInstance.of(player).y(pos.getY() + 1).yaw(state.get(FACING).getOpposite().asRotation()).particles());
     }
 
     @Override
