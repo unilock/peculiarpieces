@@ -42,7 +42,7 @@ public class TorchQuiverItem extends RangedWeaponItem {
     public TorchQuiverItem(Settings settings) {
         super(settings);
         ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(ReachEntityAttributes.REACH, new EntityAttributeModifier(REACH_MODIFIER_ID, "Reach modifier", 8, EntityAttributeModifier.Operation.ADDITION));
+        builder.put(ReachEntityAttributes.REACH, new EntityAttributeModifier(REACH_MODIFIER_ID, "Reach modifier", 16, EntityAttributeModifier.Operation.ADDITION));
         this.attributeModifiers = builder.build();
     }
 
@@ -51,7 +51,7 @@ public class TorchQuiverItem extends RangedWeaponItem {
         ItemStack stack = user.getStackInHand(hand);
         if (user.isSneaking()) {
             NbtCompound compound = stack.getOrCreateNbt();
-            stack.getOrCreateNbt().putInt("pp:setting", PeculiarHelper.clampLoop(0, 1, compound.getInt("pp:setting") + 1));
+            stack.getOrCreateNbt().putInt("pp:setting", PeculiarHelper.clampLoop(0, torches.length - 1, compound.getInt("pp:setting") + 1));
             user.getItemCooldownManager().set(this, 2);
         }
         if (stack.getOrCreateNbt().getBoolean("Unbreakable")) {
@@ -64,13 +64,16 @@ public class TorchQuiverItem extends RangedWeaponItem {
     public ActionResult useOnBlock(ItemUsageContext context) {
         ItemStack quiver = context.getStack();
         if (context.getPlayer() != null && (quiver.getDamage() < getMaxDamage() || context.getPlayer().isCreative())) {
-            Item item = torches[quiver.getOrCreateNbt().getInt("pp:setting")];
-            if (item instanceof BlockItem blockItem) {
-                ActionResult result = blockItem.place(new ItemPlacementContext(context.getPlayer(), context.getHand(), new ItemStack(item), ((ItemUsageContextAccessor) context).getHit()));
-                if (result.isAccepted() && !context.getPlayer().isCreative()) {
-                    quiver.setDamage(quiver.getDamage() + 1);
+            int setting = quiver.getOrCreateNbt().getInt("pp:setting");
+            if (setting < torches.length) {
+                Item item = torches[setting];
+                if (item instanceof BlockItem blockItem) {
+                    ActionResult result = blockItem.place(new ItemPlacementContext(context.getPlayer(), context.getHand(), new ItemStack(item), ((ItemUsageContextAccessor) context).getHit()));
+                    if (result.isAccepted() && !context.getPlayer().isCreative()) {
+                        quiver.setDamage(quiver.getDamage() + 1);
+                    }
+                    return result;
                 }
-                return result;
             }
         }
         return super.useOnBlock(context);
@@ -105,7 +108,7 @@ public class TorchQuiverItem extends RangedWeaponItem {
     public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
         if (this.isIn(group)) {
             for (int filled = 0; filled <= 1; filled++) {
-                for (int setting = 0; setting <= 1; setting++) {
+                for (int setting = 0; setting < torches.length; setting++) {
                     ItemStack stack = new ItemStack(this);
                     if (filled == 0) {
                         stack.setDamage(512);

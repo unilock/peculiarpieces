@@ -1,5 +1,6 @@
 package amymialee.peculiarpieces.mixin;
 
+import amymialee.peculiarpieces.PeculiarPieces;
 import amymialee.peculiarpieces.registry.PeculiarItems;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketComponent;
@@ -7,7 +8,6 @@ import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Pair;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,7 +24,7 @@ public class ClientPlayNetworkHandlerMixin {
     private static void PeculiarPieces$MoreTotems(PlayerEntity player, CallbackInfoReturnable<ItemStack> cir) {
         for (Hand hand : Hand.values()) {
             ItemStack itemStack = player.getStackInHand(hand);
-            if (itemStack.isOf(Items.TOTEM_OF_UNDYING)) return;
+            if (itemStack.isIn(PeculiarPieces.TOTEMS)) cir.setReturnValue(itemStack);
         }
         Optional<TrinketComponent> optionalComponent = TrinketsApi.getTrinketComponent(player);
         if (optionalComponent.isPresent()) {

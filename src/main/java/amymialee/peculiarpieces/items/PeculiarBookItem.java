@@ -22,16 +22,16 @@ public class PeculiarBookItem extends Item {
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        ItemStack stack = playerIn.getStackInHand(handIn);
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getStackInHand(hand);
         Book book = getBook();
         if (book == null) {
             return new TypedActionResult<>(ActionResult.FAIL, stack);
         }
-        if (playerIn instanceof ServerPlayerEntity) {
-            PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, book.id);
+        if (player instanceof ServerPlayerEntity serverPlayer) {
+            PatchouliAPI.get().openBookGUI(serverPlayer, book.id);
             SoundEvent sfx = PatchouliSounds.getSound(book.openSound, PatchouliSounds.BOOK_OPEN);
-            playerIn.playSound(sfx, 1F, (float) (0.7 + Math.random() * 0.4));
+            player.playSound(sfx, 1F, (float) (0.7 + Math.random() * 0.4));
         }
         return new TypedActionResult<>(ActionResult.SUCCESS, stack);
     }

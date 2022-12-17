@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.stat.Stats;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Pair;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPos;
@@ -53,6 +54,8 @@ public abstract class LivingEntityMixin extends Entity {
     @Shadow protected abstract SoundEvent getDrinkSound(ItemStack stack);
     @Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
     @Shadow public float airStrafingSpeed;
+
+    @Shadow public abstract ItemStack getStackInHand(Hand hand);
 
     @Inject(method = "fall", at = @At("HEAD"))
     public void PeculiarPieces$FallHead(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition, CallbackInfo ci) {
@@ -133,6 +136,21 @@ public abstract class LivingEntityMixin extends Entity {
                 return;
             }
             if (((Object) this) instanceof LivingEntity livingEntity) {
+                for (Hand hand : Hand.values()) {
+                    ItemStack itemStack = this.getStackInHand(hand);
+                    if (itemStack.isIn(PeculiarPieces.TOTEMS)) {
+                        useTotem(livingEntity, itemStack);
+                        if (itemStack.isOf(PeculiarItems.EVERLASTING_EMBLEM)) {
+                            if (livingEntity instanceof PlayerEntity player) {
+                                player.getItemCooldownManager().set(PeculiarItems.EVERLASTING_EMBLEM, (source.getAttacker() instanceof PlayerEntity ? 2 : 1) * 6 * 60 * 20);
+                            }
+                        } else if (!itemStack.isOf(PeculiarItems.PERPETUAL_FIGURE)) {
+                            itemStack.decrement(1);
+                        }
+                        cir.setReturnValue(true);
+                        return;
+                    }
+                }
                 Optional<TrinketComponent> optionalComponent = TrinketsApi.getTrinketComponent(livingEntity);
                 if (optionalComponent.isPresent()) {
                     if (optionalComponent.get().isEquipped(PeculiarItems.TOKEN_OF_UNDYING)) {
@@ -145,7 +163,7 @@ public abstract class LivingEntityMixin extends Entity {
                         if (livingEntity instanceof PlayerEntity player && !player.getItemCooldownManager().isCoolingDown(PeculiarItems.EVERLASTING_EMBLEM)) {
                             List<Pair<SlotReference, ItemStack>> equipped = optionalComponent.get().getEquipped(PeculiarItems.EVERLASTING_EMBLEM);
                             ItemStack stack = equipped.get(0).getRight();
-                            useTotem(player, stack);
+                            useTotem(livingEntity, stack);
                             player.getItemCooldownManager().set(PeculiarItems.EVERLASTING_EMBLEM, (source.getAttacker() instanceof PlayerEntity ? 2 : 1) * 6 * 60 * 20);
                             cir.setReturnValue(true);
                         }
@@ -162,9 +180,9 @@ public abstract class LivingEntityMixin extends Entity {
         }
         this.setHealth(1.0f);
         this.clearStatusEffects();
-        this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 10 * 20, 3));
-        this.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 16 * 20, 3));
-        this.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 32 * 20, 0));
+        this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));
+        this.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
+        this.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));
         this.getWorld().sendEntityStatus(this, EntityStatuses.USE_TOTEM_OF_UNDYING);
     }
 }

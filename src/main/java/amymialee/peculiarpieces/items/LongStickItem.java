@@ -15,13 +15,14 @@ import java.util.UUID;
 public class LongStickItem extends Item {
     private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
     protected static final UUID REACH_MODIFIER_ID = UUID.fromString("3CE62193-A8F6-4137-8109-C4516ADCED06");
+    protected static final UUID ATTACK_RANGE_MODIFIER_ID = UUID.fromString("5c0954f2-934a-4db5-9f5e-ad8128a88e55");
 
     public LongStickItem(FabricItemSettings settings) {
         super(settings);
         ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(ReachEntityAttributes.REACH, new EntityAttributeModifier(REACH_MODIFIER_ID, "Reach modifier", 16, EntityAttributeModifier.Operation.ADDITION));
-        builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", 8, EntityAttributeModifier.Operation.ADDITION));
-        builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", -3.4, EntityAttributeModifier.Operation.ADDITION));
+        builder.put(ReachEntityAttributes.ATTACK_RANGE, new EntityAttributeModifier(ATTACK_RANGE_MODIFIER_ID, "Attack Reach modifier", 4, EntityAttributeModifier.Operation.ADDITION));
+        builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", -3, EntityAttributeModifier.Operation.ADDITION));
         this.attributeModifiers = builder.build();
     }
 

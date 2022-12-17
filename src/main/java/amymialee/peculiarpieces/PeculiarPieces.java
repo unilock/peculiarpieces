@@ -94,6 +94,7 @@ public class PeculiarPieces implements ModInitializer {
     public static final TagKey<Block> SHEARS_MINEABLE = TagKey.of(Registry.BLOCK_KEY, id("mineable/shears"));
     public static final TagKey<Item> BARRIERS = TagKey.of(Registry.ITEM_KEY, id("barriers"));
     public static final TagKey<Item> TORCHES = TagKey.of(Registry.ITEM_KEY, id("torches"));
+    public static final TagKey<Item> TOTEMS = TagKey.of(Registry.ITEM_KEY, id("totems"));
     //Flight
     public static final StatusEffect FLIGHT_EFFECT = Registry.register(Registry.STATUS_EFFECT, id("flight"), new FlightStatusEffect(StatusEffectCategory.BENEFICIAL, 6670591));
     public static final Potion FLIGHT = Registry.register(Registry.POTION, id("flight"), new Potion(new StatusEffectInstance(FLIGHT_EFFECT, 3600)));
