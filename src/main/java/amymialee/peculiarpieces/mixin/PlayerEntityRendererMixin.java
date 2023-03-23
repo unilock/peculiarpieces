@@ -11,7 +11,7 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -35,7 +35,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
             player.bodyYaw = player.headYaw;
             player.prevBodyYaw = player.prevHeadYaw;
             super.setupTransforms(player, matrixStack, f, g, h);
-            matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(-95.0f));
+            matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-95.0f));
             matrixStack.translate(0, -1, 0.85f);
             ci.cancel();
         }

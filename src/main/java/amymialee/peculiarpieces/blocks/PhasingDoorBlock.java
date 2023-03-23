@@ -1,6 +1,5 @@
 package amymialee.peculiarpieces.blocks;
 
-import amymialee.visiblebarriers.VisibleBarriers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -37,7 +36,7 @@ public class PhasingDoorBlock extends Block {
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         boolean held = context.isHolding(this.asItem());
-        return state.get(SOLID) || held || VisibleBarriers.isVisible() ? VoxelShapes.fullCube() : VoxelShapes.empty();
+        return state.get(SOLID) || held ? VoxelShapes.fullCube() : VoxelShapes.empty();
     }
 
     @Override
@@ -62,7 +61,7 @@ public class PhasingDoorBlock extends Block {
 
     @Override
     public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
-        if (!VisibleBarriers.isVisible() && !state.get(SOLID) && state.get(ACTIVE)) {
+        if (!state.get(SOLID) && state.get(ACTIVE)) {
             return true;
         }
         if (stateFrom.getBlock() instanceof PhasingDoorBlock) {
@@ -75,7 +74,7 @@ public class PhasingDoorBlock extends Block {
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         if (ctx.getWorld().isReceivingRedstonePower(ctx.getBlockPos())) {
-            ctx.getWorld().createAndScheduleBlockTick(ctx.getBlockPos(), this.asBlock(), 2);
+            ctx.getWorld().scheduleBlockTick(ctx.getBlockPos(), this.asBlock(), 2);
         }
         return this.getDefaultState();
     }
@@ -85,7 +84,7 @@ public class PhasingDoorBlock extends Block {
         if (!state.get(ACTIVE)) {
             world.setBlockState(pos, state.with(ACTIVE, true));
             activateNearby(world, pos, world.random);
-            world.createAndScheduleBlockTick(pos, this.asBlock(), 4);
+            world.scheduleBlockTick(pos, this.asBlock(), 4);
         }
         return super.onUse(state, world, pos, player, hand, hit);
     }
@@ -100,7 +99,7 @@ public class PhasingDoorBlock extends Block {
         if (!active && solid && world.isReceivingRedstonePower(pos)) {
             world.setBlockState(pos, state.cycle(ACTIVE));
             activateNearby(world, pos, world.random);
-            world.createAndScheduleBlockTick(pos, this.asBlock(), 8);
+            world.scheduleBlockTick(pos, this.asBlock(), 8);
         }
     }
 
@@ -110,20 +109,20 @@ public class PhasingDoorBlock extends Block {
         boolean solid = state.get(SOLID);
         if (active && solid) {
             world.setBlockState(pos, state.cycle(SOLID));
-            world.createAndScheduleBlockTick(pos, this.asBlock(), 140);
+            world.scheduleBlockTick(pos, this.asBlock(), 140);
             Vec3d particlePos = Vec3d.ofCenter(pos);
             world.spawnParticles(DustParticleEffect.DEFAULT, particlePos.getX(), particlePos.getY(), particlePos.getZ(), 6, 0.4, 0.4, 0.4, 0.1f);
             world.playSound(null, pos, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.5f, 0.5f * (1 + nearbyActive(world, pos)));
         } else if (active) {
             world.setBlockState(pos, state.cycle(ACTIVE));
-            world.createAndScheduleBlockTick(pos, this.asBlock(), 4);
+            world.scheduleBlockTick(pos, this.asBlock(), 4);
         } else if (!solid) {
             world.setBlockState(pos, state.cycle(SOLID));
             world.playSound(null, pos, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.5f, 0.5f * (1 + nearbyActive(world, pos)));
         } else {
             world.setBlockState(pos, state.cycle(ACTIVE));
             activateNearby(world, pos, random);
-            world.createAndScheduleBlockTick(pos, this.asBlock(), 4);
+            world.scheduleBlockTick(pos, this.asBlock(), 4);
         }
     }
 
@@ -132,7 +131,7 @@ public class PhasingDoorBlock extends Block {
             BlockPos pos2 = pos.add(direction.getVector());
             BlockState state = world.getBlockState(pos2);
             if (state.getBlock() instanceof PhasingDoorBlock && state.get(SOLID) && !state.get(ACTIVE)) {
-                world.createAndScheduleBlockTick(pos2, state.getBlock(), random.nextInt(3) + 1);
+                world.scheduleBlockTick(pos2, state.getBlock(), random.nextInt(3) + 1);
             }
         }
     }

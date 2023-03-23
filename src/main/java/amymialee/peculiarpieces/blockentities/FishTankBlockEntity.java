@@ -57,7 +57,7 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
             ((EntityAccessor) cachedEntity).setTouchingWater(true);
             cachedEntity.setFromBucket(true);
             if (cachedEntity instanceof TropicalFishEntity tropicalFish) {
-                tropicalFish.setVariant(cachedStack.getOrCreateNbt().getInt(BUCKET_VARIANT_TAG_KEY));
+                tropicalFish.setVariant(TropicalFishEntity.Variety.fromId(cachedStack.getOrCreateNbt().getInt(BUCKET_VARIANT_TAG_KEY)));
             }
         }
         return cachedEntity;

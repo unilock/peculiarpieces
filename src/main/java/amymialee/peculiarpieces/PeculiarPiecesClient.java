@@ -31,11 +31,9 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
@@ -55,7 +53,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.potion.PotionUtil;
-import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -133,7 +130,7 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         EntityRendererRegistry.register(PeculiarEntities.TELEPORT_ITEM_ENTITY, TeleportItemEntityRenderer::new);
         EntityRendererRegistry.register(PeculiarEntities.EQUIPMENT_STAND_ENTITY, EquipmentStandEntityRenderer::new);
 
-        ClientSpriteRegistryCallback.event(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).register(((atlasTexture, registry) -> registry.register(PeculiarPieces.id("particle/warding_aura"))));
+//        ClientSpriteRegistryCallback.event(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).register(((atlasTexture, registry) -> registry.register(PeculiarPieces.id("particle/warding_aura"))));
         ParticleFactoryRegistry.getInstance().register(PeculiarPieces.WARDING_AURA, WardingParticle.Factory::new);
 
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> tintIndex == 1 ? (state.get(RedstoneStaticBlock.POWERED) ? 16711680 : 2621440) : -1, PeculiarBlocks.REDSTONE_STATIC);
@@ -170,10 +167,10 @@ public class PeculiarPiecesClient implements ClientModInitializer {
         BlockEntityRendererRegistry.register(PeculiarBlocks.CREATIVE_BARREL_BLOCK_ENTITY, ctx -> new CreativeBarrelBlockEntityRenderer());
         BlockEntityRendererRegistry.register(PeculiarBlocks.EQUIPMENT_STAND_BLOCK_ENTITY, ctx -> new EquipmentStandBlockEntityRenderer());
 
-        BuiltinItemRendererRegistry.INSTANCE.register(PeculiarBlocks.FLAG, (stack, mode, matrixStack, vertexConsumerProvider, light, overlay) -> {
-            this.renderFlag.readFrom(stack);
-            MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(renderFlag, matrixStack, vertexConsumerProvider, light, overlay);
-        });
+//        BuiltinItemRendererRegistry.INSTANCE.register(PeculiarBlocks.FLAG, (stack, mode, matrixStack, vertexConsumerProvider, light, overlay) -> {
+//            this.renderFlag.readFrom(stack);
+//            MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(renderFlag, matrixStack, vertexConsumerProvider, light, overlay);
+//        });
     }
 
     public int getColorOr(ItemStack stack, int base) {

@@ -11,7 +11,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 
 public class RedstoneTriggerBlockEntityRenderer implements BlockEntityRenderer<RedstoneTriggerBlockEntity> {
     @Override
@@ -30,8 +30,8 @@ public class RedstoneTriggerBlockEntityRenderer implements BlockEntityRenderer<R
                     h += (float)Math.PI * 2;
                 }
                 float k = blockEntity.lastBookRotation + h * tickDelta;
-                matrices.multiply(Vec3f.POSITIVE_Y.getRadialQuaternion(-k));
-                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
+                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-k));
+                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90));
             }
             int lightAbove = WorldRenderer.getLightmapCoordinates(blockEntity.getWorld(), blockEntity.getPos().up());
             MinecraftClient.getInstance().getItemRenderer().renderItem(Items.AMETHYST_SHARD.getDefaultStack(), ModelTransformation.Mode.GROUND, lightAbove, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);

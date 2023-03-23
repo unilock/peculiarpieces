@@ -24,7 +24,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 
 public class FlagBlockEntityRenderer implements BlockEntityRenderer<FlagBlockEntity> {
     public static final Identifier TEXTURE = PeculiarPieces.id("textures/entity/flags/base_flag.png");
@@ -66,7 +66,7 @@ public class FlagBlockEntityRenderer implements BlockEntityRenderer<FlagBlockEnt
                     if (direction.getAxis() == Direction.Axis.X) {
                         direction = direction.getOpposite();
                     }
-                    matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(direction.asRotation() + 90));
+                    matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(direction.asRotation() + 90));
                     this.flag.roll = (float) Math.toRadians(202.5f);
                     this.flag.pivotX = 6;
                     this.flag.pitch = (float) Math.toRadians(0f);
@@ -80,7 +80,7 @@ public class FlagBlockEntityRenderer implements BlockEntityRenderer<FlagBlockEnt
                     if (direction.getAxis() == Direction.Axis.X) {
                         direction = direction.getOpposite();
                     }
-                    matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(direction.asRotation() + 90));
+                    matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(direction.asRotation() + 90));
                     this.flag.yaw = (float) Math.toRadians(270f);
                     this.flag.roll = (float) Math.toRadians(180f);
                     this.flag.pivotX = 7.5f;
@@ -89,7 +89,7 @@ public class FlagBlockEntityRenderer implements BlockEntityRenderer<FlagBlockEnt
                     this.pole.visible = false;
                 } else {
                     float h = (float) (-blockState.get(FlagBlock.ROTATION) * 360) / 16.0f;
-                    matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(h));
+                    matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(h));
                 }
             }
         }

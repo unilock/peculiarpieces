@@ -5,7 +5,6 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AbstractBlockMixin",
-    "AbstractBlockMixin$AbstractBlockStateMixin",
     "AmethystBlockMixin",
     "AnvilBlockMixin",
     "ArrowEntityAccessor",

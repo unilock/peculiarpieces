@@ -11,7 +11,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 
 public class PeculiarEntities {
     public static final EntityType<TeleportItemEntity> TELEPORT_ITEM_ENTITY = registerEntity("teleport_item_entity", FabricEntityTypeBuilder.<TeleportItemEntity>create(SpawnGroup.MISC, TeleportItemEntity::new).dimensions(EntityDimensions.fixed(0.5f, 0.5f)).trackRangeChunks(6).trackedUpdateRate(20).build());
@@ -23,7 +24,7 @@ public class PeculiarEntities {
     }
 
     public static <T extends Entity> EntityType<T> registerEntity(String name, EntityType<T> entity) {
-        Registry.register(Registry.ENTITY_TYPE, PeculiarPieces.id(name), entity);
+        Registry.register(Registries.ENTITY_TYPE, PeculiarPieces.id(name), entity);
         return entity;
     }
 }

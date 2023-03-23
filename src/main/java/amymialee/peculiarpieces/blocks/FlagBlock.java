@@ -12,7 +12,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -22,7 +21,6 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -80,15 +78,15 @@ public class FlagBlock extends BlockWithEntity {
         return super.getPickStack(world, pos, state);
     }
 
-    @Override
-    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
-        for (DyeColor color : DyeColor.values()) {
-            addStack(color.getName().toLowerCase(), stacks);
-        }
-        for (ExtraFlag flag : ExtraFlag.values()) {
-            addStack(flag.name().toLowerCase(), stacks);
-        }
-    }
+//    @Override
+//    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+//        for (DyeColor color : DyeColor.values()) {
+//            addStack(color.getName().toLowerCase(), stacks);
+//        }
+//        for (ExtraFlag flag : ExtraFlag.values()) {
+//            addStack(flag.name().toLowerCase(), stacks);
+//        }
+//    }
 
     public void addStack(String name, DefaultedList<ItemStack> stacks) {
         ItemStack stack = new ItemStack(this);

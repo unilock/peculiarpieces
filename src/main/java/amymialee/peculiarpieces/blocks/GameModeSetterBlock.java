@@ -1,9 +1,7 @@
 package amymialee.peculiarpieces.blocks;
 
 import amymialee.peculiarpieces.util.ExtraPlayerDataWrapper;
-import amymialee.visiblebarriers.VisibleBarriers;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -49,12 +47,6 @@ public class GameModeSetterBlock extends AbstractStructureVoidBlock {
     @Override
     public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
         return true;
-    }
-
-    @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        if (VisibleBarriers.isVisible()) return BlockRenderType.MODEL;
-        return BlockRenderType.INVISIBLE;
     }
 
     @Override

@@ -17,9 +17,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.TickPriority;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+import net.minecraft.world.tick.TickPriority;
 
 public class RedstoneFlipBlock extends AbstractRedstoneComparisonBlock {
     public static final BooleanProperty ENABLED = BooleanProperty.of("enabled");
@@ -55,7 +55,7 @@ public class RedstoneFlipBlock extends AbstractRedstoneComparisonBlock {
             if (!state.get(POWERED)) {
                 world.setBlockState(pos, state.with(POWERED, true).with(ENABLED, !state.get(ENABLED)), Block.NOTIFY_LISTENERS);
                 world.playSound(null, pos, SoundEvents.BLOCK_LEVER_CLICK, SoundCategory.BLOCKS, 0.3f, world.getBlockState(pos).get(ENABLED) ? 0.6f : 0.5f);
-                world.createAndScheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);
+                world.scheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);
             }
         } else {
             world.setBlockState(pos, state.with(POWERED, false), Block.NOTIFY_LISTENERS);

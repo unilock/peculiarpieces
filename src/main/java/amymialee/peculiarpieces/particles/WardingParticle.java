@@ -15,7 +15,7 @@ import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
+import org.joml.Vector3f;
 
 public class WardingParticle extends Particle {
     protected Sprite sprite;
@@ -37,27 +37,27 @@ public class WardingParticle extends Particle {
             float f = (float)(MathHelper.lerp(tickDelta, this.prevPosX, this.x) - vec3d.getX());
             float g = (float)(MathHelper.lerp(tickDelta, this.prevPosY, this.y) - vec3d.getY());
             float h = (float)(MathHelper.lerp(tickDelta, this.prevPosZ, this.z) - vec3d.getZ());
-            Vec3f[] vec3set = directionVectors(direction);
+            Vector3f[] vec3set = directionVectors(direction);
             for (int k = 0; k < 4; k++) {
-                Vec3f vec3f2 = vec3set[k];
-                vec3f2.scale(0.501f);
-                vec3f2.add(f, g, h);
+                Vector3f Vector3f2 = vec3set[k];
+                Vector3f2.mul(0.501f);
+                Vector3f2.add(f, g, h);
             }
-            vertexConsumer.vertex(vec3set[0].getX(), vec3set[0].getY(), vec3set[0].getZ()).texture(m, o).color(this.red, this.green, this.blue, this.alpha).light(LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE).next();
-            vertexConsumer.vertex(vec3set[1].getX(), vec3set[1].getY(), vec3set[1].getZ()).texture(m, n).color(this.red, this.green, this.blue, this.alpha).light(LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE).next();
-            vertexConsumer.vertex(vec3set[2].getX(), vec3set[2].getY(), vec3set[2].getZ()).texture(l, n).color(this.red, this.green, this.blue, this.alpha).light(LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE).next();
-            vertexConsumer.vertex(vec3set[3].getX(), vec3set[3].getY(), vec3set[3].getZ()).texture(l, o).color(this.red, this.green, this.blue, this.alpha).light(LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE).next();
+            vertexConsumer.vertex(vec3set[0].x(), vec3set[0].y(), vec3set[0].z()).texture(m, o).color(this.red, this.green, this.blue, this.alpha).light(LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE).next();
+            vertexConsumer.vertex(vec3set[1].x(), vec3set[1].y(), vec3set[1].z()).texture(m, n).color(this.red, this.green, this.blue, this.alpha).light(LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE).next();
+            vertexConsumer.vertex(vec3set[2].x(), vec3set[2].y(), vec3set[2].z()).texture(l, n).color(this.red, this.green, this.blue, this.alpha).light(LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE).next();
+            vertexConsumer.vertex(vec3set[3].x(), vec3set[3].y(), vec3set[3].z()).texture(l, o).color(this.red, this.green, this.blue, this.alpha).light(LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE).next();
         }
     }
 
-    private static Vec3f[] directionVectors(Direction direction) {
+    private static Vector3f[] directionVectors(Direction direction) {
         return switch (direction) {
-            case UP -> new Vec3f[]{new Vec3f(1.0f, -1.0f, -1.0f), new Vec3f(1.0f, -1.0f, 1.0f), new Vec3f(-1.0f, -1.0f, 1.0f), new Vec3f(-1.0f, -1.0f, -1.0f)};
-            case DOWN -> new Vec3f[]{new Vec3f(-1.0f, 1.0f, -1.0f), new Vec3f(-1.0f, 1.0f, 1.0f), new Vec3f(1.0f, 1.0f, 1.0f), new Vec3f(1.0f, 1.0f, -1.0f)};
-            case EAST -> new Vec3f[]{new Vec3f(-1.0f, -1.0f, 1.0f), new Vec3f(-1.0f, 1.0f, 1.0f), new Vec3f(-1.0f, 1.0f, -1.0f), new Vec3f(-1.0f, -1.0f, -1.0f)};
-            case WEST -> new Vec3f[]{new Vec3f(1.0f, -1.0f, 1.0f), new Vec3f(1.0f, -1.0f, -1.0f), new Vec3f(1.0f, 1.0f, -1.0f), new Vec3f(1.0f, 1.0f, 1.0f)};
-            case SOUTH -> new Vec3f[]{new Vec3f(-1.0f, -1.0f, -1.0f), new Vec3f(-1.0f, 1.0f, -1.0f), new Vec3f(1.0f, 1.0f, -1.0f), new Vec3f(1.0f, -1.0f, -1.0f)};
-            case NORTH -> new Vec3f[]{new Vec3f(-1.0f, -1.0f, 1.0f), new Vec3f(1.0f, -1.0f, 1.0f), new Vec3f(1.0f, 1.0f, 1.0f), new Vec3f(-1.0f, 1.0f, 1.0f)};
+            case UP -> new Vector3f[]{new Vector3f(1.0f, -1.0f, -1.0f), new Vector3f(1.0f, -1.0f, 1.0f), new Vector3f(-1.0f, -1.0f, 1.0f), new Vector3f(-1.0f, -1.0f, -1.0f)};
+            case DOWN -> new Vector3f[]{new Vector3f(-1.0f, 1.0f, -1.0f), new Vector3f(-1.0f, 1.0f, 1.0f), new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(1.0f, 1.0f, -1.0f)};
+            case EAST -> new Vector3f[]{new Vector3f(-1.0f, -1.0f, 1.0f), new Vector3f(-1.0f, 1.0f, 1.0f), new Vector3f(-1.0f, 1.0f, -1.0f), new Vector3f(-1.0f, -1.0f, -1.0f)};
+            case WEST -> new Vector3f[]{new Vector3f(1.0f, -1.0f, 1.0f), new Vector3f(1.0f, -1.0f, -1.0f), new Vector3f(1.0f, 1.0f, -1.0f), new Vector3f(1.0f, 1.0f, 1.0f)};
+            case SOUTH -> new Vector3f[]{new Vector3f(-1.0f, -1.0f, -1.0f), new Vector3f(-1.0f, 1.0f, -1.0f), new Vector3f(1.0f, 1.0f, -1.0f), new Vector3f(1.0f, -1.0f, -1.0f)};
+            case NORTH -> new Vector3f[]{new Vector3f(-1.0f, -1.0f, 1.0f), new Vector3f(1.0f, -1.0f, 1.0f), new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(-1.0f, 1.0f, 1.0f)};
         };
     }
 

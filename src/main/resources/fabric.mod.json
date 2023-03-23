@@ -21,33 +21,19 @@
     ],
     "main": [
       "amymialee.peculiarpieces.PeculiarPieces"
-    ],
-    "cardinal-components-chunk": [
-      "amymialee.peculiarpieces.component.PeculiarComponentInitializer"
     ]
   },
   "mixins": [
     "peculiarpieces.mixins.json"
   ],
   "depends": {
-    "fabric": "*",
-    "trinkets": ">=3.0.0",
-    "visiblebarriers": ">=1.5.0",
-    "kofitable": ">=1.0.0",
-    "patchouli": "*"
+    "fabric": "*"
   },
   "custom": {
     "modmenu": {
       "links": {
         "modmenu.discord": "http://discord.amymialee.xyz/"
       }
-    },
-    "cardinal-components": [
-      "peculiarpieces:warding"
-    ],
-    "waila:plugins" : {
-      "id": "peculiarpieces:peculiar_plugin",
-      "initializer": "amymialee.peculiarpieces.compat.PeculiarWaliaPlugin"
     }
   }
 }

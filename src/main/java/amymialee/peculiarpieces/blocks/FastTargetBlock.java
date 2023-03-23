@@ -60,7 +60,7 @@ public class FastTargetBlock extends Block {
 
     private static void setPower(WorldAccess world, BlockState state, int power, BlockPos pos) {
         world.setBlockState(pos, state.with(POWER, power), Block.NOTIFY_ALL);
-        world.createAndScheduleBlockTick(pos, state.getBlock(), 1);
+        world.scheduleBlockTick(pos, state.getBlock(), 1);
     }
 
     @Override

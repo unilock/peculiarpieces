@@ -4,8 +4,6 @@ import amymialee.peculiarpieces.callbacks.PlayerCrouchCallback;
 import amymialee.peculiarpieces.callbacks.PlayerCrouchConsumingBlock;
 import amymialee.peculiarpieces.callbacks.PlayerJumpCallback;
 import amymialee.peculiarpieces.callbacks.PlayerJumpConsumingBlock;
-import amymialee.peculiarpieces.component.PeculiarComponentInitializer;
-import amymialee.peculiarpieces.component.WardingComponent;
 import amymialee.peculiarpieces.effects.FlightStatusEffect;
 import amymialee.peculiarpieces.effects.OpenStatusEffect;
 import amymialee.peculiarpieces.registry.PeculiarBlocks;
@@ -23,19 +21,17 @@ import amymialee.peculiarpieces.screens.WarpScreenHandler;
 import amymialee.peculiarpieces.util.ExtraPlayerDataWrapper;
 import amymialee.peculiarpieces.util.RedstoneManager;
 import amymialee.peculiarpieces.util.WarpManager;
-import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.Vec3ArgumentType;
 import net.minecraft.entity.Entity;
@@ -46,77 +42,74 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.potion.Potion;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.chunk.Chunk;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @SuppressWarnings("unused")
 public class PeculiarPieces implements ModInitializer {
     public static final String MOD_ID = "peculiarpieces";
     //ItemGroups
-    public static final ItemGroup PIECES_GROUP = FabricItemGroupBuilder.create(id("peculiarpieces_group")).icon(PeculiarItems::getPeculiarIcon).build();
-    public static final ItemGroup CREATIVE_GROUP = FabricItemGroupBuilder.create(id("peculiarpieces_creative_group")).icon(PeculiarItems::getCreativeIcon).build();
-    public static final ItemGroup POTION_GROUP = FabricItemGroupBuilder.create(id("peculiarpieces_potion_group")).icon(PeculiarItems::getPotionIcon).build();
+//    public static final ItemGroup PIECES_GROUP = FabricItemGroupBuilder.create(id("peculiarpieces_group")).icon(PeculiarItems::getPeculiarIcon).build();
+//    public static final ItemGroup CREATIVE_GROUP = FabricItemGroupBuilder.create(id("peculiarpieces_creative_group")).icon(PeculiarItems::getCreativeIcon).build();
+//    public static final ItemGroup POTION_GROUP = FabricItemGroupBuilder.create(id("peculiarpieces_potion_group")).icon(PeculiarItems::getPotionIcon).build();
     //ScreenHandlers
-    public static final ScreenHandlerType<WarpScreenHandler> WARP_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, "warp_block", new ScreenHandlerType<>(WarpScreenHandler::new));
-    public static final ScreenHandlerType<CouriporterScreenHandler> COURIPORTER_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, "couriporter", new ScreenHandlerType<>(CouriporterScreenHandler::new));
-    public static final ScreenHandlerType<PotionPadScreenHandler> POTION_PAD_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, "potion_pad", new ScreenHandlerType<>(PotionPadScreenHandler::new));
-    public static final ScreenHandlerType<PackedPouchScreenHandler> BUSTLING_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, "bustling_bundle", new ScreenHandlerType<>((a, b) -> new PackedPouchScreenHandler(a, b, PeculiarItems.PACKED_POUCH.getDefaultStack().copy())));
-    public static final ScreenHandlerType<PedestalScreenHandler> PEDESTAL_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, "pedestal", new ScreenHandlerType<>(PedestalScreenHandler::new));
-    public static final ScreenHandlerType<FishTankScreenHandler> FISH_TANK_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, "fish_tank", new ScreenHandlerType<>(FishTankScreenHandler::new));
-    public static final ScreenHandlerType<RedstoneTriggerScreenHandler> REDSTONE_TRIGGER_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, "redstone_trigger", new ScreenHandlerType<>(RedstoneTriggerScreenHandler::new));
-    public static final ScreenHandlerType<CreativeBarrelScreenHandler> CREATIVE_BARREL_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, "creative_barrel", new ScreenHandlerType<>(CreativeBarrelScreenHandler::new));
-    public static final ScreenHandlerType<EquipmentStandScreenHandler> EQUIPMENT_STAND_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, "equipment_stand", new ScreenHandlerType<>(EquipmentStandScreenHandler::new));
+    
+    public static final ScreenHandlerType<WarpScreenHandler> WARP_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(id("warp_block"), WarpScreenHandler::new);
+    public static final ScreenHandlerType<CouriporterScreenHandler> COURIPORTER_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(id("couriporter"), CouriporterScreenHandler::new);
+    public static final ScreenHandlerType<PotionPadScreenHandler> POTION_PAD_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(id("potion_pad"), PotionPadScreenHandler::new);
+    public static final ScreenHandlerType<PackedPouchScreenHandler> BUSTLING_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(id("bustling_bundle"), (a, b) -> new PackedPouchScreenHandler(a, b, PeculiarItems.PACKED_POUCH.getDefaultStack().copy()));
+    public static final ScreenHandlerType<PedestalScreenHandler> PEDESTAL_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(id("pedestal"), PedestalScreenHandler::new);
+    public static final ScreenHandlerType<FishTankScreenHandler> FISH_TANK_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(id("fish_tank"), FishTankScreenHandler::new);
+    public static final ScreenHandlerType<RedstoneTriggerScreenHandler> REDSTONE_TRIGGER_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(id("redstone_trigger"), RedstoneTriggerScreenHandler::new);
+    public static final ScreenHandlerType<CreativeBarrelScreenHandler> CREATIVE_BARREL_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(id("creative_barrel"), CreativeBarrelScreenHandler::new);
+    public static final ScreenHandlerType<EquipmentStandScreenHandler> EQUIPMENT_STAND_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(id("equipment_stand"), EquipmentStandScreenHandler::new);
     //Tags
-    public static final TagKey<EntityType<?>> MOUNT_BLACKLIST = TagKey.of(Registry.ENTITY_TYPE_KEY, id("mount_blacklist"));
-    public static final TagKey<EntityType<?>> UNGRABBABLE = TagKey.of(Registry.ENTITY_TYPE_KEY, id("ungrabbable"));
-    public static final TagKey<Block> WARP_BINDABLE = TagKey.of(Registry.BLOCK_KEY, id("warp_bindable"));
-    public static final TagKey<Block> SCAFFOLDING = TagKey.of(Registry.BLOCK_KEY, id("scaffolding"));
-    public static final TagKey<Block> SHEARS_MINEABLE = TagKey.of(Registry.BLOCK_KEY, id("mineable/shears"));
-    public static final TagKey<Item> BARRIERS = TagKey.of(Registry.ITEM_KEY, id("barriers"));
-    public static final TagKey<Item> TORCHES = TagKey.of(Registry.ITEM_KEY, id("torches"));
-    public static final TagKey<Item> TOTEMS = TagKey.of(Registry.ITEM_KEY, id("totems"));
+    public static final TagKey<EntityType<?>> MOUNT_BLACKLIST = TagKey.of(Registries.ENTITY_TYPE.getKey(), id("mount_blacklist"));
+    public static final TagKey<EntityType<?>> UNGRABBABLE = TagKey.of(Registries.ENTITY_TYPE.getKey(), id("ungrabbable"));
+    public static final TagKey<Block> WARP_BINDABLE = TagKey.of(Registries.BLOCK.getKey(), id("warp_bindable"));
+    public static final TagKey<Block> SCAFFOLDING = TagKey.of(Registries.BLOCK.getKey(), id("scaffolding"));
+    public static final TagKey<Block> SHEARS_MINEABLE = TagKey.of(Registries.BLOCK.getKey(), id("mineable/shears"));
+    public static final TagKey<Item> BARRIERS = TagKey.of(Registries.ITEM.getKey(), id("barriers"));
+    public static final TagKey<Item> TORCHES = TagKey.of(Registries.ITEM.getKey(), id("torches"));
+    public static final TagKey<Item> TOTEMS = TagKey.of(Registries.ITEM.getKey(), id("totems"));
     //Flight
-    public static final StatusEffect FLIGHT_EFFECT = Registry.register(Registry.STATUS_EFFECT, id("flight"), new FlightStatusEffect(StatusEffectCategory.BENEFICIAL, 6670591));
-    public static final Potion FLIGHT = Registry.register(Registry.POTION, id("flight"), new Potion(new StatusEffectInstance(FLIGHT_EFFECT, 3600)));
-    public static final Potion LONG_FLIGHT = Registry.register(Registry.POTION, id("long_flight"), new Potion("flight", new StatusEffectInstance(FLIGHT_EFFECT, 9600)));
+    public static final StatusEffect FLIGHT_EFFECT = Registry.register(Registries.STATUS_EFFECT, id("flight"), new FlightStatusEffect(StatusEffectCategory.BENEFICIAL, 6670591));
+    public static final Potion FLIGHT = Registry.register(Registries.POTION, id("flight"), new Potion(new StatusEffectInstance(FLIGHT_EFFECT, 3600)));
+    public static final Potion LONG_FLIGHT = Registry.register(Registries.POTION, id("long_flight"), new Potion("flight", new StatusEffectInstance(FLIGHT_EFFECT, 9600)));
     //Glowing
-    public static final Potion GLOWING = Registry.register(Registry.POTION, id("glowing"), new Potion(new StatusEffectInstance(StatusEffects.GLOWING, 3600)));
-    public static final Potion LONG_GLOWING = Registry.register(Registry.POTION, id("long_glowing"), new Potion("glowing", new StatusEffectInstance(StatusEffects.GLOWING, 9600)));
+    public static final Potion GLOWING = Registry.register(Registries.POTION, id("glowing"), new Potion(new StatusEffectInstance(StatusEffects.GLOWING, 3600)));
+    public static final Potion LONG_GLOWING = Registry.register(Registries.POTION, id("long_glowing"), new Potion("glowing", new StatusEffectInstance(StatusEffects.GLOWING, 9600)));
     //Concealment
-    public static final StatusEffect CONCEALMENT_EFFECT = Registry.register(Registry.STATUS_EFFECT, id("concealment"), new OpenStatusEffect(StatusEffectCategory.BENEFICIAL, 8356754));
-    public static final Potion CONCEALMENT = Registry.register(Registry.POTION, id("concealment"), new Potion(new StatusEffectInstance(CONCEALMENT_EFFECT, 3600)));
-    public static final Potion LONG_CONCEALMENT = Registry.register(Registry.POTION, id("long_concealment"), new Potion("concealment", new StatusEffectInstance(CONCEALMENT_EFFECT, 9600)));
+    public static final StatusEffect CONCEALMENT_EFFECT = Registry.register(Registries.STATUS_EFFECT, id("concealment"), new OpenStatusEffect(StatusEffectCategory.BENEFICIAL, 8356754));
+    public static final Potion CONCEALMENT = Registry.register(Registries.POTION, id("concealment"), new Potion(new StatusEffectInstance(CONCEALMENT_EFFECT, 3600)));
+    public static final Potion LONG_CONCEALMENT = Registry.register(Registries.POTION, id("long_concealment"), new Potion("concealment", new StatusEffectInstance(CONCEALMENT_EFFECT, 9600)));
     //Impervious
-    public static final StatusEffect INVULNERABILITY_EFFECT = Registry.register(Registry.STATUS_EFFECT, id("invulnerability"), new OpenStatusEffect(StatusEffectCategory.BENEFICIAL, 16772864));
-    public static final Potion INVULNERABILITY = Registry.register(Registry.POTION, id("invulnerability"), new Potion(new StatusEffectInstance(INVULNERABILITY_EFFECT, 3600)));
-    public static final Potion LONG_INVULNERABILITY = Registry.register(Registry.POTION, id("long_invulnerability"), new Potion("invulnerability", new StatusEffectInstance(INVULNERABILITY_EFFECT, 9600)));
+    public static final StatusEffect INVULNERABILITY_EFFECT = Registry.register(Registries.STATUS_EFFECT, id("invulnerability"), new OpenStatusEffect(StatusEffectCategory.BENEFICIAL, 16772864));
+    public static final Potion INVULNERABILITY = Registry.register(Registries.POTION, id("invulnerability"), new Potion(new StatusEffectInstance(INVULNERABILITY_EFFECT, 3600)));
+    public static final Potion LONG_INVULNERABILITY = Registry.register(Registries.POTION, id("long_invulnerability"), new Potion("invulnerability", new StatusEffectInstance(INVULNERABILITY_EFFECT, 9600)));
     //Gamerules
     public static final GameRules.Key<GameRules.BooleanRule> DO_EXPLOSIONS_BREAK = GameRuleRegistry.register("pp:explosionsBreakBlocks", GameRules.Category.MOBS, GameRuleFactory.createBooleanRule(true));
     public static final GameRules.Key<GameRules.BooleanRule> DO_EXPLOSIONS_ALWAYS_DROP = GameRuleRegistry.register("pp:explosionsAlwaysDrop", GameRules.Category.MOBS, GameRuleFactory.createBooleanRule(true));
     public static final GameRules.Key<GameRules.BooleanRule> NO_MOB_PUSHING = GameRuleRegistry.register("pp:doEntityPush", GameRules.Category.MOBS, GameRuleFactory.createBooleanRule(true));
     //SoundEvents
-    public static final SoundEvent ENTITY_SHEEP_YIPPEE = Registry.register(Registry.SOUND_EVENT, "peculiarpieces.sheep.yippee", new SoundEvent(id("peculiarpieces.sheep.yippee")));
-    public static final SoundEvent ENTITY_SHEEP_YIPPEE_ENGINEER = Registry.register(Registry.SOUND_EVENT, "peculiarpieces.sheep.yippee_engineer", new SoundEvent(id("peculiarpieces.sheep.yippee_engineer")));
+    public static final SoundEvent ENTITY_SHEEP_YIPPEE = Registry.register(Registries.SOUND_EVENT, "peculiarpieces.sheep.yippee", SoundEvent.of(id("peculiarpieces.sheep.yippee")));
+    public static final SoundEvent ENTITY_SHEEP_YIPPEE_ENGINEER = Registry.register(Registries.SOUND_EVENT, "peculiarpieces.sheep.yippee_engineer", SoundEvent.of(id("peculiarpieces.sheep.yippee_engineer")));
     //Particles
     public static final DefaultParticleType WARDING_AURA = FabricParticleTypes.simple();
 
@@ -125,7 +118,7 @@ public class PeculiarPieces implements ModInitializer {
         PeculiarItems.init();
         PeculiarBlocks.init();
         PeculiarEntities.init();
-        Registry.register(Registry.PARTICLE_TYPE, PeculiarPieces.id("warding_aura"), WARDING_AURA);
+        Registry.register(Registries.PARTICLE_TYPE, PeculiarPieces.id("warding_aura"), WARDING_AURA);
         CommandRegistrationCallback.EVENT.register((dispatcher, access, environment) -> {
             LiteralArgumentBuilder<ServerCommandSource> literalArgumentBuilder = CommandManager.literal("peculiar").requires(source -> source.hasPermissionLevel(2));
             for (GameMode gameMode : GameMode.values()) {
@@ -180,59 +173,6 @@ public class PeculiarPieces implements ModInitializer {
                                                 } else {
                                                     ctx.getSource().sendFeedback(Text.translatable("peculiar.commands.checkpoint.success.multiple", pos.getX(), pos.getY(), pos.getZ(), targets.size()), true);
                                                 }
-                                                return 0;
-                                            }))));
-            literalArgumentBuilder
-                    .then(CommandManager.literal("wardarea")
-                            .then(CommandManager.argument("set", BoolArgumentType.bool())
-                                    .then(CommandManager.argument("from", BlockPosArgumentType.blockPos())
-                                            .then(CommandManager.argument("to", BlockPosArgumentType.blockPos())
-                                                    .executes(context -> {
-                                                        BlockBox range = BlockBox.create(BlockPosArgumentType.getLoadedBlockPos(context, "from"), BlockPosArgumentType.getLoadedBlockPos(context, "to"));
-                                                        ServerCommandSource source = context.getSource();
-                                                        int i = range.getBlockCountX() * range.getBlockCountY() * range.getBlockCountZ();
-                                                        if (i > 32768 * 8) {
-                                                            source.sendFeedback(Text.translatable("commands.fill.toobig", 32768 * 8, i), false);
-                                                            return 0;
-                                                        }
-                                                        ServerWorld serverWorld = source.getWorld();
-                                                        int j = 0;
-                                                        boolean ward = BoolArgumentType.getBool(context, "set");
-                                                        for (BlockPos blockPos : BlockPos.iterate(range.getMinX(), range.getMinY(), range.getMinZ(), range.getMaxX(), range.getMaxY(), range.getMaxZ())) {
-                                                            if (ward && serverWorld.getBlockState(blockPos).isAir()) {
-                                                                continue;
-                                                            }
-                                                            Chunk chunk = serverWorld.getChunk(blockPos);
-                                                            Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(chunk);
-                                                            if (component.isPresent()) {
-                                                                WardingComponent wardingComponent = component.get();
-                                                                wardingComponent.setWard(blockPos, ward);
-                                                                PeculiarComponentInitializer.WARDING.sync(chunk);
-                                                                j++;
-                                                            }
-                                                        }
-                                                        source.sendFeedback(Text.translatable("peculiar.commands.wardarea.success", ward ? "Warded" : "Unwarded", j), true);
-                                                        return j;
-                                                    })))));
-            literalArgumentBuilder
-                    .then(CommandManager.literal("ward")
-                            .then(CommandManager.argument("set", BoolArgumentType.bool())
-                                    .then(CommandManager.argument("pos", BlockPosArgumentType.blockPos())
-                                            .executes(context -> {
-                                                ServerCommandSource source = context.getSource();
-                                                ServerWorld serverWorld = source.getWorld();
-                                                BlockPos pos = BlockPosArgumentType.getLoadedBlockPos(context, "pos");
-                                                Chunk chunk = serverWorld.getChunk(pos);
-                                                Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(chunk);
-                                                boolean ward = BoolArgumentType.getBool(context, "set");
-                                                if (component.isPresent()) {
-                                                    WardingComponent wardingComponent = component.get();
-                                                    wardingComponent.setWard(pos, ward);
-                                                    PeculiarComponentInitializer.WARDING.sync(chunk);
-                                                } else {
-                                                    source.sendFeedback(Text.translatable("peculiar.commands.ward.failure"), true);
-                                                }
-                                                source.sendFeedback(Text.translatable("peculiar.commands.ward.success", ward ? "Warded" : "Unwarded", pos.getX(), pos.getY(), pos.getZ()), true);
                                                 return 0;
                                             }))));
             literalArgumentBuilder

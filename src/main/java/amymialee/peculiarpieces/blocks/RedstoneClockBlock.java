@@ -17,8 +17,8 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.TickPriority;
 import net.minecraft.world.World;
+import net.minecraft.world.tick.TickPriority;
 
 public class RedstoneClockBlock extends AbstractRedstoneComparisonBlock {
     public static final IntProperty DELAY = IntProperty.of("delay", 0, 4);
@@ -53,7 +53,7 @@ public class RedstoneClockBlock extends AbstractRedstoneComparisonBlock {
         boolean bl2 = this.hasPower(world, pos, state);
         if (bl2) {
             world.setBlockState(pos, state.with(POWERED, true).with(LOOPED, !state.get(LOOPED)), Block.NOTIFY_LISTENERS);
-            world.createAndScheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);
+            world.scheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);
         } else {
             world.setBlockState(pos, state.with(POWERED, false).with(LOOPED, false), Block.NOTIFY_LISTENERS);
         }

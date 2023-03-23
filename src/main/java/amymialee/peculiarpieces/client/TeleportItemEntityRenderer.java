@@ -16,7 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.random.Random;
 
 public class TeleportItemEntityRenderer extends EntityRenderer<TeleportItemEntity> {
@@ -47,13 +47,13 @@ public class TeleportItemEntityRenderer extends EntityRenderer<TeleportItemEntit
         this.random.setSeed(j);
         BakedModel bakedModel = this.itemRenderer.getModel(itemStack, itemEntity.world, null, itemEntity.getId());
         float l = MathHelper.sin(((float) itemEntity.age + g) / 10.0f) * 0.1f + 0.1f;
-        float m = bakedModel.getTransformation().getTransformation(ModelTransformation.Mode.GROUND).scale.getY();
+        float m = bakedModel.getTransformation().getTransformation(ModelTransformation.Mode.GROUND).scale.y();
         matrixStack.translate(0.0, l + 0.25f * m, 0.0);
         float n = itemEntity.getRotation(g);
-        matrixStack.multiply(Vec3f.POSITIVE_Y.getRadialQuaternion(n));
-        float o = bakedModel.getTransformation().ground.scale.getX();
-        float p = bakedModel.getTransformation().ground.scale.getY();
-        float q = bakedModel.getTransformation().ground.scale.getZ();
+        matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(n));
+        float o = bakedModel.getTransformation().ground.scale.x();
+        float p = bakedModel.getTransformation().ground.scale.y();
+        float q = bakedModel.getTransformation().ground.scale.z();
         matrixStack.push();
         this.itemRenderer.renderItem(itemStack, ModelTransformation.Mode.GROUND, false, matrixStack, vertexConsumerProvider, i, OverlayTexture.DEFAULT_UV, bakedModel);
         matrixStack.pop();

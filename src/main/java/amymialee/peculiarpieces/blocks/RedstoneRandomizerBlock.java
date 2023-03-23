@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.TickPriority;
+import net.minecraft.world.tick.TickPriority;
 
 public class RedstoneRandomizerBlock extends AbstractRedstoneComparisonBlock {
     public static final IntProperty OUTPUT = IntProperty.of("output", 1, 15);
@@ -32,7 +32,7 @@ public class RedstoneRandomizerBlock extends AbstractRedstoneComparisonBlock {
             world.setBlockState(pos, state.with(POWERED, false), Block.NOTIFY_LISTENERS);
         } else if (!bl) {
             world.setBlockState(pos, state.with(POWERED, true).with(OUTPUT, random.nextBetween(1, getPower(world, pos, state))), Block.NOTIFY_LISTENERS);
-            world.createAndScheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);
+            world.scheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);
         }
     }
 

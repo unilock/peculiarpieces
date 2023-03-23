@@ -10,7 +10,7 @@ import net.minecraft.block.FluidDrainable;
 import net.minecraft.block.SpongeBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.tag.FluidTags;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;

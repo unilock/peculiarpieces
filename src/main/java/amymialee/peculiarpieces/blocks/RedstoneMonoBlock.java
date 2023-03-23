@@ -11,8 +11,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.TickPriority;
 import net.minecraft.world.World;
+import net.minecraft.world.tick.TickPriority;
 
 public class RedstoneMonoBlock extends AbstractRedstoneComparisonBlock {
     public static final BooleanProperty EXPIRED = BooleanProperty.of("expired");
@@ -37,10 +37,10 @@ public class RedstoneMonoBlock extends AbstractRedstoneComparisonBlock {
         if (bl2) {
             if (!bl) {
                 world.setBlockState(pos, state.with(POWERED, true), Block.NOTIFY_LISTENERS);
-                world.createAndScheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);
+                world.scheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);
             } else if (!state.get(EXPIRED)) {
                 world.setBlockState(pos, state.with(EXPIRED, true), Block.NOTIFY_LISTENERS);
-                world.createAndScheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);
+                world.scheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);
             }
         } else {
             world.setBlockState(pos, state.with(POWERED, false).with(EXPIRED, false), Block.NOTIFY_LISTENERS);

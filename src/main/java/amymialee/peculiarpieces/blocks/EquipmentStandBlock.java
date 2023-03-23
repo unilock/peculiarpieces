@@ -56,7 +56,7 @@ public class EquipmentStandBlock extends BlockWithEntity {
             boolean bl = state.get(POWERED);
             if (bl != world.isReceivingRedstonePower(pos)) {
                 if (bl) {
-                    world.createAndScheduleBlockTick(pos, this, 4);
+                    world.scheduleBlockTick(pos, this, 4);
                 } else {
                     world.setBlockState(pos, state.cycle(POWERED), Block.NOTIFY_LISTENERS);
                     BlockEntity entity = world.getBlockEntity(pos);

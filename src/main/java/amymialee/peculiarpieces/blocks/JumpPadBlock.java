@@ -5,7 +5,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
@@ -16,7 +15,6 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -41,14 +39,14 @@ public class JumpPadBlock extends AbstractFlatBlock implements PlayerJumpConsumi
         return stack;
     }
 
-    @Override
-    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
-        for (int i : POWER.getValues()) {
-            ItemStack stack = new ItemStack(this);
-            stack.getOrCreateNbt().putInt("pp:variant", i);
-            stacks.add(stack);
-        }
-    }
+//    @Override
+//    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+//        for (int i : POWER.getValues()) {
+//            ItemStack stack = new ItemStack(this);
+//            stack.getOrCreateNbt().putInt("pp:variant", i);
+//            stacks.add(stack);
+//        }
+//    }
 
     @Override
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {}

@@ -14,7 +14,6 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -25,7 +24,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -104,21 +102,21 @@ public class TorchQuiverItem extends RangedWeaponItem {
         };
     }
 
-    @Override
-    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
-        if (this.isIn(group)) {
-            for (int filled = 0; filled <= 1; filled++) {
-                for (int setting = 0; setting < torches.length; setting++) {
-                    ItemStack stack = new ItemStack(this);
-                    if (filled == 0) {
-                        stack.setDamage(512);
-                    }
-                    stack.getOrCreateNbt().putInt("pp:setting", setting);
-                    stacks.add(stack);
-                }
-            }
-        }
-    }
+//    @Override
+//    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+//        if (this.isIn(group)) {
+//            for (int filled = 0; filled <= 1; filled++) {
+//                for (int setting = 0; setting < torches.length; setting++) {
+//                    ItemStack stack = new ItemStack(this);
+//                    if (filled == 0) {
+//                        stack.setDamage(512);
+//                    }
+//                    stack.getOrCreateNbt().putInt("pp:setting", setting);
+//                    stacks.add(stack);
+//                }
+//            }
+//        }
+//    }
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {

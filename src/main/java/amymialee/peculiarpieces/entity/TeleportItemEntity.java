@@ -16,16 +16,17 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.tag.FluidTags;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
@@ -53,7 +54,7 @@ public class TeleportItemEntity extends Entity {
         if (!stack.isEmpty()) {
             this.setStack(stack);
         } else {
-            Registry.ITEM.getRandom(random).ifPresent((a) -> this.setStack(new ItemStack(a)));
+            Registries.ITEM.getRandom(random).ifPresent((a) -> this.setStack(new ItemStack(a)));
         }
         this.setPearl(pearl);
     }
@@ -266,7 +267,7 @@ public class TeleportItemEntity extends Entity {
     }
 
     @Override
-    public Packet<?> createSpawnPacket() {
+    public Packet<ClientPlayPacketListener> createSpawnPacket() {
         return new EntitySpawnS2CPacket(this);
     }
 

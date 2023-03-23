@@ -9,7 +9,7 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 
 public class CreativeBarrelBlockEntityRenderer implements BlockEntityRenderer<CreativeBarrelBlockEntity> {
     private ItemStack cachedStack;
@@ -23,7 +23,7 @@ public class CreativeBarrelBlockEntityRenderer implements BlockEntityRenderer<Cr
         }
         if (cachedStack != null && blockEntity.getWorld() != null) {
             matrices.translate(0.5, cachedStack.getItem() instanceof BlockItem ? 0.3 : 0.35, 0.5);
-            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 4));
+            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((blockEntity.getWorld().getTime() + tickDelta) * 4));
             MinecraftClient.getInstance().getItemRenderer().renderItem(cachedStack, ModelTransformation.Mode.GROUND, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
         }
         matrices.pop();

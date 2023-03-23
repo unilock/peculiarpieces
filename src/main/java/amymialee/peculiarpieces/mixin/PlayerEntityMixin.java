@@ -1,8 +1,6 @@
 package amymialee.peculiarpieces.mixin;
 
 import amymialee.peculiarpieces.callbacks.PlayerJumpCallback;
-import amymialee.peculiarpieces.component.PeculiarComponentInitializer;
-import amymialee.peculiarpieces.component.WardingComponent;
 import amymialee.peculiarpieces.items.GliderItem;
 import amymialee.peculiarpieces.util.ExtraPlayerDataWrapper;
 import net.minecraft.entity.EntityType;
@@ -11,11 +9,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,7 +21,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 
@@ -37,17 +34,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
 
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
-    }
-
-    @Inject(method = "isBlockBreakingRestricted", at = @At("HEAD"), cancellable = true)
-    public void PeculiarPieces$RestrictWardedBlock(World world, BlockPos pos, GameMode gameMode, CallbackInfoReturnable<Boolean> cir) {
-        Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
-        if (component.isPresent()) {
-            WardingComponent wardingComponent = component.get();
-            if (wardingComponent.getWard(pos)) {
-                cir.setReturnValue(true);
-            }
-        }
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))

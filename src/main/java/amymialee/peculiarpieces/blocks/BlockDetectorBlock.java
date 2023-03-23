@@ -46,7 +46,7 @@ public class BlockDetectorBlock extends FacingBlock {
 
     private void scheduleTick(WorldAccess world, BlockPos pos) {
         if (!world.isClient() && !world.getBlockTickScheduler().isQueued(pos, this)) {
-            world.createAndScheduleBlockTick(pos, this, 2);
+            world.scheduleBlockTick(pos, this, 2);
         }
     }
 
@@ -99,7 +99,7 @@ public class BlockDetectorBlock extends FacingBlock {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        ctx.getWorld().createAndScheduleBlockTick(ctx.getBlockPos(), this, 4);
+        ctx.getWorld().scheduleBlockTick(ctx.getBlockPos(), this, 4);
         return this.getDefaultState().with(FACING, ctx.getPlayerLookDirection().getOpposite().getOpposite());
     }
 

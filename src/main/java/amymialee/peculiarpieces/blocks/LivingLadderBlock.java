@@ -29,6 +29,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -140,7 +141,7 @@ public class LivingLadderBlock extends Block implements Fertilizable, Waterlogga
             }
         }
         if (state.get(WATERLOGGED)) {
-            world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
@@ -176,7 +177,7 @@ public class LivingLadderBlock extends Block implements Fertilizable, Waterlogga
     }
 
     @Override
-    public boolean isFertilizable(BlockView world, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
         BlockState stateDown = world.getBlockState(pos.down());
         return stateDown.isAir() || ((stateDown.getBlock() instanceof LivingLadderBlock livingLadderBlock) && livingLadderBlock.isFertilizable(world, pos.down(), state, isClient));
     }

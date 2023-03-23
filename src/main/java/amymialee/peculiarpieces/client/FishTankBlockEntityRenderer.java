@@ -8,8 +8,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.passive.FishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Quaternion;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.world.GameRules;
 
 public class FishTankBlockEntityRenderer implements BlockEntityRenderer<FishTankBlockEntity> {
@@ -31,7 +30,7 @@ public class FishTankBlockEntityRenderer implements BlockEntityRenderer<FishTank
                     }
                     matrices.translate(0.5f, 0, 0.5f);
                     if (blockEntity.getWorld().getBlockEntity(blockEntity.getPos()) instanceof FishTankBlockEntity) {
-                        matrices.multiply(Quaternion.fromEulerXyzDegrees(new Vec3f(0, -blockEntity.getYaw(), 0)));
+                        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-blockEntity.getYaw()));
                     }
                     MinecraftClient.getInstance().getEntityRenderDispatcher().render(cachedEntity, 0f, 0.2f, 0f, 0f, tickDelta, matrices, vertexConsumers, light);
                 }
