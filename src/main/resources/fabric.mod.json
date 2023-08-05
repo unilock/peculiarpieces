@@ -30,7 +30,8 @@
     "peculiarpieces.mixins.json"
   ],
   "depends": {
-    "fabric": "*"
+    "fabric": "*",
+    "trinkets": "*"
   },
   "custom": {
     "modmenu": {
