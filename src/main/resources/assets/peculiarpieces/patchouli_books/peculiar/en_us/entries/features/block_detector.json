@@ -1,0 +1,15 @@
+{
+  "name": "Block Detector",
+  "icon": "peculiarpieces:block_detector",
+  "category": "peculiarpieces:features",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Similar to an Observer, this block will give a redstone signal only if the face it's pointing is a full cube."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:redstone/block_detector"
+    }
+  ]
+}

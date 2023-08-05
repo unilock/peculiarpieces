@@ -65,7 +65,7 @@ public class WarpBlockEntity extends LootableContainerBlockEntity {
                 WarpManager.queueTeleport(WarpInstance.of(entity).position(new Vec3d(vec3d.getX(), world.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, this.getPos()).getY(), vec3d.getZ())).particles());
             }
         } else if (stack.isOf(PeculiarItems.SPAWNPOINT_PEARL)) {
-            if (!entity.world.isClient) {
+            if (!entity.getWorld().isClient) {
                 if (world instanceof ServerWorld serverWorld && entity instanceof ServerPlayerEntity player) {
                     if (player.getSpawnPointPosition() != null) {
                         Optional<Vec3d> spawnpoint = PlayerEntity.findRespawnPosition(serverWorld, player.getSpawnPointPosition(), 0, false, true);

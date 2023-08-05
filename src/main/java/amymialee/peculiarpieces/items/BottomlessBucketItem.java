@@ -5,7 +5,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FluidDrainable;
 import net.minecraft.block.FluidFillable;
-import net.minecraft.block.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
@@ -83,7 +82,6 @@ public class BottomlessBucketItem extends Item implements FluidModificationItem 
         }
         BlockState blockState = world.getBlockState(pos);
         Block block = blockState.getBlock();
-        Material material = blockState.getMaterial();
         boolean bl = blockState.canBucketPlace(this.fluid);
         boolean bl2 = blockState.isAir() || bl || block instanceof FluidFillable && ((FluidFillable) block).canFillWithFluid(world, pos, blockState, this.fluid);
         if (!bl2) {
@@ -104,7 +102,7 @@ public class BottomlessBucketItem extends Item implements FluidModificationItem 
             this.playEmptyingSound(player, world, pos);
             return true;
         }
-        if (!world.isClient && bl && !material.isLiquid()) {
+        if (!world.isClient && bl && !blockState.isLiquid()) {
             world.breakBlock(pos, true);
         }
         if (world.setBlockState(pos, this.fluid.getDefaultState().getBlockState(), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD) || blockState.getFluidState().isStill()) {

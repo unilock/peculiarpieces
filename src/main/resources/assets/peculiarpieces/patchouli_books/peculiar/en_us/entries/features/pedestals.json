@@ -1,0 +1,50 @@
+{
+  "name": "Pedestals",
+  "icon": "peculiarpieces:dark_oak_pedestal",
+  "category": "peculiarpieces:features",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Pedestals are a new decorative block which allows you to display your items.$(br)To place items onto the pedestal use shift click to access it's inventory.$(br)It contains two slots, the first is displayed normally and the second is displayed when powered with redstone."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:pedestals/oak_pedestal",
+      "recipe2": "peculiarpieces:pedestals/birch_pedestal"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:pedestals/spruce_pedestal",
+      "recipe2": "peculiarpieces:pedestals/jungle_pedestal"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:pedestals/acacia_pedestal",
+      "recipe2": "peculiarpieces:pedestals/dark_oak_pedestal"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:pedestals/crimson_pedestal",
+      "recipe2": "peculiarpieces:pedestals/warped_pedestal"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:pedestals/mangrove_pedestal",
+      "recipe2": "peculiarpieces:pedestals/cherry_pedestal"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:pedestals/stone_pedestal",
+      "recipe2": "peculiarpieces:pedestals/deepslate_pedestal"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:pedestals/blackstone_pedestal",
+      "recipe2": "peculiarpieces:pedestals/prismarine_pedestal"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:pedestals/quartz_pedestal"
+    }
+  ]
+}

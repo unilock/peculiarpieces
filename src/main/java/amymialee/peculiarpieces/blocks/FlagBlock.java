@@ -1,5 +1,6 @@
 package amymialee.peculiarpieces.blocks;
 
+import amymialee.peculiarpieces.CustomCreativeItems;
 import amymialee.peculiarpieces.blockentities.FlagBlockEntity;
 import amymialee.peculiarpieces.registry.PeculiarBlocks;
 import net.minecraft.block.AbstractBlock;
@@ -12,8 +13,12 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemGroup.Entries;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
@@ -21,6 +26,7 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -32,7 +38,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
-public class FlagBlock extends BlockWithEntity {
+public class FlagBlock extends BlockWithEntity implements CustomCreativeItems {
     public static final EnumProperty<FlagMountLocation> FACE = EnumProperty.of("face", FlagMountLocation.class);
     public static final IntProperty ROTATION = Properties.ROTATION;
     protected static final VoxelShape NORTH_WALL_SHAPE = Block.createCuboidShape(6, 1, 11, 10, 16, 16);
@@ -49,9 +55,9 @@ public class FlagBlock extends BlockWithEntity {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(ROTATION, 0).with(FACE, FlagMountLocation.FLOOR));
     }
-
+    
     @Override
-    public boolean canMobSpawnInside() {
+    public boolean canMobSpawnInside(BlockState state) {
         return true;
     }
 
@@ -78,22 +84,24 @@ public class FlagBlock extends BlockWithEntity {
         return super.getPickStack(world, pos, state);
     }
 
-//    @Override
-//    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
-//        for (DyeColor color : DyeColor.values()) {
-//            addStack(color.getName().toLowerCase(), stacks);
-//        }
-//        for (ExtraFlag flag : ExtraFlag.values()) {
-//            addStack(flag.name().toLowerCase(), stacks);
-//        }
-//    }
+    private static final DyeColor[] NEW_DYE_ORDER = {DyeColor.WHITE, DyeColor.LIGHT_GRAY, DyeColor.GRAY, DyeColor.BLACK, DyeColor.BROWN, DyeColor.RED, DyeColor.ORANGE, DyeColor.YELLOW, DyeColor.LIME, DyeColor.GREEN, DyeColor.CYAN, DyeColor.LIGHT_BLUE, DyeColor.BLUE, DyeColor.PURPLE, DyeColor.MAGENTA, DyeColor.PINK};
+    
+    @Override
+    public void appendStacks(Entries entries) {
+        for (DyeColor color : NEW_DYE_ORDER) {
+            addStack(color.getName().toLowerCase(), entries);
+        }
+        for (ExtraFlag flag : ExtraFlag.values()) {
+            addStack(flag.name().toLowerCase(), entries);
+        }
+    }
 
-    public void addStack(String name, DefaultedList<ItemStack> stacks) {
+    public void addStack(String name, ItemGroup.Entries entries) {
         ItemStack stack = new ItemStack(this);
         NbtCompound nbtCompound = new NbtCompound();
         nbtCompound.putString(FlagBlockEntity.TEXTURE_KEY, name);
         BlockItem.setBlockEntityNbt(stack, PeculiarBlocks.FLAG_BLOCK_ENTITY, nbtCompound);
-        stacks.add(stack);
+        entries.add(stack);
     }
 
     @Override

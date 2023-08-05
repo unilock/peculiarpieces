@@ -22,7 +22,7 @@ public class PeculiarItems {
 
     //Book
     public static final Item PECULIAR_BOOK = registerItem("peculiar_book", MOD_ITEMS, new PeculiarBookItem(new FabricItemSettings().maxCount(1).rarity(Rarity.RARE)));
-    public static final Item CREATIVE_BOOK = registerItem("creative_book", MOD_ITEMS, new CreativeBookItem(new FabricItemSettings().maxCount(1).rarity(Rarity.RARE)));
+    public static final Item CREATIVE_BOOK = registerItem("creative_book", CREATIVE_ITEMS, new CreativeBookItem(new FabricItemSettings().maxCount(1).rarity(Rarity.RARE)));
     //Misc
     public static final Item SLIME = registerItem("slime", MOD_ITEMS, new SlimeItem(new FabricItemSettings().rarity(Rarity.UNCOMMON)));
     public static final Item CRAFTING_SLATE = registerItem("crafting_slate", MOD_ITEMS, new CraftingSlateItem(new FabricItemSettings().maxCount(1).rarity(Rarity.UNCOMMON)));
@@ -33,8 +33,8 @@ public class PeculiarItems {
     public static final Item ENDER_POUCH = registerItem("ender_pouch", MOD_ITEMS, new EnderPouchItem(new FabricItemSettings().maxCount(1).rarity(Rarity.RARE)));
     public static final Item TOKEN_OF_UNDYING = registerItem("token_of_undying", MOD_ITEMS, new DispensableTrinketItem(new FabricItemSettings().maxCount(1).rarity(Rarity.UNCOMMON)));
     public static final Item EVERLASTING_EMBLEM = registerItem("everlasting_emblem", MOD_ITEMS, new EverlastingEmblemItem(new FabricItemSettings().maxCount(1).rarity(Rarity.EPIC).fireproof()));
-    public static final Item PERPETUAL_FIGURE = registerItem("perpetual_figure", MOD_ITEMS, new EverlastingEmblemItem(new FabricItemSettings().maxCount(1).rarity(Rarity.EPIC).fireproof()));
-    public static final Item ETERNAL_DOUGHNUT = registerItem("eternal_doughnut", MOD_ITEMS, new EternalDoughnutItem(new FabricItemSettings().maxCount(1).rarity(Rarity.EPIC).fireproof()));
+    public static final Item PERPETUAL_FIGURE = registerItem("perpetual_figure", CREATIVE_ITEMS, new EverlastingEmblemItem(new FabricItemSettings().maxCount(1).rarity(Rarity.EPIC).fireproof()));
+    public static final Item ETERNAL_DOUGHNUT = registerItem("eternal_doughnut", CREATIVE_ITEMS, new EternalDoughnutItem(new FabricItemSettings().maxCount(1).rarity(Rarity.EPIC).fireproof()));
     public static final Item MOUNTING_STICK = registerItem("mounting_stick", MOD_ITEMS, new MountingStickItem(new FabricItemSettings().maxCount(1).rarity(Rarity.UNCOMMON)));
     public static final Item BOTTOMLESS_BUCKET = registerItem("bottomless_bucket", MOD_ITEMS, new BottomlessBucketItem(Fluids.EMPTY, new FabricItemSettings().maxCount(1).rarity(Rarity.RARE)));
     public static final Item BOTTOMLESS_WATER_BUCKET = registerItem("bottomless_water_bucket", MOD_ITEMS, new BottomlessBucketItem(Fluids.WATER, new FabricItemSettings().maxCount(1).rarity(Rarity.RARE)));
@@ -70,7 +70,7 @@ public class PeculiarItems {
 
     public static Item registerItem(String name, ArrayList<Item> list, Item item) {
         Registry.register(Registries.ITEM, PeculiarPieces.id(name), item);
-        list.add(item);
+        if (list != null) list.add(item);
         return item;
     }
 

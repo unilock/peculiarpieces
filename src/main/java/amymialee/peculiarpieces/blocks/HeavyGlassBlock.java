@@ -8,9 +8,4 @@ public class HeavyGlassBlock extends AbstractGlassBlock {
     public HeavyGlassBlock(Settings settings) {
         super(settings);
     }
-
-    @Override
-    public PistonBehavior getPistonBehavior(BlockState state) {
-        return PistonBehavior.PUSH_ONLY;
-    }
 }

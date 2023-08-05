@@ -59,7 +59,7 @@ public class PositionTrapItem extends Item {
             return;
         }
         double d = user.getEyeY() - (double)0.3f;
-        TeleportItemEntity teleportItemEntity = new TeleportItemEntity(user.world, user.getX(), d, user.getZ(), user.getStackInHand(hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND).copy(), stack);
+        TeleportItemEntity teleportItemEntity = new TeleportItemEntity(user.getWorld(), user.getX(), d, user.getZ(), user.getStackInHand(hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND).copy(), stack);
         teleportItemEntity.setThrower(user);
         teleportItemEntity.setDelay(40);
         float g = MathHelper.sin(user.getPitch() * ((float)Math.PI / 180));
@@ -69,7 +69,7 @@ public class PositionTrapItem extends Item {
         float k = user.getRandom().nextFloat() * ((float)Math.PI * 2);
         float l = 0.02f * user.getRandom().nextFloat();
         teleportItemEntity.setVelocity((double)(-i * h * 0.3f) + Math.cos(k) * (double)l, -g * 0.3f + 0.1f + (user.getRandom().nextFloat() - user.getRandom().nextFloat()) * 0.1f, (double)(j * h * 0.3f) + Math.sin(k) * (double)l);
-        user.world.spawnEntity(teleportItemEntity);
+        user.getWorld().spawnEntity(teleportItemEntity);
     }
 
     public static void writeStone(ItemStack stack, BlockPos pos) {

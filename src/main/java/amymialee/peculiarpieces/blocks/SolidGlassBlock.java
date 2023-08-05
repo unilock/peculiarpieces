@@ -42,8 +42,8 @@ public class SolidGlassBlock extends AbstractGlassBlock {
     }
 
     @Override
-    public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
-        return !tinted && super.isTranslucent(state, world, pos);
+    public boolean isTransparent(BlockState state, BlockView world, BlockPos pos) {
+        return !tinted && super.isTransparent(state, world, pos);
     }
 
     @Override

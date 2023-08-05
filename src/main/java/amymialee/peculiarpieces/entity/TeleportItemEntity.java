@@ -15,7 +15,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.particle.ItemStackParticleEffect;
@@ -90,22 +90,22 @@ public class TeleportItemEntity extends Entity {
         } else if (!this.hasNoGravity()) {
             this.setVelocity(this.getVelocity().add(0.0, -0.04, 0.0));
         }
-        if (this.world.isClient) {
+        if (this.getWorld().isClient) {
             this.noClip = false;
         } else {
-            this.noClip = !this.world.isSpaceEmpty(this, this.getBoundingBox().contract(1.0E-7));
+            this.noClip = !this.getWorld().isSpaceEmpty(this, this.getBoundingBox().contract(1.0E-7));
             if (this.noClip) {
                 this.pushOutOfBlocks(this.getX(), (this.getBoundingBox().minY + this.getBoundingBox().maxY) / 2.0, this.getZ());
             }
         }
-        if (!this.onGround || this.getVelocity().horizontalLengthSquared() > (double)1.0E-5f || (this.age + this.getId()) % 4 == 0) {
+        if (!this.isOnGround() || this.getVelocity().horizontalLengthSquared() > (double)1.0E-5f || (this.age + this.getId()) % 4 == 0) {
             this.move(MovementType.SELF, this.getVelocity());
             float g = 0.99f;
-            if (this.onGround) {
-                g = this.world.getBlockState(new BlockPos(this.getX(), this.getY() - 1.0, this.getZ())).getBlock().getSlipperiness() * 0.99f;
+            if (this.isOnGround()) {
+                g = this.getWorld().getBlockState(BlockPos.ofFloored(this.getX(), this.getY() - 1.0, this.getZ())).getBlock().getSlipperiness() * 0.99f;
             }
             this.setVelocity(this.getVelocity().multiply(g, 0.99, g));
-            if (this.onGround) {
+            if (this.isOnGround()) {
                 Vec3d vec3d2 = this.getVelocity();
                 if (vec3d2.y < 0.0) {
                     this.setVelocity(vec3d2.multiply(1.0, -0.5, 1.0));
@@ -116,17 +116,17 @@ public class TeleportItemEntity extends Entity {
             ++this.itemAge;
         }
         this.velocityDirty |= this.updateWaterState();
-        if (!this.world.isClient && this.getVelocity().subtract(vec3d).lengthSquared() > 0.01) {
+        if (!this.getWorld().isClient && this.getVelocity().subtract(vec3d).lengthSquared() > 0.01) {
             this.velocityDirty = true;
         }
         int delay = this.getDelay();
         if (delay > 0 && delay != CANNOT_PICK_UP_DELAY) {
             this.setDelay(delay - 1);
-            if (this.getDelay() == 0 && this.world instanceof ServerWorld serverWorld) {
+            if (this.getDelay() == 0 && this.getWorld() instanceof ServerWorld serverWorld) {
                 serverWorld.spawnParticles(ParticleTypes.SMOKE, getX(), getY() + 0.1f, getZ(), 16, 0.1, 0.1, 0.1, 0.05f);
             }
         }
-        if (!this.world.isClient && this.itemAge >= DESPAWN_AGE) {
+        if (!this.getWorld().isClient && this.itemAge >= DESPAWN_AGE) {
             this.discard();
         }
     }
@@ -146,13 +146,13 @@ public class TeleportItemEntity extends Entity {
         if (this.isInvulnerableTo(source)) {
             return false;
         }
-        if (!this.world.isClient()) {
+        if (!this.getWorld().isClient()) {
             this.scheduleVelocityUpdate();
             this.health = (int)((float)this.health - amount);
             this.emitGameEvent(GameEvent.ENTITY_DAMAGE, source.getAttacker());
         }
         if (this.health <= 0) {
-            if (world instanceof ServerWorld serverWorld) {
+            if (getWorld() instanceof ServerWorld serverWorld) {
                 double r = this.getPos().getX();
                 double s = this.getPos().getY() + 0.1f;
                 double d = this.getPos().getZ();
@@ -203,7 +203,7 @@ public class TeleportItemEntity extends Entity {
 
     @Override
     public void onPlayerCollision(PlayerEntity player) {
-        if (this.world.isClient) {
+        if (this.getWorld().isClient) {
             return;
         }
         if (this.getDelay() == 0) {

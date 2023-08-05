@@ -30,7 +30,7 @@ public class CustomScaffoldingItem extends BlockItem {
         World world = context.getWorld();
         BlockState blockState = world.getBlockState(blockPos);
         if (blockState.isOf(this.getBlock())) {
-            Direction direction = context.shouldCancelInteraction() ? (context.hitsInsideBlock() ? context.getSide().getOpposite() : context.getSide()) : (context.getSide() == Direction.UP ? context.getPlayerFacing() : Direction.UP);
+            Direction direction = context.shouldCancelInteraction() ? (context.hitsInsideBlock() ? context.getSide().getOpposite() : context.getSide()) : (context.getSide() == Direction.UP ? context.getHorizontalPlayerFacing() : Direction.UP);
             int i = 0;
             BlockPos.Mutable mutable = blockPos.mutableCopy().move(direction);
             while (i < size) {

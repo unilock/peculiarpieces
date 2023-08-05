@@ -6,7 +6,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RedstoneWireBlock;
-import net.minecraft.block.RepeaterBlock;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.state.StateManager;
 import net.minecraft.util.math.BlockPos;
@@ -30,8 +29,8 @@ public abstract class AbstractRedstoneComparisonBlock extends AbstractRedstoneGa
     protected abstract int getOutputLevel(BlockView world, BlockPos pos, BlockState state);
 
     @Override
-    protected boolean isValidInput(BlockState state) {
-        return RepeaterBlock.isRedstoneGate(state);
+    protected boolean getSideInputFromGatesOnly() {
+        return true;
     }
 
     protected static int getPower(BlockView world, BlockPos pos, BlockState state) {

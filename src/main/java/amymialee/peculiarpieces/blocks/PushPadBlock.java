@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemGroup.Entries;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -26,7 +27,9 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class PushPadBlock extends AbstractFlatBlock {
+import amymialee.peculiarpieces.CustomCreativeItems;
+
+public class PushPadBlock extends AbstractFlatBlock implements CustomCreativeItems {
     public static final IntProperty POWER = IntProperty.of("power", 0, 3);
     public static final BooleanProperty POWERED = Properties.POWERED;
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
@@ -43,14 +46,14 @@ public class PushPadBlock extends AbstractFlatBlock {
         return stack;
     }
 
-//    @Override
-//    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
-//        for (int i : POWER.getValues()) {
-//            ItemStack stack = new ItemStack(this);
-//            stack.getOrCreateNbt().putInt("pp:variant", i);
-//            stacks.add(stack);
-//        }
-//    }
+    @Override
+    public void appendStacks(Entries entries) {
+        for (int i : POWER.getValues()) {
+            ItemStack stack = new ItemStack(this);
+            stack.getOrCreateNbt().putInt("pp:variant", i);
+            entries.add(stack);
+        }
+    }
 
     @Override
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {}
@@ -91,7 +94,7 @@ public class PushPadBlock extends AbstractFlatBlock {
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         ItemStack stack = ctx.getStack();
-        BlockState state = this.getDefaultState().with(POWERED, ctx.getWorld().isReceivingRedstonePower(ctx.getBlockPos())).with(FACING, ctx.getPlayerFacing());
+        BlockState state = this.getDefaultState().with(POWERED, ctx.getWorld().isReceivingRedstonePower(ctx.getBlockPos())).with(FACING, ctx.getHorizontalPlayerFacing());
         if (stack.hasNbt() && stack.getNbt() != null) {
             return state.with(POWER, Math.min(3, stack.getNbt().getInt("pp:variant")));
         }

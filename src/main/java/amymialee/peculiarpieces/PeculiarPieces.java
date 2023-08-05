@@ -1,11 +1,17 @@
 package amymialee.peculiarpieces;
 
+import amymialee.peculiarpieces.blocks.FlagBlock;
 import amymialee.peculiarpieces.callbacks.PlayerCrouchCallback;
 import amymialee.peculiarpieces.callbacks.PlayerCrouchConsumingBlock;
 import amymialee.peculiarpieces.callbacks.PlayerJumpCallback;
 import amymialee.peculiarpieces.callbacks.PlayerJumpConsumingBlock;
+import amymialee.peculiarpieces.component.PeculiarComponentInitializer;
+import amymialee.peculiarpieces.component.WardingComponent;
 import amymialee.peculiarpieces.effects.FlightStatusEffect;
 import amymialee.peculiarpieces.effects.OpenStatusEffect;
+import amymialee.peculiarpieces.items.TorchQuiverItem;
+import amymialee.peculiarpieces.recipe.ShapedNbtRecipe;
+import amymialee.peculiarpieces.recipe.ShapelessNbtRecipe;
 import amymialee.peculiarpieces.registry.PeculiarBlocks;
 import amymialee.peculiarpieces.registry.PeculiarEntities;
 import amymialee.peculiarpieces.registry.PeculiarItems;
@@ -21,6 +27,8 @@ import amymialee.peculiarpieces.screens.WarpScreenHandler;
 import amymialee.peculiarpieces.util.ExtraPlayerDataWrapper;
 import amymialee.peculiarpieces.util.RedstoneManager;
 import amymialee.peculiarpieces.util.WarpManager;
+
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.api.ModInitializer;
@@ -28,10 +36,12 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.Vec3ArgumentType;
 import net.minecraft.entity.Entity;
@@ -42,8 +52,19 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemGroup.DisplayContext;
+import net.minecraft.item.ItemGroup.Entries;
+import net.minecraft.item.ItemGroup.EntryCollector;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.potion.Potion;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.ShapedRecipe;
+import net.minecraft.recipe.ShapelessRecipe;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.tag.TagKey;
@@ -51,23 +72,28 @@ import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.chunk.Chunk;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @SuppressWarnings("unused")
 public class PeculiarPieces implements ModInitializer {
     public static final String MOD_ID = "peculiarpieces";
     //ItemGroups
-//    public static final ItemGroup PIECES_GROUP = FabricItemGroupBuilder.create(id("peculiarpieces_group")).icon(PeculiarItems::getPeculiarIcon).build();
-//    public static final ItemGroup CREATIVE_GROUP = FabricItemGroupBuilder.create(id("peculiarpieces_creative_group")).icon(PeculiarItems::getCreativeIcon).build();
-//    public static final ItemGroup POTION_GROUP = FabricItemGroupBuilder.create(id("peculiarpieces_potion_group")).icon(PeculiarItems::getPotionIcon).build();
+    public static final ItemGroup PIECES_GROUP = FabricItemGroup.builder().displayName(Text.translatable("itemGroup.peculiarpieces.peculiarpieces_group")).icon(PeculiarItems::getPeculiarIcon).entries(PeculiarItemGroups::buildPieces).build();
+    public static final ItemGroup CREATIVE_GROUP = FabricItemGroup.builder().displayName(Text.translatable("itemGroup.peculiarpieces.peculiarpieces_creative_group")).icon(PeculiarItems::getCreativeIcon).entries(PeculiarItemGroups::buildCreative).build();
+    public static final ItemGroup POTION_GROUP = FabricItemGroup.builder().displayName(Text.translatable("itemGroup.peculiarpieces.peculiarpieces_potion_group")).icon(PeculiarItems::getPotionIcon).entries(PeculiarItemGroups::buildPotion).build();
     //ScreenHandlers
     
     public static final ScreenHandlerType<WarpScreenHandler> WARP_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(id("warp_block"), WarpScreenHandler::new);
@@ -113,12 +139,19 @@ public class PeculiarPieces implements ModInitializer {
     //Particles
     public static final DefaultParticleType WARDING_AURA = FabricParticleTypes.simple();
 
+    //RecipeSerializers
+    public static final RecipeSerializer<ShapedRecipe> SHAPED_NBT_CRAFTING_SERIALZIER = RecipeSerializer.register(id("nbt_crafting_shaped").toString(), new ShapedNbtRecipe.Serializer());
+    public static final RecipeSerializer<ShapelessRecipe> SHAPELESS_NBT_CRAFTING_SERIALZIER = RecipeSerializer.register(id("nbt_crafting_shapeless").toString(), new ShapelessNbtRecipe.Serializer());
+    
     @Override
     public void onInitialize() {
         PeculiarItems.init();
         PeculiarBlocks.init();
         PeculiarEntities.init();
         Registry.register(Registries.PARTICLE_TYPE, PeculiarPieces.id("warding_aura"), WARDING_AURA);
+        Registry.register(Registries.ITEM_GROUP, PeculiarPieces.id("peculiarpieces_group"), PIECES_GROUP);
+        Registry.register(Registries.ITEM_GROUP, PeculiarPieces.id("peculiarpieces_creative_group"), CREATIVE_GROUP);
+        Registry.register(Registries.ITEM_GROUP, PeculiarPieces.id("peculiarpieces_potion_group"), POTION_GROUP);
         CommandRegistrationCallback.EVENT.register((dispatcher, access, environment) -> {
             LiteralArgumentBuilder<ServerCommandSource> literalArgumentBuilder = CommandManager.literal("peculiar").requires(source -> source.hasPermissionLevel(2));
             for (GameMode gameMode : GameMode.values()) {
@@ -148,9 +181,9 @@ public class PeculiarPieces implements ModInitializer {
                                                                 }
                                                             }
                                                             if (targets.size() == 1) {
-                                                                ctx.getSource().sendFeedback(Text.translatable("peculiar.commands.gamemode.success.single", gameMode.getName(), targets.iterator().next().getDisplayName()), true);
+                                                                ctx.getSource().sendFeedback(() -> Text.translatable("peculiar.commands.gamemode.success.single", gameMode.getName(), targets.iterator().next().getDisplayName()), true);
                                                             } else {
-                                                                ctx.getSource().sendFeedback(Text.translatable("peculiar.commands.gamemode.success.multiple", gameMode.getName(), targets.size()), true);
+                                                                ctx.getSource().sendFeedback(() -> Text.translatable("peculiar.commands.gamemode.success.multiple", gameMode.getName(), targets.size()), true);
                                                             }
                                                             return 0;
                                                         }))))));
@@ -169,10 +202,64 @@ public class PeculiarPieces implements ModInitializer {
                                                     }
                                                 }
                                                 if (targets.size() == 1) {
-                                                    ctx.getSource().sendFeedback(Text.translatable("peculiar.commands.checkpoint.success.single", pos.getX(), pos.getY(), pos.getZ(), targets.iterator().next().getDisplayName()), true);
+                                                    ctx.getSource().sendFeedback(() -> Text.translatable("peculiar.commands.checkpoint.success.single", pos.getX(), pos.getY(), pos.getZ(), targets.iterator().next().getDisplayName()), true);
                                                 } else {
-                                                    ctx.getSource().sendFeedback(Text.translatable("peculiar.commands.checkpoint.success.multiple", pos.getX(), pos.getY(), pos.getZ(), targets.size()), true);
+                                                    ctx.getSource().sendFeedback(() -> Text.translatable("peculiar.commands.checkpoint.success.multiple", pos.getX(), pos.getY(), pos.getZ(), targets.size()), true);
                                                 }
+                                                return 0;
+                                            }))));
+            literalArgumentBuilder
+                    .then(CommandManager.literal("wardarea")
+                            .then(CommandManager.argument("set", BoolArgumentType.bool())
+                                    .then(CommandManager.argument("from", BlockPosArgumentType.blockPos())
+                                            .then(CommandManager.argument("to", BlockPosArgumentType.blockPos())
+                                                    .executes(context -> {
+                                                        BlockBox range = BlockBox.create(BlockPosArgumentType.getLoadedBlockPos(context, "from"), BlockPosArgumentType.getLoadedBlockPos(context, "to"));
+                                                        ServerCommandSource source = context.getSource();
+                                                        int i = range.getBlockCountX() * range.getBlockCountY() * range.getBlockCountZ();
+                                                        if (i > 32768 * 8) {
+                                                            source.sendFeedback(() -> Text.translatable("commands.fill.toobig", 32768 * 8, i), false);
+                                                            return 0;
+                                                        }
+                                                        ServerWorld serverWorld = source.getWorld();
+                                                        int j = 0;
+                                                        boolean ward = BoolArgumentType.getBool(context, "set");
+                                                        for (BlockPos blockPos : BlockPos.iterate(range.getMinX(), range.getMinY(), range.getMinZ(), range.getMaxX(), range.getMaxY(), range.getMaxZ())) {
+                                                            if (ward && serverWorld.getBlockState(blockPos).isAir()) {
+                                                                continue;
+                                                            }
+                                                            Chunk chunk = serverWorld.getChunk(blockPos);
+                                                            Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(chunk);
+                                                            if (component.isPresent()) {
+                                                                WardingComponent wardingComponent = component.get();
+                                                                wardingComponent.setWard(blockPos, ward);
+                                                                PeculiarComponentInitializer.WARDING.sync(chunk);
+                                                                j++;
+                                                            }
+                                                        }
+                                                        final var fj = j;
+                                                        source.sendFeedback(() -> Text.translatable("peculiar.commands.wardarea.success", ward ? "Warded" : "Unwarded", fj), true);
+                                                        return j;
+                                                    })))));
+            literalArgumentBuilder
+                    .then(CommandManager.literal("ward")
+                            .then(CommandManager.argument("set", BoolArgumentType.bool())
+                                    .then(CommandManager.argument("pos", BlockPosArgumentType.blockPos())
+                                            .executes(context -> {
+                                                ServerCommandSource source = context.getSource();
+                                                ServerWorld serverWorld = source.getWorld();
+                                                BlockPos pos = BlockPosArgumentType.getLoadedBlockPos(context, "pos");
+                                                Chunk chunk = serverWorld.getChunk(pos);
+                                                Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(chunk);
+                                                boolean ward = BoolArgumentType.getBool(context, "set");
+                                                if (component.isPresent()) {
+                                                    WardingComponent wardingComponent = component.get();
+                                                    wardingComponent.setWard(pos, ward);
+                                                    PeculiarComponentInitializer.WARDING.sync(chunk);
+                                                } else {
+                                                    source.sendFeedback(() -> Text.translatable("peculiar.commands.ward.failure"), true);
+                                                }
+                                                source.sendFeedback(() -> Text.translatable("peculiar.commands.ward.success", ward ? "Warded" : "Unwarded", pos.getX(), pos.getY(), pos.getZ()), true);
                                                 return 0;
                                             }))));
             literalArgumentBuilder
@@ -190,12 +277,13 @@ public class PeculiarPieces implements ModInitializer {
                                         if (targets.size() == 1) {
                                             Entity first = targets.iterator().next();
                                             if (first instanceof PlayerEntity) {
-                                                context.getSource().sendFeedback(Text.translatable("peculiar.commands.discard.failure.single"), true);
+                                                context.getSource().sendFeedback(() -> Text.translatable("peculiar.commands.discard.failure.single"), true);
                                             } else {
-                                                context.getSource().sendFeedback(Text.translatable("peculiar.commands.discard.success.single", first.getDisplayName()), true);
+                                                context.getSource().sendFeedback(() -> Text.translatable("peculiar.commands.discard.success.single", first.getDisplayName()), true);
                                             }
                                         } else {
-                                            context.getSource().sendFeedback(Text.translatable("peculiar.commands.discard.success.multiple", total), true);
+                                            var ftotal = total;
+                                            context.getSource().sendFeedback(() -> Text.translatable("peculiar.commands.discard.success.multiple", ftotal), true);
                                         }
                                         return targets.size();
                                     })));

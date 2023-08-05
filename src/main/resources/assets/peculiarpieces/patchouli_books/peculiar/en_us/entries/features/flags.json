@@ -1,0 +1,91 @@
+{
+  "name": "Flags",
+  "icon": "peculiarpieces:flag{BlockEntityTag:{\"Texture\":\"red\",\"id\":\"minecraft:flag\"}}",
+  "category": "peculiarpieces:features",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Flags can be made similar to banners with dyed wool.$(br)They are nice to add a splash of colour to your buildings!$(br)They can be placed flat against the wall by crouching while placing them."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:flags/white_flag",
+      "recipe2": "peculiarpieces:flags/white_flag_dyed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:flags/orange_flag",
+      "recipe2": "peculiarpieces:flags/orange_flag_dyed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:flags/magenta_flag",
+      "recipe2": "peculiarpieces:flags/magenta_flag_dyed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:flags/light_blue_flag",
+      "recipe2": "peculiarpieces:flags/light_blue_flag_dyed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:flags/yellow_flag",
+      "recipe2": "peculiarpieces:flags/yellow_flag_dyed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:flags/lime_flag",
+      "recipe2": "peculiarpieces:flags/lime_flag_dyed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:flags/pink_flag",
+      "recipe2": "peculiarpieces:flags/pink_flag_dyed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:flags/gray_flag",
+      "recipe2": "peculiarpieces:flags/gray_flag_dyed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:flags/light_gray_flag",
+      "recipe2": "peculiarpieces:flags/light_gray_flag_dyed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:flags/cyan_flag",
+      "recipe2": "peculiarpieces:flags/cyan_flag_dyed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:flags/purple_flag",
+      "recipe2": "peculiarpieces:flags/purple_flag_dyed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:flags/blue_flag",
+      "recipe2": "peculiarpieces:flags/blue_flag_dyed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:flags/brown_flag",
+      "recipe2": "peculiarpieces:flags/brown_flag_dyed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:flags/green_flag",
+      "recipe2": "peculiarpieces:flags/green_flag_dyed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:flags/red_flag",
+      "recipe2": "peculiarpieces:flags/red_flag_dyed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:flags/black_flag",
+      "recipe2": "peculiarpieces:flags/black_flag_dyed"
+    }
+  ]
+}

@@ -18,7 +18,8 @@ public class EquipmentStandEntityRenderer extends BipedEntityRenderer<EquipmentS
         super(ctx, new PlayerEntityModel<>(ctx.getPart(PeculiarPiecesClient.EQUIPMENT_STAND), true), 0.0f);
         this.addFeature(new ArmorFeatureRenderer<>(this,
                         new BipedEntityModel<>(ctx.getPart(EntityModelLayers.PLAYER_INNER_ARMOR)),
-                        new BipedEntityModel<>(ctx.getPart(EntityModelLayers.PLAYER_OUTER_ARMOR))));
+                        new BipedEntityModel<>(ctx.getPart(EntityModelLayers.PLAYER_OUTER_ARMOR)),
+                ctx.getModelManager()));
         this.addFeature(new HangGliderStandFeatureRenderer<>(this, ctx.getModelLoader()));
     }
 

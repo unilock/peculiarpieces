@@ -14,8 +14,8 @@ public class EnderPouchScreenHandler extends GenericContainerScreenHandler {
     }
 
     @Override
-    public void close(PlayerEntity player) {
-        super.close(player);
-        player.world.playSoundFromEntity(null, player, SoundEvents.BLOCK_ENDER_CHEST_CLOSE, SoundCategory.PLAYERS, 0.5f, player.getRandom().nextFloat() * 0.1f + 0.9f);
+    public void onClosed(PlayerEntity player) {
+        super.onClosed(player);
+        player.getWorld().playSoundFromEntity(null, player, SoundEvents.BLOCK_ENDER_CHEST_CLOSE, SoundCategory.PLAYERS, 0.5f, player.getRandom().nextFloat() * 0.1f + 0.9f);
     }
 }

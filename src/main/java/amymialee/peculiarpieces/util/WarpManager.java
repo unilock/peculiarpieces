@@ -28,11 +28,11 @@ public class WarpManager {
                     targetWorld = server.getWorld(instance.getEntity().getWorld().getRegistryKey());
                 }
                 if (instance.hasParticles()) {
-                    entity.world.sendEntityStatus(entity, (byte)46);
+                    entity.getWorld().sendEntityStatus(entity, (byte)46);
                 }
                 FabricDimensions.teleport(entity, targetWorld, new TeleportTarget(targetPos, targetVelocity, targetYaw, targetPitch));
                 if (instance.hasParticles()) {
-                    entity.world.sendEntityStatus(entity, (byte)46);
+                    entity.getWorld().sendEntityStatus(entity, (byte)46);
                 }
                 if (entity instanceof PathAwareEntity) {
                     ((PathAwareEntity)entity).getNavigation().stop();

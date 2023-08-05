@@ -38,7 +38,7 @@ public class WarpBlock extends BlockWithEntity {
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(FACING, ctx.getPlayerFacing()).with(ENABLED, false);
+        return this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing()).with(ENABLED, false);
     }
 
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {

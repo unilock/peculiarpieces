@@ -1,0 +1,15 @@
+{
+  "name": "Redstone Remote",
+  "icon": "peculiarpieces:redstone_remote",
+  "category": "peculiarpieces:features",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A Redstone Remote can be used to ignite a redstone signal from a long distance away.$(br)Select a position by shift clicking on a block.$(br)This is very useful to active remote redstone devices."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:tools/redstone_remote"
+    }
+  ]
+}

@@ -48,7 +48,7 @@ public class LivingLadderBlock extends Block implements Fertilizable, Waterlogga
     }
 
     @Override
-    public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
+    public boolean isTransparent(BlockState state, BlockView world, BlockPos pos) {
         return true;
     }
 
@@ -156,7 +156,7 @@ public class LivingLadderBlock extends Block implements Fertilizable, Waterlogga
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         World world = ctx.getWorld();
         BlockPos pos = ctx.getBlockPos();
-        Direction dir = ctx.getSide().getAxis() != Direction.Axis.Y ? ctx.getSide() : ctx.getPlayerFacing();
+        Direction dir = ctx.getSide().getAxis() != Direction.Axis.Y ? ctx.getSide() : ctx.getHorizontalPlayerFacing();
         if (!isSecurePlacement(world, pos, dir)) {
             if (!secureNear(world, pos)) {
                 return null;

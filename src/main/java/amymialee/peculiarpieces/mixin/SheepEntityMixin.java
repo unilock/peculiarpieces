@@ -23,11 +23,11 @@ public abstract class SheepEntityMixin extends AnimalEntity {
     @Inject(method = "interactMob", at = @At("HEAD"), cancellable = true)
     private void PeculiarPieces$ExtraInteractions(PlayerEntity player2, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         if (this.isBaby()) {
-            if (!this.world.isClient) {
+            if (!this.getWorld().isClient) {
                 if (this.getCustomName() != null && this.getCustomName().toString().contains("Engineer")) {
-                    this.world.playSoundFromEntity(null, this, PeculiarPieces.ENTITY_SHEEP_YIPPEE_ENGINEER, SoundCategory.PLAYERS, getSoundVolume(), getSoundPitch());
+                    this.getWorld().playSoundFromEntity(null, this, PeculiarPieces.ENTITY_SHEEP_YIPPEE_ENGINEER, SoundCategory.PLAYERS, getSoundVolume(), getSoundPitch());
                 } else {
-                    this.world.playSoundFromEntity(null, this, PeculiarPieces.ENTITY_SHEEP_YIPPEE, SoundCategory.PLAYERS, getSoundVolume(), getSoundPitch());
+                    this.getWorld().playSoundFromEntity(null, this, PeculiarPieces.ENTITY_SHEEP_YIPPEE, SoundCategory.PLAYERS, getSoundVolume(), getSoundPitch());
                 }
                 cir.setReturnValue(ActionResult.SUCCESS);
             }

@@ -25,7 +25,7 @@ public class MidairBlockItem extends BlockItem {
         float f = -MathHelper.sin(yaw * ((float)Math.PI / 180)) * MathHelper.cos(pitch * ((float)Math.PI / 180));
         float g = -MathHelper.sin(pitch * ((float)Math.PI / 180));
         float h = MathHelper.cos(yaw * ((float)Math.PI / 180)) * MathHelper.cos(pitch * ((float)Math.PI / 180));
-        BlockPos blockPos = new BlockPos(user.getPos().add(f * 2.4f, (g * 2.4f) + 1.8f, h * 2.4f));
+        BlockPos blockPos = BlockPos.ofFloored(user.getPos().add(f * 2.4f, (g * 2.4f) + 1.8f, h * 2.4f));
         place(new ItemPlacementContext(user, hand, user.getStackInHand(hand), new BlockHitResult(user.getPos(), Direction.UP, blockPos, true)));
         return super.use(world, user, hand);
     }

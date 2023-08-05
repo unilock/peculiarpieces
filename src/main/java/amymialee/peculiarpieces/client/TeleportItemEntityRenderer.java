@@ -9,6 +9,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.enchantment.Enchantments;
@@ -45,9 +46,9 @@ public class TeleportItemEntityRenderer extends EntityRenderer<TeleportItemEntit
         }
         int j = itemStack.isEmpty() ? 187 : Item.getRawId(itemStack.getItem()) + itemStack.getDamage();
         this.random.setSeed(j);
-        BakedModel bakedModel = this.itemRenderer.getModel(itemStack, itemEntity.world, null, itemEntity.getId());
+        BakedModel bakedModel = this.itemRenderer.getModel(itemStack, itemEntity.getWorld(), null, itemEntity.getId());
         float l = MathHelper.sin(((float) itemEntity.age + g) / 10.0f) * 0.1f + 0.1f;
-        float m = bakedModel.getTransformation().getTransformation(ModelTransformation.Mode.GROUND).scale.y();
+        float m = bakedModel.getTransformation().getTransformation(ModelTransformationMode.GROUND).scale.y();
         matrixStack.translate(0.0, l + 0.25f * m, 0.0);
         float n = itemEntity.getRotation(g);
         matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(n));
@@ -55,7 +56,7 @@ public class TeleportItemEntityRenderer extends EntityRenderer<TeleportItemEntit
         float p = bakedModel.getTransformation().ground.scale.y();
         float q = bakedModel.getTransformation().ground.scale.z();
         matrixStack.push();
-        this.itemRenderer.renderItem(itemStack, ModelTransformation.Mode.GROUND, false, matrixStack, vertexConsumerProvider, i, OverlayTexture.DEFAULT_UV, bakedModel);
+        this.itemRenderer.renderItem(itemStack, ModelTransformationMode.GROUND, false, matrixStack, vertexConsumerProvider, i, OverlayTexture.DEFAULT_UV, bakedModel);
         matrixStack.pop();
         matrixStack.translate(0.0f * o, 0.0f * p, 0.09375f * q);
         matrixStack.pop();

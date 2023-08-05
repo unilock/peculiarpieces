@@ -27,7 +27,7 @@ public class PackedPouchScreenHandler extends ScreenHandler {
         int j;
         readNBT();
         bundleInv.onOpen(playerInventory.player);
-        playerInventory.player.world.playSoundFromEntity(null, playerInventory.player, SoundEvents.BLOCK_BARREL_OPEN, SoundCategory.PLAYERS, 0.5f, playerInventory.player.getRandom().nextFloat() * 0.1f + 0.9f);
+        playerInventory.player.getWorld().playSoundFromEntity(null, playerInventory.player, SoundEvents.BLOCK_BARREL_OPEN, SoundCategory.PLAYERS, 0.5f, playerInventory.player.getRandom().nextFloat() * 0.1f + 0.9f);
         for (j = 0; j < 6; ++j) {
             for (k = 0; k < 9; ++k) {
                 this.addSlot(new Slot(bundleInv, k + j * 9, 8 + k * 18, 18 + j * 18) {
@@ -81,10 +81,10 @@ public class PackedPouchScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public void close(PlayerEntity player) {
-        super.close(player);
+    public void onClosed(PlayerEntity player) {
+        super.onClosed(player);
         this.bundleInv.onClose(player);
-        player.world.playSoundFromEntity(null, player, SoundEvents.BLOCK_BARREL_CLOSE, SoundCategory.PLAYERS, 0.5f, player.getRandom().nextFloat() * 0.1f + 0.9f);
+        player.getWorld().playSoundFromEntity(null, player, SoundEvents.BLOCK_BARREL_CLOSE, SoundCategory.PLAYERS, 0.5f, player.getRandom().nextFloat() * 0.1f + 0.9f);
     }
 
     @Override

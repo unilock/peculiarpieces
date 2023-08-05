@@ -27,7 +27,7 @@ public class CheckpointDamageBlock extends AbstractStructureVoidBlock {
             Vec3d checkpointPos = checkPlayer.getCheckpointPos();
             if (checkpointPos != null && checkpointPos.distanceTo(entity.getPos()) > 2) {
                 float health = player.getHealth();
-                player.damage(DamageSource.MAGIC, Math.max(0, (health) / 2));
+                player.damage(world.getDamageSources().magic(), Math.max(0, (health) / 2));
                 WarpInstance instance = WarpInstance.of(player).position(checkpointPos).particles();
                 RegistryKey<World> worldRegistryKey = checkPlayer.getCheckpointWorld();
                 if (worldRegistryKey != null) {
