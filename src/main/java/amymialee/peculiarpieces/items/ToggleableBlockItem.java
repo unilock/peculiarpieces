@@ -31,6 +31,6 @@ public class ToggleableBlockItem extends BlockItem {
     private void toggle(ItemStack stack) {
         NbtCompound compound = stack.getOrCreateNbt();
         int old = compound.getInt("pp:variant");
-        compound.putInt("pp:variant", PeculiarHelper.clampLoop(0, options, old + 1));
+        compound.putInt("pp:variant", PeculiarHelper.clampLoop(0, this.options, old + 1));
     }
 }

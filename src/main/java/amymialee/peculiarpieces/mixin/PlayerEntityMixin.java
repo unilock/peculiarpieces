@@ -52,17 +52,17 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
 
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
     public void PeculiarPieces$WriteCustomData(NbtCompound nbt, CallbackInfo ci) {
-        if (checkpointPos != null && checkpointPos.distanceTo(Vec3d.ZERO) > 1) {
-            nbt.put("pp:checkpos", NbtHelper.fromBlockPos(BlockPos.ofFloored(checkpointPos)));
+        if (this.checkpointPos != null && this.checkpointPos.distanceTo(Vec3d.ZERO) > 1) {
+            nbt.put("pp:checkpos", NbtHelper.fromBlockPos(BlockPos.ofFloored(this.checkpointPos)));
         }
-        if (checkpointWorld != null) {
-            World.CODEC.encodeStart(NbtOps.INSTANCE, checkpointWorld).resultOrPartial(error -> {}).ifPresent(nbtElement -> nbt.put("CheckpointDimension", nbtElement));
+        if (this.checkpointWorld != null) {
+            World.CODEC.encodeStart(NbtOps.INSTANCE, this.checkpointWorld).resultOrPartial(error -> {}).ifPresent(nbtElement -> nbt.put("CheckpointDimension", nbtElement));
         }
-        if (storedGameMode != null) {
-            nbt.putInt("pp:gamemode", storedGameMode.getId() + 1);
+        if (this.storedGameMode != null) {
+            nbt.putInt("pp:gamemode", this.storedGameMode.getId() + 1);
         }
-        if (gameModeDuration != 0) {
-            nbt.putInt("pp:gamemode_duration", gameModeDuration);
+        if (this.gameModeDuration != 0) {
+            nbt.putInt("pp:gamemode_duration", this.gameModeDuration);
         }
     }
 
@@ -70,17 +70,17 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
     public void PeculiarPieces$ReadCustomData(NbtCompound nbt, CallbackInfo ci) {
         Vec3d vec3d = Vec3d.ofBottomCenter(NbtHelper.toBlockPos(nbt.getCompound("pp:checkpos")));
         if (vec3d.distanceTo(Vec3d.ZERO) > 1) {
-            checkpointPos = vec3d;
+            this.checkpointPos = vec3d;
         }
         Optional<RegistryKey<World>> worldKey = getCheckpointDimension(nbt);
-        worldKey.ifPresent(worldRegistryKey -> checkpointWorld = worldRegistryKey);
+        worldKey.ifPresent(worldRegistryKey -> this.checkpointWorld = worldRegistryKey);
         int gameMode = nbt.getInt("pp:gamemode");
         if (gameMode != 0) {
-            storedGameMode = GameMode.byId(gameMode - 1);
+            this.storedGameMode = GameMode.byId(gameMode - 1);
         } else {
-            storedGameMode = null;
+            this.storedGameMode = null;
         }
-        gameModeDuration = nbt.getInt("pp:gamemode_duration");
+        this.gameModeDuration = nbt.getInt("pp:gamemode_duration");
     }
 
     private static Optional<RegistryKey<World>> getCheckpointDimension(NbtCompound nbt) {
@@ -90,12 +90,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
     @Inject(method = "tick", at = @At("TAIL"))
     public void PeculiarPieces$GamemodeTicks(CallbackInfo ci) {
         if (((PlayerEntity) ((Object) this)) instanceof ServerPlayerEntity serverPlayer) {
-            if (gameModeDuration > 0) {
-                gameModeDuration--;
-                if (gameModeDuration == 0) {
-                    if (storedGameMode != null) {
-                        serverPlayer.changeGameMode(storedGameMode);
-                        storedGameMode = null;
+            if (this.gameModeDuration > 0) {
+                this.gameModeDuration--;
+                if (this.gameModeDuration == 0) {
+                    if (this.storedGameMode != null) {
+                        serverPlayer.changeGameMode(this.storedGameMode);
+                        this.storedGameMode = null;
                     }
                 }
             }
@@ -120,39 +120,39 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
             this.velocityDirty = true;
         } else if (GliderItem.isGliding(this2)) {
             double horizontalSpeed = !isSneaking() ? 0.03 : 0.1;
-            double xSpeed = Math.cos(Math.toRadians(headYaw + 90)) * horizontalSpeed;
-            double zSpeed = Math.sin(Math.toRadians(headYaw + 90)) * horizontalSpeed;
+            double xSpeed = Math.cos(Math.toRadians(this.headYaw + 90)) * horizontalSpeed;
+            double zSpeed = Math.sin(Math.toRadians(this.headYaw + 90)) * horizontalSpeed;
             this.setVelocity(velocity.x + xSpeed, !isSneaking() ? -0.052 : -0.176, velocity.z + zSpeed);
             this.fallDistance = 0;
         }
     }
 
     @Override public Vec3d getCheckpointPos() {
-        return checkpointPos;
+        return this.checkpointPos;
     }
 
     @Override public void setCheckpointPos(Vec3d vec3d) {
-        checkpointPos = vec3d;
+        this.checkpointPos = vec3d;
     }
 
     @Override public int getGameModeDuration() {
-        return gameModeDuration;
+        return this.gameModeDuration;
     }
 
     @Override public void setGameModeDuration(int duration) {
-        gameModeDuration = duration;
+        this.gameModeDuration = duration;
     }
 
     @Override public GameMode getStoredGameMode() {
-        return storedGameMode;
+        return this.storedGameMode;
     }
 
     @Override public void setStoredGameMode(GameMode gameMode) {
-        storedGameMode = gameMode;
+        this.storedGameMode = gameMode;
     }
 
     @Override public double getBouncePower() {
-        return bouncePower;
+        return this.bouncePower;
     }
 
     @Override public void setBouncePower(double bouncePower) {
@@ -161,7 +161,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
 
     @Override
     public RegistryKey<World> getCheckpointWorld() {
-        return checkpointWorld;
+        return this.checkpointWorld;
     }
 
     @Override

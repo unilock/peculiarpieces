@@ -129,100 +129,100 @@ public class WarpInstance {
     }
 
     public Vec3d getPosition() {
-        return new Vec3d(this.hasXPos ? xPos : entity.getX(), this.hasYPos ? yPos : entity.getY(), this.hasZPos ? zPos : entity.getZ());
+        return new Vec3d(this.hasXPos ? this.xPos : this.entity.getX(), this.hasYPos ? this.yPos : this.entity.getY(), this.hasZPos ? this.zPos : this.entity.getZ());
     }
 
     public Vec3d getVelocity() {
         Vec3d entity = this.entity.getVelocity();
-        return new Vec3d(this.hasXVel ? xVel : entity.getX(), this.hasYVel ? yVel : entity.getY(), this.hasZVel ? zVel : entity.getZ());
+        return new Vec3d(this.hasXVel ? this.xVel : entity.getX(), this.hasYVel ? this.yVel : entity.getY(), this.hasZVel ? this.zVel : entity.getZ());
     }
 
     @Nonnull
     public Entity getEntity() {
-        return entity;
+        return this.entity;
     }
 
     public boolean hasWorld() {
-        return hasWorld;
+        return this.hasWorld;
     }
 
     public RegistryKey<World> getWorld() {
-        return world;
+        return this.world;
     }
 
     public boolean hasPosition() {
-        return hasPosition;
+        return this.hasPosition;
     }
 
     public boolean hasXPos() {
-        return hasXPos;
+        return this.hasXPos;
     }
 
     public double getXPos() {
-        return xPos;
+        return this.xPos;
     }
 
     public boolean hasYPos() {
-        return hasYPos;
+        return this.hasYPos;
     }
 
     public double getYPos() {
-        return yPos;
+        return this.yPos;
     }
 
     public boolean hasZPos() {
-        return hasZPos;
+        return this.hasZPos;
     }
 
     public double getzPos() {
-        return zPos;
+        return this.zPos;
     }
 
     public boolean hasVelocity() {
-        return hasVelocity;
+        return this.hasVelocity;
     }
 
     public boolean hasXVel() {
-        return hasXVel;
+        return this.hasXVel;
     }
 
     public double getXVel() {
-        return xVel;
+        return this.xVel;
     }
 
     public boolean hasYVel() {
-        return hasYVel;
+        return this.hasYVel;
     }
 
     public double getYVel() {
-        return yVel;
+        return this.yVel;
     }
 
     public boolean hasZVel() {
-        return hasZVel;
+        return this.hasZVel;
     }
 
     public double getzVel() {
-        return zVel;
+        return this.zVel;
     }
 
     public boolean hasPitch() {
-        return hasPitch;
+        return this.hasPitch;
     }
 
     public float getPitch() {
-        return pitch;
+        return this.pitch;
     }
 
     public boolean hasYaw() {
-        return hasYaw;
+        return this.hasYaw;
     }
 
     public float getYaw() {
-        return yaw;
+        return this.yaw;
     }
 
     public boolean hasParticles() {
-        return particles;
+        return this.particles;
     }
 }

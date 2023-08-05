@@ -31,7 +31,7 @@ public class SolidGlassBlock extends AbstractGlassBlock {
     }
 
     private VoxelShape getShape(boolean filled) {
-        if (inverted) {
+        if (this.inverted) {
             filled = !filled;
         }
         if (filled) {
@@ -43,11 +43,11 @@ public class SolidGlassBlock extends AbstractGlassBlock {
 
     @Override
     public boolean isTransparent(BlockState state, BlockView world, BlockPos pos) {
-        return !tinted && super.isTransparent(state, world, pos);
+        return !this.tinted && super.isTransparent(state, world, pos);
     }
 
     @Override
     public int getOpacity(BlockState state, BlockView world, BlockPos pos) {
-        return tinted ? world.getMaxLightLevel() : super.getOpacity(state, world, pos);
+        return this.tinted ? world.getMaxLightLevel() : super.getOpacity(state, world, pos);
     }
 }

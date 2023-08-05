@@ -34,8 +34,8 @@ public class PotionPadScreen extends HandledScreen<PotionPadScreenHandler> {
         int i = (this.width - this.backgroundWidth) / 2;
         int j = (this.height - this.backgroundHeight) / 2;
         ctx.drawTexture(TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
-        if (handler.getSlot(0).getStack().isEmpty()) {
-            ctx.drawTexture(EMPTY_TEXTURE, x + 80, y + 20, 0, 0, 0, 16, 16, 16, 16);
+        if (this.handler.getSlot(0).getStack().isEmpty()) {
+            ctx.drawTexture(EMPTY_TEXTURE, this.x + 80, this.y + 20, 0, 0, 0, 16, 16, 16, 16);
         }
     }
 }

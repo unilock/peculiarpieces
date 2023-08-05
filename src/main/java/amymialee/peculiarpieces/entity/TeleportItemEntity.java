@@ -54,7 +54,7 @@ public class TeleportItemEntity extends Entity {
         if (!stack.isEmpty()) {
             this.setStack(stack);
         } else {
-            Registries.ITEM.getRandom(random).ifPresent((a) -> this.setStack(new ItemStack(a)));
+            Registries.ITEM.getRandom(this.random).ifPresent((a) -> this.setStack(new ItemStack(a)));
         }
         this.setPearl(pearl);
     }
@@ -156,7 +156,7 @@ public class TeleportItemEntity extends Entity {
                 double r = this.getPos().getX();
                 double s = this.getPos().getY() + 0.1f;
                 double d = this.getPos().getZ();
-                serverWorld.spawnParticles(new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(PeculiarItems.POS_TRAP)), r, s, d, 32, 0, 0, 0, random.nextGaussian() * 0.15);
+                serverWorld.spawnParticles(new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(PeculiarItems.POS_TRAP)), r, s, d, 32, 0, 0, 0, this.random.nextGaussian() * 0.15);
                 for (double e = 0.0; e < Math.PI * 2; e += 0.15707963267948966) {
                     serverWorld.spawnParticles(ParticleTypes.PORTAL, r + Math.cos(e) * 0.2f, s, d + Math.sin(e) * 0.2f, 2, 0, 0, 0, Math.cos(e) * -5.0);
                     serverWorld.spawnParticles(ParticleTypes.PORTAL, r + Math.cos(e) * 0.2f, s, d + Math.sin(e) * 0.2f, 2, 0, 0, 0, Math.sin(e) * -7.0);

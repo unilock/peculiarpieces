@@ -143,7 +143,7 @@ public class FlagBlockEntityRenderer implements BlockEntityRenderer<FlagBlockEnt
         }
         matrixStack.pop();
         matrixStack.pop();
-        if (walled || init) {
+        if (walled || this.init) {
             this.flag.pitch = (float) Math.toRadians(180f);
             this.flag.yaw = 0;
             this.flag.roll = 0;
@@ -156,7 +156,7 @@ public class FlagBlockEntityRenderer implements BlockEntityRenderer<FlagBlockEnt
             this.pole.pivotX = 0;
             this.pole.pivotY = 0;
             this.pole.pivotZ = 0;
-            init = false;
+            this.init = false;
         }
     }
 }

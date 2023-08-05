@@ -31,11 +31,11 @@ public class GameModeBarrierBlock extends Block {
             return VoxelShapes.fullCube();
         }
         if (context instanceof EntityShapeContext entityShapeContext && entityShapeContext.getEntity() instanceof PlayerEntity player) {
-            if (player instanceof ServerPlayerEntity playerEntity && playerEntity.interactionManager.getGameMode() == gameMode) {
+            if (player instanceof ServerPlayerEntity playerEntity && playerEntity.interactionManager.getGameMode() == this.gameMode) {
                 return VoxelShapes.fullCube();
             } else if (player.getWorld().isClient() && player instanceof ClientPlayerEntity clientPlayerEntity) {
                 PlayerListEntry playerListEntry = clientPlayerEntity.networkHandler.getPlayerListEntry(clientPlayerEntity.getUuid());
-                if (playerListEntry != null && playerListEntry.getGameMode() == gameMode) {
+                if (playerListEntry != null && playerListEntry.getGameMode() == this.gameMode) {
                     return VoxelShapes.fullCube();
                 }
             }
@@ -46,11 +46,11 @@ public class GameModeBarrierBlock extends Block {
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if (context instanceof EntityShapeContext entityShapeContext && entityShapeContext.getEntity() instanceof PlayerEntity player) {
-            if (player instanceof ServerPlayerEntity playerEntity && playerEntity.interactionManager.getGameMode() == gameMode) {
+            if (player instanceof ServerPlayerEntity playerEntity && playerEntity.interactionManager.getGameMode() == this.gameMode) {
                 return VoxelShapes.fullCube();
             } else if (player.getWorld().isClient() && player instanceof ClientPlayerEntity clientPlayerEntity) {
                 PlayerListEntry playerListEntry = clientPlayerEntity.networkHandler.getPlayerListEntry(clientPlayerEntity.getUuid());
-                if (playerListEntry != null && playerListEntry.getGameMode() == gameMode) {
+                if (playerListEntry != null && playerListEntry.getGameMode() == this.gameMode) {
                     return VoxelShapes.fullCube();
                 }
             }

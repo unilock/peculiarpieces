@@ -39,23 +39,23 @@ public class EquipmentStandScreen extends HandledScreen<EquipmentStandScreenHand
         int i = (this.width - this.backgroundWidth) / 2;
         int j = (this.height - this.backgroundHeight) / 2;
         ctx.drawTexture(TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
-        if (handler.getSlot(0).getStack().isEmpty()) {
-            ctx.drawTexture(EMPTY_FEET, x + 62, y + 20, 0, 0, 0, 16, 16, 16, 16);
+        if (this.handler.getSlot(0).getStack().isEmpty()) {
+            ctx.drawTexture(EMPTY_FEET, this.x + 62, this.y + 20, 0, 0, 0, 16, 16, 16, 16);
         }
-        if (handler.getSlot(1).getStack().isEmpty()) {
-            ctx.drawTexture(EMPTY_LEGS, x + 80, y + 20, 0, 0, 0, 16, 16, 16, 16);
+        if (this.handler.getSlot(1).getStack().isEmpty()) {
+            ctx.drawTexture(EMPTY_LEGS, this.x + 80, this.y + 20, 0, 0, 0, 16, 16, 16, 16);
         }
-        if (handler.getSlot(2).getStack().isEmpty()) {
-            ctx.drawTexture(EMPTY_CHEST, x + 98, y + 20, 0, 0, 0, 16, 16, 16, 16);
+        if (this.handler.getSlot(2).getStack().isEmpty()) {
+            ctx.drawTexture(EMPTY_CHEST, this.x + 98, this.y + 20, 0, 0, 0, 16, 16, 16, 16);
         }
-        if (handler.getSlot(3).getStack().isEmpty()) {
-            ctx.drawTexture(EMPTY_HEAD, x + 116, y + 20, 0, 0, 0, 16, 16, 16, 16);
+        if (this.handler.getSlot(3).getStack().isEmpty()) {
+            ctx.drawTexture(EMPTY_HEAD, this.x + 116, this.y + 20, 0, 0, 0, 16, 16, 16, 16);
         }
-        if (handler.getSlot(4).getStack().isEmpty()) {
-            ctx.drawTexture(EMPTY_GLIDER, x + 134, y + 20, 0, 0, 0, 16, 16, 16, 16);
+        if (this.handler.getSlot(4).getStack().isEmpty()) {
+            ctx.drawTexture(EMPTY_GLIDER, this.x + 134, this.y + 20, 0, 0, 0, 16, 16, 16, 16);
         }
-        if (handler.getSlot(6).getStack().isEmpty()) {
-            ctx.drawTexture(EMPTY_OFFHAND, x + 44, y + 20, 0, 0, 0, 16, 16, 16, 16);
+        if (this.handler.getSlot(6).getStack().isEmpty()) {
+            ctx.drawTexture(EMPTY_OFFHAND, this.x + 44, this.y + 20, 0, 0, 0, 16, 16, 16, 16);
         }
     }
 }

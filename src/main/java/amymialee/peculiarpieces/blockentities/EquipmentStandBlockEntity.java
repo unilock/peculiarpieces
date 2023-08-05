@@ -36,29 +36,29 @@ public class EquipmentStandBlockEntity extends LockableContainerBlockEntity {
     }
 
     public void updatePlayerYaw() {
-        if (world != null) {
-            PlayerEntity playerEntity = world.getClosestPlayer((double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, 32.0, false);
+        if (this.world != null) {
+            PlayerEntity playerEntity = this.world.getClosestPlayer((double) this.pos.getX() + 0.5, (double) this.pos.getY() + 0.5, (double) this.pos.getZ() + 0.5, 32.0, false);
             if (playerEntity != null) {
-                double d = playerEntity.getX() - ((double) pos.getX() + 0.5);
-                double e = playerEntity.getZ() - ((double) pos.getZ() + 0.5);
+                double d = playerEntity.getX() - ((double) this.pos.getX() + 0.5);
+                double e = playerEntity.getZ() - ((double) this.pos.getZ() + 0.5);
                 this.playerYaw = (float) (Math.toDegrees(MathHelper.atan2(e, d)) - (this.getCachedState().get(FlagBlock.ROTATION) * 360) / 16) - 90;
             }
         }
     }
 
     public EquipmentStandEntity getCachedEntity() {
-        if (cachedEntity == null) {
-            cachedEntity = PeculiarEntities.EQUIPMENT_STAND_ENTITY.create(getWorld());
+        if (this.cachedEntity == null) {
+            this.cachedEntity = PeculiarEntities.EQUIPMENT_STAND_ENTITY.create(getWorld());
         }
-        if (cachedEntity != null) {
-            cachedEntity.setPosition(Vec3d.of(getPos()));
+        if (this.cachedEntity != null) {
+            this.cachedEntity.setPosition(Vec3d.of(getPos()));
             for (int i = 0; i < EquipmentSlot.values().length; i++) {
                 EquipmentSlot slot = EquipmentSlot.values()[i];
-                cachedEntity.equipStack(slot, getStack(i));
+                this.cachedEntity.equipStack(slot, getStack(i));
             }
-            cachedEntity.equipGliderStack(getStack(6));
+            this.cachedEntity.equipGliderStack(getStack(6));
         }
-        return cachedEntity;
+        return this.cachedEntity;
     }
 
     public void readNbt(NbtCompound nbt) {
@@ -152,10 +152,10 @@ public class EquipmentStandBlockEntity extends LockableContainerBlockEntity {
     }
 
     public void updateState() {
-        if (world != null && !world.isClient()) {
-            BlockState state = world.getBlockState(pos);
-            cachedEntity = null;
-            world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
+        if (this.world != null && !this.world.isClient()) {
+            BlockState state = this.world.getBlockState(this.pos);
+            this.cachedEntity = null;
+            this.world.updateListeners(this.pos, state, state, Block.NOTIFY_LISTENERS);
         }
     }
 

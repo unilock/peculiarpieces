@@ -76,7 +76,7 @@ public class EquipmentStandScreenHandler extends ScreenHandler {
         if (slot.hasStack()) {
             ItemStack itemStack = slot.getStack();
             copy = itemStack.copy();
-            if (index < inventory.size() ? !this.insertItem(itemStack, inventory.size(), this.slots.size(), true) : !this.insertItem(itemStack, 0, inventory.size(), false)) {
+            if (index < this.inventory.size() ? !this.insertItem(itemStack, this.inventory.size(), this.slots.size(), true) : !this.insertItem(itemStack, 0, this.inventory.size(), false)) {
                 return ItemStack.EMPTY;
             }
             if (itemStack.isEmpty()) {

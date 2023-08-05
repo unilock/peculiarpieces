@@ -40,7 +40,7 @@ public class FlagBlockEntity extends BlockEntity implements Nameable {
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         if (this.texture != null) {
-            nbt.putString(TEXTURE_KEY, texture);
+            nbt.putString(TEXTURE_KEY, this.texture);
         }
         if (this.customName != null) {
             nbt.putString("CustomName", Text.Serializer.toJson(this.customName));
@@ -69,7 +69,7 @@ public class FlagBlockEntity extends BlockEntity implements Nameable {
         ItemStack itemStack = new ItemStack(PeculiarBlocks.FLAG);
         if (this.texture != null) {
             NbtCompound nbtCompound = new NbtCompound();
-            nbtCompound.putString(TEXTURE_KEY, texture);
+            nbtCompound.putString(TEXTURE_KEY, this.texture);
             BlockItem.setBlockEntityNbt(itemStack, this.getType(), nbtCompound);
         }
         if (this.customName != null) {
@@ -92,7 +92,7 @@ public class FlagBlockEntity extends BlockEntity implements Nameable {
     }
 
     public String getTexture() {
-        return texture;
+        return this.texture;
     }
 
     public void setTexture(String texture) {

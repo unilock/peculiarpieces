@@ -35,11 +35,11 @@ public class LegacyPressurePlateBlock extends AbstractLegacyPressurePlateBlock {
     }
 
     protected void playPressSound(WorldAccess world, BlockPos pos) {
-        world.playSound(null, pos, pressSound, SoundCategory.BLOCKS, 0.3F, 0.6F);
+        world.playSound(null, pos, this.pressSound, SoundCategory.BLOCKS, 0.3F, 0.6F);
     }
 
     protected void playDepressSound(WorldAccess world, BlockPos pos) {
-        world.playSound(null, pos, depressSound, SoundCategory.BLOCKS, 0.3F, 0.6F);
+        world.playSound(null, pos, this.depressSound, SoundCategory.BLOCKS, 0.3F, 0.6F);
     }
 
     protected int getRedstoneOutput(World world, BlockPos pos) {

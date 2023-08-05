@@ -172,7 +172,7 @@ public class PeculiarPiecesClient implements ClientModInitializer {
 
         BuiltinItemRendererRegistry.INSTANCE.register(PeculiarBlocks.FLAG, (stack, mode, matrixStack, vertexConsumerProvider, light, overlay) -> {
             this.renderFlag.readFrom(stack);
-            MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(renderFlag, matrixStack, vertexConsumerProvider, light, overlay);
+            MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(this.renderFlag, matrixStack, vertexConsumerProvider, light, overlay);
         });
         
         if (FabricLoader.getInstance().isModLoaded("visiblebarriers")) {

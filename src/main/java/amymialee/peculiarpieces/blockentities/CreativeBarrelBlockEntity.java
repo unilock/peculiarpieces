@@ -71,9 +71,9 @@ public class CreativeBarrelBlockEntity extends LootableContainerBlockEntity {
     }
 
     public void updateState() {
-        if (world != null && !world.isClient()) {
-            BlockState state = world.getBlockState(pos);
-            world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
+        if (this.world != null && !this.world.isClient()) {
+            BlockState state = this.world.getBlockState(this.pos);
+            this.world.updateListeners(this.pos, state, state, Block.NOTIFY_LISTENERS);
         }
     }
 

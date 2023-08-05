@@ -25,11 +25,11 @@ public class WardingComponent implements AutoSyncedComponent {
 
     public boolean getWard(WorldView world, BlockPos pos) {
         BlockState block = world.getBlockState(pos);
-        return !block.isAir() && !(block.isOf(Blocks.PISTON) || block.isOf(Blocks.STICKY_PISTON) || block.isOf(Blocks.MOVING_PISTON) || block.isOf(Blocks.PISTON_HEAD)) && getWard(pos);
+        return !block.isAir() && !(block.isOf(Blocks.PISTON) || block.isOf(Blocks.STICKY_PISTON) || block.isOf(Blocks.MOVING_PISTON) || block.isOf(Blocks.PISTON_HEAD)) && this.getWard(pos);
     }
 
     public boolean getWard(BlockPos pos) {
-        return set.contains(pos);
+        return this.set.contains(pos);
     }
 
     public void setWard(BlockPos pos, boolean warded) {
@@ -47,7 +47,7 @@ public class WardingComponent implements AutoSyncedComponent {
         for (NbtElement element : list) {
             if (element instanceof NbtCompound compound) {
                 BlockPos pos = NbtHelper.toBlockPos(compound);
-                set.add(pos);
+                this.set.add(pos);
             }
         }
     }
@@ -55,7 +55,7 @@ public class WardingComponent implements AutoSyncedComponent {
     @Override
     public void writeToNbt(@NotNull NbtCompound tag) {
         NbtList list = new NbtList();
-        for (BlockPos pos : set) {
+        for (BlockPos pos : this.set) {
             list.add(NbtHelper.fromBlockPos(pos));
         }
         tag.put("positions", list);

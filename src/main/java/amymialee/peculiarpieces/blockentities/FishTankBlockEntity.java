@@ -40,27 +40,27 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
     }
 
     public FishEntity getCachedEntity() {
-        if (getStack(0) != cachedStack) {
-            cachedEntity = null;
-            cachedStack = getStack(0);
+        if (getStack(0) != this.cachedStack) {
+            this.cachedEntity = null;
+            this.cachedStack = getStack(0);
         }
-        if (cachedEntity == null) {
-            if (cachedStack.getItem() instanceof EntityBucketItem bucket) {
+        if (this.cachedEntity == null) {
+            if (this.cachedStack.getItem() instanceof EntityBucketItem bucket) {
                 Entity entity = ((EntityBucketItemAccessor) bucket).getEntityType().create(getWorld());
                 if (entity instanceof FishEntity fish) {
-                    cachedEntity = fish;
+                    this.cachedEntity = fish;
                 }
             } else {
                 return null;
             }
-            cachedEntity.setPosition(Vec3d.of(getPos()));
-            ((EntityAccessor) cachedEntity).setTouchingWater(true);
-            cachedEntity.setFromBucket(true);
-            if (cachedEntity instanceof TropicalFishEntity tropicalFish) {
-                tropicalFish.setVariant(TropicalFishEntity.Variety.fromId(cachedStack.getOrCreateNbt().getInt(BUCKET_VARIANT_TAG_KEY)));
+            this.cachedEntity.setPosition(Vec3d.of(getPos()));
+            ((EntityAccessor) this.cachedEntity).setTouchingWater(true);
+            this.cachedEntity.setFromBucket(true);
+            if (this.cachedEntity instanceof TropicalFishEntity tropicalFish) {
+                tropicalFish.setVariant(TropicalFishEntity.Variety.fromId(this.cachedStack.getOrCreateNbt().getInt(BUCKET_VARIANT_TAG_KEY)));
             }
         }
-        return cachedEntity;
+        return this.cachedEntity;
     }
 
     public void readNbt(NbtCompound nbt) {
@@ -73,7 +73,7 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         Inventories.writeNbt(nbt, this.inventory);
-        nbt.putFloat("pp:yaw", yaw);
+        nbt.putFloat("pp:yaw", this.yaw);
     }
 
     @Nullable
@@ -153,7 +153,7 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
     }
 
     public float getYaw() {
-        return yaw;
+        return this.yaw;
     }
 
     public void setYaw(float yaw) {
@@ -161,13 +161,13 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
     }
 
     public void updateState() {
-        if (world != null && !world.isClient()) {
+        if (this.world != null && !this.world.isClient()) {
             boolean present = !getStack(0).isEmpty();
-            BlockState oldState = world.getBlockState(pos);
+            BlockState oldState = this.world.getBlockState(this.pos);
             if (oldState.get(FishTankBlock.FILLED) != present) {
-                world.setBlockState(pos, world.getBlockState(pos).with(FishTankBlock.FILLED, present));
+                this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(FishTankBlock.FILLED, present));
             }
-            world.updateListeners(pos, oldState, world.getBlockState(pos), Block.NOTIFY_LISTENERS);
+            this.world.updateListeners(this.pos, oldState, this.world.getBlockState(this.pos), Block.NOTIFY_LISTENERS);
         }
     }
 }

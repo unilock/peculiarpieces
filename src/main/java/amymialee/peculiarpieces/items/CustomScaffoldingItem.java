@@ -33,7 +33,7 @@ public class CustomScaffoldingItem extends BlockItem {
             Direction direction = context.shouldCancelInteraction() ? (context.hitsInsideBlock() ? context.getSide().getOpposite() : context.getSide()) : (context.getSide() == Direction.UP ? context.getHorizontalPlayerFacing() : Direction.UP);
             int i = 0;
             BlockPos.Mutable mutable = blockPos.mutableCopy().move(direction);
-            while (i < size) {
+            while (i < this.size) {
                 if (!world.isClient && !world.isInBuildLimit(mutable)) {
                     PlayerEntity playerEntity = context.getPlayer();
                     int j = world.getTopY();
@@ -52,7 +52,7 @@ public class CustomScaffoldingItem extends BlockItem {
             }
             return null;
         }
-        if (ScaffoldingBlock.calculateDistance(world, blockPos) == size) {
+        if (ScaffoldingBlock.calculateDistance(world, blockPos) == this.size) {
             return null;
         }
         return context;

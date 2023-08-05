@@ -58,7 +58,7 @@ public class PotionPadBlockEntity extends LockableContainerBlockEntity {
     }
 
     public ItemStack getPotion() {
-        return inventory.get(0);
+        return this.inventory.get(0);
     }
 
     public void readNbt(NbtCompound nbt) {
@@ -149,9 +149,9 @@ public class PotionPadBlockEntity extends LockableContainerBlockEntity {
     }
 
     public void updateState() {
-        ItemStack stack = inventory.get(0);
+        ItemStack stack = this.inventory.get(0);
         BlockState blockState = getCachedState();
-        if (!(blockState.getBlock() instanceof PotionPadBlock) || world == null) {
+        if (!(blockState.getBlock() instanceof PotionPadBlock) || this.world == null) {
             return;
         }
         boolean update = false;
@@ -166,7 +166,7 @@ public class PotionPadBlockEntity extends LockableContainerBlockEntity {
             update = true;
         }
         if (update) {
-            world.setBlockState(pos, blockState, Block.NOTIFY_LISTENERS);
+            this.world.setBlockState(this.pos, blockState, Block.NOTIFY_LISTENERS);
             markDirty();
         }
     }

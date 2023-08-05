@@ -26,15 +26,15 @@ public class GameModeSetterBlock extends AbstractStructureVoidBlock {
         if (!world.isClient()) {
             if (entity instanceof ServerPlayerEntity player) {
                 if (player instanceof ExtraPlayerDataWrapper wrapper) {
-                    if (gameMode == wrapper.getStoredGameMode()) {
+                    if (this.gameMode == wrapper.getStoredGameMode()) {
                         return;
                     }
                     GameMode playerMode = player.interactionManager.getGameMode();
-                    if (playerMode != gameMode && playerMode != GameMode.SPECTATOR && playerMode != GameMode.CREATIVE) {
+                    if (playerMode != this.gameMode && playerMode != GameMode.SPECTATOR && playerMode != GameMode.CREATIVE) {
                         if (wrapper.getGameModeDuration() == 0) {
                             wrapper.setStoredGameMode(playerMode);
                         }
-                        player.changeGameMode(gameMode);
+                        player.changeGameMode(this.gameMode);
                         wrapper.setGameModeDuration(3);
                         return;
                     }

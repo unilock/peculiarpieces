@@ -49,7 +49,7 @@ public class CouriporterBlockEntity extends LootableContainerBlockEntity {
     }
 
     public DefaultedList<ItemStack> getInventory() {
-        return inventory;
+        return this.inventory;
     }
 
     @Override

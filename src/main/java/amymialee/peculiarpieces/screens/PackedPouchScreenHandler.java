@@ -26,11 +26,11 @@ public class PackedPouchScreenHandler extends ScreenHandler {
         int k;
         int j;
         readNBT();
-        bundleInv.onOpen(playerInventory.player);
+        this.bundleInv.onOpen(playerInventory.player);
         playerInventory.player.getWorld().playSoundFromEntity(null, playerInventory.player, SoundEvents.BLOCK_BARREL_OPEN, SoundCategory.PLAYERS, 0.5f, playerInventory.player.getRandom().nextFloat() * 0.1f + 0.9f);
         for (j = 0; j < 6; ++j) {
             for (k = 0; k < 9; ++k) {
-                this.addSlot(new Slot(bundleInv, k + j * 9, 8 + k * 18, 18 + j * 18) {
+                this.addSlot(new Slot(this.bundleInv, k + j * 9, 8 + k * 18, 18 + j * 18) {
                     @Override
                     public boolean canInsert(ItemStack stack) {
                         return !stack.isOf(PeculiarItems.PACKED_POUCH) && !stack.isOf(Items.BUNDLE);
@@ -50,10 +50,10 @@ public class PackedPouchScreenHandler extends ScreenHandler {
 
     private void readNBT() {
         DefaultedList<ItemStack> stacks = DefaultedList.ofSize(54, ItemStack.EMPTY);
-        if (bundle.hasNbt() && bundle.getNbt() != null) {
-            Inventories.readNbt(bundle.getNbt(), stacks);
+        if (this.bundle.hasNbt() && this.bundle.getNbt() != null) {
+            Inventories.readNbt(this.bundle.getNbt(), stacks);
             for (int i = 0; i < stacks.size(); i++) {
-                bundleInv.setStack(i, stacks.get(i));
+                this.bundleInv.setStack(i, stacks.get(i));
             }
         }
     }
@@ -62,18 +62,18 @@ public class PackedPouchScreenHandler extends ScreenHandler {
         DefaultedList<ItemStack> stacks = DefaultedList.ofSize(54, ItemStack.EMPTY);
         double capacity = 0;
         for (int i = 0; i < stacks.size(); i++) {
-            ItemStack item = bundleInv.getStack(i);
+            ItemStack item = this.bundleInv.getStack(i);
             stacks.set(i, item);
             capacity += (double) item.getCount() / item.getMaxCount();
         }
-        Inventories.writeNbt(bundle.getOrCreateNbt(), stacks, true);
-        bundle.getOrCreateNbt().putDouble("pp:capacity", capacity);
+        Inventories.writeNbt(this.bundle.getOrCreateNbt(), stacks, true);
+        this.bundle.getOrCreateNbt().putDouble("pp:capacity", capacity);
     }
 
     @Override
     public boolean canUse(PlayerEntity player) {
         for (Hand hand : Hand.values()) {
-            if (player.getStackInHand(hand) == bundle) {
+            if (player.getStackInHand(hand) == this.bundle) {
                 return true;
             }
         }

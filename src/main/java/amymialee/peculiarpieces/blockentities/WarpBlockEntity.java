@@ -39,7 +39,7 @@ public class WarpBlockEntity extends LootableContainerBlockEntity {
     }
 
     public void onEntityCollided(Entity entity) {
-        ItemStack stack = inventory.get(0);
+        ItemStack stack = this.inventory.get(0);
         if (stack.isOf(PeculiarItems.POS_PEARL) || stack.isOf(PeculiarItems.POS_PAPER)) {
             NbtCompound compound = stack.getNbt();
             if (compound != null && compound.contains("pp:target")) {
@@ -60,13 +60,13 @@ public class WarpBlockEntity extends LootableContainerBlockEntity {
                 }
             }
         } else if (stack.isOf(PeculiarItems.SKY_PEARL)) {
-            if (world != null) {
-                Vec3d vec3d = Vec3d.ofBottomCenter(pos);
-                WarpManager.queueTeleport(WarpInstance.of(entity).position(new Vec3d(vec3d.getX(), world.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, this.getPos()).getY(), vec3d.getZ())).particles());
+            if (this.world != null) {
+                Vec3d vec3d = Vec3d.ofBottomCenter(this.pos);
+                WarpManager.queueTeleport(WarpInstance.of(entity).position(new Vec3d(vec3d.getX(), this.world.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, this.getPos()).getY(), vec3d.getZ())).particles());
             }
         } else if (stack.isOf(PeculiarItems.SPAWNPOINT_PEARL)) {
             if (!entity.getWorld().isClient) {
-                if (world instanceof ServerWorld serverWorld && entity instanceof ServerPlayerEntity player) {
+                if (this.world instanceof ServerWorld serverWorld && entity instanceof ServerPlayerEntity player) {
                     if (player.getSpawnPointPosition() != null) {
                         Optional<Vec3d> spawnpoint = PlayerEntity.findRespawnPosition(serverWorld, player.getSpawnPointPosition(), 0, false, true);
                         if (spawnpoint.isPresent()) {

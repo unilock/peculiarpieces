@@ -30,7 +30,7 @@ public class EntityBarrierBlock extends Block {
     }
 
     private VoxelShape getShape(boolean filled) {
-        if (player) {
+        if (this.player) {
             filled = !filled;
         }
         if (filled) {

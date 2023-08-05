@@ -28,13 +28,13 @@ public class OpenPressurePlate extends LegacyPressurePlateBlock {
     }
 
     protected void playPressSound(WorldAccess world, BlockPos pos) {
-        if (!invis) {
+        if (!this.invis) {
             super.playPressSound(world, pos);
         }
     }
 
     protected void playDepressSound(WorldAccess world, BlockPos pos) {
-        if (!invis) {
+        if (!this.invis) {
             super.playDepressSound(world, pos);
         }
     }
@@ -62,7 +62,7 @@ public class OpenPressurePlate extends LegacyPressurePlateBlock {
     
     @Override
     public BlockRenderType getRenderType(BlockState state) {
-        if (!invis || VisibleBarriersAccess.isVisibilityEnabled()) return BlockRenderType.MODEL;
+        if (!this.invis || VisibleBarriersAccess.isVisibilityEnabled()) return BlockRenderType.MODEL;
         return BlockRenderType.INVISIBLE;
     }
 }

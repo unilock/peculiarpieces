@@ -74,7 +74,7 @@ public class BlockBreakerBlock extends Block {
             world.syncWorldEvent(WorldEvents.BLOCK_BROKEN, pos, Block.getRawIdFromState(blockState));
         }
         BlockEntity blockEntity = blockState.hasBlockEntity() ? world.getBlockEntity(pos) : null;
-        Block.dropStacks(blockState, world, pos, blockEntity, null, silk ? pick_silk : pick);
+        Block.dropStacks(blockState, world, pos, blockEntity, null, this.silk ? pick_silk : pick);
         if (world.setBlockState(pos, fluidState.getBlockState(), Block.NOTIFY_ALL, 512)) {
             world.emitGameEvent(GameEvent.BLOCK_DESTROY, pos, GameEvent.Emitter.of(null, blockState));
         }

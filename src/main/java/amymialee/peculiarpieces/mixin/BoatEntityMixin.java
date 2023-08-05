@@ -22,7 +22,7 @@ public abstract class BoatEntityMixin extends Entity {
 
     @Inject(method = "updateVelocity", at = @At("TAIL"))
     private void PeculiarPieces$SpinVelocityCap(CallbackInfo ci) {
-        yawVelocity = MathHelper.clamp(yawVelocity, -90, 90);
+        this.yawVelocity = MathHelper.clamp(this.yawVelocity, -90, 90);
     }
 
     @Inject(method = "getNearbySlipperiness", at = @At("TAIL"), cancellable = true)

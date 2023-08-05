@@ -31,14 +31,14 @@ public class RedstoneInstance {
     }
 
     public int getLifetime() {
-        return lifetime;
+        return this.lifetime;
     }
 
     public int getPower() {
-        return power;
+        return this.power;
     }
 
     public boolean isStrong() {
-        return strong;
+        return this.strong;
     }
 }
