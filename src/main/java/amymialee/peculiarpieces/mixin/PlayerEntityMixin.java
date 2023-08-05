@@ -1,6 +1,8 @@
 package amymialee.peculiarpieces.mixin;
 
 import amymialee.peculiarpieces.callbacks.PlayerJumpCallback;
+import amymialee.peculiarpieces.component.PeculiarComponentInitializer;
+import amymialee.peculiarpieces.component.WardingComponent;
 import amymialee.peculiarpieces.items.GliderItem;
 import amymialee.peculiarpieces.util.ExtraPlayerDataWrapper;
 import net.minecraft.entity.EntityType;
@@ -21,6 +23,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 
@@ -36,10 +39,21 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
         super(entityType, world);
     }
 
+    @Inject(method = "isBlockBreakingRestricted", at = @At("HEAD"), cancellable = true)
+    public void PeculiarPieces$RestrictWardedBlock(World world, BlockPos pos, GameMode gameMode, CallbackInfoReturnable<Boolean> cir) {
+        Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
+        if (component.isPresent()) {
+            WardingComponent wardingComponent = component.get();
+            if (wardingComponent.getWard(pos)) {
+                cir.setReturnValue(true);
+            }
+        }
+    }
+
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
     public void PeculiarPieces$WriteCustomData(NbtCompound nbt, CallbackInfo ci) {
         if (checkpointPos != null && checkpointPos.distanceTo(Vec3d.ZERO) > 1) {
-            nbt.put("pp:checkpos", NbtHelper.fromBlockPos(new BlockPos(checkpointPos)));
+            nbt.put("pp:checkpos", NbtHelper.fromBlockPos(BlockPos.ofFloored(checkpointPos)));
         }
         if (checkpointWorld != null) {
             World.CODEC.encodeStart(NbtOps.INSTANCE, checkpointWorld).resultOrPartial(error -> {}).ifPresent(nbtElement -> nbt.put("CheckpointDimension", nbtElement));

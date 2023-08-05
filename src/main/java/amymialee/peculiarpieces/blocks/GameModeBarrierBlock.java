@@ -1,7 +1,9 @@
 package amymialee.peculiarpieces.blocks;
 
+import amymialee.peculiarpieces.VisibleBarriersAccess;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.EntityShapeContext;
 import net.minecraft.block.ShapeContext;
@@ -25,13 +27,13 @@ public class GameModeBarrierBlock extends Block {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        if (context.isHolding(this.asItem())) {
+        if (context.isHolding(this.asItem()) || VisibleBarriersAccess.areBarriersEnabled()) {
             return VoxelShapes.fullCube();
         }
         if (context instanceof EntityShapeContext entityShapeContext && entityShapeContext.getEntity() instanceof PlayerEntity player) {
             if (player instanceof ServerPlayerEntity playerEntity && playerEntity.interactionManager.getGameMode() == gameMode) {
                 return VoxelShapes.fullCube();
-            } else if (player.world.isClient() && player instanceof ClientPlayerEntity clientPlayerEntity) {
+            } else if (player.getWorld().isClient() && player instanceof ClientPlayerEntity clientPlayerEntity) {
                 PlayerListEntry playerListEntry = clientPlayerEntity.networkHandler.getPlayerListEntry(clientPlayerEntity.getUuid());
                 if (playerListEntry != null && playerListEntry.getGameMode() == gameMode) {
                     return VoxelShapes.fullCube();
@@ -46,7 +48,7 @@ public class GameModeBarrierBlock extends Block {
         if (context instanceof EntityShapeContext entityShapeContext && entityShapeContext.getEntity() instanceof PlayerEntity player) {
             if (player instanceof ServerPlayerEntity playerEntity && playerEntity.interactionManager.getGameMode() == gameMode) {
                 return VoxelShapes.fullCube();
-            } else if (player.world.isClient() && player instanceof ClientPlayerEntity clientPlayerEntity) {
+            } else if (player.getWorld().isClient() && player instanceof ClientPlayerEntity clientPlayerEntity) {
                 PlayerListEntry playerListEntry = clientPlayerEntity.networkHandler.getPlayerListEntry(clientPlayerEntity.getUuid());
                 if (playerListEntry != null && playerListEntry.getGameMode() == gameMode) {
                     return VoxelShapes.fullCube();
@@ -57,12 +59,18 @@ public class GameModeBarrierBlock extends Block {
     }
 
     @Override
-    public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
+    public boolean isTransparent(BlockState state, BlockView world, BlockPos pos) {
         return true;
     }
 
     @Override
     public float getAmbientOcclusionLightLevel(BlockState state, BlockView world, BlockPos pos) {
         return 1.0f;
+    }
+    
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        if (VisibleBarriersAccess.areBarriersEnabled()) return BlockRenderType.MODEL;
+        return BlockRenderType.INVISIBLE;
     }
 }

@@ -1,0 +1,15 @@
+{
+  "name": "Shock Absorbers",
+  "icon": "peculiarpieces:shock_absorber",
+  "category": "peculiarpieces:features",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Shock Absorbers will absorb all impacts thrown at them.$(br)This will prevent all fall damage but can be disabled with redstone."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:blocks/shock_absorber"
+    }
+  ]
+}

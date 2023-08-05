@@ -7,6 +7,7 @@
   "pause_game": true,
   "show_progress": false,
   "dont_generate_book": true,
+  "use_resource_pack": true,
   "pamphlet": false,
   "custom_book_item": "peculiarpieces:peculiar_book"
 }

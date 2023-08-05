@@ -1,7 +1,9 @@
 package amymialee.peculiarpieces.blocks;
 
+import amymialee.peculiarpieces.VisibleBarriersAccess;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.EntityShapeContext;
 import net.minecraft.block.ShapeContext;
@@ -39,12 +41,18 @@ public class EntityBarrierBlock extends Block {
     }
 
     @Override
-    public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
+    public boolean isTransparent(BlockState state, BlockView world, BlockPos pos) {
         return true;
     }
 
     @Override
     public float getAmbientOcclusionLightLevel(BlockState state, BlockView world, BlockPos pos) {
         return 1.0f;
+    }
+    
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        if (VisibleBarriersAccess.areBarriersEnabled()) return BlockRenderType.MODEL;
+        return BlockRenderType.INVISIBLE;
     }
 }

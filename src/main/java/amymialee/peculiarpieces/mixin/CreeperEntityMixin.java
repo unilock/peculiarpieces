@@ -62,8 +62,8 @@ public class CreeperEntityMixin extends HostileEntity {
     private void PeculiarPieces$ExtraInteractions(PlayerEntity player2, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         ItemStack itemStack = player2.getStackInHand(hand);
         if (itemStack.isOf(Items.SHEARS) && !this.dataTracker.get(DEFUSED)) {
-            if (!this.world.isClient) {
-                this.world.playSoundFromEntity(null, this, SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            if (!this.getWorld().isClient) {
+                this.getWorld().playSoundFromEntity(null, this, SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.PLAYERS, 1.0f, 1.0f);
                 this.dataTracker.set(DEFUSED, true);
                 ItemEntity itemEntity = this.dropStack(new ItemStack(Items.STRING), 1);
                 if (itemEntity != null) {
@@ -74,17 +74,17 @@ public class CreeperEntityMixin extends HostileEntity {
                 cir.setReturnValue(ActionResult.SUCCESS);
             }
         } else if (itemStack.isOf(Items.STRING) && this.dataTracker.get(DEFUSED)) {
-            if (!this.world.isClient) {
-                this.world.playSoundFromEntity(null, this, SoundEvents.BLOCK_WOOL_PLACE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            if (!this.getWorld().isClient) {
+                this.getWorld().playSoundFromEntity(null, this, SoundEvents.BLOCK_WOOL_PLACE, SoundCategory.PLAYERS, 1.0f, 1.0f);
                 this.dataTracker.set(DEFUSED, false);
                 itemStack.decrement(1);
                 cir.setReturnValue(ActionResult.SUCCESS);
             }
         } else if (itemStack.isOf(Items.WATER_BUCKET) && this.dataTracker.get(IGNITED)) {
-            if (!this.world.isClient) {
+            if (!this.getWorld().isClient) {
                 itemStack.decrement(1);
                 player2.setStackInHand(hand, BucketItem.getEmptiedStack(itemStack, player2));
-                this.world.playSoundFromEntity(null, this, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0f, 1.0f);
+                this.getWorld().playSoundFromEntity(null, this, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0f, 1.0f);
                 this.dataTracker.set(IGNITED, false);
                 itemStack.decrement(1);
                 cir.setReturnValue(ActionResult.SUCCESS);

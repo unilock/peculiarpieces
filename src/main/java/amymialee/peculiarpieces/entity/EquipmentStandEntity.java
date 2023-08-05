@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -27,7 +28,7 @@ public class EquipmentStandEntity extends MobEntity {
 
     public EquipmentStandEntity(EntityType<? extends EquipmentStandEntity> entityType, World world) {
         super(entityType, world);
-        this.stepHeight = 0.0f;
+        setStepHeight(0);
     }
 
     @Override
@@ -81,10 +82,10 @@ public class EquipmentStandEntity extends MobEntity {
 
     @Override
     public boolean damage(DamageSource source, float amount) {
-        if (this.world.isClient || this.isRemoved()) {
+        if (this.getWorld().isClient || this.isRemoved()) {
             return false;
         }
-        if (DamageSource.OUT_OF_WORLD.equals(source)) {
+        if (source.isOf(DamageTypes.OUT_OF_WORLD)) {
             this.kill();
             return false;
         }
@@ -126,7 +127,7 @@ public class EquipmentStandEntity extends MobEntity {
 
     @Override
     public boolean handleAttack(Entity attacker) {
-        return attacker instanceof PlayerEntity && !this.world.canPlayerModifyAt((PlayerEntity)attacker, this.getBlockPos());
+        return attacker instanceof PlayerEntity && !this.getWorld().canPlayerModifyAt((PlayerEntity)attacker, this.getBlockPos());
     }
 
     @Override

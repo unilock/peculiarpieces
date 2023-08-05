@@ -2,7 +2,6 @@ package amymialee.peculiarpieces.mixin;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.ProjectileDamageSource;
 import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
@@ -22,10 +21,8 @@ public class EndermanEntityMixin extends HostileEntity {
     @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
     public void PeculiarPieces$SplashingDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if (!this.isInvulnerableTo(source)) {
-            if (source instanceof ProjectileDamageSource) {
-                if (source.getSource() instanceof ArrowEntity arrow && ((ArrowEntityAccessor) arrow).getPotion() == Potions.WATER) {
-                    cir.setReturnValue(super.damage(source, amount * 2));
-                }
+            if (source.getSource() instanceof ArrowEntity arrow && ((ArrowEntityAccessor) arrow).getPotion() == Potions.WATER) {
+                cir.setReturnValue(super.damage(source, amount * 2));
             }
         }
     }

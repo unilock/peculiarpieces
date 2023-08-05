@@ -19,7 +19,7 @@ public class FlightStatusEffect extends OpenStatusEffect {
     @Override
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         super.onApplied(entity, attributes, amplifier);
-        if (!entity.world.isClient() && entity instanceof PlayerEntity player) {
+        if (!entity.getWorld().isClient() && entity instanceof PlayerEntity player) {
             Pal.grantAbility(player, VanillaAbilities.ALLOW_FLYING, FLIGHT_POTION);
         }
     }
@@ -27,7 +27,7 @@ public class FlightStatusEffect extends OpenStatusEffect {
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         super.onRemoved(entity, attributes, amplifier);
-        if (!entity.world.isClient() && entity instanceof PlayerEntity player) {
+        if (!entity.getWorld().isClient() && entity instanceof PlayerEntity player) {
             Pal.revokeAbility(player, VanillaAbilities.ALLOW_FLYING, FLIGHT_POTION);
         }
     }

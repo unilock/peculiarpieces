@@ -1,7 +1,5 @@
 package amymialee.peculiarpieces.client;
 
-import amymialee.kofitable.KofiTable;
-import amymialee.kofitable.supporter.Supporter;
 import amymialee.peculiarpieces.PeculiarPieces;
 import amymialee.peculiarpieces.PeculiarPiecesClient;
 import amymialee.peculiarpieces.items.GliderItem;
@@ -37,32 +35,32 @@ public class HangGliderFeatureRenderer<T extends PlayerEntity, M extends EntityM
             this.getContextModel().copyStateTo(this.glider);
             this.glider.setAngles(playerEntity, f, g, j, k, l);
             Identifier identifier = SKIN;
-            Supporter supporter = KofiTable.CONTRIBUTORS.get(playerEntity.getUuid());
-            try {
-                if (supporter != null) {
-                    String supportGlider = supporter.getString("peculiarpieces:glider").toLowerCase();
-                    if (supporter.has("peculiarpieces:glider") && Identifier.isValid(supportGlider)) {
-                        Identifier supportIdentifier = PeculiarPieces.id("textures/entity/gliders/%s_glider.png".formatted(supportGlider));
-                        if (MinecraftClient.getInstance().getResourceManager().getResource(supportIdentifier).isPresent()) {
-                            identifier = supportIdentifier;
-                        }
-                    }
-                    if (supporter.getBoolean("peculiarpieces:anyglider")) {
-                        ItemStack glider = GliderItem.getGlider(playerEntity);
-                        if (glider != null && glider.hasCustomName()) {
-                            String renameGlider = glider.getName().getString().toLowerCase().split(" ")[0];
-                            if (Identifier.isValid(renameGlider)) {
-                                Identifier supportIdentifier = PeculiarPieces.id("textures/entity/gliders/%s_glider.png".formatted(renameGlider));
-                                if (MinecraftClient.getInstance().getResourceManager().getResource(supportIdentifier).isPresent()) {
-                                    identifier = supportIdentifier;
-                                }
-                            }
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+//            Supporter supporter = KofiTable.CONTRIBUTORS.get(playerEntity.getUuid());
+//            try {
+//                if (supporter != null) {
+//                    String supportGlider = supporter.getString("peculiarpieces:glider").toLowerCase();
+//                    if (supporter.has("peculiarpieces:glider") && Identifier.isValid(supportGlider)) {
+//                        Identifier supportIdentifier = PeculiarPieces.id("textures/entity/gliders/%s_glider.png".formatted(supportGlider));
+//                        if (MinecraftClient.getInstance().getResourceManager().getResource(supportIdentifier).isPresent()) {
+//                            identifier = supportIdentifier;
+//                        }
+//                    }
+//                    if (supporter.getBoolean("peculiarpieces:anyglider")) {
+//                        ItemStack glider = GliderItem.getGlider(playerEntity);
+//                        if (glider != null && glider.hasCustomName()) {
+//                            String renameGlider = glider.getName().getString().toLowerCase().split(" ")[0];
+//                            if (Identifier.isValid(renameGlider)) {
+//                                Identifier supportIdentifier = PeculiarPieces.id("textures/entity/gliders/%s_glider.png".formatted(renameGlider));
+//                                if (MinecraftClient.getInstance().getResourceManager().getResource(supportIdentifier).isPresent()) {
+//                                    identifier = supportIdentifier;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            } catch (Exception e) {
+//                System.out.println(e.getMessage());
+//            }
             VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(identifier), false, false);
             this.glider.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, 1.0f, 1.0f, 1.0f, 1.0f);
             matrixStack.pop();

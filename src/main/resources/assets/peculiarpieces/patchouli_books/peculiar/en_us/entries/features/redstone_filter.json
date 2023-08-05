@@ -1,0 +1,15 @@
+{
+  "name": "Redstone Filter",
+  "icon": "peculiarpieces:redstone_filter",
+  "category": "peculiarpieces:features",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A Redstone Filter will only allow a signal through if it matches it's filter level.$(br)The filter level can be raised with right click and lowered with shift right click."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:redstone/redstone_filter"
+    }
+  ]
+}

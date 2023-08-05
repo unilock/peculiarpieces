@@ -22,7 +22,10 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
 import org.jetbrains.annotations.Nullable;
+
+import amymialee.peculiarpieces.VisibleBarriersAccess;
 
 public class PhasingDoorBlock extends Block {
     public static final BooleanProperty ACTIVE = BooleanProperty.of("active");
@@ -36,7 +39,7 @@ public class PhasingDoorBlock extends Block {
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         boolean held = context.isHolding(this.asItem());
-        return state.get(SOLID) || held ? VoxelShapes.fullCube() : VoxelShapes.empty();
+        return state.get(SOLID) || held || VisibleBarriersAccess.isVisibilityEnabled() ? VoxelShapes.fullCube() : VoxelShapes.empty();
     }
 
     @Override
@@ -55,13 +58,13 @@ public class PhasingDoorBlock extends Block {
     }
 
     @Override
-    public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
+    public boolean isTransparent(BlockState state, BlockView world, BlockPos pos) {
         return true;
     }
 
     @Override
     public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
-        if (!state.get(SOLID) && state.get(ACTIVE)) {
+        if (!VisibleBarriersAccess.isVisibilityEnabled() && !state.get(SOLID) && state.get(ACTIVE)) {
             return true;
         }
         if (stateFrom.getBlock() instanceof PhasingDoorBlock) {

@@ -1,0 +1,15 @@
+{
+  "name": "Redstone Flip",
+  "icon": "peculiarpieces:redstone_flip",
+  "category": "peculiarpieces:features",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A Redstone Flip acts as a t-flip-flop in a single block, swapping it's state when powered."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:redstone/redstone_flip"
+    }
+  ]
+}

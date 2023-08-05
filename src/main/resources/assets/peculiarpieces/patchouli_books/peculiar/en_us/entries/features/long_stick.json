@@ -1,0 +1,15 @@
+{
+  "name": "Long Stick",
+  "icon": "peculiarpieces:long_stick",
+  "category": "peculiarpieces:features",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "very long stick"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:tools/long_stick"
+    }
+  ]
+}

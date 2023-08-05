@@ -21,6 +21,9 @@
     ],
     "main": [
       "amymialee.peculiarpieces.PeculiarPieces"
+    ],
+    "cardinal-components-chunk": [
+      "amymialee.peculiarpieces.component.PeculiarComponentInitializer"
     ]
   },
   "mixins": [
@@ -34,6 +37,9 @@
       "links": {
         "modmenu.discord": "http://discord.amymialee.xyz/"
       }
-    }
+    },
+    "cardinal-components": [
+      "peculiarpieces:warding"
+    ]
   }
 }

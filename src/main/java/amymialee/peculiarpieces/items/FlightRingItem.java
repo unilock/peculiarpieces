@@ -20,7 +20,7 @@ public class FlightRingItem extends DispensableTrinketItem {
     @Override
     public void onEquip(ItemStack stack, SlotReference slot, LivingEntity entity) {
         super.onEquip(stack, slot, entity);
-        if (!entity.world.isClient() && entity instanceof PlayerEntity player) {
+        if (!entity.getWorld().isClient() && entity instanceof PlayerEntity player) {
             Pal.grantAbility(player, VanillaAbilities.ALLOW_FLYING, FLIGHT_RING);
         }
     }
@@ -28,7 +28,7 @@ public class FlightRingItem extends DispensableTrinketItem {
     @Override
     public void onUnequip(ItemStack stack, SlotReference slot, LivingEntity entity) {
         super.onUnequip(stack, slot, entity);
-        if (!entity.world.isClient() && entity instanceof PlayerEntity player) {
+        if (!entity.getWorld().isClient() && entity instanceof PlayerEntity player) {
             Pal.revokeAbility(player, VanillaAbilities.ALLOW_FLYING, FLIGHT_RING);
         }
     }

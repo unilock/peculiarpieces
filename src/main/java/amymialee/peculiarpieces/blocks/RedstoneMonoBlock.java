@@ -60,8 +60,8 @@ public class RedstoneMonoBlock extends AbstractRedstoneComparisonBlock {
     }
 
     @Override
-    protected boolean isValidInput(BlockState state) {
-        return RepeaterBlock.isRedstoneGate(state);
+    protected boolean getSideInputFromGatesOnly() {
+        return true;
     }
 
     @Override

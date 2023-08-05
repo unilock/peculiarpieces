@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "peculiarpieces:nbt_crafting_shaped",
   "pattern": [
     " IC",
     "PBI",

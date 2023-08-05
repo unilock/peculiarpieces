@@ -1,10 +1,13 @@
 package amymialee.peculiarpieces.blocks;
 
+import amymialee.peculiarpieces.VisibleBarriersAccess;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 
 public abstract class AbstractStructureVoidBlock extends Block {
@@ -16,6 +19,13 @@ public abstract class AbstractStructureVoidBlock extends Block {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return SHAPE;
+        if (VisibleBarriersAccess.areStructureVoidsEnabled()) return SHAPE;
+        return VoxelShapes.empty();
+    }
+    
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        if (VisibleBarriersAccess.areStructureVoidsEnabled()) return BlockRenderType.MODEL;
+        return BlockRenderType.INVISIBLE;
     }
 }

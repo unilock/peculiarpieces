@@ -30,7 +30,7 @@ public abstract class EntityMixin {
 
     @Inject(method = "pushAwayFrom", at = @At("HEAD"), cancellable = true)
     private void PeculiarPieces$DisablePushing(Entity entity, CallbackInfo ci) {
-        if (!entity.world.getGameRules().getBoolean(PeculiarPieces.NO_MOB_PUSHING)) {
+        if (!entity.getWorld().getGameRules().getBoolean(PeculiarPieces.NO_MOB_PUSHING)) {
             ci.cancel();
         }
     }

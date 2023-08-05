@@ -13,11 +13,13 @@ import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.stat.Stats;
@@ -53,7 +55,6 @@ public abstract class LivingEntityMixin extends Entity {
     @Shadow public abstract boolean isHoldingOntoLadder();
     @Shadow protected abstract SoundEvent getDrinkSound(ItemStack stack);
     @Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
-    @Shadow public float airStrafingSpeed;
 
     @Shadow public abstract ItemStack getStackInHand(Hand hand);
 
@@ -63,7 +64,8 @@ public abstract class LivingEntityMixin extends Entity {
             Optional<TrinketComponent> optionalComponent = TrinketsApi.getTrinketComponent(player);
             if (optionalComponent.isPresent() && optionalComponent.get().isEquipped(PeculiarItems.BOUNCY_BOOTS)) {
                 if (!this.isSneaking()) {
-                    this.airStrafingSpeed *= 4;
+                    // TODO[una] this moved to getMovementSpeed, but they seem to work fine even without this?
+//                    this.airStrafingSpeed *= 4;
                     if (onGround) {
                         if (this.fallDistance > 0.0f) {
                             extraPlayerDataWrapper.setBouncePower(Math.pow(Math.abs(getVelocity().getY()), 1.5) - 0.05);
@@ -132,7 +134,7 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "tryUseTotem", at = @At("RETURN"), cancellable = true)
     private void PeculiarPieces$TotemTrinkets(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
         if (!cir.getReturnValue()) {
-            if (source.isOutOfWorld()) {
+            if (source.isOf(DamageTypes.OUT_OF_WORLD)) {
                 return;
             }
             if (((Object) this) instanceof LivingEntity livingEntity) {

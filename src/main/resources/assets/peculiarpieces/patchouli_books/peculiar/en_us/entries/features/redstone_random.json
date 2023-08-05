@@ -1,0 +1,15 @@
+{
+  "name": "Redstone Random",
+  "icon": "peculiarpieces:redstone_random",
+  "category": "peculiarpieces:features",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A Redstone Random will output a random signal strength every time it is powered.$(br)The signal it outputs will be a random amount from 1 to the power of it's input."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "peculiarpieces:redstone/redstone_random"
+    }
+  ]
+}

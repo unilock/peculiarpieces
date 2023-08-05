@@ -1,6 +1,8 @@
 package amymialee.peculiarpieces.blocks;
 
-import net.minecraft.block.PressurePlateBlock;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.PressurePlateBlock.ActivationRule;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,7 +14,10 @@ import net.minecraft.world.WorldAccess;
 
 import java.util.List;
 
-public class OpenPressurePlate extends PressurePlateBlock {
+import amymialee.peculiarpieces.VisibleBarriersAccess;
+import amymialee.peculiarpieces.blocks.port.LegacyPressurePlateBlock;
+
+public class OpenPressurePlate extends LegacyPressurePlateBlock {
     private final boolean invis;
     private final int weight;
 
@@ -53,5 +58,11 @@ public class OpenPressurePlate extends PressurePlateBlock {
             }
         }
         return 0;
+    }
+    
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        if (!invis || VisibleBarriersAccess.isVisibilityEnabled()) return BlockRenderType.MODEL;
+        return BlockRenderType.INVISIBLE;
     }
 }
