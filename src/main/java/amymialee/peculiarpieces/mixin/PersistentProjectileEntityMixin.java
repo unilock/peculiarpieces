@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class PersistentProjectileEntityMixin {
     @Redirect(method = "onEntityHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;getType()Lnet/minecraft/entity/EntityType;"))
     protected EntityType<?> PeculiarPieces$SplashingEnderman(Entity instance) {
-        PersistentProjectileEntity this2 = ((PersistentProjectileEntity) ((Object) this));
+        var this2 = ((PersistentProjectileEntity) ((Object) this));
         if (this2 instanceof ArrowEntity arrow && ((ArrowEntityAccessor) arrow).getPotion() == Potions.WATER) {
             return EntityType.CREEPER;
         }

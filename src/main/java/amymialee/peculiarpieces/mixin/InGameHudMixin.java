@@ -31,26 +31,26 @@ public abstract class InGameHudMixin {
 
     @Inject(method = "renderHealthBar", at = @At("TAIL"))
     private void PeculiarPieces$TotemHealth(DrawContext ctx, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, CallbackInfo ci) {
-        int j = MathHelper.ceil((double)maxHealth / 2.0);
-        int q = y;
+        var j = MathHelper.ceil((double)maxHealth / 2.0);
+        var q = y;
         if (lastHealth + absorption <= 4) {
             q += this.random.nextInt(2);
         }
         if (-1 < j && 0 == regeneratingHeartIndex) {
             q -= 2;
         }
-        for (Hand hand : Hand.values()) {
-            ItemStack itemStack = player.getStackInHand(hand);
+        for (var hand : Hand.values()) {
+            var itemStack = player.getStackInHand(hand);
             if (itemStack.isOf(Items.TOTEM_OF_UNDYING)) {
                 drawTotem(ctx, x, q, 0, blinking);
                 drawTotem(ctx, x, q, 1, false);
                 return;
             }
         }
-        Optional<TrinketComponent> optionalComponent = TrinketsApi.getTrinketComponent(player);
+        var optionalComponent = TrinketsApi.getTrinketComponent(player);
         if (optionalComponent.isPresent()) {
-            boolean token = optionalComponent.get().isEquipped(PeculiarItems.TOKEN_OF_UNDYING);
-            boolean emblem = optionalComponent.get().isEquipped(PeculiarItems.EVERLASTING_EMBLEM);
+            var token = optionalComponent.get().isEquipped(PeculiarItems.TOKEN_OF_UNDYING);
+            var emblem = optionalComponent.get().isEquipped(PeculiarItems.EVERLASTING_EMBLEM);
             if (token || emblem) {
                 drawTotem(ctx, x, q, 0, blinking);
                 if (token) {

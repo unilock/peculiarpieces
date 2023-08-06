@@ -29,7 +29,7 @@ public class RedstoneHurdleBlock extends AbstractRedstoneComparisonBlock {
         if (!player.getAbilities().allowModifyWorld) {
             return ActionResult.PASS;
         }
-        int filter = PeculiarHelper.clampLoop(0, 15, state.get(HURDLE) + (player.isSneaking() ? -1 : 1));
+        var filter = PeculiarHelper.clampLoop(0, 15, state.get(HURDLE) + (player.isSneaking() ? -1 : 1));
         world.setBlockState(pos, state.with(HURDLE, filter), Block.NOTIFY_ALL);
         world.playSound(player, pos, SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3f, (float) (3 * filter) / 15);
         return ActionResult.success(world.isClient);
@@ -37,7 +37,7 @@ public class RedstoneHurdleBlock extends AbstractRedstoneComparisonBlock {
 
     @Override
     protected int getOutputLevel(BlockView world, BlockPos pos, BlockState state) {
-        int input = getPower(world, pos, state);
+        var input = getPower(world, pos, state);
         if (input >= state.get(HURDLE)) {
             return input;
         }

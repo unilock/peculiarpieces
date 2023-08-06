@@ -43,10 +43,10 @@ public class MountingStickItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        PlayerEntity user = context.getPlayer();
+        var user = context.getPlayer();
         if (user != null) {
             if (!user.getItemCooldownManager().isCoolingDown(this)) {
-                Entity passenger = user.getFirstPassenger();
+                var passenger = user.getFirstPassenger();
                 if (passenger != null) {
                     passenger.dismountVehicle();
                     WarpManager.queueTeleport(WarpInstance.of(passenger).position(context.getHitPos()));

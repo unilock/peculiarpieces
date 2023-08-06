@@ -30,8 +30,8 @@ public class CreativeBarrelScreen extends HandledScreen<CreativeBarrelScreenHand
     @Override
     protected void drawBackground(DrawContext ctx, float delta, int mouseX, int mouseY) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        int i = (this.width - this.backgroundWidth) / 2;
-        int j = (this.height - this.backgroundHeight) / 2;
+        var i = (this.width - this.backgroundWidth) / 2;
+        var j = (this.height - this.backgroundHeight) / 2;
         ctx.drawTexture(TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
     }
 }

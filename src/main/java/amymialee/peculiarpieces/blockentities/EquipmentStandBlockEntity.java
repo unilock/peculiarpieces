@@ -37,10 +37,10 @@ public class EquipmentStandBlockEntity extends LockableContainerBlockEntity {
 
     public void updatePlayerYaw() {
         if (this.world != null) {
-            PlayerEntity playerEntity = this.world.getClosestPlayer((double) this.pos.getX() + 0.5, (double) this.pos.getY() + 0.5, (double) this.pos.getZ() + 0.5, 32.0, false);
+            var playerEntity = this.world.getClosestPlayer((double) this.pos.getX() + 0.5, (double) this.pos.getY() + 0.5, (double) this.pos.getZ() + 0.5, 32.0, false);
             if (playerEntity != null) {
-                double d = playerEntity.getX() - ((double) this.pos.getX() + 0.5);
-                double e = playerEntity.getZ() - ((double) this.pos.getZ() + 0.5);
+                var d = playerEntity.getX() - ((double) this.pos.getX() + 0.5);
+                var e = playerEntity.getZ() - ((double) this.pos.getZ() + 0.5);
                 this.playerYaw = (float) (Math.toDegrees(MathHelper.atan2(e, d)) - (this.getCachedState().get(FlagBlock.ROTATION) * 360) / 16) - 90;
             }
         }
@@ -52,8 +52,8 @@ public class EquipmentStandBlockEntity extends LockableContainerBlockEntity {
         }
         if (this.cachedEntity != null) {
             this.cachedEntity.setPosition(Vec3d.of(getPos()));
-            for (int i = 0; i < EquipmentSlot.values().length; i++) {
-                EquipmentSlot slot = EquipmentSlot.values()[i];
+            for (var i = 0; i < EquipmentSlot.values().length; i++) {
+                var slot = EquipmentSlot.values()[i];
                 this.cachedEntity.equipStack(slot, getStack(i));
             }
             this.cachedEntity.equipGliderStack(getStack(6));
@@ -82,7 +82,7 @@ public class EquipmentStandBlockEntity extends LockableContainerBlockEntity {
 
     @Override
     public NbtCompound toInitialChunkDataNbt() {
-        NbtCompound nbtCompound = super.toInitialChunkDataNbt();
+        var nbtCompound = super.toInitialChunkDataNbt();
         Inventories.writeNbt(nbtCompound, this.inventory, true);
         nbtCompound.putFloat("pp:playeryaw", this.playerYaw);
         return nbtCompound;
@@ -108,7 +108,7 @@ public class EquipmentStandBlockEntity extends LockableContainerBlockEntity {
 
     @Override
     public boolean isEmpty() {
-        for (ItemStack itemStack : this.inventory) {
+        for (var itemStack : this.inventory) {
             if (itemStack.isEmpty()) continue;
             return false;
         }
@@ -125,14 +125,14 @@ public class EquipmentStandBlockEntity extends LockableContainerBlockEntity {
 
     @Override
     public ItemStack removeStack(int slot, int amount) {
-        ItemStack stack = Inventories.splitStack(this.inventory, slot, amount);
+        var stack = Inventories.splitStack(this.inventory, slot, amount);
         updateState();
         return stack;
     }
 
     @Override
     public ItemStack removeStack(int slot) {
-        ItemStack stack = Inventories.removeStack(this.inventory, slot);
+        var stack = Inventories.removeStack(this.inventory, slot);
         updateState();
         return stack;
     }
@@ -153,7 +153,7 @@ public class EquipmentStandBlockEntity extends LockableContainerBlockEntity {
 
     public void updateState() {
         if (this.world != null && !this.world.isClient()) {
-            BlockState state = this.world.getBlockState(this.pos);
+            var state = this.world.getBlockState(this.pos);
             this.cachedEntity = null;
             this.world.updateListeners(this.pos, state, state, Block.NOTIFY_LISTENERS);
         }

@@ -28,18 +28,18 @@ public class WardingParticle extends Particle {
 
     @Override
     public void buildGeometry(VertexConsumer vertexConsumer, Camera camera, float tickDelta) {
-        Vec3d vec3d = camera.getPos();
-        float l = this.sprite.getMinU();
-        float m = this.sprite.getMaxU();
-        float n = this.sprite.getMinV();
-        float o = this.sprite.getMaxV();
-        for (Direction direction : Direction.values()) {
-            float f = (float)(MathHelper.lerp(tickDelta, this.prevPosX, this.x) - vec3d.getX());
-            float g = (float)(MathHelper.lerp(tickDelta, this.prevPosY, this.y) - vec3d.getY());
-            float h = (float)(MathHelper.lerp(tickDelta, this.prevPosZ, this.z) - vec3d.getZ());
-            Vector3f[] vec3set = directionVectors(direction);
-            for (int k = 0; k < 4; k++) {
-                Vector3f Vector3f2 = vec3set[k];
+        var vec3d = camera.getPos();
+        var l = this.sprite.getMinU();
+        var m = this.sprite.getMaxU();
+        var n = this.sprite.getMinV();
+        var o = this.sprite.getMaxV();
+        for (var direction : Direction.values()) {
+            var f = (float)(MathHelper.lerp(tickDelta, this.prevPosX, this.x) - vec3d.getX());
+            var g = (float)(MathHelper.lerp(tickDelta, this.prevPosY, this.y) - vec3d.getY());
+            var h = (float)(MathHelper.lerp(tickDelta, this.prevPosZ, this.z) - vec3d.getZ());
+            var vec3set = directionVectors(direction);
+            for (var k = 0; k < 4; k++) {
+                var Vector3f2 = vec3set[k];
                 Vector3f2.mul(0.501f);
                 Vector3f2.add(f, g, h);
             }
@@ -92,7 +92,7 @@ public class WardingParticle extends Particle {
 
         @Override
         public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
-            WardingParticle wardingParticle = new WardingParticle(clientWorld, d, e, f, g, h, i);
+            var wardingParticle = new WardingParticle(clientWorld, d, e, f, g, h, i);
             wardingParticle.setSprite(this.spriteProvider);
             return wardingParticle;
         }

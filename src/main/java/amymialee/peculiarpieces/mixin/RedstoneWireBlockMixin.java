@@ -15,7 +15,7 @@ public class RedstoneWireBlockMixin {
     @Inject(method = "connectsTo(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/Direction;)Z", at = @At("TAIL"), cancellable = true)
     private static void PeculiarPieces$DontConnect(BlockState state, Direction dir, CallbackInfoReturnable<Boolean> cir) {
         if (state.getBlock() instanceof AbstractRedstoneComparisonBlock) {
-            Direction direction = state.get(RepeaterBlock.FACING);
+            var direction = state.get(RepeaterBlock.FACING);
             cir.setReturnValue(direction == dir || direction.getOpposite() == dir);
         }
     }

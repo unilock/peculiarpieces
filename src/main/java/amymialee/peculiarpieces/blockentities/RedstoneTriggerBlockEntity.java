@@ -36,10 +36,10 @@ public class RedstoneTriggerBlockEntity extends LockableContainerBlockEntity {
     public static void tick(World world, BlockPos pos, BlockState state, RedstoneTriggerBlockEntity blockEntity) {
         float g;
         blockEntity.lastBookRotation = blockEntity.bookRotation;
-        PlayerEntity playerEntity = world.getClosestPlayer((double)pos.getX() + 0.5, (double)pos.getY() + 0.5, (double)pos.getZ() + 0.5, 3.0, false);
+        var playerEntity = world.getClosestPlayer((double)pos.getX() + 0.5, (double)pos.getY() + 0.5, (double)pos.getZ() + 0.5, 3.0, false);
         if (playerEntity != null) {
-            double d = playerEntity.getX() - ((double)pos.getX() + 0.5);
-            double e = playerEntity.getZ() - ((double)pos.getZ() + 0.5);
+            var d = playerEntity.getX() - ((double)pos.getX() + 0.5);
+            var e = playerEntity.getZ() - ((double)pos.getZ() + 0.5);
             blockEntity.targetBookRotation = (float) MathHelper.atan2(e, d);
         } else {
             blockEntity.targetBookRotation += state.get(RedstoneTriggerBlock.TRIGGERED) ? 0.2f : 0.02f;
@@ -86,7 +86,7 @@ public class RedstoneTriggerBlockEntity extends LockableContainerBlockEntity {
 
     @Override
     public NbtCompound toInitialChunkDataNbt() {
-        NbtCompound nbtCompound = super.toInitialChunkDataNbt();
+        var nbtCompound = super.toInitialChunkDataNbt();
         Inventories.writeNbt(nbtCompound, this.inventory, true);
         return nbtCompound;
     }
@@ -111,7 +111,7 @@ public class RedstoneTriggerBlockEntity extends LockableContainerBlockEntity {
 
     @Override
     public boolean isEmpty() {
-        for (ItemStack itemStack : this.inventory) {
+        for (var itemStack : this.inventory) {
             if (itemStack.isEmpty()) continue;
             return false;
         }

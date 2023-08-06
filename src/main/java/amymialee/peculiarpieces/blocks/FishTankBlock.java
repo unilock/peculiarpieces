@@ -43,7 +43,7 @@ public class FishTankBlock extends BlockWithEntity {
     }
 
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-        BlockEntity blockEntity = world.getBlockEntity(pos);
+        var blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof FishTankBlockEntity fishTank) {
             if (itemStack.hasCustomName()) {
                 fishTank.setCustomName(itemStack.getName());
@@ -61,7 +61,7 @@ public class FishTankBlock extends BlockWithEntity {
         if (world.isClient) {
             return ActionResult.SUCCESS;
         } else {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof FishTankBlockEntity fishTank) {
                 if (player.isSneaking() && player.getAbilities().allowModifyWorld) {
                     player.openHandledScreen(fishTank);
@@ -80,7 +80,7 @@ public class FishTankBlock extends BlockWithEntity {
 
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof FishTankBlockEntity) {
                 ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
             }
@@ -119,7 +119,7 @@ public class FishTankBlock extends BlockWithEntity {
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        boolean bl = world.isReceivingRedstonePower(pos);
+        var bl = world.isReceivingRedstonePower(pos);
         if (bl != state.get(POWERED)) {
             world.setBlockState(pos, state.with(POWERED, bl), Block.NOTIFY_ALL);
         }

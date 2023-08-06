@@ -18,9 +18,9 @@ public class ElevatorBlock extends Block implements PlayerCrouchConsumingBlock, 
 
     @Override
     public void onCrouch(BlockState state, World world, BlockPos pos, PlayerEntity player) {
-        for(int i = pos.getY() - 1; i >= world.getBottomY(); i--) {
-            BlockPos pos2 = new BlockPos(pos.getX(), i, pos.getZ());
-            BlockState state2 = world.getBlockState(pos2);
+        for(var i = pos.getY() - 1; i >= world.getBottomY(); i--) {
+            var pos2 = new BlockPos(pos.getX(), i, pos.getZ());
+            var state2 = world.getBlockState(pos2);
             if (state2.getBlock() instanceof ElevatorBlock block) {
                 block.receiveTeleport(state2, pos2, player);
                 break;
@@ -30,9 +30,9 @@ public class ElevatorBlock extends Block implements PlayerCrouchConsumingBlock, 
 
     @Override
     public void onJump(BlockState state, World world, BlockPos pos, PlayerEntity player) {
-        for(int i = pos.getY() + 1; i <= world.getTopY(); i++) {
-            BlockPos pos2 = new BlockPos(pos.getX(), i, pos.getZ());
-            BlockState state2 = world.getBlockState(pos2);
+        for(var i = pos.getY() + 1; i <= world.getTopY(); i++) {
+            var pos2 = new BlockPos(pos.getX(), i, pos.getZ());
+            var state2 = world.getBlockState(pos2);
             if (state2.getBlock() instanceof ElevatorBlock block) {
                 block.receiveTeleport(state2, pos2, player);
                 break;

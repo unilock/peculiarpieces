@@ -34,7 +34,7 @@ public class GameModeBarrierBlock extends Block {
             if (player instanceof ServerPlayerEntity playerEntity && playerEntity.interactionManager.getGameMode() == this.gameMode) {
                 return VoxelShapes.fullCube();
             } else if (player.getWorld().isClient() && player instanceof ClientPlayerEntity clientPlayerEntity) {
-                PlayerListEntry playerListEntry = clientPlayerEntity.networkHandler.getPlayerListEntry(clientPlayerEntity.getUuid());
+                var playerListEntry = clientPlayerEntity.networkHandler.getPlayerListEntry(clientPlayerEntity.getUuid());
                 if (playerListEntry != null && playerListEntry.getGameMode() == this.gameMode) {
                     return VoxelShapes.fullCube();
                 }
@@ -49,7 +49,7 @@ public class GameModeBarrierBlock extends Block {
             if (player instanceof ServerPlayerEntity playerEntity && playerEntity.interactionManager.getGameMode() == this.gameMode) {
                 return VoxelShapes.fullCube();
             } else if (player.getWorld().isClient() && player instanceof ClientPlayerEntity clientPlayerEntity) {
-                PlayerListEntry playerListEntry = clientPlayerEntity.networkHandler.getPlayerListEntry(clientPlayerEntity.getUuid());
+                var playerListEntry = clientPlayerEntity.networkHandler.getPlayerListEntry(clientPlayerEntity.getUuid());
                 if (playerListEntry != null && playerListEntry.getGameMode() == this.gameMode) {
                     return VoxelShapes.fullCube();
                 }

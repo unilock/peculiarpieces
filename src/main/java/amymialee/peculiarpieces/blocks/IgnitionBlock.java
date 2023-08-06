@@ -32,8 +32,8 @@ public class IgnitionBlock extends Block {
     }
 
     protected void ignite(World world, BlockState state, BlockPos pos) {
-        BlockPos ignitePos = pos.add(state.get(FACING).getVector());
-        BlockState blockState = world.getBlockState(ignitePos);
+        var ignitePos = pos.add(state.get(FACING).getVector());
+        var blockState = world.getBlockState(ignitePos);
         if (CampfireBlock.canBeLit(blockState) || CandleBlock.canBeLit(blockState) || CandleCakeBlock.canBeLit(blockState)) {
             world.playSound(null, ignitePos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0f, world.getRandom().nextFloat() * 0.4f + 0.8f);
             world.setBlockState(ignitePos, blockState.with(Properties.LIT, true), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
@@ -41,7 +41,7 @@ public class IgnitionBlock extends Block {
         }
         if (AbstractFireBlock.canPlaceAt(world, ignitePos, state.get(FACING).getOpposite())) {
             world.playSound(null, ignitePos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0f, world.getRandom().nextFloat() * 0.4f + 0.8f);
-            BlockState blockState2 = AbstractFireBlock.getState(world, ignitePos);
+            var blockState2 = AbstractFireBlock.getState(world, ignitePos);
             world.setBlockState(ignitePos, blockState2, Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
             world.emitGameEvent(null, GameEvent.BLOCK_PLACE, ignitePos);
         }
@@ -49,7 +49,7 @@ public class IgnitionBlock extends Block {
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        boolean bl = world.isReceivingRedstonePower(pos) || world.isReceivingRedstonePower(pos.up());
+        var bl = world.isReceivingRedstonePower(pos) || world.isReceivingRedstonePower(pos.up());
         boolean bl2 = state.get(TRIGGERED);
         if (bl && !bl2) {
             this.ignite(world, state, pos);

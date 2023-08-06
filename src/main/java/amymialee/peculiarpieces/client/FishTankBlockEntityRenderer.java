@@ -16,9 +16,9 @@ public class FishTankBlockEntityRenderer implements BlockEntityRenderer<FishTank
     public void render(FishTankBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         matrices.push();
         if (blockEntity.getWorld() != null) {
-            ItemStack stack = blockEntity.getStack(0);
+            var stack = blockEntity.getStack(0);
             if (stack != null) {
-                FishEntity cachedEntity = blockEntity.getCachedEntity();
+                var cachedEntity = blockEntity.getCachedEntity();
                 if (cachedEntity != null) {
                     if (blockEntity.getWorld().getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE)) {
                         cachedEntity.age = (int) blockEntity.getWorld().getTimeOfDay();

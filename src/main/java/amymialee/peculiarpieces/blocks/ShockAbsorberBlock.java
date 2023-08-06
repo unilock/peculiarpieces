@@ -34,7 +34,7 @@ public class ShockAbsorberBlock extends Block {
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        boolean bl = world.isReceivingRedstonePower(pos);
+        var bl = world.isReceivingRedstonePower(pos);
         if (bl != state.get(POWERED)) {
             world.setBlockState(pos, state.with(POWERED, bl), Block.NOTIFY_ALL);
         }

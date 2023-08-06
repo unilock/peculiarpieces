@@ -23,10 +23,10 @@ public class CheckpointPearlItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (user instanceof ExtraPlayerDataWrapper checkPlayer) {
-            Vec3d checkpointPos = checkPlayer.getCheckpointPos();
+            var checkpointPos = checkPlayer.getCheckpointPos();
             if (checkpointPos != null) {
-                WarpInstance instance = WarpInstance.of(user).position(checkpointPos).particles();
-                RegistryKey<World> worldRegistryKey = checkPlayer.getCheckpointWorld();
+                var instance = WarpInstance.of(user).position(checkpointPos).particles();
+                var worldRegistryKey = checkPlayer.getCheckpointWorld();
                 if (worldRegistryKey != null) {
                     instance.world(worldRegistryKey);
                 }

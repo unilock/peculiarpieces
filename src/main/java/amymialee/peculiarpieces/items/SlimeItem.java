@@ -20,7 +20,7 @@ public class SlimeItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        SlimeEntity slime = EntityType.SLIME.create(context.getWorld());
+        var slime = EntityType.SLIME.create(context.getWorld());
         if (slime != null) {
             slime.setSize(0, true);
             slime.setPosition(Vec3d.ofBottomCenter(context.getBlockPos().add(context.getSide().getVector())));
@@ -34,7 +34,7 @@ public class SlimeItem extends Item {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (entity != null && world instanceof StructureWorldAccess access) {
-            ChunkPos pos = entity.getChunkPos();
+            var pos = entity.getChunkPos();
             if (ChunkRandom.getSlimeRandom(pos.x, pos.z, access.getSeed(), 987234911L).nextInt(10) == 0) {
                 stack.getOrCreateNbt().putBoolean("pp:chunked", true);
             } else if (stack.getNbt() != null) {

@@ -18,9 +18,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class HopperBlockEntityMixin {
     @Inject(method = "insert", at = @At("HEAD"), cancellable = true)
     private static void insert(World world, BlockPos pos, BlockState state, Inventory inventory, CallbackInfoReturnable<Boolean> cir) {
-        BlockEntity entity = getOutputBlockEntity(world, pos, state);
+        var entity = getOutputBlockEntity(world, pos, state);
         if (entity instanceof CreativeBarrelBlockEntity) {
-            for (int i = 0; i < inventory.size(); ++i) {
+            for (var i = 0; i < inventory.size(); ++i) {
                 if (!inventory.getStack(i).isEmpty()) {
                     inventory.removeStack(i, 1);
                     cir.setReturnValue(true);
@@ -31,7 +31,7 @@ public abstract class HopperBlockEntityMixin {
     }
 
     private static BlockEntity getOutputBlockEntity(World world, BlockPos pos, BlockState state) {
-        Direction direction = state.get(HopperBlock.FACING);
+        var direction = state.get(HopperBlock.FACING);
         return world.getBlockEntity(pos.offset(direction));
     }
 }

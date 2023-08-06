@@ -21,13 +21,13 @@ public class AmethystBlockMixin extends AbstractBlockMixin {
     @Override
     public void PeculiarPieces$OnUseHead(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
         if (player.getAbilities().allowModifyWorld) {
-            ItemStack stack = player.getStackInHand(hand);
+            var stack = player.getStackInHand(hand);
             if (stack.isOf(Items.ECHO_SHARD)) {
                 world.setBlockState(pos, Blocks.BUDDING_AMETHYST.getDefaultState());
                 stack.decrement(1);
                 world.playSound(player, pos, SoundEvents.ENTITY_WARDEN_HEARTBEAT, SoundCategory.BLOCKS, 2f, (world.random.nextFloat() - world.random.nextFloat()) * 0.2f + 1.0f);
+                cir.setReturnValue(ActionResult.success(world.isClient));
             }
         }
-        cir.setReturnValue(ActionResult.success(world.isClient));
     }
 }

@@ -44,7 +44,7 @@ public class CreativeBarrelBlockEntity extends LootableContainerBlockEntity {
 
     @Override
     public ItemStack removeStack(int slot, int amount) {
-        ItemStack stack = super.getStack(slot).copy();
+        var stack = super.getStack(slot).copy();
         stack.setCount(amount);
         updateState();
         return stack;
@@ -72,7 +72,7 @@ public class CreativeBarrelBlockEntity extends LootableContainerBlockEntity {
 
     public void updateState() {
         if (this.world != null && !this.world.isClient()) {
-            BlockState state = this.world.getBlockState(this.pos);
+            var state = this.world.getBlockState(this.pos);
             this.world.updateListeners(this.pos, state, state, Block.NOTIFY_LISTENERS);
         }
     }
@@ -96,7 +96,7 @@ public class CreativeBarrelBlockEntity extends LootableContainerBlockEntity {
 
     @Override
     public NbtCompound toInitialChunkDataNbt() {
-        NbtCompound nbtCompound = super.toInitialChunkDataNbt();
+        var nbtCompound = super.toInitialChunkDataNbt();
         Inventories.writeNbt(nbtCompound, this.inventory, true);
         return nbtCompound;
     }
@@ -151,10 +151,10 @@ public class CreativeBarrelBlockEntity extends LootableContainerBlockEntity {
     }
 
     void playSound(BlockState state, SoundEvent soundEvent) {
-        Vec3i vec3i = state.get(BarrelBlock.FACING).getVector();
-        double d = (double)this.pos.getX() + 0.5 + (double)vec3i.getX() / 2.0;
-        double e = (double)this.pos.getY() + 0.5 + (double)vec3i.getY() / 2.0;
-        double f = (double)this.pos.getZ() + 0.5 + (double)vec3i.getZ() / 2.0;
+        var vec3i = state.get(BarrelBlock.FACING).getVector();
+        var d = (double)this.pos.getX() + 0.5 + (double)vec3i.getX() / 2.0;
+        var e = (double)this.pos.getY() + 0.5 + (double)vec3i.getY() / 2.0;
+        var f = (double)this.pos.getZ() + 0.5 + (double)vec3i.getZ() / 2.0;
         if (this.world != null) {
             this.world.playSound(null, d, e, f, soundEvent, SoundCategory.BLOCKS, 0.5F, this.world.random.nextFloat() * 0.1F + 0.9F);
         }
@@ -175,7 +175,7 @@ public class CreativeBarrelBlockEntity extends LootableContainerBlockEntity {
 
         protected boolean isPlayerViewing(PlayerEntity player) {
             if (player.currentScreenHandler instanceof GenericContainerScreenHandler) {
-                Inventory inventory = ((GenericContainerScreenHandler)player.currentScreenHandler).getInventory();
+                var inventory = ((GenericContainerScreenHandler)player.currentScreenHandler).getInventory();
                 return inventory == CreativeBarrelBlockEntity.this;
             } else {
                 return false;

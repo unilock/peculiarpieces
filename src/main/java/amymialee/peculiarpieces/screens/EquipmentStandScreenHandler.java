@@ -54,12 +54,12 @@ public class EquipmentStandScreenHandler extends ScreenHandler {
         });
         this.addSlot(new Slot(inventory, 0, 26, 20));
         this.addSlot(new Slot(inventory, 1, 26 + 18, 20));
-        for(int j = 0; j < 3; ++j) {
-            for(int k = 0; k < 9; ++k) {
+        for(var j = 0; j < 3; ++j) {
+            for(var k = 0; k < 9; ++k) {
                 this.addSlot(new Slot(playerInventory, k + j * 9 + 9, 8 + k * 18, j * 18 + 51));
             }
         }
-        for(int j = 0; j < 9; ++j) {
+        for(var j = 0; j < 9; ++j) {
             this.addSlot(new Slot(playerInventory, j, 8 + j * 18, 109));
         }
     }
@@ -71,10 +71,10 @@ public class EquipmentStandScreenHandler extends ScreenHandler {
 
     @Override
     public ItemStack quickMove(PlayerEntity player, int index) {
-        ItemStack copy = ItemStack.EMPTY;
-        Slot slot = this.slots.get(index);
+        var copy = ItemStack.EMPTY;
+        var slot = this.slots.get(index);
         if (slot.hasStack()) {
-            ItemStack itemStack = slot.getStack();
+            var itemStack = slot.getStack();
             copy = itemStack.copy();
             if (index < this.inventory.size() ? !this.insertItem(itemStack, this.inventory.size(), this.slots.size(), true) : !this.insertItem(itemStack, 0, this.inventory.size(), false)) {
                 return ItemStack.EMPTY;

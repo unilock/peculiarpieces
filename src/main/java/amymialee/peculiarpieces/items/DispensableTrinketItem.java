@@ -27,12 +27,12 @@ public class DispensableTrinketItem extends TrinketItem {
     }
 
     public static boolean dispenseTrinket(BlockPointer pointer, ItemStack stack) {
-        BlockPos blockPos = pointer.getPos().offset(pointer.getBlockState().get(DispenserBlock.FACING));
-        List<PlayerEntity> list = pointer.getWorld().getEntitiesByClass(PlayerEntity.class, new Box(blockPos), EntityPredicates.EXCEPT_SPECTATOR.and(new EntityPredicates.Equipable(stack)));
+        var blockPos = pointer.getPos().offset(pointer.getBlockState().get(DispenserBlock.FACING));
+        var list = pointer.getWorld().getEntitiesByClass(PlayerEntity.class, new Box(blockPos), EntityPredicates.EXCEPT_SPECTATOR.and(new EntityPredicates.Equipable(stack)));
         if (list.isEmpty()) {
             return false;
         }
-        PlayerEntity user = list.get(0);
+        var user = list.get(0);
         return equipItem(user, stack);
     }
 }

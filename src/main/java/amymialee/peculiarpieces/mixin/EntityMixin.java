@@ -38,7 +38,7 @@ public abstract class EntityMixin {
     @Inject(method = "isSneaking", at = @At("HEAD"))
     public void PeculiarPieces$IsSneakingHead(CallbackInfoReturnable<Boolean> cir) {
         if (!this.getWorld().isClient()) {
-            boolean sneaking = this.getFlag(1);
+            var sneaking = this.getFlag(1);
             if (sneaking != this.wasSneaky) {
                 if (sneaking) {
                     this.wasSneaky = true;

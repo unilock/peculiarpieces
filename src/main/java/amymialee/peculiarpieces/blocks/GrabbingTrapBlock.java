@@ -34,7 +34,7 @@ public class GrabbingTrapBlock extends AbstractFlatBlock {
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         super.onEntityCollision(state, world, pos, entity);
         if (!state.get(POWERED) && !entity.isSneaking() && !entity.getType().isIn(PeculiarPieces.UNGRABBABLE)) {
-            Vec3d trapPos = Vec3d.ofBottomCenter(pos).add(0, 0.0625, 0);
+            var trapPos = Vec3d.ofBottomCenter(pos).add(0, 0.0625, 0);
             if (distanceTo(trapPos, entity) > 0.01) {
                 WarpManager.queueTeleport(WarpInstance.of(entity).position(trapPos));
             }
@@ -47,15 +47,15 @@ public class GrabbingTrapBlock extends AbstractFlatBlock {
     }
 
     public float distanceTo(Vec3d pos, Entity entity) {
-        float f = (float)(pos.getX() - entity.getX());
-        float g = (float)(pos.getY() - entity.getY());
-        float h = (float)(pos.getZ() - entity.getZ());
+        var f = (float)(pos.getX() - entity.getX());
+        var g = (float)(pos.getY() - entity.getY());
+        var h = (float)(pos.getZ() - entity.getZ());
         return MathHelper.sqrt(f * f + g * g + h * h);
     }
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        boolean bl = world.isReceivingRedstonePower(pos);
+        var bl = world.isReceivingRedstonePower(pos);
         if (bl != state.get(POWERED)) {
             world.setBlockState(pos, state.with(POWERED, bl), Block.NOTIFY_ALL);
         }

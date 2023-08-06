@@ -21,7 +21,7 @@ public class AnvilBlockMixin {
 
     @Inject(method = "onLanding", at = @At("HEAD"))
     public void PeculiarPieces$RenewableSand(World world, BlockPos pos, BlockState fallingBlockState, BlockState currentStateInPos, FallingBlockEntity fallingBlockEntity, CallbackInfo ci) {
-        BlockState underState = world.getBlockState(pos.down());
+        var underState = world.getBlockState(pos.down());
         if (underState.getBlock() == Blocks.COBBLESTONE) {
             world.setBlockState(pos.down(), Blocks.SAND.getDefaultState());
         } else if (underState.getBlock() == Blocks.PUMPKIN) {

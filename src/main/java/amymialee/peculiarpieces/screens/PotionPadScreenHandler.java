@@ -27,12 +27,12 @@ public class PotionPadScreenHandler extends ScreenHandler {
                 return stack.isOf(Items.POTION) || stack.isOf(PeculiarItems.HIDDEN_POTION) || stack.isOf(Items.SPLASH_POTION) || stack.isOf(Items.LINGERING_POTION) || stack.isOf(Items.MILK_BUCKET);
             }
         });
-        for(int j = 0; j < 3; ++j) {
-            for(int k = 0; k < 9; ++k) {
+        for(var j = 0; j < 3; ++j) {
+            for(var k = 0; k < 9; ++k) {
                 this.addSlot(new Slot(playerInventory, k + j * 9 + 9, 8 + k * 18, j * 18 + 51));
             }
         }
-        for(int j = 0; j < 9; ++j) {
+        for(var j = 0; j < 9; ++j) {
             this.addSlot(new Slot(playerInventory, j, 8 + j * 18, 109));
         }
     }
@@ -44,10 +44,10 @@ public class PotionPadScreenHandler extends ScreenHandler {
 
     @Override
     public ItemStack quickMove(PlayerEntity player, int index) {
-        ItemStack copy = ItemStack.EMPTY;
-        Slot slot = this.slots.get(index);
+        var copy = ItemStack.EMPTY;
+        var slot = this.slots.get(index);
         if (slot.hasStack()) {
-            ItemStack stack = slot.getStack();
+            var stack = slot.getStack();
             copy = stack.copy();
             if (index == 0) {
                 if (!this.insertItem(stack, 1, this.slots.size(), true)) {

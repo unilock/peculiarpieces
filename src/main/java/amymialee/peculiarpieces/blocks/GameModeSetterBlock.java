@@ -29,7 +29,7 @@ public class GameModeSetterBlock extends AbstractStructureVoidBlock {
                     if (this.gameMode == wrapper.getStoredGameMode()) {
                         return;
                     }
-                    GameMode playerMode = player.interactionManager.getGameMode();
+                    var playerMode = player.interactionManager.getGameMode();
                     if (playerMode != this.gameMode && playerMode != GameMode.SPECTATOR && playerMode != GameMode.CREATIVE) {
                         if (wrapper.getGameModeDuration() == 0) {
                             wrapper.setStoredGameMode(playerMode);

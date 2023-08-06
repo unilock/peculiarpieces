@@ -18,8 +18,8 @@ public class ParticleManagerMixin {
 
     @Inject(method = "addBlockBreakingParticles", at = @At("HEAD"), cancellable = true)
     public void PeculiarPieces$NoEmptyParticles(BlockPos pos, Direction direction, CallbackInfo ci) {
-        BlockState blockState = this.world.getBlockState(pos);
-        VoxelShape shape = blockState.getOutlineShape(this.world, pos);
+        var blockState = this.world.getBlockState(pos);
+        var shape = blockState.getOutlineShape(this.world, pos);
         if (shape.isEmpty()) {
             ci.cancel();
         }

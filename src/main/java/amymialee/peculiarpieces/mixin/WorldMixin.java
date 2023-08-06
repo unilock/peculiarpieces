@@ -18,10 +18,10 @@ public abstract class WorldMixin implements WorldAccess {
 
     @Inject(method = "setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;II)Z", at = @At("HEAD"), cancellable = true)
     public void PeculiarPieces$RestrictWardedOverride(BlockPos pos, BlockState state, int flags, int maxUpdateDepth, CallbackInfoReturnable<Boolean> cir) {
-        Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(this.getChunk(pos));
+        var component = PeculiarComponentInitializer.WARDING.maybeGet(this.getChunk(pos));
         if (component.isPresent()) {
-            WardingComponent wardingComponent = component.get();
-            BlockState current = this.getBlockState(pos);
+            var wardingComponent = component.get();
+            var current = this.getBlockState(pos);
             if (wardingComponent.getWard(this, pos)) {
                 if (current.getBlock() != state.getBlock()) {
                     cir.setReturnValue(false);

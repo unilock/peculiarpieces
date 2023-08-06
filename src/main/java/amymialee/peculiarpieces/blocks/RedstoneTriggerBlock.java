@@ -53,7 +53,7 @@ public class RedstoneTriggerBlock extends BlockWithEntity {
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         if (itemStack.hasCustomName()) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof RedstoneTriggerBlockEntity redstoneTriggerEntity) {
                 redstoneTriggerEntity.setCustomName(itemStack.getName());
             }
@@ -69,7 +69,7 @@ public class RedstoneTriggerBlock extends BlockWithEntity {
         if (world.isClient) {
             return ActionResult.SUCCESS;
         }
-        BlockEntity blockEntity = world.getBlockEntity(pos);
+        var blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof RedstoneTriggerBlockEntity redstoneTriggerEntity) {
             if (player.getAbilities().allowModifyWorld) {
                 player.openHandledScreen(redstoneTriggerEntity);
@@ -81,7 +81,7 @@ public class RedstoneTriggerBlock extends BlockWithEntity {
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof RedstoneTriggerBlockEntity) {
                 ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
             }
@@ -91,14 +91,14 @@ public class RedstoneTriggerBlock extends BlockWithEntity {
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        boolean bl = world.isReceivingRedstonePower(pos);
+        var bl = world.isReceivingRedstonePower(pos);
         if (bl != state.get(TRIGGERED)) {
             world.setBlockState(pos, state.with(TRIGGERED, bl), Block.NOTIFY_ALL);
             if (!world.isClient) {
-                BlockEntity blockEntity = world.getBlockEntity(pos);
+                var blockEntity = world.getBlockEntity(pos);
                 if (blockEntity instanceof RedstoneTriggerBlockEntity redstoneTriggerEntity) {
-                    ItemStack itemStack = redstoneTriggerEntity.getStack(bl ? 0 : 1);
-                    BlockPos target = RedstoneRemoteItem.readTarget(itemStack);
+                    var itemStack = redstoneTriggerEntity.getStack(bl ? 0 : 1);
+                    var target = RedstoneRemoteItem.readTarget(itemStack);
                     if (target != BlockPos.ORIGIN) {
                         RedstoneManager.addInstance(world, target, new RedstoneInstance());
                     }

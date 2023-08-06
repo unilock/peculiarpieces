@@ -76,9 +76,9 @@ public class ToughenedScaffoldingBlock extends Block implements Waterloggable {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockPos blockPos = ctx.getBlockPos();
-        World world = ctx.getWorld();
-        int i = calculateDistance(world, blockPos);
+        var blockPos = ctx.getBlockPos();
+        var world = ctx.getWorld();
+        var i = calculateDistance(world, blockPos);
         return this.getDefaultState().with(WATERLOGGED, world.getFluidState(blockPos).getFluid() == Fluids.WATER).with(DISTANCE, i).with(BOTTOM, this.shouldBeBottom(world, blockPos, i));
     }
 
@@ -102,8 +102,8 @@ public class ToughenedScaffoldingBlock extends Block implements Waterloggable {
 
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        int i = calculateDistance(world, pos);
-        BlockState blockState = state.with(DISTANCE, i).with(BOTTOM, this.shouldBeBottom(world, pos, i));
+        var i = calculateDistance(world, pos);
+        var blockState = state.with(DISTANCE, i).with(BOTTOM, this.shouldBeBottom(world, pos, i));
         if (blockState.get(DISTANCE) == 24) {
             if (state.get(DISTANCE) == 24) {
                 FallingBlockEntity.spawnFromBlock(world, pos, blockState);
@@ -145,15 +145,15 @@ public class ToughenedScaffoldingBlock extends Block implements Waterloggable {
 
     public static int calculateDistance(BlockView world, BlockPos pos) {
         BlockState blockState2;
-        BlockPos.Mutable mutable = pos.mutableCopy().move(Direction.DOWN);
-        BlockState blockState = world.getBlockState(mutable);
-        int i = 24;
+        var mutable = pos.mutableCopy().move(Direction.DOWN);
+        var blockState = world.getBlockState(mutable);
+        var i = 24;
         if (blockState.isIn(PeculiarPieces.SCAFFOLDING)) {
             i = blockState.get(DISTANCE);
         } else if (blockState.isSideSolidFullSquare(world, mutable, Direction.UP)) {
             return 0;
         }
-        for (Direction direction : Direction.Type.HORIZONTAL) {
+        for (var direction : Direction.Type.HORIZONTAL) {
             if (!(!(blockState2 = world.getBlockState(mutable.set(pos, direction))).isIn(PeculiarPieces.SCAFFOLDING) || (blockState2.contains(DISTANCE) && ((i = Math.min(i, blockState2.get(DISTANCE) + 1)) != 1)) || (blockState2.contains(ScaffoldingBlock.DISTANCE) && ((i = Math.min(i, blockState2.get(ScaffoldingBlock.DISTANCE) + 1)) != 1)))) {
                 break;
             }

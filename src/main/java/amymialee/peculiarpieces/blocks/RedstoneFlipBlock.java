@@ -35,11 +35,11 @@ public class RedstoneFlipBlock extends AbstractRedstoneComparisonBlock {
             return ActionResult.SUCCESS;
         }
         if (state.getBlock() instanceof RedstoneFlipBlock) {
-            BlockState blockState = state.cycle(ENABLED);
+            var blockState = state.cycle(ENABLED);
             world.setBlockState(pos, blockState, Block.NOTIFY_ALL);
             world.updateNeighborsAlways(pos, this);
             world.updateNeighborsAlways(pos.offset(blockState.get(FACING).getOpposite()), this);
-            float f = blockState.get(ENABLED) ? 0.6f : 0.5f;
+            var f = blockState.get(ENABLED) ? 0.6f : 0.5f;
             world.playSound(null, pos, SoundEvents.BLOCK_LEVER_CLICK, SoundCategory.BLOCKS, 0.3f, f);
             world.emitGameEvent(player, blockState.get(ENABLED) ? GameEvent.BLOCK_ACTIVATE : GameEvent.BLOCK_DEACTIVATE, pos);
         }

@@ -47,15 +47,15 @@ public class BurningSpongeBlock extends Block {
     private boolean absorb(World world, BlockPos pos) {
         LinkedList<Pair<BlockPos, Integer>> queue = Lists.newLinkedList();
         queue.add(new Pair<>(pos, 0));
-        int i = 0;
+        var i = 0;
         while (!queue.isEmpty()) {
-            Pair<BlockPos, Integer> pair = queue.poll();
-            BlockPos blockPos = pair.getLeft();
+            var pair = queue.poll();
+            var blockPos = pair.getLeft();
             int j = pair.getRight();
-            for (Direction direction : Direction.values()) {
-                BlockPos blockPos2 = blockPos.offset(direction);
-                BlockState blockState = world.getBlockState(blockPos2);
-                FluidState fluidState = world.getFluidState(blockPos2);
+            for (var direction : Direction.values()) {
+                var blockPos2 = blockPos.offset(direction);
+                var blockState = world.getBlockState(blockPos2);
+                var fluidState = world.getFluidState(blockPos2);
                 if (!fluidState.isIn(FluidTags.WATER)) continue;
                 if (blockState.getBlock() instanceof FluidDrainable fluidDrainable && !fluidDrainable.tryDrainFluid(world, blockPos2, blockState).isEmpty()) {
                     ++i;
@@ -70,7 +70,7 @@ public class BurningSpongeBlock extends Block {
                     queue.add(new Pair<>(blockPos2, j + 1));
                     continue;
                 }
-                BlockEntity blockEntity = blockState.hasBlockEntity() ? world.getBlockEntity(blockPos2) : null;
+                var blockEntity = blockState.hasBlockEntity() ? world.getBlockEntity(blockPos2) : null;
                 SpongeBlock.dropStacks(blockState, world, blockPos2, blockEntity);
                 world.setBlockState(blockPos2, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);
                 ++i;

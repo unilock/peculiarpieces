@@ -47,7 +47,7 @@ public class WarpBlock extends BlockWithEntity {
 
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         if (itemStack.hasCustomName()) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof WarpBlockEntity warpBlockEntity) {
                 warpBlockEntity.setCustomName(itemStack.getName());
             }
@@ -68,7 +68,7 @@ public class WarpBlock extends BlockWithEntity {
         if (world.isClient) {
             return ActionResult.SUCCESS;
         } else {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof WarpBlockEntity warpBlockEntity) {
                 if (player.isSneaking() && player.getAbilities().allowModifyWorld) {
                     player.openHandledScreen(warpBlockEntity);
@@ -85,7 +85,7 @@ public class WarpBlock extends BlockWithEntity {
     }
 
     private void updateEnabled(World world, BlockPos pos, BlockState state) {
-        boolean bl = !world.isReceivingRedstonePower(pos);
+        var bl = !world.isReceivingRedstonePower(pos);
         if (bl != state.get(ENABLED)) {
             world.setBlockState(pos, state.with(ENABLED, bl), Block.NO_REDRAW);
         }
@@ -93,7 +93,7 @@ public class WarpBlock extends BlockWithEntity {
 
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof WarpBlockEntity) {
                 ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
                 world.updateComparators(pos, this);
@@ -125,7 +125,7 @@ public class WarpBlock extends BlockWithEntity {
     @Override
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
         if (!world.isClient()) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof WarpBlockEntity warpBlockEntity) {
                 warpBlockEntity.onEntityCollided(entity);
             }

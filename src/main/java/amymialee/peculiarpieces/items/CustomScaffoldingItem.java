@@ -26,17 +26,17 @@ public class CustomScaffoldingItem extends BlockItem {
     @Override
     @Nullable
     public ItemPlacementContext getPlacementContext(ItemPlacementContext context) {
-        BlockPos blockPos = context.getBlockPos();
-        World world = context.getWorld();
-        BlockState blockState = world.getBlockState(blockPos);
+        var blockPos = context.getBlockPos();
+        var world = context.getWorld();
+        var blockState = world.getBlockState(blockPos);
         if (blockState.isOf(this.getBlock())) {
-            Direction direction = context.shouldCancelInteraction() ? (context.hitsInsideBlock() ? context.getSide().getOpposite() : context.getSide()) : (context.getSide() == Direction.UP ? context.getHorizontalPlayerFacing() : Direction.UP);
-            int i = 0;
-            BlockPos.Mutable mutable = blockPos.mutableCopy().move(direction);
+            var direction = context.shouldCancelInteraction() ? (context.hitsInsideBlock() ? context.getSide().getOpposite() : context.getSide()) : (context.getSide() == Direction.UP ? context.getHorizontalPlayerFacing() : Direction.UP);
+            var i = 0;
+            var mutable = blockPos.mutableCopy().move(direction);
             while (i < this.size) {
                 if (!world.isClient && !world.isInBuildLimit(mutable)) {
-                    PlayerEntity playerEntity = context.getPlayer();
-                    int j = world.getTopY();
+                    var playerEntity = context.getPlayer();
+                    var j = world.getTopY();
                     if (!(playerEntity instanceof ServerPlayerEntity) || mutable.getY() < j) break;
                     playerEntity.sendMessage(Text.translatable("build.tooHigh", j - 1).formatted(Formatting.RED), true);
                     break;

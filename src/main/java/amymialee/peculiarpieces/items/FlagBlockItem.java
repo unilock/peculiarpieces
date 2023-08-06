@@ -19,7 +19,7 @@ public class FlagBlockItem extends BlockItem {
 
     @Override
     public Text getName(ItemStack stack) {
-        NbtCompound nbtCompound = BlockItem.getBlockEntityNbt(stack);
+        var nbtCompound = BlockItem.getBlockEntityNbt(stack);
         if (nbtCompound != null && nbtCompound.contains(FlagBlockEntity.TEXTURE_KEY, 8)) {
             return Text.translatable("block.%s.%s_flag".formatted(PeculiarPieces.MOD_ID, nbtCompound.getString(FlagBlockEntity.TEXTURE_KEY).toLowerCase()));
         }

@@ -77,7 +77,7 @@ public class FlagBlock extends BlockWithEntity implements CustomCreativeItems {
 
     @Override
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-        BlockEntity blockEntity = world.getBlockEntity(pos);
+        var blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof FlagBlockEntity flagBlock) {
             return flagBlock.getPickStack();
         }
@@ -88,17 +88,17 @@ public class FlagBlock extends BlockWithEntity implements CustomCreativeItems {
     
     @Override
     public void appendStacks(Entries entries) {
-        for (DyeColor color : NEW_DYE_ORDER) {
+        for (var color : NEW_DYE_ORDER) {
             addStack(color.getName().toLowerCase(), entries);
         }
-        for (ExtraFlag flag : ExtraFlag.values()) {
+        for (var flag : ExtraFlag.values()) {
             addStack(flag.name().toLowerCase(), entries);
         }
     }
 
     public void addStack(String name, ItemGroup.Entries entries) {
-        ItemStack stack = new ItemStack(this);
-        NbtCompound nbtCompound = new NbtCompound();
+        var stack = new ItemStack(this);
+        var nbtCompound = new NbtCompound();
         nbtCompound.putString(FlagBlockEntity.TEXTURE_KEY, name);
         BlockItem.setBlockEntityNbt(stack, PeculiarBlocks.FLAG_BLOCK_ENTITY, nbtCompound);
         entries.add(stack);
@@ -161,7 +161,7 @@ public class FlagBlock extends BlockWithEntity implements CustomCreativeItems {
     @Override
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        PlayerEntity player = ctx.getPlayer();
+        var player = ctx.getPlayer();
         if (ctx.getSide().getAxis() != Direction.Axis.Y) {
             switch (ctx.getSide()) {
                 case SOUTH -> {
@@ -178,8 +178,8 @@ public class FlagBlock extends BlockWithEntity implements CustomCreativeItems {
                 }
             }
         }
-        for (Direction direction : ctx.getPlacementDirections()) {
-            BlockState blockState = this.getDefaultState()
+        for (var direction : ctx.getPlacementDirections()) {
+            var blockState = this.getDefaultState()
                     .with(FACE, direction == Direction.UP ? FlagMountLocation.CEILING : FlagMountLocation.FLOOR)
                     .with(ROTATION, MathHelper.floor((double)((180.0f + ((player != null && player.isSneaking() ? 90 : 0) + ctx.getPlayerYaw())) * 16.0f / 360.0f) + 0.5) & 0xF);
             if (!blockState.canPlaceAt(ctx.getWorld(), ctx.getBlockPos())) continue;

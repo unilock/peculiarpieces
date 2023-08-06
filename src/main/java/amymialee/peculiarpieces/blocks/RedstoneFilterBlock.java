@@ -29,7 +29,7 @@ public class RedstoneFilterBlock extends AbstractRedstoneComparisonBlock {
         if (!player.getAbilities().allowModifyWorld) {
             return ActionResult.PASS;
         }
-        int filter = PeculiarHelper.clampLoop(0, 15, state.get(FILTER) + (player.isSneaking() ? -1 : 1));
+        var filter = PeculiarHelper.clampLoop(0, 15, state.get(FILTER) + (player.isSneaking() ? -1 : 1));
         world.setBlockState(pos, state.with(FILTER, filter), Block.NOTIFY_ALL);
         world.playSound(player, pos, SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3f, (float) (3 * filter) / 15);
         return ActionResult.success(world.isClient);
@@ -37,7 +37,7 @@ public class RedstoneFilterBlock extends AbstractRedstoneComparisonBlock {
 
     @Override
     protected int getOutputLevel(BlockView world, BlockPos pos, BlockState state) {
-        int i = getPower(world, pos, state);
+        var i = getPower(world, pos, state);
         if (state.get(FILTER) == i) {
             return i;
         }

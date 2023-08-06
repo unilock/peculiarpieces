@@ -39,19 +39,19 @@ public class WarpBlockEntity extends LootableContainerBlockEntity {
     }
 
     public void onEntityCollided(Entity entity) {
-        ItemStack stack = this.inventory.get(0);
+        var stack = this.inventory.get(0);
         if (stack.isOf(PeculiarItems.POS_PEARL) || stack.isOf(PeculiarItems.POS_PAPER)) {
-            NbtCompound compound = stack.getNbt();
+            var compound = stack.getNbt();
             if (compound != null && compound.contains("pp:target")) {
-                BlockPos pos = PositionPearlItem.readStone(stack);
+                var pos = PositionPearlItem.readStone(stack);
                 WarpManager.queueTeleport(WarpInstance.of(entity).position(pos).particles());
             }
         } else if (stack.isOf(PeculiarItems.CHECKPOINT_PEARL)) {
             if (entity instanceof PlayerEntity player && player instanceof ExtraPlayerDataWrapper checkPlayer) {
-                Vec3d checkpointPos = checkPlayer.getCheckpointPos();
+                var checkpointPos = checkPlayer.getCheckpointPos();
                 if (checkpointPos != null) {
-                    WarpInstance instance = WarpInstance.of(entity).position(checkpointPos).particles();
-                    RegistryKey<World> worldRegistryKey = checkPlayer.getCheckpointWorld();
+                    var instance = WarpInstance.of(entity).position(checkpointPos).particles();
+                    var worldRegistryKey = checkPlayer.getCheckpointWorld();
                     if (worldRegistryKey != null) {
                         instance.world(worldRegistryKey);
                     }
@@ -61,18 +61,18 @@ public class WarpBlockEntity extends LootableContainerBlockEntity {
             }
         } else if (stack.isOf(PeculiarItems.SKY_PEARL)) {
             if (this.world != null) {
-                Vec3d vec3d = Vec3d.ofBottomCenter(this.pos);
+                var vec3d = Vec3d.ofBottomCenter(this.pos);
                 WarpManager.queueTeleport(WarpInstance.of(entity).position(new Vec3d(vec3d.getX(), this.world.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, this.getPos()).getY(), vec3d.getZ())).particles());
             }
         } else if (stack.isOf(PeculiarItems.SPAWNPOINT_PEARL)) {
             if (!entity.getWorld().isClient) {
                 if (this.world instanceof ServerWorld serverWorld && entity instanceof ServerPlayerEntity player) {
                     if (player.getSpawnPointPosition() != null) {
-                        Optional<Vec3d> spawnpoint = PlayerEntity.findRespawnPosition(serverWorld, player.getSpawnPointPosition(), 0, false, true);
+                        var spawnpoint = PlayerEntity.findRespawnPosition(serverWorld, player.getSpawnPointPosition(), 0, false, true);
                         if (spawnpoint.isPresent()) {
-                            RegistryKey<World> spawnDim = player.getSpawnPointDimension();
+                            var spawnDim = player.getSpawnPointDimension();
                             if (spawnDim != player.getWorld().getRegistryKey()) {
-                                ServerWorld level = serverWorld.getServer().getWorld(spawnDim);
+                                var level = serverWorld.getServer().getWorld(spawnDim);
                                 if (!(level == null)) {
                                     player.moveToWorld(level);
                                 }

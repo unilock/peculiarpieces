@@ -27,7 +27,7 @@ public class RedstoneRandomizerBlock extends AbstractRedstoneComparisonBlock {
             return;
         }
         boolean bl = state.get(POWERED);
-        boolean bl2 = this.hasPower(world, pos, state);
+        var bl2 = this.hasPower(world, pos, state);
         if (!bl2) {
             world.setBlockState(pos, state.with(POWERED, false), Block.NOTIFY_LISTENERS);
         } else if (!bl) {

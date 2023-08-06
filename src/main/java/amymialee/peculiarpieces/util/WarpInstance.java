@@ -133,7 +133,7 @@ public class WarpInstance {
     }
 
     public Vec3d getVelocity() {
-        Vec3d entity = this.entity.getVelocity();
+        var entity = this.entity.getVelocity();
         return new Vec3d(this.hasXVel ? this.xVel : entity.getX(), this.hasYVel ? this.yVel : entity.getY(), this.hasZVel ? this.zVel : entity.getZ());
     }
 

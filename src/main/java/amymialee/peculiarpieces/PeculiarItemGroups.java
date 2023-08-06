@@ -19,7 +19,7 @@ import net.minecraft.registry.RegistryWrapper;
 public class PeculiarItemGroups {
     
     private static void build(ArrayList<Item> items, Entries entries) {
-        for (Item i : items) {
+        for (var i : items) {
             if (i instanceof CustomCreativeItems cci) {
                 cci.appendStacks(entries);
             } else if (i instanceof BlockItem bi && bi.getBlock() instanceof CustomCreativeItems cci) {

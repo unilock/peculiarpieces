@@ -51,8 +51,8 @@ public class BlockDetectorBlock extends FacingBlock {
     }
 
     protected void updateNeighbors(World world, BlockPos pos, BlockState state) {
-        Direction direction = state.get(FACING);
-        BlockPos blockPos = pos.offset(direction.getOpposite());
+        var direction = state.get(FACING);
+        var blockPos = pos.offset(direction.getOpposite());
         world.updateNeighbor(blockPos, this, pos);
         world.updateNeighborsExcept(blockPos, this, direction);
     }
@@ -81,7 +81,7 @@ public class BlockDetectorBlock extends FacingBlock {
             return;
         }
         if (!world.isClient() && state.get(POWERED) && !world.getBlockTickScheduler().isQueued(pos, this)) {
-            BlockState blockState = state.with(POWERED, false);
+            var blockState = state.with(POWERED, false);
             world.setBlockState(pos, blockState, Block.NOTIFY_LISTENERS | Block.FORCE_STATE);
             this.updateNeighbors(world, pos, blockState);
         }

@@ -44,7 +44,7 @@ public class CreativeBarrelBlock extends BlockWithEntity {
         if (world.isClient) {
             return ActionResult.SUCCESS;
         } else {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof CreativeBarrelBlockEntity creativeBarrelBlockEntity) {
                 player.openHandledScreen(creativeBarrelBlockEntity);
                 player.incrementStat(Stats.OPEN_BARREL);
@@ -54,7 +54,7 @@ public class CreativeBarrelBlock extends BlockWithEntity {
     }
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        BlockEntity blockEntity = world.getBlockEntity(pos);
+        var blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof CreativeBarrelBlockEntity creativeBarrelBlockEntity) {
             creativeBarrelBlockEntity.tick();
         }
@@ -71,7 +71,7 @@ public class CreativeBarrelBlock extends BlockWithEntity {
 
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         if (itemStack.hasCustomName()) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof CreativeBarrelBlockEntity creativeBarrelBlockEntity) {
                 creativeBarrelBlockEntity.setCustomName(itemStack.getName());
             }

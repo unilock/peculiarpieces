@@ -36,7 +36,7 @@ public class JumpPadBlock extends AbstractFlatBlock implements PlayerJumpConsumi
 
     @Override
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-        ItemStack stack = super.getPickStack(world, pos, state);
+        var stack = super.getPickStack(world, pos, state);
         stack.getOrCreateNbt().putInt("pp:variant", state.get(POWER));
         return stack;
     }
@@ -45,7 +45,7 @@ public class JumpPadBlock extends AbstractFlatBlock implements PlayerJumpConsumi
     @Override
     public void appendStacks(Entries entries) {
         for (int i : POWER.getValues()) {
-            ItemStack stack = new ItemStack(this);
+            var stack = new ItemStack(this);
             stack.getOrCreateNbt().putInt("pp:variant", i);
             entries.add(stack);
         }
@@ -59,12 +59,12 @@ public class JumpPadBlock extends AbstractFlatBlock implements PlayerJumpConsumi
         if (state.get(POWERED)) {
             return;
         }
-        int power = state.get(POWER) + 1;
+        var power = state.get(POWER) + 1;
         double d = (0.42f * power) + player.getJumpBoostVelocityModifier();
-        Vec3d vec3d = player.getVelocity();
+        var vec3d = player.getVelocity();
         player.setVelocity(vec3d.x, vec3d.y + d, vec3d.z);
         if (player.isSprinting()) {
-            float f = player.getYaw() * ((float)Math.PI / 180);
+            var f = player.getYaw() * ((float)Math.PI / 180);
             player.setVelocity(player.getVelocity().add(-MathHelper.sin(f) * 0.2f * power, 0.0, MathHelper.cos(f) * 0.2f * power));
         }
         player.velocityModified = true;
@@ -83,8 +83,8 @@ public class JumpPadBlock extends AbstractFlatBlock implements PlayerJumpConsumi
     @Override
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        ItemStack stack = ctx.getStack();
-        BlockState state = this.getDefaultState().with(POWERED, ctx.getWorld().isReceivingRedstonePower(ctx.getBlockPos()));
+        var stack = ctx.getStack();
+        var state = this.getDefaultState().with(POWERED, ctx.getWorld().isReceivingRedstonePower(ctx.getBlockPos()));
         if (stack.hasNbt() && stack.getNbt() != null) {
             return state.with(POWER, Math.min(3, stack.getNbt().getInt("pp:variant")));
         }
@@ -93,7 +93,7 @@ public class JumpPadBlock extends AbstractFlatBlock implements PlayerJumpConsumi
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        boolean bl = world.isReceivingRedstonePower(pos);
+        var bl = world.isReceivingRedstonePower(pos);
         if (bl != state.get(POWERED)) {
             world.setBlockState(pos, state.with(POWERED, bl), Block.NOTIFY_ALL);
         }

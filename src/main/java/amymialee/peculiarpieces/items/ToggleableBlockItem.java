@@ -21,7 +21,7 @@ public class ToggleableBlockItem extends BlockItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (user.isSneaking()) {
-            ItemStack stack = user.getStackInHand(hand);
+            var stack = user.getStackInHand(hand);
             toggle(stack);
             return TypedActionResult.success(stack);
         }
@@ -29,8 +29,8 @@ public class ToggleableBlockItem extends BlockItem {
     }
 
     private void toggle(ItemStack stack) {
-        NbtCompound compound = stack.getOrCreateNbt();
-        int old = compound.getInt("pp:variant");
+        var compound = stack.getOrCreateNbt();
+        var old = compound.getInt("pp:variant");
         compound.putInt("pp:variant", PeculiarHelper.clampLoop(0, this.options, old + 1));
     }
 }

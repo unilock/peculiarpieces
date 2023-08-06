@@ -29,17 +29,17 @@ public class BeaconBlockMixin {
     @Inject(method = "onUse", at = @At("HEAD"), cancellable = true)
     public void PeculiarPieces$UnbreakableBeacons(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
         if (!world.isClient && player.isSneaking()) {
-            Box box = Box.of(Vec3d.of(pos.add(0, 1, 0)), 1.0D, 1.0D, 1.0D);
-            List<ItemEntity> list = world.getEntitiesByType(TypeFilter.instanceOf(ItemEntity.class), box, (orb) -> orb.getStack().getNbt() == null || !orb.getStack().getNbt().getBoolean("Unbreakable"));
-            for (ItemEntity itemEntity : list) {
-                ItemStack stack = itemEntity.getStack();
+            var box = Box.of(Vec3d.of(pos.add(0, 1, 0)), 1.0D, 1.0D, 1.0D);
+            var list = world.getEntitiesByType(TypeFilter.instanceOf(ItemEntity.class), box, (orb) -> orb.getStack().getNbt() == null || !orb.getStack().getNbt().getBoolean("Unbreakable"));
+            for (var itemEntity : list) {
+                var stack = itemEntity.getStack();
                 if (stack.getItem().isDamageable()) {
                     stack.getOrCreateNbt().putBoolean("Unbreakable", true);
                     itemEntity.setStack(stack);
                 }
             }
             if (list.size() > 0) {
-                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(world);
+                var lightningEntity = EntityType.LIGHTNING_BOLT.create(world);
                 if (lightningEntity != null) {
                     lightningEntity.setCosmetic(true);
                     lightningEntity.refreshPositionAfterTeleport(Vec3d.of(pos));

@@ -101,9 +101,9 @@ public class LivingLadderBlock extends Block implements Fertilizable, Waterlogga
     }
 
     private boolean secureNear(WorldAccess world, BlockPos pos) {
-        boolean safe = false;
-        for (int i = pos.getY() - 1; i > world.getBottomY(); i--) {
-            BlockState stateDown = world.getBlockState(pos.withY(i));
+        var safe = false;
+        for (var i = pos.getY() - 1; i > world.getBottomY(); i--) {
+            var stateDown = world.getBlockState(pos.withY(i));
             if (stateDown.isOf(this)) {
                 if (stateDown.get(SECURE)) {
                     safe = true;
@@ -114,8 +114,8 @@ public class LivingLadderBlock extends Block implements Fertilizable, Waterlogga
             }
         }
         if (!safe) {
-            for (int i = pos.getY() + 1; i < world.getTopY(); i++) {
-                BlockState stateUp = world.getBlockState(pos.withY(i));
+            for (var i = pos.getY() + 1; i < world.getTopY(); i++) {
+                var stateUp = world.getBlockState(pos.withY(i));
                 if (stateUp.isOf(this)) {
                     if (stateUp.get(SECURE)) {
                         safe = true;
@@ -131,7 +131,7 @@ public class LivingLadderBlock extends Block implements Fertilizable, Waterlogga
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        boolean secure = isSecurePlacement(world, pos, state.get(FACING));
+        var secure = isSecurePlacement(world, pos, state.get(FACING));
         if (state.get(SECURE) != secure) {
             return state.with(SECURE, secure);
         }
@@ -154,31 +154,31 @@ public class LivingLadderBlock extends Block implements Fertilizable, Waterlogga
     @Override
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        World world = ctx.getWorld();
-        BlockPos pos = ctx.getBlockPos();
-        Direction dir = ctx.getSide().getAxis() != Direction.Axis.Y ? ctx.getSide() : ctx.getHorizontalPlayerFacing();
+        var world = ctx.getWorld();
+        var pos = ctx.getBlockPos();
+        var dir = ctx.getSide().getAxis() != Direction.Axis.Y ? ctx.getSide() : ctx.getHorizontalPlayerFacing();
         if (!isSecurePlacement(world, pos, dir)) {
             if (!secureNear(world, pos)) {
                 return null;
             }
         }
-        BlockState blockState = ctx.getWorld().getBlockState(ctx.getBlockPos().offset(ctx.getSide().getOpposite()));
+        var blockState = ctx.getWorld().getBlockState(ctx.getBlockPos().offset(ctx.getSide().getOpposite()));
         if (!ctx.canReplaceExisting() && blockState.isOf(this) && blockState.get(FACING) == ctx.getSide()) {
             return null;
         }
         blockState = this.getDefaultState();
-        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
+        var fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
         return blockState.with(FACING, dir).with(SECURE, isSecurePlacement(world, pos, blockState.get(FACING).getOpposite())).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
     }
 
     private boolean isSecurePlacement(BlockView world, BlockPos pos, Direction side) {
-        BlockState blockState = world.getBlockState(pos.offset(side.getOpposite()));
+        var blockState = world.getBlockState(pos.offset(side.getOpposite()));
         return blockState.isSideSolidFullSquare(world, pos, side.getOpposite());
     }
 
     @Override
     public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
-        BlockState stateDown = world.getBlockState(pos.down());
+        var stateDown = world.getBlockState(pos.down());
         return stateDown.isAir() || ((stateDown.getBlock() instanceof LivingLadderBlock livingLadderBlock) && livingLadderBlock.isFertilizable(world, pos.down(), state, isClient));
     }
 
@@ -190,7 +190,7 @@ public class LivingLadderBlock extends Block implements Fertilizable, Waterlogga
     @Override
     public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
         if (world.isInBuildLimit(pos.down())) {
-            BlockState below = world.getBlockState(pos.down());
+            var below = world.getBlockState(pos.down());
             if (below.isOf(this)) {
                 ((Fertilizable) below.getBlock()).grow(world, random, pos.down(), below);
             } else {

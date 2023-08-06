@@ -46,7 +46,7 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
         }
         if (this.cachedEntity == null) {
             if (this.cachedStack.getItem() instanceof EntityBucketItem bucket) {
-                Entity entity = ((EntityBucketItemAccessor) bucket).getEntityType().create(getWorld());
+                var entity = ((EntityBucketItemAccessor) bucket).getEntityType().create(getWorld());
                 if (entity instanceof FishEntity fish) {
                     this.cachedEntity = fish;
                 }
@@ -84,7 +84,7 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
 
     @Override
     public NbtCompound toInitialChunkDataNbt() {
-        NbtCompound nbtCompound = super.toInitialChunkDataNbt();
+        var nbtCompound = super.toInitialChunkDataNbt();
         writeNbt(nbtCompound);
         return nbtCompound;
     }
@@ -109,7 +109,7 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
 
     @Override
     public boolean isEmpty() {
-        for (ItemStack itemStack : this.inventory) {
+        for (var itemStack : this.inventory) {
             if (itemStack.isEmpty()) continue;
             return false;
         }
@@ -126,14 +126,14 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
 
     @Override
     public ItemStack removeStack(int slot, int amount) {
-        ItemStack stack = Inventories.splitStack(this.inventory, slot, amount);
+        var stack = Inventories.splitStack(this.inventory, slot, amount);
         updateState();
         return stack;
     }
 
     @Override
     public ItemStack removeStack(int slot) {
-        ItemStack stack = Inventories.removeStack(this.inventory, slot);
+        var stack = Inventories.removeStack(this.inventory, slot);
         updateState();
         return stack;
     }
@@ -162,8 +162,8 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
 
     public void updateState() {
         if (this.world != null && !this.world.isClient()) {
-            boolean present = !getStack(0).isEmpty();
-            BlockState oldState = this.world.getBlockState(this.pos);
+            var present = !getStack(0).isEmpty();
+            var oldState = this.world.getBlockState(this.pos);
             if (oldState.get(FishTankBlock.FILLED) != present) {
                 this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(FishTankBlock.FILLED, present));
             }

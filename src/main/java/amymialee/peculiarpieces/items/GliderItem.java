@@ -18,31 +18,31 @@ public class GliderItem extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
+        var stack = user.getStackInHand(hand);
         toggle(stack);
         return TypedActionResult.success(stack);
     }
 
     private void toggle(ItemStack stack) {
-        NbtCompound compound = stack.getOrCreateNbt();
+        var compound = stack.getOrCreateNbt();
         compound.putBoolean("pp:gliding", !compound.getBoolean("pp:gliding"));
     }
 
     public static boolean hasGlider(LivingEntity player) {
-        ItemStack main = player.getMainHandStack();
+        var main = player.getMainHandStack();
         if (main.getNbt() != null && main.getNbt().getBoolean("pp:gliding")) {
             return true;
         }
-        ItemStack off = player.getOffHandStack();
+        var off = player.getOffHandStack();
         return off.getNbt() != null && off.getNbt().getBoolean("pp:gliding");
     }
 
     public static ItemStack getGlider(LivingEntity player) {
-        ItemStack main = player.getMainHandStack();
+        var main = player.getMainHandStack();
         if (isActive(main)) {
             return main;
         }
-        ItemStack off = player.getOffHandStack();
+        var off = player.getOffHandStack();
         if (isActive(off)) {
             return off;
         }
@@ -59,7 +59,7 @@ public class GliderItem extends Item {
 
     public static boolean isGliding(LivingEntity player) {
         if (!player.isOnGround() && !player.isSubmergedInWater() && !player.isSleeping()) {
-            Vec3d velocity = player.getVelocity();
+            var velocity = player.getVelocity();
             return hasGlider(player) && velocity.getY() < 0;
         }
         return false;

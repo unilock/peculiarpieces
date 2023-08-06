@@ -49,20 +49,20 @@ public class PackedPouchScreenHandler extends ScreenHandler {
     }
 
     private void readNBT() {
-        DefaultedList<ItemStack> stacks = DefaultedList.ofSize(54, ItemStack.EMPTY);
+        var stacks = DefaultedList.ofSize(54, ItemStack.EMPTY);
         if (this.bundle.hasNbt() && this.bundle.getNbt() != null) {
             Inventories.readNbt(this.bundle.getNbt(), stacks);
-            for (int i = 0; i < stacks.size(); i++) {
+            for (var i = 0; i < stacks.size(); i++) {
                 this.bundleInv.setStack(i, stacks.get(i));
             }
         }
     }
 
     private void writeNBT() {
-        DefaultedList<ItemStack> stacks = DefaultedList.ofSize(54, ItemStack.EMPTY);
+        var stacks = DefaultedList.ofSize(54, ItemStack.EMPTY);
         double capacity = 0;
-        for (int i = 0; i < stacks.size(); i++) {
-            ItemStack item = this.bundleInv.getStack(i);
+        for (var i = 0; i < stacks.size(); i++) {
+            var item = this.bundleInv.getStack(i);
             stacks.set(i, item);
             capacity += (double) item.getCount() / item.getMaxCount();
         }
@@ -72,7 +72,7 @@ public class PackedPouchScreenHandler extends ScreenHandler {
 
     @Override
     public boolean canUse(PlayerEntity player) {
-        for (Hand hand : Hand.values()) {
+        for (var hand : Hand.values()) {
             if (player.getStackInHand(hand) == this.bundle) {
                 return true;
             }
@@ -89,10 +89,10 @@ public class PackedPouchScreenHandler extends ScreenHandler {
 
     @Override
     public ItemStack quickMove(PlayerEntity player, int index) {
-        ItemStack itemStack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(index);
+        var itemStack = ItemStack.EMPTY;
+        var slot = this.slots.get(index);
         if (slot.hasStack()) {
-            ItemStack itemStack2 = slot.getStack();
+            var itemStack2 = slot.getStack();
             itemStack = itemStack2.copy();
             if (index < 54 ? !this.insertItem(itemStack2, 54, this.slots.size(), true) : !this.insertItem(itemStack2, 0, 54, false)) {
                 return ItemStack.EMPTY;

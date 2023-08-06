@@ -43,7 +43,7 @@ public class BigBarrelBlock extends BlockWithEntity {
         if (world.isClient) {
             return ActionResult.SUCCESS;
         } else {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof BigBarrelBlockEntity bigBarrelBlockEntity) {
                 player.openHandledScreen(bigBarrelBlockEntity);
                 player.incrementStat(Stats.OPEN_BARREL);
@@ -54,7 +54,7 @@ public class BigBarrelBlock extends BlockWithEntity {
 
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof Inventory) {
                 ItemScatterer.spawn(world, pos, (Inventory)blockEntity);
                 world.updateComparators(pos, this);
@@ -64,7 +64,7 @@ public class BigBarrelBlock extends BlockWithEntity {
     }
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        BlockEntity blockEntity = world.getBlockEntity(pos);
+        var blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof BigBarrelBlockEntity bigBarrelBlockEntity) {
             bigBarrelBlockEntity.tick();
         }
@@ -81,7 +81,7 @@ public class BigBarrelBlock extends BlockWithEntity {
 
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         if (itemStack.hasCustomName()) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof BigBarrelBlockEntity bigBarrelBlockEntity) {
                 bigBarrelBlockEntity.setCustomName(itemStack.getName());
             }

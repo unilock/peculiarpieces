@@ -24,10 +24,10 @@ public class ClientWorldMixin {
     @Inject(method = "randomBlockDisplayTick", at = @At("HEAD"))
     public void randomBlockDisplayTick(int centerX, int centerY, int centerZ, int radius, Random random, Block block, BlockPos.Mutable pos, CallbackInfo ci) {
         if (VisibleBarriersAccess.isVisibilityEnabled()) {
-            ClientWorld world = ((ClientWorld) ((Object) this));
-            Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
+            var world = ((ClientWorld) ((Object) this));
+            var component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
             if (component.isPresent()) {
-                WardingComponent wardingComponent = component.get();
+                var wardingComponent = component.get();
                 if (wardingComponent.getWard(pos)) {
                     world.addParticle(PeculiarPieces.WARDING_AURA, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, 0.0, 0.0, 0.0);
                 }

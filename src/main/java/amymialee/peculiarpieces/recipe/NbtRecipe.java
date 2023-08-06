@@ -10,9 +10,9 @@ import net.minecraft.util.JsonHelper;
 public class NbtRecipe {
 
     public static NbtCompound extractData(JsonObject obj) {
-        JsonObject result = JsonHelper.getObject(obj, "result");
+        var result = JsonHelper.getObject(obj, "result");
         if (result.has("data")) {
-            NbtCompound data = (NbtCompound) JsonOps.INSTANCE.convertTo(NbtOps.INSTANCE, JsonHelper.getObject(result, "data"));
+            var data = (NbtCompound) JsonOps.INSTANCE.convertTo(NbtOps.INSTANCE, JsonHelper.getObject(result, "data"));
             result.remove("data");
             return data;
         }

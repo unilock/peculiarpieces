@@ -16,9 +16,9 @@ public class LockingKeyItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        World world = context.getWorld();
-        BlockPos pos = context.getBlockPos();
-        BlockEntity blockEntity = world.getBlockEntity(pos);
+        var world = context.getWorld();
+        var pos = context.getBlockPos();
+        var blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof LockableBlockEntityWrapper lockable) {
             if (!lockable.getLock().canOpen(context.getStack())) {
                 lockable.setLock(ContainerLock.EMPTY);

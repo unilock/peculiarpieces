@@ -59,7 +59,7 @@ public class EquipmentStandBlock extends BlockWithEntity {
                     world.scheduleBlockTick(pos, this, 4);
                 } else {
                     world.setBlockState(pos, state.cycle(POWERED), Block.NOTIFY_LISTENERS);
-                    BlockEntity entity = world.getBlockEntity(pos);
+                    var entity = world.getBlockEntity(pos);
                     if (entity instanceof EquipmentStandBlockEntity equipmentStand) {
                         equipmentStand.updatePlayerYaw();
                     }
@@ -85,7 +85,7 @@ public class EquipmentStandBlock extends BlockWithEntity {
     }
 
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-        BlockEntity blockEntity = world.getBlockEntity(pos);
+        var blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof EquipmentStandBlockEntity equipmentStand) {
             if (itemStack.hasCustomName()) {
                 equipmentStand.setCustomName(itemStack.getName());
@@ -102,7 +102,7 @@ public class EquipmentStandBlock extends BlockWithEntity {
         if (world.isClient) {
             return ActionResult.SUCCESS;
         } else {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof EquipmentStandBlockEntity equipmentStand) {
                 if (player.isSneaking() && player.getAbilities().allowModifyWorld) {
                     player.openHandledScreen(equipmentStand);
@@ -114,7 +114,7 @@ public class EquipmentStandBlock extends BlockWithEntity {
 
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof EquipmentStandBlockEntity) {
                 ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
             }

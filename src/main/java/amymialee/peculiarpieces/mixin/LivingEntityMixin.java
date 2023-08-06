@@ -61,7 +61,7 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "fall", at = @At("HEAD"))
     public void PeculiarPieces$FallHead(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition, CallbackInfo ci) {
         if ((Object) this instanceof PlayerEntity player && player instanceof ExtraPlayerDataWrapper extraPlayerDataWrapper) {
-            Optional<TrinketComponent> optionalComponent = TrinketsApi.getTrinketComponent(player);
+            var optionalComponent = TrinketsApi.getTrinketComponent(player);
             if (optionalComponent.isPresent() && optionalComponent.get().isEquipped(PeculiarItems.BOUNCY_BOOTS)) {
                 if (!this.isSneaking()) {
                     // TODO[una] this moved to getMovementSpeed, but they seem to work fine even without this?
@@ -105,7 +105,7 @@ public abstract class LivingEntityMixin extends Entity {
     @ModifyVariable(method = "travel", at = @At("STORE"))
     public float PeculiarPieces$SlipperyShoesSlipping(float p) {
         if (((Object) this) instanceof LivingEntity livingEntity) {
-            Optional<TrinketComponent> optionalComponent = TrinketsApi.getTrinketComponent(livingEntity);
+            var optionalComponent = TrinketsApi.getTrinketComponent(livingEntity);
             if (optionalComponent.isPresent() && optionalComponent.get().isEquipped(PeculiarItems.SLIPPERY_SHOES)) {
                 return 1f / 0.91f;
             }
@@ -120,9 +120,9 @@ public abstract class LivingEntityMixin extends Entity {
     private void PeculiarPieces$MoreScaffolds(Vec3d motion, CallbackInfoReturnable<Vec3d> cir) {
         if (this.isClimbing()) {
             this.onLanding();
-            double d = MathHelper.clamp(motion.x, -0.15f, 0.15f);
-            double e = MathHelper.clamp(motion.z, -0.15f, 0.15f);
-            double g = Math.max(motion.y, -0.15f);
+            var d = MathHelper.clamp(motion.x, -0.15f, 0.15f);
+            var e = MathHelper.clamp(motion.z, -0.15f, 0.15f);
+            var g = Math.max(motion.y, -0.15f);
             if (g < 0.0 && !this.getBlockStateAtPos().isIn(PeculiarPieces.SCAFFOLDING)) {
                 this.isHoldingOntoLadder();
             }
@@ -138,8 +138,8 @@ public abstract class LivingEntityMixin extends Entity {
                 return;
             }
             if (((Object) this) instanceof LivingEntity livingEntity) {
-                for (Hand hand : Hand.values()) {
-                    ItemStack itemStack = this.getStackInHand(hand);
+                for (var hand : Hand.values()) {
+                    var itemStack = this.getStackInHand(hand);
                     if (itemStack.isIn(PeculiarPieces.TOTEMS)) {
                         useTotem(livingEntity, itemStack);
                         if (itemStack.isOf(PeculiarItems.EVERLASTING_EMBLEM)) {
@@ -153,18 +153,18 @@ public abstract class LivingEntityMixin extends Entity {
                         return;
                     }
                 }
-                Optional<TrinketComponent> optionalComponent = TrinketsApi.getTrinketComponent(livingEntity);
+                var optionalComponent = TrinketsApi.getTrinketComponent(livingEntity);
                 if (optionalComponent.isPresent()) {
                     if (optionalComponent.get().isEquipped(PeculiarItems.TOKEN_OF_UNDYING)) {
-                        List<Pair<SlotReference, ItemStack>> equipped = optionalComponent.get().getEquipped(PeculiarItems.TOKEN_OF_UNDYING);
-                        ItemStack stack = equipped.get(0).getRight();
+                        var equipped = optionalComponent.get().getEquipped(PeculiarItems.TOKEN_OF_UNDYING);
+                        var stack = equipped.get(0).getRight();
                         useTotem(livingEntity, stack);
                         stack.decrement(1);
                         cir.setReturnValue(true);
                     } else if (optionalComponent.get().isEquipped(PeculiarItems.EVERLASTING_EMBLEM)) {
                         if (livingEntity instanceof PlayerEntity player && !player.getItemCooldownManager().isCoolingDown(PeculiarItems.EVERLASTING_EMBLEM)) {
-                            List<Pair<SlotReference, ItemStack>> equipped = optionalComponent.get().getEquipped(PeculiarItems.EVERLASTING_EMBLEM);
-                            ItemStack stack = equipped.get(0).getRight();
+                            var equipped = optionalComponent.get().getEquipped(PeculiarItems.EVERLASTING_EMBLEM);
+                            var stack = equipped.get(0).getRight();
                             useTotem(livingEntity, stack);
                             player.getItemCooldownManager().set(PeculiarItems.EVERLASTING_EMBLEM, (source.getAttacker() instanceof PlayerEntity ? 2 : 1) * 6 * 60 * 20);
                             cir.setReturnValue(true);

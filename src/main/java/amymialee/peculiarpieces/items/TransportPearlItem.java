@@ -32,7 +32,7 @@ public class TransportPearlItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        PlayerEntity player = context.getPlayer();
+        var player = context.getPlayer();
         if (player != null && player.isSneaking() && context.getWorld().getBlockState(context.getBlockPos()).getBlock() == Blocks.LODESTONE) {
             writeStone(context.getStack(), context.getBlockPos().add(0, 1, 0));
             player.getItemCooldownManager().set(this, 1);
@@ -42,8 +42,8 @@ public class TransportPearlItem extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
-        BlockPos pos = readStone(stack);
+        var stack = user.getStackInHand(hand);
+        var pos = readStone(stack);
         if (user.isSneaking()) {
             incrementSlot(stack);
             user.getItemCooldownManager().set(this, 1);
@@ -70,12 +70,12 @@ public class TransportPearlItem extends Item {
     }
 
     private static void incrementSlot(ItemStack stack) {
-        NbtCompound mainCompound = stack.getOrCreateNbt();
+        var mainCompound = stack.getOrCreateNbt();
         {
-            NbtCompound nbtCompound = stack.getSubNbt("display");
+            var nbtCompound = stack.getSubNbt("display");
             if (nbtCompound != null) {
                 if (nbtCompound.contains("Name", NbtElement.STRING_TYPE)) {
-                    MutableText text = Text.Serializer.fromJson(nbtCompound.getString("Name"));
+                    var text = Text.Serializer.fromJson(nbtCompound.getString("Name"));
                     if (text != null ) {
                         mainCompound.putString("pp:target_name_%d".formatted(getSlot(stack)), text.getString());
                     }
@@ -102,9 +102,9 @@ public class TransportPearlItem extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
-        NbtCompound compound = stack.getOrCreateNbt();
-        for (int i = 0; i < 8; i++) {
-            BlockPos pos = NbtHelper.toBlockPos(compound.getCompound("pp:target_%d".formatted(i)));
+        var compound = stack.getOrCreateNbt();
+        for (var i = 0; i < 8; i++) {
+            var pos = NbtHelper.toBlockPos(compound.getCompound("pp:target_%d".formatted(i)));
             if (!pos.equals(BlockPos.ORIGIN)) {
                 if (compound.contains("pp:target_name_%d".formatted(i))) {
                     tooltip.add(Text.translatable(compound.getString("pp:target_name_%d".formatted(i)) + ": x%d, y%d, z%d".formatted(pos.getX(), pos.getY(), pos.getZ())).setStyle(Style.EMPTY.withColor(MathHelper.hsvToRgb(((float)(i + 1) / 8), 1.0f, 1.0f))));

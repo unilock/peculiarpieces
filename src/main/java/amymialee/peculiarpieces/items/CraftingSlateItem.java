@@ -22,7 +22,7 @@ public class CraftingSlateItem extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
+        var stack = user.getStackInHand(hand);
         if (world.isClient) {
             return TypedActionResult.consume(stack);
         }

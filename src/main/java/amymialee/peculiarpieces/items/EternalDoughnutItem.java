@@ -19,7 +19,7 @@ public class EternalDoughnutItem extends Item {
 	}
 
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-		ItemStack itemStack = user.getStackInHand(hand);
+		var itemStack = user.getStackInHand(hand);
 		if (user.canConsume(true)) {
 			user.setCurrentHand(hand);
 			return TypedActionResult.consume(itemStack);

@@ -18,7 +18,7 @@ public class PowderSnowBlockMixin {
     @Inject(method = "canWalkOnPowderSnow", at = @At("HEAD"), cancellable = true)
     private static void PeculiarPieces$SteadySnow(Entity entity, CallbackInfoReturnable<Boolean> cir) {
         if (entity instanceof LivingEntity livingEntity) {
-            Optional<TrinketComponent> optionalComponent = TrinketsApi.getTrinketComponent(livingEntity);
+            var optionalComponent = TrinketsApi.getTrinketComponent(livingEntity);
             if (optionalComponent.isPresent() && optionalComponent.get().isEquipped(PeculiarItems.STEADY_SNEAKERS)) {
                 cir.setReturnValue(true);
             }

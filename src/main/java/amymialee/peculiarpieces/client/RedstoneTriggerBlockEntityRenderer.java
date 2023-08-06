@@ -19,22 +19,22 @@ public class RedstoneTriggerBlockEntityRenderer implements BlockEntityRenderer<R
     public void render(RedstoneTriggerBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         matrices.push();
         if (blockEntity.getWorld() != null) {
-            double offset = Math.sin((blockEntity.getWorld().getTime() + tickDelta) / 16.0) / 32.0;
+            var offset = Math.sin((blockEntity.getWorld().getTime() + tickDelta) / 16.0) / 32.0;
             matrices.translate(0.5, 0.4 + offset, 0.5);
-            BlockState state = blockEntity.getCachedState();
+            var state = blockEntity.getCachedState();
             if (state.getBlock() instanceof RedstoneTriggerBlock) {
-                float h = blockEntity.bookRotation - blockEntity.lastBookRotation;
+                var h = blockEntity.bookRotation - blockEntity.lastBookRotation;
                 while (h >= (float)Math.PI) {
                     h -= (float)Math.PI * 2;
                 }
                 while (h < (float)(-Math.PI)) {
                     h += (float)Math.PI * 2;
                 }
-                float k = blockEntity.lastBookRotation + h * tickDelta;
+                var k = blockEntity.lastBookRotation + h * tickDelta;
                 matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-k));
                 matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90));
             }
-            int lightAbove = WorldRenderer.getLightmapCoordinates(blockEntity.getWorld(), blockEntity.getPos().up());
+            var lightAbove = WorldRenderer.getLightmapCoordinates(blockEntity.getWorld(), blockEntity.getPos().up());
             MinecraftClient.getInstance().getItemRenderer().renderItem(Items.AMETHYST_SHARD.getDefaultStack(), ModelTransformationMode.GROUND, lightAbove, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, blockEntity.getWorld(), 0);
         }
         matrices.pop();

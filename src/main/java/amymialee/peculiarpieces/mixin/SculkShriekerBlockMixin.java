@@ -25,7 +25,7 @@ public class SculkShriekerBlockMixin extends AbstractBlockMixin {
     @Override
     public void PeculiarPieces$OnUseHead(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
         if (!state.get(CAN_SUMMON) && player.getAbilities().allowModifyWorld) {
-            ItemStack stack = player.getStackInHand(hand);
+            var stack = player.getStackInHand(hand);
             if (stack.isOf(Items.ECHO_SHARD)) {
                 world.setBlockState(pos, state.with(CAN_SUMMON, true));
                 stack.decrement(1);

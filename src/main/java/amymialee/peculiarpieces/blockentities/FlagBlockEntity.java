@@ -30,7 +30,7 @@ public class FlagBlockEntity extends BlockEntity implements Nameable {
 
     @Nullable
     public static String getTexture(ItemStack stack) {
-        NbtCompound nbtCompound = BlockItem.getBlockEntityNbt(stack);
+        var nbtCompound = BlockItem.getBlockEntityNbt(stack);
         if (nbtCompound != null && nbtCompound.contains(TEXTURE_KEY, NbtElement.STRING_TYPE)) {
             return nbtCompound.getString(TEXTURE_KEY);
         }
@@ -66,9 +66,9 @@ public class FlagBlockEntity extends BlockEntity implements Nameable {
     }
 
     public ItemStack getPickStack() {
-        ItemStack itemStack = new ItemStack(PeculiarBlocks.FLAG);
+        var itemStack = new ItemStack(PeculiarBlocks.FLAG);
         if (this.texture != null) {
-            NbtCompound nbtCompound = new NbtCompound();
+            var nbtCompound = new NbtCompound();
             nbtCompound.putString(TEXTURE_KEY, this.texture);
             BlockItem.setBlockEntityNbt(itemStack, this.getType(), nbtCompound);
         }

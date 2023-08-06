@@ -31,8 +31,8 @@ public class PotionPadScreen extends HandledScreen<PotionPadScreenHandler> {
     @Override
     protected void drawBackground(DrawContext ctx, float delta, int mouseX, int mouseY) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        int i = (this.width - this.backgroundWidth) / 2;
-        int j = (this.height - this.backgroundHeight) / 2;
+        var i = (this.width - this.backgroundWidth) / 2;
+        var j = (this.height - this.backgroundHeight) / 2;
         ctx.drawTexture(TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
         if (this.handler.getSlot(0).getStack().isEmpty()) {
             ctx.drawTexture(EMPTY_TEXTURE, this.x + 80, this.y + 20, 0, 0, 0, 16, 16, 16, 16);

@@ -23,7 +23,7 @@ public class EnderPouchItem extends Item {
     }
 
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        EnderChestInventory enderChestInventory = user.getEnderChestInventory();
+        var enderChestInventory = user.getEnderChestInventory();
         if (enderChestInventory == null) {
             return TypedActionResult.success(user.getStackInHand(hand));
         }

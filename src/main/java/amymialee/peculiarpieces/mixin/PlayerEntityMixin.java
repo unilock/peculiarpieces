@@ -41,9 +41,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
 
     @Inject(method = "isBlockBreakingRestricted", at = @At("HEAD"), cancellable = true)
     public void PeculiarPieces$RestrictWardedBlock(World world, BlockPos pos, GameMode gameMode, CallbackInfoReturnable<Boolean> cir) {
-        Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
+        var component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
         if (component.isPresent()) {
-            WardingComponent wardingComponent = component.get();
+            var wardingComponent = component.get();
             if (wardingComponent.getWard(pos)) {
                 cir.setReturnValue(true);
             }
@@ -68,13 +68,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
 
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
     public void PeculiarPieces$ReadCustomData(NbtCompound nbt, CallbackInfo ci) {
-        Vec3d vec3d = Vec3d.ofBottomCenter(NbtHelper.toBlockPos(nbt.getCompound("pp:checkpos")));
+        var vec3d = Vec3d.ofBottomCenter(NbtHelper.toBlockPos(nbt.getCompound("pp:checkpos")));
         if (vec3d.distanceTo(Vec3d.ZERO) > 1) {
             this.checkpointPos = vec3d;
         }
-        Optional<RegistryKey<World>> worldKey = getCheckpointDimension(nbt);
+        var worldKey = getCheckpointDimension(nbt);
         worldKey.ifPresent(worldRegistryKey -> this.checkpointWorld = worldRegistryKey);
-        int gameMode = nbt.getInt("pp:gamemode");
+        var gameMode = nbt.getInt("pp:gamemode");
         if (gameMode != 0) {
             this.storedGameMode = GameMode.byId(gameMode - 1);
         } else {
@@ -111,17 +111,17 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
 
     @Inject(method = "tickMovement", at = @At("TAIL"))
     public void PeculiarPieces$MovementTicks(CallbackInfo ci) {
-        PlayerEntity this2 = ((PlayerEntity) ((Object) this));
-        Vec3d velocity = getVelocity();
+        var this2 = ((PlayerEntity) ((Object) this));
+        var velocity = getVelocity();
         if (getBouncePower() > 0) {
-            float f = this.headYaw * ((float)Math.PI / 180);
+            var f = this.headYaw * ((float)Math.PI / 180);
             this.setVelocity(this.getVelocity().add(-MathHelper.sin(f) * (velocity.horizontalLength() * getBouncePower() * 4) * (this.isSprinting() ? 1.5f : 0.5f), getBouncePower(), MathHelper.cos(f) * (velocity.horizontalLength() * getBouncePower() * 4) * (isSprinting() ? 1.5f : 0.5f)));
             setBouncePower(0);
             this.velocityDirty = true;
         } else if (GliderItem.isGliding(this2)) {
-            double horizontalSpeed = !isSneaking() ? 0.03 : 0.1;
-            double xSpeed = Math.cos(Math.toRadians(this.headYaw + 90)) * horizontalSpeed;
-            double zSpeed = Math.sin(Math.toRadians(this.headYaw + 90)) * horizontalSpeed;
+            var horizontalSpeed = !isSneaking() ? 0.03 : 0.1;
+            var xSpeed = Math.cos(Math.toRadians(this.headYaw + 90)) * horizontalSpeed;
+            var zSpeed = Math.sin(Math.toRadians(this.headYaw + 90)) * horizontalSpeed;
             this.setVelocity(velocity.x + xSpeed, !isSneaking() ? -0.052 : -0.176, velocity.z + zSpeed);
             this.fallDistance = 0;
         }

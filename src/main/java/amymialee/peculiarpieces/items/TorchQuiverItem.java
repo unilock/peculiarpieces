@@ -49,9 +49,9 @@ public class TorchQuiverItem extends RangedWeaponItem implements CustomCreativeI
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
+        var stack = user.getStackInHand(hand);
         if (user.isSneaking()) {
-            NbtCompound compound = stack.getOrCreateNbt();
+            var compound = stack.getOrCreateNbt();
             stack.getOrCreateNbt().putInt("pp:setting", PeculiarHelper.clampLoop(0, torches.length - 1, compound.getInt("pp:setting") + 1));
             user.getItemCooldownManager().set(this, 2);
         }
@@ -63,13 +63,13 @@ public class TorchQuiverItem extends RangedWeaponItem implements CustomCreativeI
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        ItemStack quiver = context.getStack();
+        var quiver = context.getStack();
         if (context.getPlayer() != null && (quiver.getDamage() < getMaxDamage() || context.getPlayer().isCreative())) {
-            int setting = quiver.getOrCreateNbt().getInt("pp:setting");
+            var setting = quiver.getOrCreateNbt().getInt("pp:setting");
             if (setting < torches.length) {
-                Item item = torches[setting];
+                var item = torches[setting];
                 if (item instanceof BlockItem blockItem) {
-                    ActionResult result = blockItem.place(new ItemPlacementContext(context.getPlayer(), context.getHand(), new ItemStack(item), ((ItemUsageContextAccessor) context).getHit()));
+                    var result = blockItem.place(new ItemPlacementContext(context.getPlayer(), context.getHand(), new ItemStack(item), ((ItemUsageContextAccessor) context).getHit()));
                     if (result.isAccepted() && !context.getPlayer().isCreative()) {
                         quiver.setDamage(quiver.getDamage() + 1);
                     }
@@ -83,7 +83,7 @@ public class TorchQuiverItem extends RangedWeaponItem implements CustomCreativeI
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (selected && stack.getDamage() > 0 && entity instanceof PlayerEntity player && !player.isCreative()) {
-            ItemStack torches = player.getProjectileType(stack);
+            var torches = player.getProjectileType(stack);
             if (!torches.isEmpty()) {
                 stack.setDamage(stack.getDamage() - 1);
                 torches.decrement(1);
@@ -107,9 +107,9 @@ public class TorchQuiverItem extends RangedWeaponItem implements CustomCreativeI
     
     @Override
     public void appendStacks(Entries entries) {
-        for (int filled = 0; filled <= 1; filled++) {
-            for (int setting = 0; setting < torches.length; setting++) {
-                ItemStack stack = new ItemStack(this);
+        for (var filled = 0; filled <= 1; filled++) {
+            for (var setting = 0; setting < torches.length; setting++) {
+                var stack = new ItemStack(this);
                 if (filled == 0) {
                     stack.setDamage(512);
                 }

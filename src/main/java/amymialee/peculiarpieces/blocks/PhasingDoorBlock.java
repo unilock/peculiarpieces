@@ -38,7 +38,7 @@ public class PhasingDoorBlock extends Block {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        boolean held = context.isHolding(this.asItem());
+        var held = context.isHolding(this.asItem());
         return state.get(SOLID) || held || VisibleBarriersAccess.isVisibilityEnabled() ? VoxelShapes.fullCube() : VoxelShapes.empty();
     }
 
@@ -113,7 +113,7 @@ public class PhasingDoorBlock extends Block {
         if (active && solid) {
             world.setBlockState(pos, state.cycle(SOLID));
             world.scheduleBlockTick(pos, this.asBlock(), 140);
-            Vec3d particlePos = Vec3d.ofCenter(pos);
+            var particlePos = Vec3d.ofCenter(pos);
             world.spawnParticles(DustParticleEffect.DEFAULT, particlePos.getX(), particlePos.getY(), particlePos.getZ(), 6, 0.4, 0.4, 0.4, 0.1f);
             world.playSound(null, pos, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.5f, 0.5f * (1 + nearbyActive(world, pos)));
         } else if (active) {
@@ -130,9 +130,9 @@ public class PhasingDoorBlock extends Block {
     }
 
     private static void activateNearby(World world, BlockPos pos, Random random) {
-        for (Direction direction : Direction.values()) {
-            BlockPos pos2 = pos.add(direction.getVector());
-            BlockState state = world.getBlockState(pos2);
+        for (var direction : Direction.values()) {
+            var pos2 = pos.add(direction.getVector());
+            var state = world.getBlockState(pos2);
             if (state.getBlock() instanceof PhasingDoorBlock && state.get(SOLID) && !state.get(ACTIVE)) {
                 world.scheduleBlockTick(pos2, state.getBlock(), random.nextInt(3) + 1);
             }
@@ -140,9 +140,9 @@ public class PhasingDoorBlock extends Block {
     }
 
     private static int nearbyActive(World world, BlockPos pos) {
-        int active = 0;
-        for (Direction direction : Direction.values()) {
-            BlockState state = world.getBlockState(pos.add(direction.getVector()));
+        var active = 0;
+        for (var direction : Direction.values()) {
+            var state = world.getBlockState(pos.add(direction.getVector()));
             if (state.getBlock() instanceof PhasingDoorBlock && !state.get(SOLID) && state.get(ACTIVE)) {
                 active++;
             }

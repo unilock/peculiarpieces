@@ -60,12 +60,12 @@ public class CreeperEntityMixin extends HostileEntity {
 
     @Inject(method = "interactMob", at = @At("HEAD"), cancellable = true)
     private void PeculiarPieces$ExtraInteractions(PlayerEntity player2, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        ItemStack itemStack = player2.getStackInHand(hand);
+        var itemStack = player2.getStackInHand(hand);
         if (itemStack.isOf(Items.SHEARS) && !this.dataTracker.get(DEFUSED)) {
             if (!this.getWorld().isClient) {
                 this.getWorld().playSoundFromEntity(null, this, SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.PLAYERS, 1.0f, 1.0f);
                 this.dataTracker.set(DEFUSED, true);
-                ItemEntity itemEntity = this.dropStack(new ItemStack(Items.STRING), 1);
+                var itemEntity = this.dropStack(new ItemStack(Items.STRING), 1);
                 if (itemEntity != null) {
                     itemEntity.setVelocity(itemEntity.getVelocity().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1f, this.random.nextFloat() * 0.05f, (this.random.nextFloat() - this.random.nextFloat()) * 0.1f));
                 }

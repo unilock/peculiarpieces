@@ -80,7 +80,7 @@ public class CouriporterBlock extends BlockWithEntity {
 
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         if (itemStack.hasCustomName()) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof CouriporterBlockEntity couriporter) {
                 couriporter.setCustomName(itemStack.getName());
             }
@@ -91,7 +91,7 @@ public class CouriporterBlock extends BlockWithEntity {
         if (world.isClient) {
             return ActionResult.SUCCESS;
         } else {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof CouriporterBlockEntity couriporterBlockEntity) {
                 if (player.isSneaking() && player.getAbilities().allowModifyWorld) {
                     player.openHandledScreen(couriporterBlockEntity);
@@ -103,16 +103,16 @@ public class CouriporterBlock extends BlockWithEntity {
 
     protected void ignite(World world, BlockState state, BlockPos pos) {
         if (world.getBlockEntity(pos) instanceof CouriporterBlockEntity couriporter) {
-            ItemStack stack = couriporter.getInventory().get(0);
-            NbtCompound compound = stack.getNbt();
+            var stack = couriporter.getInventory().get(0);
+            var compound = stack.getNbt();
             if (compound != null && compound.contains("pp:target")) {
-                BlockPos targetPos = PositionPearlItem.readStone(stack);
+                var targetPos = PositionPearlItem.readStone(stack);
                 if (world.getBlockState(targetPos).isAir()) {
-                    BlockPos movingPos = pos.add(state.get(FACING).getVector());
-                    BlockState movingState = world.getBlockState(movingPos);
+                    var movingPos = pos.add(state.get(FACING).getVector());
+                    var movingState = world.getBlockState(movingPos);
                     if (movingState.getHardness(world, pos) != -1 && !movingState.isAir()) {
                         world.setBlockState(targetPos, movingState, NOTIFY_ALL);
-                        BlockEntity entity = world.getBlockEntity(movingPos);
+                        var entity = world.getBlockEntity(movingPos);
                         if (entity != null) {
                             world.removeBlockEntity(movingPos);
                             ((BlockEntityWrapper) entity).setPos(targetPos);
@@ -127,7 +127,7 @@ public class CouriporterBlock extends BlockWithEntity {
                                 double r = movingPos.getX() + 0.5f;
                                 double s = movingPos.getY() + 0.5f;
                                 double d = movingPos.getZ() + 0.5f;
-                                for (double e = 0.0; e < Math.PI * 2; e += 0.15707963267948966) {
+                                for (var e = 0.0; e < Math.PI * 2; e += 0.15707963267948966) {
                                     serverWorld.spawnParticles(ParticleTypes.PORTAL, r + Math.cos(e) * 0.2f, s, d + Math.sin(e) * 0.2f, 2, 0, 0, 0, Math.cos(e) * -5.0);
                                     serverWorld.spawnParticles(ParticleTypes.PORTAL, r + Math.cos(e) * 0.2f, s, d + Math.sin(e) * 0.2f, 2, 0, 0, 0, Math.sin(e) * -7.0);
                                 }
@@ -136,7 +136,7 @@ public class CouriporterBlock extends BlockWithEntity {
                                 double r = targetPos.getX() + 0.5f;
                                 double s = targetPos.getY() + 0.5f;
                                 double d = targetPos.getZ() + 0.5f;
-                                for (double e = 0.0; e < Math.PI * 2; e += 0.15707963267948966) {
+                                for (var e = 0.0; e < Math.PI * 2; e += 0.15707963267948966) {
                                     serverWorld.spawnParticles(ParticleTypes.PORTAL, r + Math.cos(e) * 0.2f, s, d + Math.sin(e) * 0.2f, 2, 0, 0, 0, Math.cos(e) * -5.0);
                                     serverWorld.spawnParticles(ParticleTypes.PORTAL, r + Math.cos(e) * 0.2f, s, d + Math.sin(e) * 0.2f, 2, 0, 0, 0, Math.sin(e) * -7.0);
                                 }
@@ -150,7 +150,7 @@ public class CouriporterBlock extends BlockWithEntity {
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        boolean bl = world.isReceivingRedstonePower(pos) || world.isReceivingRedstonePower(pos.up());
+        var bl = world.isReceivingRedstonePower(pos) || world.isReceivingRedstonePower(pos.up());
         boolean bl2 = state.get(TRIGGERED);
         if (bl && !bl2) {
             this.ignite(world, state, pos);
@@ -168,7 +168,7 @@ public class CouriporterBlock extends BlockWithEntity {
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof CouriporterBlockEntity) {
                 ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
                 world.updateComparators(pos, this);

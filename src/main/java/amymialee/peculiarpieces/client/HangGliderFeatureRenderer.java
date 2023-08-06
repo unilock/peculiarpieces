@@ -34,7 +34,7 @@ public class HangGliderFeatureRenderer<T extends PlayerEntity, M extends EntityM
             matrixStack.translate(0.0, 0.0, (GliderItem.isGliding(playerEntity) ? 0 : 1) * 0.1);
             this.getContextModel().copyStateTo(this.glider);
             this.glider.setAngles(playerEntity, f, g, j, k, l);
-            Identifier identifier = SKIN;
+            var identifier = SKIN;
 //            Supporter supporter = KofiTable.CONTRIBUTORS.get(playerEntity.getUuid());
 //            try {
 //                if (supporter != null) {
@@ -61,7 +61,7 @@ public class HangGliderFeatureRenderer<T extends PlayerEntity, M extends EntityM
 //            } catch (Exception e) {
 //                System.out.println(e.getMessage());
 //            }
-            VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(identifier), false, false);
+            var vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(identifier), false, false);
             this.glider.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, 1.0f, 1.0f, 1.0f, 1.0f);
             matrixStack.pop();
         }

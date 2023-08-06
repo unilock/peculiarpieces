@@ -35,26 +35,26 @@ public class TeleportItemEntityRenderer extends EntityRenderer<TeleportItemEntit
     @Override
     public void render(TeleportItemEntity itemEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         matrixStack.push();
-        ItemStack itemStack = paper;
+        var itemStack = paper;
         if (itemEntity.getDelay() == 0) {
-            ItemStack input = itemEntity.getStack();
+            var input = itemEntity.getStack();
             if (input != null && !input.isEmpty()) {
                 itemStack = itemEntity.getStack();
             } else {
                 itemStack = PeculiarItems.POS_PAPER.getDefaultStack();
             }
         }
-        int j = itemStack.isEmpty() ? 187 : Item.getRawId(itemStack.getItem()) + itemStack.getDamage();
+        var j = itemStack.isEmpty() ? 187 : Item.getRawId(itemStack.getItem()) + itemStack.getDamage();
         this.random.setSeed(j);
-        BakedModel bakedModel = this.itemRenderer.getModel(itemStack, itemEntity.getWorld(), null, itemEntity.getId());
-        float l = MathHelper.sin(((float) itemEntity.age + g) / 10.0f) * 0.1f + 0.1f;
-        float m = bakedModel.getTransformation().getTransformation(ModelTransformationMode.GROUND).scale.y();
+        var bakedModel = this.itemRenderer.getModel(itemStack, itemEntity.getWorld(), null, itemEntity.getId());
+        var l = MathHelper.sin(((float) itemEntity.age + g) / 10.0f) * 0.1f + 0.1f;
+        var m = bakedModel.getTransformation().getTransformation(ModelTransformationMode.GROUND).scale.y();
         matrixStack.translate(0.0, l + 0.25f * m, 0.0);
-        float n = itemEntity.getRotation(g);
+        var n = itemEntity.getRotation(g);
         matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(n));
-        float o = bakedModel.getTransformation().ground.scale.x();
-        float p = bakedModel.getTransformation().ground.scale.y();
-        float q = bakedModel.getTransformation().ground.scale.z();
+        var o = bakedModel.getTransformation().ground.scale.x();
+        var p = bakedModel.getTransformation().ground.scale.y();
+        var q = bakedModel.getTransformation().ground.scale.z();
         matrixStack.push();
         this.itemRenderer.renderItem(itemStack, ModelTransformationMode.GROUND, false, matrixStack, vertexConsumerProvider, i, OverlayTexture.DEFAULT_UV, bakedModel);
         matrixStack.pop();

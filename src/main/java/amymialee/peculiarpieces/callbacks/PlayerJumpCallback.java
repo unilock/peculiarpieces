@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 public interface PlayerJumpCallback {
     Event<PlayerJumpCallback> EVENT = EventFactory.createArrayBacked(PlayerJumpCallback.class,
             (listeners) -> (player, world) -> {
-                for (PlayerJumpCallback event : listeners) {
+                for (var event : listeners) {
                     event.onJump(player, world);
                 }
             }

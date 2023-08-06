@@ -50,13 +50,13 @@ public abstract class AbstractLegacyPressurePlateBlock extends Block {
 
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-		BlockPos blockPos = pos.down();
+		var blockPos = pos.down();
 		return hasTopRim(world, blockPos) || sideCoversSmallSquare(world, blockPos, Direction.UP);
 	}
 
 	@Override
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-		int i = this.getRedstoneOutput(state);
+		var i = this.getRedstoneOutput(state);
 		if (i > 0) {
 			this.updatePlateState((Entity) null, world, pos, state, i);
 		}
@@ -66,7 +66,7 @@ public abstract class AbstractLegacyPressurePlateBlock extends Block {
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (!world.isClient) {
-			int i = this.getRedstoneOutput(state);
+			var i = this.getRedstoneOutput(state);
 			if (i == 0) {
 				this.updatePlateState(entity, world, pos, state, i);
 			}
@@ -75,11 +75,11 @@ public abstract class AbstractLegacyPressurePlateBlock extends Block {
 	}
 
 	protected void updatePlateState(@Nullable Entity entity, World world, BlockPos pos, BlockState state, int output) {
-		int i = this.getRedstoneOutput(world, pos);
-		boolean bl = output > 0;
-		boolean bl2 = i > 0;
+		var i = this.getRedstoneOutput(world, pos);
+		var bl = output > 0;
+		var bl2 = i > 0;
 		if (output != i) {
-			BlockState blockState = this.setRedstoneOutput(state, i);
+			var blockState = this.setRedstoneOutput(state, i);
 			world.setBlockState(pos, blockState, 2);
 			this.updateNeighbors(world, pos);
 			world.scheduleBlockRerenderIfNeeded(pos, state, blockState);

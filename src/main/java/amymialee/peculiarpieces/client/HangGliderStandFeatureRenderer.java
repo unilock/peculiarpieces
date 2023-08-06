@@ -33,13 +33,13 @@ public class HangGliderStandFeatureRenderer<T extends EquipmentStandEntity, M ex
             matrixStack.translate(0.0, 0.0, 0.1);
             this.getContextModel().copyStateTo(this.glider);
             this.glider.setAngles(entity, f, g, j, k, l);
-            Identifier identifier = SKIN;
+            var identifier = SKIN;
             try {
-                ItemStack glider = getGlider(entity);
+                var glider = getGlider(entity);
                 if (glider != null && glider.hasCustomName()) {
-                    String renameGlider = glider.getName().getString().toLowerCase().split(" ")[0];
+                    var renameGlider = glider.getName().getString().toLowerCase().split(" ")[0];
                     if (Identifier.isValid(renameGlider)) {
-                        Identifier supportIdentifier = PeculiarPieces.id("textures/entity/gliders/%s_glider.png".formatted(renameGlider));
+                        var supportIdentifier = PeculiarPieces.id("textures/entity/gliders/%s_glider.png".formatted(renameGlider));
                         if (MinecraftClient.getInstance().getResourceManager().getResource(supportIdentifier).isPresent()) {
                             identifier = supportIdentifier;
                         }
@@ -48,7 +48,7 @@ public class HangGliderStandFeatureRenderer<T extends EquipmentStandEntity, M ex
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-            VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(identifier), false, false);
+            var vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(identifier), false, false);
             this.glider.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, 1.0f, 1.0f, 1.0f, 1.0f);
             matrixStack.pop();
         }

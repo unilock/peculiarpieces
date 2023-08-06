@@ -26,8 +26,8 @@ public class PositionTrapItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        PlayerEntity player = context.getPlayer();
-        ItemStack stack = context.getStack();
+        var player = context.getPlayer();
+        var stack = context.getStack();
         if (player != null && player.isSneaking()) {
             writeStone(stack, context.getBlockPos().add(0, 1, 0));
             player.getItemCooldownManager().set(this, 20);
@@ -37,11 +37,11 @@ public class PositionTrapItem extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
+        var stack = user.getStackInHand(hand);
         if (user.isSneaking()) {
             return TypedActionResult.consume(stack);
         }
-        BlockPos pos = readStone(stack);
+        var pos = readStone(stack);
         if (pos.getSquaredDistance(0, 0, 0) > 1) {
             if (!world.isClient && !pos.equals(BlockPos.ORIGIN)) {
                 dropTrap(stack, user, hand);
@@ -58,16 +58,16 @@ public class PositionTrapItem extends Item {
         if (stack.isEmpty()) {
             return;
         }
-        double d = user.getEyeY() - (double)0.3f;
-        TeleportItemEntity teleportItemEntity = new TeleportItemEntity(user.getWorld(), user.getX(), d, user.getZ(), user.getStackInHand(hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND).copy(), stack);
+        var d = user.getEyeY() - (double)0.3f;
+        var teleportItemEntity = new TeleportItemEntity(user.getWorld(), user.getX(), d, user.getZ(), user.getStackInHand(hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND).copy(), stack);
         teleportItemEntity.setThrower(user);
         teleportItemEntity.setDelay(40);
-        float g = MathHelper.sin(user.getPitch() * ((float)Math.PI / 180));
-        float h = MathHelper.cos(user.getPitch() * ((float)Math.PI / 180));
-        float i = MathHelper.sin(user.getYaw() * ((float)Math.PI / 180));
-        float j = MathHelper.cos(user.getYaw() * ((float)Math.PI / 180));
-        float k = user.getRandom().nextFloat() * ((float)Math.PI * 2);
-        float l = 0.02f * user.getRandom().nextFloat();
+        var g = MathHelper.sin(user.getPitch() * ((float)Math.PI / 180));
+        var h = MathHelper.cos(user.getPitch() * ((float)Math.PI / 180));
+        var i = MathHelper.sin(user.getYaw() * ((float)Math.PI / 180));
+        var j = MathHelper.cos(user.getYaw() * ((float)Math.PI / 180));
+        var k = user.getRandom().nextFloat() * ((float)Math.PI * 2);
+        var l = 0.02f * user.getRandom().nextFloat();
         teleportItemEntity.setVelocity((double)(-i * h * 0.3f) + Math.cos(k) * (double)l, -g * 0.3f + 0.1f + (user.getRandom().nextFloat() - user.getRandom().nextFloat()) * 0.1f, (double)(j * h * 0.3f) + Math.sin(k) * (double)l);
         user.getWorld().spawnEntity(teleportItemEntity);
     }
@@ -91,7 +91,7 @@ public class PositionTrapItem extends Item {
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         if (stack.getNbt() != null) {
-            BlockPos pos = NbtHelper.toBlockPos(stack.getNbt().getCompound("pp:target"));
+            var pos = NbtHelper.toBlockPos(stack.getNbt().getCompound("pp:target"));
             if (!pos.equals(BlockPos.ORIGIN)) {
                 tooltip.add(Text.translatable("Position: x%d, y%d, z%d".formatted(pos.getX(), pos.getY(), pos.getZ())).formatted(Formatting.RED));
             } else {

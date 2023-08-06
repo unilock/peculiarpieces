@@ -31,7 +31,7 @@ public class PlayerCompassItem extends Item {
     @Nullable
     public static GlobalPos createPlayerPos(World world, NbtCompound nbt) {
         if (nbt.contains(PLAYER_POS_KEY)) {
-            BlockPos blockPos = NbtHelper.toBlockPos(nbt.getCompound(PLAYER_POS_KEY));
+            var blockPos = NbtHelper.toBlockPos(nbt.getCompound(PLAYER_POS_KEY));
             return GlobalPos.create(world.getRegistryKey(), blockPos);
         }
         return null;
@@ -40,14 +40,14 @@ public class PlayerCompassItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (user.isSneaking()) {
-            ItemStack stack = user.getStackInHand(hand);
+            var stack = user.getStackInHand(hand);
             user.getItemCooldownManager().set(stack.getItem(), 120);
             if (stack.getItem() instanceof PlayerCompassItem) {
-                Vec3d vec3d = user.getCameraPosVec(1);
-                Vec3d vec3d2 = user.getRotationVec(1.0f);
-                Vec3d vec3d3 = vec3d.add(vec3d2.x * 8, vec3d2.y * 8, vec3d2.z * 8);
-                Box box = user.getBoundingBox().stretch(vec3d2.multiply(8)).expand(1.0, 1.0, 1.0);
-                EntityHitResult entityHitResult = ProjectileUtil.raycast(user, vec3d, vec3d3, box, entity -> entity instanceof PlayerEntity && !entity.isSpectator() && entity.isCollidable(), 8);
+                var vec3d = user.getCameraPosVec(1);
+                var vec3d2 = user.getRotationVec(1.0f);
+                var vec3d3 = vec3d.add(vec3d2.x * 8, vec3d2.y * 8, vec3d2.z * 8);
+                var box = user.getBoundingBox().stretch(vec3d2.multiply(8)).expand(1.0, 1.0, 1.0);
+                var entityHitResult = ProjectileUtil.raycast(user, vec3d, vec3d3, box, entity -> entity instanceof PlayerEntity && !entity.isSpectator() && entity.isCollidable(), 8);
                 if (entityHitResult != null) {
                     if (entityHitResult.getEntity() instanceof PlayerEntity player) {
                         if (!world.isClient()) {
@@ -71,7 +71,7 @@ public class PlayerCompassItem extends Item {
         if (world.isClient || !(entity.age % 20 == 0)) {
             return;
         }
-        NbtCompound compound = stack.getOrCreateNbt();
+        var compound = stack.getOrCreateNbt();
         if (compound.contains(PLAYER_KEY)) {
             LivingEntity trackedPlayer = world.getPlayerByUuid(compound.getUuid(PLAYER_KEY));
             if (trackedPlayer != null && !trackedPlayer.hasStatusEffect(StatusEffects.INVISIBILITY) && !trackedPlayer.hasStatusEffect(PeculiarPieces.CONCEALMENT_EFFECT)) {

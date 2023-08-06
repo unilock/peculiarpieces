@@ -48,7 +48,7 @@ public class PotionPadBlock extends BlockWithEntity {
 
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         if (itemStack.hasCustomName()) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof PotionPadBlockEntity potionPadBlockEntity) {
                 potionPadBlockEntity.setCustomName(itemStack.getName());
             }
@@ -68,7 +68,7 @@ public class PotionPadBlock extends BlockWithEntity {
         if (world.isClient) {
             return ActionResult.SUCCESS;
         }
-        BlockEntity blockEntity = world.getBlockEntity(pos);
+        var blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof PotionPadBlockEntity potionPadBlockEntity) {
             if (player.isSneaking() && player.getAbilities().allowModifyWorld) {
                 player.openHandledScreen(potionPadBlockEntity);
@@ -81,7 +81,7 @@ public class PotionPadBlock extends BlockWithEntity {
 
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof PotionPadBlockEntity) {
                 ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
             }
@@ -91,16 +91,16 @@ public class PotionPadBlock extends BlockWithEntity {
 
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-        BlockEntity blockEntity = world.getBlockEntity(pos);
+        var blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof PotionPadBlockEntity potionPad) {
-            ItemStack potion = potionPad.getPotion();
+            var potion = potionPad.getPotion();
             if (potion.getItem() instanceof PotionItem) {
-                int i = PotionUtil.getColor(potion);
-                double d = (double) (i >> 16 & 0xFF) / 255.0;
-                double e = (double) (i >> 8 & 0xFF) / 255.0;
-                double f = (double) (i & 0xFF) / 255.0;
+                var i = PotionUtil.getColor(potion);
+                var d = (double) (i >> 16 & 0xFF) / 255.0;
+                var e = (double) (i >> 8 & 0xFF) / 255.0;
+                var f = (double) (i & 0xFF) / 255.0;
                 boolean powered = state.get(POWERED);
-                for (int j = 0; j < (powered ? 1 : 3); j++) {
+                for (var j = 0; j < (powered ? 1 : 3); j++) {
                     world.addParticle(powered ? ParticleTypes.AMBIENT_ENTITY_EFFECT : ParticleTypes.ENTITY_EFFECT, pos.getX() + random.nextFloat(), pos.getY() + random.nextFloat() / 8, pos.getZ() + random.nextFloat(), d, e, f);
                 }
             }
@@ -111,7 +111,7 @@ public class PotionPadBlock extends BlockWithEntity {
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (!world.isClient() && !state.get(POWERED) && entity instanceof LivingEntity livingEntity) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            var blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof PotionPadBlockEntity potionPadBlockEntity) {
                 potionPadBlockEntity.onEntityCollided(livingEntity);
             }
@@ -127,7 +127,7 @@ public class PotionPadBlock extends BlockWithEntity {
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        boolean bl = world.isReceivingRedstonePower(pos);
+        var bl = world.isReceivingRedstonePower(pos);
         if (bl != state.get(POWERED)) {
             world.setBlockState(pos, state.with(POWERED, bl), Block.NOTIFY_ALL);
         }

@@ -41,19 +41,19 @@ public class BottomlessBucketItem extends Item implements FluidModificationItem 
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack itemStack = user.getStackInHand(hand);
-        BlockHitResult blockHitResult = raycast(world, user, this.fluid == Fluids.EMPTY ? RaycastContext.FluidHandling.SOURCE_ONLY : RaycastContext.FluidHandling.NONE);
+        var itemStack = user.getStackInHand(hand);
+        var blockHitResult = raycast(world, user, this.fluid == Fluids.EMPTY ? RaycastContext.FluidHandling.SOURCE_ONLY : RaycastContext.FluidHandling.NONE);
         if (blockHitResult.getType() == HitResult.Type.MISS) {
             return TypedActionResult.pass(itemStack);
         }
         if (blockHitResult.getType() == HitResult.Type.BLOCK) {
-            BlockPos blockPos = blockHitResult.getBlockPos();
-            Direction direction = blockHitResult.getSide();
-            BlockPos blockPos2 = blockPos.offset(direction);
+            var blockPos = blockHitResult.getBlockPos();
+            var direction = blockHitResult.getSide();
+            var blockPos2 = blockPos.offset(direction);
             if (!world.canPlayerModifyAt(user, blockPos) || !user.canPlaceOn(blockPos2, direction, itemStack)) {
                 return TypedActionResult.fail(itemStack);
             }
-            BlockState blockState = world.getBlockState(blockPos);
+            var blockState = world.getBlockState(blockPos);
             if (this.fluid == Fluids.EMPTY) {
                 if (blockState.getBlock() instanceof FluidDrainable fluidDrainable && !fluidDrainable.tryDrainFluid(world, blockPos, blockState).isEmpty()) {
                     user.incrementStat(Stats.USED.getOrCreateStat(this));
@@ -62,7 +62,7 @@ public class BottomlessBucketItem extends Item implements FluidModificationItem 
                     return TypedActionResult.success(itemStack, world.isClient());
                 }
             } else {
-                BlockPos blockPos3 = blockState.getBlock() instanceof FluidFillable && this.fluid == Fluids.WATER ? blockPos : blockPos2;
+                var blockPos3 = blockState.getBlock() instanceof FluidFillable && this.fluid == Fluids.WATER ? blockPos : blockPos2;
                 if (this.placeFluid(user, world, blockPos3, blockHitResult)) {
                     if (user instanceof ServerPlayerEntity) {
                         Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity)user, blockPos3, itemStack);
@@ -80,19 +80,19 @@ public class BottomlessBucketItem extends Item implements FluidModificationItem 
         if (!(this.fluid instanceof FlowableFluid)) {
             return false;
         }
-        BlockState blockState = world.getBlockState(pos);
-        Block block = blockState.getBlock();
-        boolean bl = blockState.canBucketPlace(this.fluid);
-        boolean bl2 = blockState.isAir() || bl || block instanceof FluidFillable && ((FluidFillable) block).canFillWithFluid(world, pos, blockState, this.fluid);
+        var blockState = world.getBlockState(pos);
+        var block = blockState.getBlock();
+        var bl = blockState.canBucketPlace(this.fluid);
+        var bl2 = blockState.isAir() || bl || block instanceof FluidFillable && ((FluidFillable) block).canFillWithFluid(world, pos, blockState, this.fluid);
         if (!bl2) {
             return hitResult != null && this.placeFluid(player, world, hitResult.getBlockPos().offset(hitResult.getSide()), null);
         }
         if (world.getDimension().ultrawarm() && this.fluid.isIn(FluidTags.WATER)) {
-            int i = pos.getX();
-            int j = pos.getY();
-            int k = pos.getZ();
+            var i = pos.getX();
+            var j = pos.getY();
+            var k = pos.getZ();
             world.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5f, 2.6f + (world.random.nextFloat() - world.random.nextFloat()) * 0.8f);
-            for (int l = 0; l < 8; ++l) {
+            for (var l = 0; l < 8; ++l) {
                 world.addParticle(ParticleTypes.LARGE_SMOKE, (double)i + Math.random(), (double)j + Math.random(), (double)k + Math.random(), 0.0, 0.0, 0.0);
             }
             return true;
@@ -113,7 +113,7 @@ public class BottomlessBucketItem extends Item implements FluidModificationItem 
     }
 
     protected void playEmptyingSound(@Nullable PlayerEntity player, WorldAccess world, BlockPos pos) {
-        SoundEvent soundEvent = this.fluid.isIn(FluidTags.LAVA) ? SoundEvents.ITEM_BUCKET_EMPTY_LAVA : SoundEvents.ITEM_BUCKET_EMPTY;
+        var soundEvent = this.fluid.isIn(FluidTags.LAVA) ? SoundEvents.ITEM_BUCKET_EMPTY_LAVA : SoundEvents.ITEM_BUCKET_EMPTY;
         world.playSound(player, pos, soundEvent, SoundCategory.BLOCKS, 1.0f, 1.0f);
         world.emitGameEvent(player, GameEvent.FLUID_PLACE, pos);
     }

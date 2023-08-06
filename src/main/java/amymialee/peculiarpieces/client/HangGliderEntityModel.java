@@ -22,9 +22,9 @@ public class HangGliderEntityModel<T extends LivingEntity> extends AnimalModel<T
     }
 
     public static TexturedModelData getTexturedModelData() {
-        ModelData modelData = new ModelData();
-        ModelPartData modelPartData = modelData.getRoot();
-        Dilation dilation = new Dilation(4f);
+        var modelData = new ModelData();
+        var modelPartData = modelData.getRoot();
+        var dilation = new Dilation(4f);
         modelPartData.addChild(GLIDER, ModelPartBuilder.create().uv(0, 0).cuboid(-16.0f, -12.0f, 0.0f, 32.0f, 32.0f, 1.0f, dilation), ModelTransform.NONE);
         return TexturedModelData.of(modelData, 128, 64);
     }
@@ -41,13 +41,13 @@ public class HangGliderEntityModel<T extends LivingEntity> extends AnimalModel<T
 
     @Override
     public void setAngles(T livingEntity, float f, float g, float h, float i, float j) {
-        float k = 0.0f;
-        float m = 0.0f;
+        var k = 0.0f;
+        var m = 0.0f;
         if (livingEntity.isFallFlying()) {
-            float o = 1.0f;
-            Vec3d vec3d = livingEntity.getVelocity();
+            var o = 1.0f;
+            var vec3d = livingEntity.getVelocity();
             if (vec3d.y < 0.0) {
-                Vec3d vec3d2 = vec3d.normalize();
+                var vec3d2 = vec3d.normalize();
                 o = 1.0f - (float)Math.pow(-vec3d2.y, 1.5);
             }
             k = o * 0.34906584f + (1.0f - o) * k;

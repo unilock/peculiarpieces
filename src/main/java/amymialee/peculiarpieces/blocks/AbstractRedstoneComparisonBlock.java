@@ -34,19 +34,19 @@ public abstract class AbstractRedstoneComparisonBlock extends AbstractRedstoneGa
     }
 
     protected static int getPower(BlockView world, BlockPos pos, BlockState state) {
-        Direction direction = state.get(FACING);
-        BlockPos blockPos = pos.offset(direction);
-        int i = getEmittedRedstonePower(world, blockPos, direction);
+        var direction = state.get(FACING);
+        var blockPos = pos.offset(direction);
+        var i = getEmittedRedstonePower(world, blockPos, direction);
         if (i >= 15) {
             return i;
         }
-        BlockState blockState = world.getBlockState(blockPos);
+        var blockState = world.getBlockState(blockPos);
         return Math.max(i, blockState.isOf(Blocks.REDSTONE_WIRE) ? blockState.get(RedstoneWireBlock.POWER) : 0);
     }
 
     public static int getEmittedRedstonePower(BlockView world, BlockPos pos, Direction direction) {
-        BlockState blockState = world.getBlockState(pos);
-        int i = blockState.getWeakRedstonePower(world, pos, direction);
+        var blockState = world.getBlockState(pos);
+        var i = blockState.getWeakRedstonePower(world, pos, direction);
         if (blockState.isSolidBlock(world, pos)) {
             return Math.max(i, getReceivedStrongRedstonePower(world, pos));
         }
@@ -54,7 +54,7 @@ public abstract class AbstractRedstoneComparisonBlock extends AbstractRedstoneGa
     }
 
     public static int getReceivedStrongRedstonePower(BlockView world, BlockPos pos) {
-        int i = 0;
+        var i = 0;
         if ((i = Math.max(i, getStrongRedstonePower(world, pos.down(), Direction.DOWN))) >= 15) {
             return i;
         }
@@ -82,11 +82,11 @@ public abstract class AbstractRedstoneComparisonBlock extends AbstractRedstoneGa
         if (!state.get(POWERED)) {
             return;
         }
-        Direction direction = state.get(FACING);
-        double d = (double)pos.getX() + 0.5 + (random.nextDouble() - 0.5) * 0.2;
-        double e = (double)pos.getY() + 0.4 + (random.nextDouble() - 0.5) * 0.2;
-        double f = (double)pos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 0.2;
-        float g = -5.0f;
+        var direction = state.get(FACING);
+        var d = (double)pos.getX() + 0.5 + (random.nextDouble() - 0.5) * 0.2;
+        var e = (double)pos.getY() + 0.4 + (random.nextDouble() - 0.5) * 0.2;
+        var f = (double)pos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 0.2;
+        var g = -5.0f;
         double h = (g /= 16.0f) * (float)direction.getOffsetX();
         double i = g * (float)direction.getOffsetZ();
         world.addParticle(DustParticleEffect.DEFAULT, d + h, e, f + i, 0.0, 0.0, 0.0);

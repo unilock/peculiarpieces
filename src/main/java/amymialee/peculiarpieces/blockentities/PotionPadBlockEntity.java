@@ -38,14 +38,14 @@ public class PotionPadBlockEntity extends LockableContainerBlockEntity {
     }
 
     public void onEntityCollided(LivingEntity entity) {
-        ItemStack stack = getPotion();
+        var stack = getPotion();
         if (stack.getItem() instanceof MilkBucketItem) {
             entity.clearStatusEffects();
         } else {
-            List<StatusEffectInstance> list = PotionUtil.getPotionEffects(stack);
-            for (StatusEffectInstance statusEffectInstance : list) {
+            var list = PotionUtil.getPotionEffects(stack);
+            for (var statusEffectInstance : list) {
                 if (!statusEffectInstance.getEffectType().isInstant()) {
-                    StatusEffectInstance statusEffect = new StatusEffectInstance(statusEffectInstance);
+                    var statusEffect = new StatusEffectInstance(statusEffectInstance);
                     ((StatusEffectInstanceAccessor) statusEffect).setDuration(statusEffect.getDuration() / 2);
                     ((StatusEffectInstanceAccessor) statusEffect).setAmbient(true);
                     if (stack.getItem() instanceof HiddenPotionItem) {
@@ -80,7 +80,7 @@ public class PotionPadBlockEntity extends LockableContainerBlockEntity {
 
     @Override
     public NbtCompound toInitialChunkDataNbt() {
-        NbtCompound nbtCompound = super.toInitialChunkDataNbt();
+        var nbtCompound = super.toInitialChunkDataNbt();
         Inventories.writeNbt(nbtCompound, this.inventory, true);
         return nbtCompound;
     }
@@ -105,7 +105,7 @@ public class PotionPadBlockEntity extends LockableContainerBlockEntity {
 
     @Override
     public boolean isEmpty() {
-        for (ItemStack itemStack : this.inventory) {
+        for (var itemStack : this.inventory) {
             if (itemStack.isEmpty()) continue;
             return false;
         }
@@ -122,14 +122,14 @@ public class PotionPadBlockEntity extends LockableContainerBlockEntity {
 
     @Override
     public ItemStack removeStack(int slot, int amount) {
-        ItemStack stack = Inventories.splitStack(this.inventory, slot, amount);
+        var stack = Inventories.splitStack(this.inventory, slot, amount);
         updateState();
         return stack;
     }
 
     @Override
     public ItemStack removeStack(int slot) {
-        ItemStack stack = Inventories.removeStack(this.inventory, slot);
+        var stack = Inventories.removeStack(this.inventory, slot);
         updateState();
         return stack;
     }
@@ -149,12 +149,12 @@ public class PotionPadBlockEntity extends LockableContainerBlockEntity {
     }
 
     public void updateState() {
-        ItemStack stack = this.inventory.get(0);
-        BlockState blockState = getCachedState();
+        var stack = this.inventory.get(0);
+        var blockState = getCachedState();
         if (!(blockState.getBlock() instanceof PotionPadBlock) || this.world == null) {
             return;
         }
-        boolean update = false;
+        var update = false;
         if (stack.isEmpty() && !(blockState.get(PotionPadBlock.POTION) == PotionPadBlock.PotionStates.EMPTY)) {
             blockState = blockState.with(PotionPadBlock.POTION, PotionPadBlock.PotionStates.EMPTY);
             update = true;

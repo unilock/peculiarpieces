@@ -33,7 +33,7 @@ public class RedstoneMonoBlock extends AbstractRedstoneComparisonBlock {
             return;
         }
         boolean bl = state.get(POWERED);
-        boolean bl2 = this.hasPower(world, pos, state);
+        var bl2 = this.hasPower(world, pos, state);
         if (bl2) {
             if (!bl) {
                 world.setBlockState(pos, state.with(POWERED, true), Block.NOTIFY_LISTENERS);

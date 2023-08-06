@@ -30,9 +30,9 @@ public class AbstractBlockMixin {
 
     @Inject(method = "canPlaceAt", at = @At("HEAD"), cancellable = true)
     public void PeculiarPieces$WardCanAlwaysPlaceAt(BlockState state, WorldView world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
+        var component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
         if (component.isPresent()) {
-            WardingComponent wardingComponent = component.get();
+            var wardingComponent = component.get();
             if (wardingComponent.getWard(pos)) {
                 cir.setReturnValue(true);
             }
@@ -46,9 +46,9 @@ public class AbstractBlockMixin {
 
         @Inject(method = "getStateForNeighborUpdate", at = @At("HEAD"), cancellable = true)
         public void PeculiarPieces$WardCantChange(Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos, CallbackInfoReturnable<BlockState> cir) {
-            Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
+            var component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
             if (component.isPresent()) {
-                WardingComponent wardingComponent = component.get();
+                var wardingComponent = component.get();
                 if (wardingComponent.getWard(pos)) {
                     if (this.getBlock() != this.getBlock().getStateForNeighborUpdate(this.asBlockState(), direction, neighborState, world, pos, neighborPos).getBlock()) {
                         cir.setReturnValue(this.asBlockState());
@@ -59,9 +59,9 @@ public class AbstractBlockMixin {
 
         @Inject(method = "canPlaceAt", at = @At("HEAD"), cancellable = true)
         public void canPlaceAt(WorldView world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-            Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
+            var component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
             if (component.isPresent()) {
-                WardingComponent wardingComponent = component.get();
+                var wardingComponent = component.get();
                 if (wardingComponent.getWard(pos)) {
                     cir.setReturnValue(true);
                 }

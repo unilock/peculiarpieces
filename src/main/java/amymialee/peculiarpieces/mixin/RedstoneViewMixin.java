@@ -16,7 +16,7 @@ public interface RedstoneViewMixin extends BlockView {
 
     @Inject(method = "isReceivingRedstonePower", at = @At("HEAD"), cancellable = true)
     default void PeculiarPieces$RedstoneInstances(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        World world = ((World) ((Object) this));
+        var world = ((World) ((Object) this));
         if (RedstoneManager.isPowered(world, pos)) {
             cir.setReturnValue(true);
         }
@@ -24,8 +24,8 @@ public interface RedstoneViewMixin extends BlockView {
 
     @Inject(method = "getReceivedRedstonePower", at = @At("RETURN"), cancellable = true)
     default void PeculiarPieces$RedstoneInstancePower(BlockPos pos, CallbackInfoReturnable<Integer> cir) {
-        World world = ((World) ((Object) this));
-        int instancePower = RedstoneManager.getPower(world, pos);
+        var world = ((World) ((Object) this));
+        var instancePower = RedstoneManager.getPower(world, pos);
         if (cir.getReturnValue() < instancePower) {
             cir.setReturnValue(instancePower);
         }
@@ -33,11 +33,11 @@ public interface RedstoneViewMixin extends BlockView {
 
     @Inject(method = "getReceivedStrongRedstonePower", at = @At("RETURN"), cancellable = true)
     default void PeculiarPieces$StrongRedstoneInstancePower(BlockPos pos, CallbackInfoReturnable<Integer> cir) {
-        World world = ((World) ((Object) this));
-        RedstoneInstance instance = RedstoneManager.getInstance(world, pos);
+        var world = ((World) ((Object) this));
+        var instance = RedstoneManager.getInstance(world, pos);
         if (instance != null) {
             if (instance.isStrong()) {
-                int instancePower = instance.getPower();
+                var instancePower = instance.getPower();
                 if (cir.getReturnValue() < instancePower) {
                     cir.setReturnValue(instancePower);
                 }

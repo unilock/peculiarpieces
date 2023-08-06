@@ -153,22 +153,22 @@ public class PeculiarPieces implements ModInitializer {
         Registry.register(Registries.ITEM_GROUP, PeculiarPieces.id("peculiarpieces_creative_group"), CREATIVE_GROUP);
         Registry.register(Registries.ITEM_GROUP, PeculiarPieces.id("peculiarpieces_potion_group"), POTION_GROUP);
         CommandRegistrationCallback.EVENT.register((dispatcher, access, environment) -> {
-            LiteralArgumentBuilder<ServerCommandSource> literalArgumentBuilder = CommandManager.literal("peculiar").requires(source -> source.hasPermissionLevel(2));
-            for (GameMode gameMode : GameMode.values()) {
+            var literalArgumentBuilder = CommandManager.literal("peculiar").requires(source -> source.hasPermissionLevel(2));
+            for (var gameMode : GameMode.values()) {
                 literalArgumentBuilder
                         .then(CommandManager.literal("tempgamemode")
                                 .then(CommandManager.argument("targets", EntityArgumentType.players())
                                         .then((CommandManager.literal(gameMode.getName())
                                                 .then(CommandManager.argument("ticks", IntegerArgumentType.integer())
                                                         .executes(ctx -> {
-                                                            Collection<ServerPlayerEntity> targets = EntityArgumentType.getPlayers(ctx, "targets");
-                                                            int ticks = IntegerArgumentType.getInteger(ctx, "ticks");
-                                                            for (ServerPlayerEntity target : targets) {
+                                                            var targets = EntityArgumentType.getPlayers(ctx, "targets");
+                                                            var ticks = IntegerArgumentType.getInteger(ctx, "ticks");
+                                                            for (var target : targets) {
                                                                 if (target instanceof ExtraPlayerDataWrapper wrapper) {
                                                                     if (gameMode == wrapper.getStoredGameMode()) {
                                                                         continue;
                                                                     }
-                                                                    GameMode playerMode = target.interactionManager.getGameMode();
+                                                                    var playerMode = target.interactionManager.getGameMode();
                                                                     if (playerMode != gameMode) {
                                                                         if (wrapper.getGameModeDuration() == 0) {
                                                                             wrapper.setStoredGameMode(playerMode);
@@ -193,9 +193,9 @@ public class PeculiarPieces implements ModInitializer {
                             .then(CommandManager.argument("targets", EntityArgumentType.players())
                                     .then(CommandManager.argument("location", Vec3ArgumentType.vec3())
                                             .executes(ctx -> {
-                                                Collection<ServerPlayerEntity> targets = EntityArgumentType.getPlayers(ctx, "targets");
-                                                Vec3d pos = Vec3ArgumentType.getPosArgument(ctx, "location").toAbsolutePos(ctx.getSource());
-                                                for (ServerPlayerEntity target : targets) {
+                                                var targets = EntityArgumentType.getPlayers(ctx, "targets");
+                                                var pos = Vec3ArgumentType.getPosArgument(ctx, "location").toAbsolutePos(ctx.getSource());
+                                                for (var target : targets) {
                                                     if (target instanceof ExtraPlayerDataWrapper wrapper) {
                                                         wrapper.setCheckpointPos(pos);
                                                         wrapper.setCheckpointWorld(ctx.getSource().getWorld().getRegistryKey());
@@ -214,24 +214,24 @@ public class PeculiarPieces implements ModInitializer {
                                     .then(CommandManager.argument("from", BlockPosArgumentType.blockPos())
                                             .then(CommandManager.argument("to", BlockPosArgumentType.blockPos())
                                                     .executes(context -> {
-                                                        BlockBox range = BlockBox.create(BlockPosArgumentType.getLoadedBlockPos(context, "from"), BlockPosArgumentType.getLoadedBlockPos(context, "to"));
-                                                        ServerCommandSource source = context.getSource();
-                                                        int i = range.getBlockCountX() * range.getBlockCountY() * range.getBlockCountZ();
+                                                        var range = BlockBox.create(BlockPosArgumentType.getLoadedBlockPos(context, "from"), BlockPosArgumentType.getLoadedBlockPos(context, "to"));
+                                                        var source = context.getSource();
+                                                        var i = range.getBlockCountX() * range.getBlockCountY() * range.getBlockCountZ();
                                                         if (i > 32768 * 8) {
                                                             source.sendFeedback(() -> Text.translatable("commands.fill.toobig", 32768 * 8, i), false);
                                                             return 0;
                                                         }
-                                                        ServerWorld serverWorld = source.getWorld();
-                                                        int j = 0;
-                                                        boolean ward = BoolArgumentType.getBool(context, "set");
-                                                        for (BlockPos blockPos : BlockPos.iterate(range.getMinX(), range.getMinY(), range.getMinZ(), range.getMaxX(), range.getMaxY(), range.getMaxZ())) {
+                                                        var serverWorld = source.getWorld();
+                                                        var j = 0;
+                                                        var ward = BoolArgumentType.getBool(context, "set");
+                                                        for (var blockPos : BlockPos.iterate(range.getMinX(), range.getMinY(), range.getMinZ(), range.getMaxX(), range.getMaxY(), range.getMaxZ())) {
                                                             if (ward && serverWorld.getBlockState(blockPos).isAir()) {
                                                                 continue;
                                                             }
-                                                            Chunk chunk = serverWorld.getChunk(blockPos);
-                                                            Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(chunk);
+                                                            var chunk = serverWorld.getChunk(blockPos);
+                                                            var component = PeculiarComponentInitializer.WARDING.maybeGet(chunk);
                                                             if (component.isPresent()) {
-                                                                WardingComponent wardingComponent = component.get();
+                                                                var wardingComponent = component.get();
                                                                 wardingComponent.setWard(blockPos, ward);
                                                                 PeculiarComponentInitializer.WARDING.sync(chunk);
                                                                 j++;
@@ -246,14 +246,14 @@ public class PeculiarPieces implements ModInitializer {
                             .then(CommandManager.argument("set", BoolArgumentType.bool())
                                     .then(CommandManager.argument("pos", BlockPosArgumentType.blockPos())
                                             .executes(context -> {
-                                                ServerCommandSource source = context.getSource();
-                                                ServerWorld serverWorld = source.getWorld();
-                                                BlockPos pos = BlockPosArgumentType.getLoadedBlockPos(context, "pos");
-                                                Chunk chunk = serverWorld.getChunk(pos);
-                                                Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(chunk);
-                                                boolean ward = BoolArgumentType.getBool(context, "set");
+                                                var source = context.getSource();
+                                                var serverWorld = source.getWorld();
+                                                var pos = BlockPosArgumentType.getLoadedBlockPos(context, "pos");
+                                                var chunk = serverWorld.getChunk(pos);
+                                                var component = PeculiarComponentInitializer.WARDING.maybeGet(chunk);
+                                                var ward = BoolArgumentType.getBool(context, "set");
                                                 if (component.isPresent()) {
-                                                    WardingComponent wardingComponent = component.get();
+                                                    var wardingComponent = component.get();
                                                     wardingComponent.setWard(pos, ward);
                                                     PeculiarComponentInitializer.WARDING.sync(chunk);
                                                 } else {
@@ -266,8 +266,8 @@ public class PeculiarPieces implements ModInitializer {
                     .then(CommandManager.literal("discard")
                             .then(CommandManager.argument("targets", EntityArgumentType.entities())
                                     .executes(context -> {
-                                        Collection<? extends Entity> targets = EntityArgumentType.getEntities(context, "targets");
-                                        int total = 0;
+                                        var targets = EntityArgumentType.getEntities(context, "targets");
+                                        var total = 0;
                                         for (Entity entity : targets) {
                                             if (!(entity instanceof PlayerEntity)) {
                                                 entity.discard();
@@ -275,7 +275,7 @@ public class PeculiarPieces implements ModInitializer {
                                             }
                                         }
                                         if (targets.size() == 1) {
-                                            Entity first = targets.iterator().next();
+                                            var first = targets.iterator().next();
                                             if (first instanceof PlayerEntity) {
                                                 context.getSource().sendFeedback(() -> Text.translatable("peculiar.commands.discard.failure.single"), true);
                                             } else {
@@ -292,16 +292,16 @@ public class PeculiarPieces implements ModInitializer {
         ServerTickEvents.END_WORLD_TICK.register(serverWorld -> WarpManager.tick());
         ServerTickEvents.END_WORLD_TICK.register(serverWorld -> RedstoneManager.tick());
         PlayerCrouchCallback.EVENT.register((player, world) -> {
-            BlockPos pos = player.getBlockPos().add(0, -1, 0);
-            BlockState state = world.getBlockState(pos);
+            var pos = player.getBlockPos().add(0, -1, 0);
+            var state = world.getBlockState(pos);
             if (state.getBlock() instanceof PlayerCrouchConsumingBlock block) {
                 block.onCrouch(state, world, pos, player);
             }
         });
         PlayerJumpCallback.EVENT.register((player, world) -> {
-            for (int i = -1; i <= 0; i++) {
-                BlockPos pos = player.getBlockPos().add(0, i, 0);
-                BlockState state = world.getBlockState(pos);
+            for (var i = -1; i <= 0; i++) {
+                var pos = player.getBlockPos().add(0, i, 0);
+                var state = world.getBlockState(pos);
                 if (state.getBlock() instanceof PlayerJumpConsumingBlock block) {
                     block.onJump(state, world, pos, player);
                 }

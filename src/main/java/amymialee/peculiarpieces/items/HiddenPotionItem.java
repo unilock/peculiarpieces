@@ -27,8 +27,8 @@ public class HiddenPotionItem extends PotionItem {
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         if (!world.isClient) {
-            List<StatusEffectInstance> list = PotionUtil.getPotionEffects(stack);
-            for (StatusEffectInstance statusEffectInstance : list) {
+            var list = PotionUtil.getPotionEffects(stack);
+            for (var statusEffectInstance : list) {
                 if (statusEffectInstance.shouldShowParticles()) {
                     statusEffectInstance = new StatusEffectInstance(statusEffectInstance);
                     ((StatusEffectInstanceAccessor) statusEffectInstance).setShowParticles(false);

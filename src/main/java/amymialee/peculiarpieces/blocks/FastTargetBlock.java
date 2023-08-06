@@ -32,8 +32,8 @@ public class FastTargetBlock extends Block {
 
     @Override
     public void onProjectileHit(World world, BlockState state, BlockHitResult hit, ProjectileEntity projectile) {
-        int i = trigger(world, state, hit);
-        Entity entity = projectile.getOwner();
+        var i = trigger(world, state, hit);
+        var entity = projectile.getOwner();
         if (entity instanceof ServerPlayerEntity serverPlayerEntity) {
             serverPlayerEntity.incrementStat(Stats.TARGET_HIT);
             Criteria.TARGET_HIT.trigger(serverPlayerEntity, projectile, hit.getPos(), i);
@@ -41,7 +41,7 @@ public class FastTargetBlock extends Block {
     }
 
     private static int trigger(WorldAccess world, BlockState state, BlockHitResult hitResult) {
-        int i = calculatePower(hitResult, hitResult.getPos());
+        var i = calculatePower(hitResult, hitResult.getPos());
         if (!world.getBlockTickScheduler().isQueued(hitResult.getBlockPos(), state.getBlock())) {
             setPower(world, state, i, hitResult.getBlockPos());
         }
@@ -49,12 +49,12 @@ public class FastTargetBlock extends Block {
     }
 
     private static int calculatePower(BlockHitResult hitResult, Vec3d pos) {
-        Direction direction = hitResult.getSide();
-        double d = Math.abs(MathHelper.fractionalPart(pos.x) - 0.5);
-        double e = Math.abs(MathHelper.fractionalPart(pos.y) - 0.5);
-        double f = Math.abs(MathHelper.fractionalPart(pos.z) - 0.5);
-        Direction.Axis axis = direction.getAxis();
-        double g = axis == Direction.Axis.Y ? Math.max(d, f) : (axis == Direction.Axis.Z ? Math.max(d, e) : Math.max(e, f));
+        var direction = hitResult.getSide();
+        var d = Math.abs(MathHelper.fractionalPart(pos.x) - 0.5);
+        var e = Math.abs(MathHelper.fractionalPart(pos.y) - 0.5);
+        var f = Math.abs(MathHelper.fractionalPart(pos.z) - 0.5);
+        var axis = direction.getAxis();
+        var g = axis == Direction.Axis.Y ? Math.max(d, f) : (axis == Direction.Axis.Z ? Math.max(d, e) : Math.max(e, f));
         return Math.max(1, MathHelper.ceil(15.0 * MathHelper.clamp((0.5 - g) / 0.5, 0.0, 1.0)));
     }
 

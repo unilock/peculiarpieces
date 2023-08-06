@@ -24,12 +24,12 @@ public class CheckpointDamageBlock extends AbstractStructureVoidBlock {
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         super.onEntityCollision(state, world, pos, entity);
         if (!world.isClient() && entity instanceof PlayerEntity player && player instanceof ExtraPlayerDataWrapper checkPlayer) {
-            Vec3d checkpointPos = checkPlayer.getCheckpointPos();
+            var checkpointPos = checkPlayer.getCheckpointPos();
             if (checkpointPos != null && checkpointPos.distanceTo(entity.getPos()) > 2) {
-                float health = player.getHealth();
+                var health = player.getHealth();
                 player.damage(world.getDamageSources().magic(), Math.max(0, (health) / 2));
-                WarpInstance instance = WarpInstance.of(player).position(checkpointPos).particles();
-                RegistryKey<World> worldRegistryKey = checkPlayer.getCheckpointWorld();
+                var instance = WarpInstance.of(player).position(checkpointPos).particles();
+                var worldRegistryKey = checkPlayer.getCheckpointWorld();
                 if (worldRegistryKey != null) {
                     instance.world(worldRegistryKey);
                 }

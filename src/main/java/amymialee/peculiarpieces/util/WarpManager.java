@@ -14,16 +14,16 @@ public class WarpManager {
     private static final ArrayList<WarpInstance> dueTeleports = new ArrayList<>();
 
     public static void tick() {
-        for (int i = 0; i < dueTeleports.size();) {
-            WarpInstance instance = dueTeleports.get(i);
-            Entity entity = instance.getEntity();
-            MinecraftServer server = entity.getServer();
+        for (var i = 0; i < dueTeleports.size();) {
+            var instance = dueTeleports.get(i);
+            var entity = instance.getEntity();
+            var server = entity.getServer();
             if (server != null) {
-                ServerWorld targetWorld = instance.hasWorld() ? server.getWorld(instance.getWorld()) : server.getWorld(instance.getEntity().getWorld().getRegistryKey());
-                Vec3d targetPos = instance.hasPosition() ? instance.getPosition() : entity.getPos();
-                Vec3d targetVelocity = instance.hasVelocity() ? instance.getVelocity() : entity.getVelocity();
-                float targetYaw = instance.hasYaw() ? instance.getYaw() : entity.getYaw();
-                float targetPitch = instance.hasPitch() ? instance.getPitch() : entity.getPitch();
+                var targetWorld = instance.hasWorld() ? server.getWorld(instance.getWorld()) : server.getWorld(instance.getEntity().getWorld().getRegistryKey());
+                var targetPos = instance.hasPosition() ? instance.getPosition() : entity.getPos();
+                var targetVelocity = instance.hasVelocity() ? instance.getVelocity() : entity.getVelocity();
+                var targetYaw = instance.hasYaw() ? instance.getYaw() : entity.getYaw();
+                var targetPitch = instance.hasPitch() ? instance.getPitch() : entity.getPitch();
                 if (targetWorld == null) {
                     targetWorld = server.getWorld(instance.getEntity().getWorld().getRegistryKey());
                 }

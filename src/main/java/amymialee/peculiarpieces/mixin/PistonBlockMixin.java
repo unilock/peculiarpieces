@@ -23,9 +23,9 @@ public class PistonBlockMixin extends Block {
 
     @Inject(method = "isMovable", at = @At("HEAD"), cancellable = true)
     private static void PeculiarPieces$Unmovable(BlockState state, World world, BlockPos pos, Direction direction, boolean canBreak, Direction pistonDir, CallbackInfoReturnable<Boolean> cir) {
-        Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
+        var component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
         if (component.isPresent()) {
-            WardingComponent wardingComponent = component.get();
+            var wardingComponent = component.get();
             if (wardingComponent.getWard(pos)) {
                 cir.setReturnValue(false);
             }

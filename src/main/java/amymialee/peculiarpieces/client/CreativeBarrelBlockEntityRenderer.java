@@ -18,7 +18,7 @@ public class CreativeBarrelBlockEntityRenderer implements BlockEntityRenderer<Cr
     @Override
     public void render(CreativeBarrelBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         matrices.push();
-        ItemStack newStack = blockEntity.getStack(0);
+        var newStack = blockEntity.getStack(0);
         if (newStack != this.cachedStack) {
             this.cachedStack = newStack;
         }

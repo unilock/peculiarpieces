@@ -33,15 +33,15 @@ public class WallFacingBlock extends FacingBlock {
     }
 
     public static boolean canPlaceAt(WorldView world, BlockPos pos, Direction direction) {
-        BlockPos blockPos = pos.offset(direction);
+        var blockPos = pos.offset(direction);
         return world.getBlockState(blockPos).isSideSolidFullSquare(world, blockPos, direction.getOpposite());
     }
 
     @Override
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        Direction side = ctx.getSide();
-        BlockState blockState = this.getDefaultState().with(FACING, side.getAxis() == Direction.Axis.Y ? side.getOpposite() : side);
+        var side = ctx.getSide();
+        var blockState = this.getDefaultState().with(FACING, side.getAxis() == Direction.Axis.Y ? side.getOpposite() : side);
         if (blockState.canPlaceAt(ctx.getWorld(), ctx.getBlockPos())) return blockState;
         return null;
     }
@@ -55,7 +55,7 @@ public class WallFacingBlock extends FacingBlock {
     }
 
     protected static Direction getDirection(BlockState state) {
-        Direction direction = state.get(FACING);
+        var direction = state.get(FACING);
         return direction.getAxis() == Direction.Axis.Y ? direction.getOpposite() : direction;
     }
 }

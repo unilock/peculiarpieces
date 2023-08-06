@@ -41,7 +41,7 @@ public class PushPadBlock extends AbstractFlatBlock implements CustomCreativeIte
 
     @Override
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-        ItemStack stack = super.getPickStack(world, pos, state);
+        var stack = super.getPickStack(world, pos, state);
         stack.getOrCreateNbt().putInt("pp:variant", state.get(POWER));
         return stack;
     }
@@ -49,7 +49,7 @@ public class PushPadBlock extends AbstractFlatBlock implements CustomCreativeIte
     @Override
     public void appendStacks(Entries entries) {
         for (int i : POWER.getValues()) {
-            ItemStack stack = new ItemStack(this);
+            var stack = new ItemStack(this);
             stack.getOrCreateNbt().putInt("pp:variant", i);
             entries.add(stack);
         }
@@ -61,15 +61,15 @@ public class PushPadBlock extends AbstractFlatBlock implements CustomCreativeIte
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (!state.get(POWERED)) {
-            Direction direction = state.get(FACING);
+            var direction = state.get(FACING);
             if (!(direction == null)) {
                 double power = (state.get(POWER) + 1) * 0.65f;
                 if (state.get(POWER) == 3) {
                     power += 1;
                 }
-                Vec3d vector = Vec3d.of(direction.getVector());
-                Vec3d velocity = entity.getVelocity();
-                Vec3d push = new Vec3d(velocity.getX() + (power * 0.2 * vector.getX()), 0, velocity.getZ() + (power * 0.2 * vector.getZ()));
+                var vector = Vec3d.of(direction.getVector());
+                var velocity = entity.getVelocity();
+                var push = new Vec3d(velocity.getX() + (power * 0.2 * vector.getX()), 0, velocity.getZ() + (power * 0.2 * vector.getZ()));
                 switch (direction.getAxis()) {
                     case X -> entity.setVelocity(MathHelper.clamp(push.x, -power, power), velocity.y, velocity.z);
                     case Z -> entity.setVelocity(velocity.x, velocity.y, MathHelper.clamp(push.z, -power, power));
@@ -93,8 +93,8 @@ public class PushPadBlock extends AbstractFlatBlock implements CustomCreativeIte
     @Override
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        ItemStack stack = ctx.getStack();
-        BlockState state = this.getDefaultState().with(POWERED, ctx.getWorld().isReceivingRedstonePower(ctx.getBlockPos())).with(FACING, ctx.getHorizontalPlayerFacing());
+        var stack = ctx.getStack();
+        var state = this.getDefaultState().with(POWERED, ctx.getWorld().isReceivingRedstonePower(ctx.getBlockPos())).with(FACING, ctx.getHorizontalPlayerFacing());
         if (stack.hasNbt() && stack.getNbt() != null) {
             return state.with(POWER, Math.min(3, stack.getNbt().getInt("pp:variant")));
         }
@@ -103,7 +103,7 @@ public class PushPadBlock extends AbstractFlatBlock implements CustomCreativeIte
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        boolean bl = world.isReceivingRedstonePower(pos);
+        var bl = world.isReceivingRedstonePower(pos);
         if (bl != state.get(POWERED)) {
             world.setBlockState(pos, state.with(POWERED, bl), Block.NOTIFY_ALL);
         }

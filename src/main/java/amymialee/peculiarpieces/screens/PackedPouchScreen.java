@@ -31,8 +31,8 @@ public class PackedPouchScreen extends HandledScreen<PackedPouchScreenHandler> i
     protected void drawBackground(DrawContext ctx, float delta, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-        int i = (this.width - this.backgroundWidth) / 2;
-        int j = (this.height - this.backgroundHeight) / 2;
+        var i = (this.width - this.backgroundWidth) / 2;
+        var j = (this.height - this.backgroundHeight) / 2;
         ctx.drawTexture(TEXTURE, i, j, 0, 0, this.backgroundWidth, 125);
         ctx.drawTexture(TEXTURE, i, j + 125, 0, 126, this.backgroundWidth, 96);
     }

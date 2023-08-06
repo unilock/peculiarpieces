@@ -23,8 +23,8 @@ public class ShapedNbtRecipe extends ShapedRecipe {
         
         @Override
         public ShapedRecipe read(Identifier identifier, JsonObject jsonObject) {
-            NbtCompound data = NbtRecipe.extractData(jsonObject);
-            ShapedRecipe rec = super.read(identifier, jsonObject);
+            var data = NbtRecipe.extractData(jsonObject);
+            var rec = super.read(identifier, jsonObject);
             rec.getOutput(null).setNbt(data);
             return new ShapedNbtRecipe(rec);
         }

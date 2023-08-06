@@ -36,14 +36,14 @@ public class FlagBlockEntityRenderer implements BlockEntityRenderer<FlagBlockEnt
     private boolean init = true;
 
     public FlagBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
-        ModelPart modelPart = ctx.getLayerModelPart(PeculiarPiecesClient.FLAG);
+        var modelPart = ctx.getLayerModelPart(PeculiarPiecesClient.FLAG);
         this.flag = modelPart.getChild(FLAG);
         this.pole = modelPart.getChild(POLE);
     }
 
     public static TexturedModelData getTexturedModelData() {
-        ModelData modelData = new ModelData();
-        ModelPartData modelPartData = modelData.getRoot();
+        var modelData = new ModelData();
+        var modelPartData = modelData.getRoot();
         modelPartData.addChild(FLAG, ModelPartBuilder.create().uv(0, 0).cuboid(0f, -7f, -0.5f, 22f, 14f, 1f), ModelTransform.NONE);
         modelPartData.addChild(POLE, ModelPartBuilder.create().uv(0, 0).cuboid(-1.0f, -8.0f, -1.0f, 2.0f, 16.0f, 2.0f), ModelTransform.NONE);
         return TexturedModelData.of(modelData, 64, 16);
@@ -52,9 +52,9 @@ public class FlagBlockEntityRenderer implements BlockEntityRenderer<FlagBlockEnt
     @Override
     public void render(FlagBlockEntity flagBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, int overlay) {
         matrixStack.push();
-        BlockState blockState = flagBlockEntity.getCachedState();
-        long l = 0L;
-        boolean walled = false;
+        var blockState = flagBlockEntity.getCachedState();
+        var l = 0L;
+        var walled = false;
         if (flagBlockEntity.getWorld() == null) {
             matrixStack.translate(0.5, 0.5, 0.5);
         } else {
@@ -62,7 +62,7 @@ public class FlagBlockEntityRenderer implements BlockEntityRenderer<FlagBlockEnt
             if (blockState.getBlock() instanceof FlagBlock) {
                 matrixStack.translate(0.5, 0.5, 0.5);
                 if (blockState.get(FlagBlock.FACE) == FlagBlock.FlagMountLocation.WALL) {
-                    Direction direction = FlagBlock.getDirection(blockState);
+                    var direction = FlagBlock.getDirection(blockState);
                     if (direction.getAxis() == Direction.Axis.X) {
                         direction = direction.getOpposite();
                     }
@@ -76,7 +76,7 @@ public class FlagBlockEntityRenderer implements BlockEntityRenderer<FlagBlockEnt
                     this.pole.pitch = (float) Math.toRadians(0f);
                     walled = true;
                 } else if (blockState.get(FlagBlock.FACE) == FlagBlock.FlagMountLocation.FLAT) {
-                    Direction direction = FlagBlock.getDirection(blockState);
+                    var direction = FlagBlock.getDirection(blockState);
                     if (direction.getAxis() == Direction.Axis.X) {
                         direction = direction.getOpposite();
                     }
@@ -88,15 +88,15 @@ public class FlagBlockEntityRenderer implements BlockEntityRenderer<FlagBlockEnt
                     walled = true;
                     this.pole.visible = false;
                 } else {
-                    float h = (float) (-blockState.get(FlagBlock.ROTATION) * 360) / 16.0f;
+                    var h = (float) (-blockState.get(FlagBlock.ROTATION) * 360) / 16.0f;
                     matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(h));
                 }
             }
         }
         matrixStack.push();
-        BlockPos blockPos = flagBlockEntity.getPos();
+        var blockPos = flagBlockEntity.getPos();
         if (blockState.get(FlagBlock.FACE) != FlagBlock.FlagMountLocation.FLAT) {
-            float k = ((float) Math.floorMod(blockPos.getX() * 7L + blockPos.getY() * 9L + blockPos.getZ() * 13L + l, 100L) + f) / 100.0f;
+            var k = ((float) Math.floorMod(blockPos.getX() * 7L + blockPos.getY() * 9L + blockPos.getZ() * 13L + l, 100L) + f) / 100.0f;
             switch (blockState.get(FlagBlock.FACE)) {
                 case FLOOR -> this.flag.pivotY = 0.5f;
                 case CEILING -> this.flag.pivotY = -0.5f;
@@ -104,41 +104,41 @@ public class FlagBlockEntityRenderer implements BlockEntityRenderer<FlagBlockEnt
             }
             this.flag.yaw = (0.01f * MathHelper.cos((float) Math.PI * 2 * k)) * (float) Math.PI;
         } else {
-            float k = ((float) Math.floorMod(blockPos.getX() * 7L + blockPos.getY() * 9L + blockPos.getZ() * 13L + l, 100L) + f) / 100.0f;
+            var k = ((float) Math.floorMod(blockPos.getX() * 7L + blockPos.getY() * 9L + blockPos.getZ() * 13L + l, 100L) + f) / 100.0f;
             this.flag.pivotY = 0f;
             this.flag.pitch = (0.01f * MathHelper.cos((float) Math.PI * 2 * k)) * (float) Math.PI / 2;
         }
-        float[] components = {1f, 1f, 1f};
-        Identifier flag = TEXTURE;
+        var components = new float[]{1f, 1f, 1f};
+        var flag = TEXTURE;
         String flagType = null;
         if (flagBlockEntity.getCustomName() != null) {
-            String flagName = flagBlockEntity.getCustomName().getString().toLowerCase().split(" ")[0] + "_flag";
+            var flagName = flagBlockEntity.getCustomName().getString().toLowerCase().split(" ")[0] + "_flag";
             if (Identifier.isValid(flagName)) {
                 flagType = flagName;
             }
         }
         if (flagType == null && flagBlockEntity.getTexture() != null) {
-            String flagName = flagBlockEntity.getTexture().toLowerCase().split(" ")[0] + "_flag";
+            var flagName = flagBlockEntity.getTexture().toLowerCase().split(" ")[0] + "_flag";
             if (Identifier.isValid(flagName)) {
                 flagType = flagName;
             }
-            DyeColor color = DyeColor.byName(flagBlockEntity.getTexture().toLowerCase(), null);
+            var color = DyeColor.byName(flagBlockEntity.getTexture().toLowerCase(), null);
             if (color != null) {
                 components = color.getColorComponents();
             }
         }
         if (flagType != null) {
-            Identifier flagIdentifier = PeculiarPieces.id("textures/entity/flags/%s.png".formatted(flagType));
+            var flagIdentifier = PeculiarPieces.id("textures/entity/flags/%s.png".formatted(flagType));
             if (MinecraftClient.getInstance().getResourceManager().getResource(flagIdentifier).isPresent()) {
                 flag = flagIdentifier;
             }
         }
         {
-            VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getEntityCutout(flag), true, false);
+            var vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getEntityCutout(flag), true, false);
             this.flag.render(matrixStack, vertexConsumer, light, overlay, components[0], components[1], components[2], 1.0f);
         }
         {
-            VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getEntitySolid(FLAGPOLE), true, false);
+            var vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getEntitySolid(FLAGPOLE), true, false);
             this.pole.render(matrixStack, vertexConsumer, light, overlay);
         }
         matrixStack.pop();

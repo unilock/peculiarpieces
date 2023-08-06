@@ -21,7 +21,7 @@ public class EquipmentStandBlockEntityRenderer implements BlockEntityRenderer<Eq
             } else {
                 cachedEntity.setHeadYaw(0);
             }
-            float h = (float) (-blockEntity.getCachedState().get(EquipmentStandBlock.ROTATION) * 360) / 16.0f;
+            var h = (float) (-blockEntity.getCachedState().get(EquipmentStandBlock.ROTATION) * 360) / 16.0f;
             matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(h));
             MinecraftClient.getInstance().getEntityRenderDispatcher().render(cachedEntity, 0f, 0.2f - 0.01625f, 0f, 0f, 1f, matrices, vertexConsumers, light);
         }

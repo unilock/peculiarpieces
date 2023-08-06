@@ -24,7 +24,7 @@ public class WardingComponent implements AutoSyncedComponent {
     }
 
     public boolean getWard(WorldView world, BlockPos pos) {
-        BlockState block = world.getBlockState(pos);
+        var block = world.getBlockState(pos);
         return !block.isAir() && !(block.isOf(Blocks.PISTON) || block.isOf(Blocks.STICKY_PISTON) || block.isOf(Blocks.MOVING_PISTON) || block.isOf(Blocks.PISTON_HEAD)) && this.getWard(pos);
     }
 
@@ -38,15 +38,16 @@ public class WardingComponent implements AutoSyncedComponent {
         } else {
             this.set.remove(pos);
         }
+        PeculiarComponentInitializer.WARDING.sync(this.chunk);
         this.chunk.setNeedsSaving(true);
     }
 
     @Override
     public void readFromNbt(@NotNull NbtCompound tag) {
-        NbtList list = tag.getList("positions", NbtElement.COMPOUND_TYPE);
-        for (NbtElement element : list) {
+        var list = tag.getList("positions", NbtElement.COMPOUND_TYPE);
+        for (var element : list) {
             if (element instanceof NbtCompound compound) {
-                BlockPos pos = NbtHelper.toBlockPos(compound);
+                var pos = NbtHelper.toBlockPos(compound);
                 this.set.add(pos);
             }
         }
@@ -54,8 +55,8 @@ public class WardingComponent implements AutoSyncedComponent {
 
     @Override
     public void writeToNbt(@NotNull NbtCompound tag) {
-        NbtList list = new NbtList();
-        for (BlockPos pos : this.set) {
+        var list = new NbtList();
+        for (var pos : this.set) {
             list.add(NbtHelper.fromBlockPos(pos));
         }
         tag.put("positions", list);

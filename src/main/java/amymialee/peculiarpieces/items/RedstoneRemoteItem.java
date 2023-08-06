@@ -27,8 +27,8 @@ public class RedstoneRemoteItem extends Item implements DyeableItem {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        PlayerEntity player = context.getPlayer();
-        ItemStack stack = context.getStack();
+        var player = context.getPlayer();
+        var stack = context.getStack();
         if (player != null && player.isSneaking()) {
             writeTarget(stack, context.getBlockPos());
             player.getItemCooldownManager().set(this, 12);
@@ -38,8 +38,8 @@ public class RedstoneRemoteItem extends Item implements DyeableItem {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
-        BlockPos pos = readTarget(stack);
+        var stack = user.getStackInHand(hand);
+        var pos = readTarget(stack);
         if (!world.isClient && !pos.equals(BlockPos.ORIGIN)) {
             RedstoneManager.addInstance(world, pos, new RedstoneInstance().setLifetime(6));
         }
@@ -62,7 +62,7 @@ public class RedstoneRemoteItem extends Item implements DyeableItem {
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         if (stack.getNbt() != null) {
-            BlockPos pos = NbtHelper.toBlockPos(stack.getNbt().getCompound("pp:target"));
+            var pos = NbtHelper.toBlockPos(stack.getNbt().getCompound("pp:target"));
             tooltip.add(Text.translatable("Target: x%d, y%d, z%d".formatted(pos.getX(), pos.getY(), pos.getZ())).formatted(Formatting.GRAY));
         }
         super.appendTooltip(stack, world, tooltip, context);

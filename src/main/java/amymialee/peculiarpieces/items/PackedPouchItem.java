@@ -31,7 +31,7 @@ public class PackedPouchItem extends Item implements DyeableItem {
     }
 
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
+        var stack = user.getStackInHand(hand);
         if (!world.isClient) {
             openMenu((ServerPlayerEntity) user, new NamedScreenHandlerFactory() {
                 @Override
@@ -80,7 +80,7 @@ public class PackedPouchItem extends Item implements DyeableItem {
 
     @Override
     public Optional<TooltipData> getTooltipData(ItemStack stack) {
-        DefaultedList<ItemStack> stacks = DefaultedList.ofSize(54, ItemStack.EMPTY);
+        var stacks = DefaultedList.ofSize(54, ItemStack.EMPTY);
         Inventories.readNbt(stack.getOrCreateNbt(), stacks);
         DefaultedList<ItemStack> stacksFiltered = DefaultedList.of();
         stacks.stream().filter(itemStack -> !itemStack.isEmpty()).forEach((stacksFiltered::add));
@@ -89,9 +89,9 @@ public class PackedPouchItem extends Item implements DyeableItem {
 
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
-        DefaultedList<ItemStack> stacks = DefaultedList.ofSize(54, ItemStack.EMPTY);
+        var stacks = DefaultedList.ofSize(54, ItemStack.EMPTY);
         Inventories.readNbt(stack.getOrCreateNbt(), stacks);
-        int filled = stacks.stream().mapToInt(itemStack -> itemStack.isEmpty() ? 0 : 1).sum();
+        var filled = stacks.stream().mapToInt(itemStack -> itemStack.isEmpty() ? 0 : 1).sum();
         tooltip.add(Text.translatable("item.minecraft.bundle.fullness", filled, 54).formatted(Formatting.GRAY));
     }
 }

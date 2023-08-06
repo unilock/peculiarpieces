@@ -23,8 +23,8 @@ public class ShapelessNbtRecipe extends ShapelessRecipe {
         
         @Override
         public ShapelessRecipe read(Identifier identifier, JsonObject jsonObject) {
-            NbtCompound data = NbtRecipe.extractData(jsonObject);
-            ShapelessRecipe rec = super.read(identifier, jsonObject);
+            var data = NbtRecipe.extractData(jsonObject);
+            var rec = super.read(identifier, jsonObject);
             rec.getOutput(null).setNbt(data);
             return new ShapelessNbtRecipe(rec);
         }

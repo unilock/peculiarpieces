@@ -26,8 +26,8 @@ public class PositionPaperItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        PlayerEntity player = context.getPlayer();
-        ItemStack stack = context.getStack();
+        var player = context.getPlayer();
+        var stack = context.getStack();
         if (player != null && player.isSneaking()) {
             writeStone(stack, context.getBlockPos().add(0, 1, 0));
             player.getItemCooldownManager().set(this, 20);
@@ -37,11 +37,11 @@ public class PositionPaperItem extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
+        var stack = user.getStackInHand(hand);
         if (user.isSneaking()) {
             return TypedActionResult.consume(stack);
         }
-        BlockPos pos = readStone(stack);
+        var pos = readStone(stack);
         if (pos.getSquaredDistance(0, 0, 0) > 1) {
             if (!world.isClient && !pos.equals(BlockPos.ORIGIN)) {
                 WarpManager.queueTeleport(WarpInstance.of(user).position(pos).particles());
@@ -72,7 +72,7 @@ public class PositionPaperItem extends Item {
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         if (stack.getNbt() != null) {
-            BlockPos pos = NbtHelper.toBlockPos(stack.getNbt().getCompound("pp:target"));
+            var pos = NbtHelper.toBlockPos(stack.getNbt().getCompound("pp:target"));
             if (!pos.equals(BlockPos.ORIGIN)) {
                 tooltip.add(Text.translatable("Position: x%d, y%d, z%d".formatted(pos.getX(), pos.getY(), pos.getZ())).formatted(Formatting.GRAY));
             } else {

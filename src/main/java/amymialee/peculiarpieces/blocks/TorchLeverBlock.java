@@ -67,8 +67,8 @@ public class TorchLeverBlock extends WallFacingBlock {
         if (world.isClient) {
             return ActionResult.SUCCESS;
         }
-        BlockState blockState = this.togglePower(state, world, pos);
-        float f = blockState.get(POWERED) ? 0.6f : 0.5f;
+        var blockState = this.togglePower(state, world, pos);
+        var f = blockState.get(POWERED) ? 0.6f : 0.5f;
         world.playSound(null, pos, SoundEvents.BLOCK_LEVER_CLICK, SoundCategory.BLOCKS, 0.3f, f);
         world.emitGameEvent(player, blockState.get(POWERED) ? GameEvent.BLOCK_ACTIVATE : GameEvent.BLOCK_DEACTIVATE, pos);
         return ActionResult.CONSUME;
@@ -84,9 +84,9 @@ public class TorchLeverBlock extends WallFacingBlock {
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         boolean powered = state.get(POWERED);
-        double d = (double) pos.getX() + 0.5;
-        double e = (double) pos.getY() + 0.7;
-        double f = (double) pos.getZ() + 0.5;
+        var d = (double) pos.getX() + 0.5;
+        var e = (double) pos.getY() + 0.7;
+        var f = (double) pos.getZ() + 0.5;
         switch (state.get(FACING)) {
             case DOWN -> {
                 world.addParticle(powered ? new DustParticleEffect(DustParticleEffect.RED, 1) : ParticleTypes.SMOKE, d, e, f, 0.0, 0.0, 0.0);
@@ -95,7 +95,7 @@ public class TorchLeverBlock extends WallFacingBlock {
                 }
             }
             case EAST, WEST, NORTH, SOUTH -> {
-                Direction direction = state.get(FACING).getOpposite();
+                var direction = state.get(FACING).getOpposite();
                 world.addParticle(powered ? new DustParticleEffect(DustParticleEffect.RED, 1) : ParticleTypes.SMOKE, d + (powered ? 0.05 : 0.27) * (double) direction.getOffsetX(), e + (powered ? 0.07 : 0.22), f + (powered ? 0.05 : 0.27) * (double) direction.getOffsetZ(), 0.0, 0.0, 0.0);
                 if (!powered) {
                     world.addParticle(this.particle, d + 0.27 * (double) direction.getOffsetX(), e + 0.22, f + 0.27 * (double) direction.getOffsetZ(), 0.0, 0.0, 0.0);

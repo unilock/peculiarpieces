@@ -14,13 +14,13 @@ public class RedstoneManager {
     //TODO: Save and Load to the worlds, so that stopping the server doesn't leave lingering redstone.
 
     public static void tick() {
-        ArrayList<Pair<World, BlockPos>> expirations = new ArrayList<>();
+        var expirations = new ArrayList<Pair<World, BlockPos>>();
         redstoneInstances.forEach((w, m) -> m.forEach((p, r) -> {
             if (r.tick()) {
                 expirations.add(new Pair<>(w, p));
             }
         }));
-        for (Pair<World, BlockPos> pair : expirations) {
+        for (var pair : expirations) {
             redstoneInstances.get(pair.getLeft()).remove(pair.getRight());
             updatePos(pair.getLeft(), pair.getRight());
         }
@@ -30,7 +30,7 @@ public class RedstoneManager {
         if (!redstoneInstances.containsKey(world)) {
             redstoneInstances.put(world, new LinkedHashMap<>());
         }
-        LinkedHashMap<BlockPos, RedstoneInstance> map = redstoneInstances.get(world);
+        var map = redstoneInstances.get(world);
         map.remove(pos);
         map.put(pos, instance);
         updatePos(world, pos);
@@ -42,7 +42,7 @@ public class RedstoneManager {
     }
 
     public static RedstoneInstance getInstance(World world, BlockPos pos) {
-        LinkedHashMap<BlockPos, RedstoneInstance> map = redstoneInstances.get(world);
+        var map = redstoneInstances.get(world);
         if (map != null) {
             return map.get(pos);
         }
@@ -50,18 +50,18 @@ public class RedstoneManager {
     }
 
     public static boolean isPowered(World world, BlockPos pos) {
-        LinkedHashMap<BlockPos, RedstoneInstance> map = redstoneInstances.get(world);
+        var map = redstoneInstances.get(world);
         if (map != null) {
-            RedstoneInstance instance = map.get(pos);
+            var instance = map.get(pos);
             return instance != null && instance.getLifetime() > 0;
         }
         return false;
     }
 
     public static boolean isStrong(World world, BlockPos pos) {
-        LinkedHashMap<BlockPos, RedstoneInstance> map = redstoneInstances.get(world);
+        var map = redstoneInstances.get(world);
         if (map != null) {
-            RedstoneInstance instance = map.get(pos);
+            var instance = map.get(pos);
             if (instance != null && instance.getLifetime() > 0) {
                 return instance.isStrong();
             }
@@ -70,9 +70,9 @@ public class RedstoneManager {
     }
 
     public static int getPower(World world, BlockPos pos) {
-        LinkedHashMap<BlockPos, RedstoneInstance> map = redstoneInstances.get(world);
+        var map = redstoneInstances.get(world);
         if (map != null) {
-            RedstoneInstance instance = map.get(pos);
+            var instance = map.get(pos);
             if (instance != null && instance.getLifetime() > 0) {
                 return instance.getPower();
             }

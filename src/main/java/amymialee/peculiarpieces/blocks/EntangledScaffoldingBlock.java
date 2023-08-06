@@ -91,8 +91,8 @@ public class EntangledScaffoldingBlock extends BlockWithEntity implements Waterl
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockPos blockPos = ctx.getBlockPos();
-        World world = ctx.getWorld();
+        var blockPos = ctx.getBlockPos();
+        var world = ctx.getWorld();
         return this.getDefaultState().with(WATERLOGGED, world.getFluidState(blockPos).getFluid() == Fluids.WATER).with(BOTTOM, this.shouldBeBottom(world, blockPos));
     }
 

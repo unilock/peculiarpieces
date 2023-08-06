@@ -36,14 +36,14 @@ public class EntangledScaffoldingBlockEntity extends BlockEntity {
 
     public static void tick(World world, BlockPos pos, EntangledScaffoldingBlockEntity blockEntity) {
         if (blockEntity.owner == null) {
-            PlayerEntity newOwner = world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 32, false);
+            var newOwner = world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 32, false);
             if (newOwner != null) {
                 blockEntity.owner = newOwner.getUuid();
             }
         }
         blockEntity.time--;
         if (blockEntity.time <= 0) {
-            PlayerEntity owner = world.getPlayerByUuid(blockEntity.owner);
+            var owner = world.getPlayerByUuid(blockEntity.owner);
             if (owner != null) {
                 world.breakBlock(pos, !owner.giveItemStack(new ItemStack(PeculiarBlocks.ENTANGLED_SCAFFOLDING)));
             } else {

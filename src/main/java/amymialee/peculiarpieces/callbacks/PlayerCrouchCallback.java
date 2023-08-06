@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 public interface PlayerCrouchCallback {
     Event<PlayerCrouchCallback> EVENT = EventFactory.createArrayBacked(PlayerCrouchCallback.class,
             (listeners) -> (player, world) -> {
-                for (PlayerCrouchCallback event : listeners) {
+                for (var event : listeners) {
                     event.onCrouch(player, world);
                 }
             }

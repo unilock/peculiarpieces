@@ -43,11 +43,11 @@ public class ExplosionMixin {
 
     @Inject(method = "collectBlocksAndDamageEntities", at = @At("TAIL"))
     public void PeculiarPieces$ExplosionResistWarding(CallbackInfo ci) {
-        for (int i = 0; i < this.affectedBlocks.size(); i++) {
-            BlockPos pos = this.affectedBlocks.get(i);
-            Optional<WardingComponent> component = PeculiarComponentInitializer.WARDING.maybeGet(this.world.getChunk(pos));
+        for (var i = 0; i < this.affectedBlocks.size(); i++) {
+            var pos = this.affectedBlocks.get(i);
+            var component = PeculiarComponentInitializer.WARDING.maybeGet(this.world.getChunk(pos));
             if (component.isPresent()) {
-                WardingComponent wardingComponent = component.get();
+                var wardingComponent = component.get();
                 if (wardingComponent.getWard(pos)) {
                     this.affectedBlocks.remove(pos);
                     i--;

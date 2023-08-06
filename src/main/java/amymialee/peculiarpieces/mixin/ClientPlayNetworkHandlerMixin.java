@@ -22,18 +22,18 @@ import java.util.Optional;
 public class ClientPlayNetworkHandlerMixin {
     @Inject(method = "getActiveTotemOfUndying", at = @At("HEAD"), cancellable = true)
     private static void PeculiarPieces$MoreTotems(PlayerEntity player, CallbackInfoReturnable<ItemStack> cir) {
-        for (Hand hand : Hand.values()) {
-            ItemStack itemStack = player.getStackInHand(hand);
+        for (var hand : Hand.values()) {
+            var itemStack = player.getStackInHand(hand);
             if (itemStack.isIn(PeculiarPieces.TOTEMS)) cir.setReturnValue(itemStack);
         }
-        Optional<TrinketComponent> optionalComponent = TrinketsApi.getTrinketComponent(player);
+        var optionalComponent = TrinketsApi.getTrinketComponent(player);
         if (optionalComponent.isPresent()) {
             if (optionalComponent.get().isEquipped(PeculiarItems.TOKEN_OF_UNDYING)) {
-                List<Pair<SlotReference, ItemStack>> equipped = optionalComponent.get().getEquipped(PeculiarItems.TOKEN_OF_UNDYING);
+                var equipped = optionalComponent.get().getEquipped(PeculiarItems.TOKEN_OF_UNDYING);
                 cir.setReturnValue(equipped.get(0).getRight());
             } else if (optionalComponent.get().isEquipped(PeculiarItems.EVERLASTING_EMBLEM)) {
                 if (!player.getItemCooldownManager().isCoolingDown(PeculiarItems.EVERLASTING_EMBLEM)) {
-                    List<Pair<SlotReference, ItemStack>> equipped = optionalComponent.get().getEquipped(PeculiarItems.EVERLASTING_EMBLEM);
+                    var equipped = optionalComponent.get().getEquipped(PeculiarItems.EVERLASTING_EMBLEM);
                     cir.setReturnValue(equipped.get(0).getRight());
                 }
             }

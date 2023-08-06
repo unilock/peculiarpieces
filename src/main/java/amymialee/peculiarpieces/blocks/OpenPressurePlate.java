@@ -40,7 +40,7 @@ public class OpenPressurePlate extends LegacyPressurePlateBlock {
     }
 
     protected int getRedstoneOutput(World world, BlockPos pos) {
-        Box box = BOX.offset(pos);
+        var box = BOX.offset(pos);
         List<? extends Entity> list;
         switch (this.weight) {
             case 0 -> list = world.getOtherEntities(null, box);

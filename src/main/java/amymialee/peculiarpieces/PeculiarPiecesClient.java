@@ -151,7 +151,7 @@ public class PeculiarPiecesClient implements ClientModInitializer {
             if (tintIndex != 1) {
                 return -1;
             }
-            BlockState blockState = ((BlockItem)stack.getItem()).getBlock().getDefaultState();
+            var blockState = ((BlockItem)stack.getItem()).getBlock().getDefaultState();
             return MinecraftClient.getInstance().getBlockColors().getColor(blockState, null, null, tintIndex);
         }, PeculiarBlocks.LIVING_LADDER);
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex != 1 ? -1 : 16711680, PeculiarBlocks.REDSTONE_STATIC);
@@ -181,7 +181,7 @@ public class PeculiarPiecesClient implements ClientModInitializer {
     }
 
     public int getColorOr(ItemStack stack, int base) {
-        NbtCompound nbtCompound = stack.getSubNbt(DyeableItem.DISPLAY_KEY);
+        var nbtCompound = stack.getSubNbt(DyeableItem.DISPLAY_KEY);
         if (nbtCompound != null && nbtCompound.contains(DyeableItem.COLOR_KEY, NbtElement.NUMBER_TYPE)) {
             return nbtCompound.getInt(DyeableItem.COLOR_KEY);
         }

@@ -27,7 +27,7 @@ public class PositionPearlItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        PlayerEntity player = context.getPlayer();
+        var player = context.getPlayer();
         if (player != null && player.isSneaking() && context.getWorld().getBlockState(context.getBlockPos()).getBlock() == Blocks.LODESTONE) {
             writeStone(context.getStack(), context.getBlockPos().add(0, 1, 0));
             player.getItemCooldownManager().set(this, 2);
@@ -37,8 +37,8 @@ public class PositionPearlItem extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
-        BlockPos pos = readStone(stack);
+        var stack = user.getStackInHand(hand);
+        var pos = readStone(stack);
         if (!world.isClient && !pos.equals(BlockPos.ORIGIN)) {
             if (!user.isSneaking()) {
                 WarpManager.queueTeleport(WarpInstance.of(user).position(pos).particles());

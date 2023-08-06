@@ -42,7 +42,7 @@ public class BlockBreakerBlock extends Block {
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        boolean bl = world.isReceivingRedstonePower(pos) || world.isReceivingRedstonePower(pos.up());
+        var bl = world.isReceivingRedstonePower(pos) || world.isReceivingRedstonePower(pos.up());
         boolean bl2 = state.get(TRIGGERED);
         if (bl && !bl2) {
             this.destroy(world, pos.add(state.get(FACING).getVector()));
@@ -53,27 +53,27 @@ public class BlockBreakerBlock extends Block {
     }
 
     protected void destroy(World world, BlockPos pos) {
-        BlockState blockState = world.getBlockState(pos);
+        var blockState = world.getBlockState(pos);
         if (blockState.getHardness(world, pos) != -1 && !blockState.isAir()) {
             world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 0.2f, (1.0f + world.random.nextFloat()) * 2f);
             this.breakBlock(world, pos);
             if (world instanceof ServerWorld serverWorld) {
-                Vec3d vec3d = Vec3d.ofCenter(pos);
+                var vec3d = Vec3d.ofCenter(pos);
                 serverWorld.spawnParticles(ParticleTypes.EXPLOSION, vec3d.getX(), vec3d.getY(), vec3d.getZ(), 1, 0.0, 0.0, 0.0, 1.0);
             }
         }
     }
 
     public void breakBlock(World world, BlockPos pos) {
-        BlockState blockState = world.getBlockState(pos);
+        var blockState = world.getBlockState(pos);
         if (blockState.isAir()) {
             return;
         }
-        FluidState fluidState = world.getFluidState(pos);
+        var fluidState = world.getFluidState(pos);
         if (!(blockState.getBlock() instanceof AbstractFireBlock)) {
             world.syncWorldEvent(WorldEvents.BLOCK_BROKEN, pos, Block.getRawIdFromState(blockState));
         }
-        BlockEntity blockEntity = blockState.hasBlockEntity() ? world.getBlockEntity(pos) : null;
+        var blockEntity = blockState.hasBlockEntity() ? world.getBlockEntity(pos) : null;
         Block.dropStacks(blockState, world, pos, blockEntity, null, this.silk ? pick_silk : pick);
         if (world.setBlockState(pos, fluidState.getBlockState(), Block.NOTIFY_ALL, 512)) {
             world.emitGameEvent(GameEvent.BLOCK_DESTROY, pos, GameEvent.Emitter.of(null, blockState));

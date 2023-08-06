@@ -90,10 +90,10 @@ public class BigBarrelBlockEntity extends LootableContainerBlockEntity {
     }
 
     void playSound(BlockState state, SoundEvent soundEvent) {
-        Vec3i vec3i = state.get(BarrelBlock.FACING).getVector();
-        double d = (double)this.pos.getX() + 0.5 + (double)vec3i.getX() / 2.0;
-        double e = (double)this.pos.getY() + 0.5 + (double)vec3i.getY() / 2.0;
-        double f = (double)this.pos.getZ() + 0.5 + (double)vec3i.getZ() / 2.0;
+        var vec3i = state.get(BarrelBlock.FACING).getVector();
+        var d = (double)this.pos.getX() + 0.5 + (double)vec3i.getX() / 2.0;
+        var e = (double)this.pos.getY() + 0.5 + (double)vec3i.getY() / 2.0;
+        var f = (double)this.pos.getZ() + 0.5 + (double)vec3i.getZ() / 2.0;
         if (this.world != null) {
             this.world.playSound(null, d, e, f, soundEvent, SoundCategory.BLOCKS, 0.5F, this.world.random.nextFloat() * 0.1F + 0.9F);
         }
@@ -114,7 +114,7 @@ public class BigBarrelBlockEntity extends LootableContainerBlockEntity {
 
         protected boolean isPlayerViewing(PlayerEntity player) {
             if (player.currentScreenHandler instanceof GenericContainerScreenHandler) {
-                Inventory inventory = ((GenericContainerScreenHandler)player.currentScreenHandler).getInventory();
+                var inventory = ((GenericContainerScreenHandler)player.currentScreenHandler).getInventory();
                 return inventory == BigBarrelBlockEntity.this;
             } else {
                 return false;

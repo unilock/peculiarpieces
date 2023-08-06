@@ -46,7 +46,7 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity {
 
     @Override
     public NbtCompound toInitialChunkDataNbt() {
-        NbtCompound nbtCompound = super.toInitialChunkDataNbt();
+        var nbtCompound = super.toInitialChunkDataNbt();
         Inventories.writeNbt(nbtCompound, this.inventory, true);
         return nbtCompound;
     }
@@ -71,7 +71,7 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity {
 
     @Override
     public boolean isEmpty() {
-        for (ItemStack itemStack : this.inventory) {
+        for (var itemStack : this.inventory) {
             if (itemStack.isEmpty()) continue;
             return false;
         }
@@ -88,14 +88,14 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity {
 
     @Override
     public ItemStack removeStack(int slot, int amount) {
-        ItemStack stack = Inventories.splitStack(this.inventory, slot, amount);
+        var stack = Inventories.splitStack(this.inventory, slot, amount);
         updateState();
         return stack;
     }
 
     @Override
     public ItemStack removeStack(int slot) {
-        ItemStack stack = Inventories.removeStack(this.inventory, slot);
+        var stack = Inventories.removeStack(this.inventory, slot);
         updateState();
         return stack;
     }
@@ -116,7 +116,7 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity {
 
     public void updateState() {
         if (this.world != null && !this.world.isClient()) {
-            BlockState state = this.world.getBlockState(this.pos);
+            var state = this.world.getBlockState(this.pos);
             this.world.updateListeners(this.pos, state, state, Block.NOTIFY_LISTENERS);
         }
     }

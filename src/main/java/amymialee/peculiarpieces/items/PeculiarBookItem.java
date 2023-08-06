@@ -23,14 +23,14 @@ public class PeculiarBookItem extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getStackInHand(hand);
-        Book book = getBook();
+        var stack = player.getStackInHand(hand);
+        var book = getBook();
         if (book == null) {
             return new TypedActionResult<>(ActionResult.FAIL, stack);
         }
         if (player instanceof ServerPlayerEntity serverPlayer) {
             PatchouliAPI.get().openBookGUI(serverPlayer, book.id);
-            SoundEvent sfx = PatchouliSounds.getSound(book.openSound, PatchouliSounds.BOOK_OPEN);
+            var sfx = PatchouliSounds.getSound(book.openSound, PatchouliSounds.BOOK_OPEN);
             player.playSound(sfx, 1F, (float) (0.7 + Math.random() * 0.4));
         }
         return new TypedActionResult<>(ActionResult.SUCCESS, stack);

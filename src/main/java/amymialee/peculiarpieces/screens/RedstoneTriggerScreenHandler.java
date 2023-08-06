@@ -19,7 +19,7 @@ public class RedstoneTriggerScreenHandler extends ScreenHandler {
     public RedstoneTriggerScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
         super(PeculiarPieces.REDSTONE_TRIGGER_SCREEN_HANDLER, syncId);
         this.inventory = inventory;
-        for(int j = 0; j < 2; ++j) {
+        for(var j = 0; j < 2; ++j) {
             this.addSlot(new Slot(inventory, j, 71 + (j * 18), 20) {
                 @Override
                 public boolean canInsert(ItemStack stack) {
@@ -27,12 +27,12 @@ public class RedstoneTriggerScreenHandler extends ScreenHandler {
                 }
             });
         }
-        for(int j = 0; j < 3; ++j) {
-            for(int k = 0; k < 9; ++k) {
+        for(var j = 0; j < 3; ++j) {
+            for(var k = 0; k < 9; ++k) {
                 this.addSlot(new Slot(playerInventory, k + j * 9 + 9, 8 + k * 18, j * 18 + 51));
             }
         }
-        for(int j = 0; j < 9; ++j) {
+        for(var j = 0; j < 9; ++j) {
             this.addSlot(new Slot(playerInventory, j, 8 + j * 18, 109));
         }
     }
@@ -44,10 +44,10 @@ public class RedstoneTriggerScreenHandler extends ScreenHandler {
 
     @Override
     public ItemStack quickMove(PlayerEntity player, int index) {
-        ItemStack copy = ItemStack.EMPTY;
-        Slot slot = this.slots.get(index);
+        var copy = ItemStack.EMPTY;
+        var slot = this.slots.get(index);
         if (slot.hasStack()) {
-            ItemStack itemStack = slot.getStack();
+            var itemStack = slot.getStack();
             copy = itemStack.copy();
             if (index < 2 ? !this.insertItem(itemStack, 2, this.slots.size(), true) : !this.insertItem(itemStack, 0, 2, false)) {
                 return ItemStack.EMPTY;
