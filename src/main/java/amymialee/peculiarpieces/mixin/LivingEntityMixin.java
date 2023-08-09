@@ -8,6 +8,7 @@ import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
@@ -32,6 +33,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -116,19 +118,21 @@ public abstract class LivingEntityMixin extends Entity {
         return p;
     }
 
-    @Inject(method = "applyClimbingSpeed", at = @At("HEAD"), cancellable = true)
-    private void PeculiarPieces$MoreScaffolds(Vec3d motion, CallbackInfoReturnable<Vec3d> cir) {
-        if (this.isClimbing()) {
-            this.onLanding();
-            var d = MathHelper.clamp(motion.x, -0.15f, 0.15f);
-            var e = MathHelper.clamp(motion.z, -0.15f, 0.15f);
-            var g = Math.max(motion.y, -0.15f);
-            if (g < 0.0 && !this.getBlockStateAtPos().isIn(PeculiarPieces.SCAFFOLDING)) {
-                this.isHoldingOntoLadder();
-            }
-            motion = new Vec3d(d, g, e);
+    @Unique
+    private BlockState peculiarPiecesRealBlockState; 
+
+    @Inject(method = "applyClimbingSpeed", at = @At("HEAD"))
+    private void PeculiarPieces$MoreScaffoldsStart(Vec3d motion, CallbackInfoReturnable<Vec3d> cir) {
+        if (this.getBlockStateAtPos().isIn(PeculiarPieces.SCAFFOLDING)) {
+            peculiarPiecesRealBlockState = getBlockStateAtPos();
+            ((EntityAccessor)this).setBlockStateAtPos(Blocks.SCAFFOLDING.getDefaultState());
+            
         }
-        cir.setReturnValue(motion);
+    }
+    @Inject(method = "applyClimbingSpeed", at = @At("RETURN"))
+    private void PeculiarPieces$MoreScaffoldsEnd(Vec3d motion, CallbackInfoReturnable<Vec3d> cir) {
+        ((EntityAccessor)this).setBlockStateAtPos(peculiarPiecesRealBlockState);
+        peculiarPiecesRealBlockState = null;
     }
 
     @Inject(method = "tryUseTotem", at = @At("RETURN"), cancellable = true)

@@ -22,6 +22,12 @@ public class EntityBarrierBlock extends Block {
     }
 
     @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        if (context.isHolding(this.asItem()) || VisibleBarriersAccess.areBarriersEnabled()) return VoxelShapes.fullCube();
+        return VoxelShapes.empty();
+    }
+
+    @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if (context instanceof EntityShapeContext entityShapeContext && entityShapeContext.getEntity() instanceof PlayerEntity) {
             return getShape(false);

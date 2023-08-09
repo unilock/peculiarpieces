@@ -9,11 +9,11 @@ public class VisibleBarriersAccess {
     public static BooleanSupplier visibility = () -> false;
 
     public static boolean areStructureVoidsEnabled() {
-        return structureVoids.getAsBoolean();
+        return isVisibilityEnabled() || structureVoids.getAsBoolean();
     }
 
     public static boolean areBarriersEnabled() {
-        return barriers.getAsBoolean();
+        return isVisibilityEnabled() || barriers.getAsBoolean();
     }
 
     public static boolean isVisibilityEnabled() {
