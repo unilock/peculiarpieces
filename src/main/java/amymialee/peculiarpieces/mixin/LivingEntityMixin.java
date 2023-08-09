@@ -70,7 +70,7 @@ public abstract class LivingEntityMixin extends Entity {
 //                    this.airStrafingSpeed *= 4;
                     if (onGround) {
                         if (this.fallDistance > 0.0f) {
-                            extraPlayerDataWrapper.setBouncePower(Math.pow(Math.abs(getVelocity().getY()), 1.5) - 0.05);
+                            extraPlayerDataWrapper.setBouncePower(Math.pow(Math.abs(this.getVelocity().getY()), 1.5) - 0.05);
                             return;
                         }
                     }
@@ -124,15 +124,15 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "applyClimbingSpeed", at = @At("HEAD"))
     private void PeculiarPieces$MoreScaffoldsStart(Vec3d motion, CallbackInfoReturnable<Vec3d> cir) {
         if (this.getBlockStateAtPos().isIn(PeculiarPieces.SCAFFOLDING)) {
-            peculiarPiecesRealBlockState = getBlockStateAtPos();
+            this.peculiarPiecesRealBlockState = this.getBlockStateAtPos();
             ((EntityAccessor)this).setBlockStateAtPos(Blocks.SCAFFOLDING.getDefaultState());
             
         }
     }
     @Inject(method = "applyClimbingSpeed", at = @At("RETURN"))
     private void PeculiarPieces$MoreScaffoldsEnd(Vec3d motion, CallbackInfoReturnable<Vec3d> cir) {
-        ((EntityAccessor)this).setBlockStateAtPos(peculiarPiecesRealBlockState);
-        peculiarPiecesRealBlockState = null;
+        ((EntityAccessor)this).setBlockStateAtPos(this.peculiarPiecesRealBlockState);
+        this.peculiarPiecesRealBlockState = null;
     }
 
     @Inject(method = "tryUseTotem", at = @At("RETURN"), cancellable = true)
@@ -145,7 +145,7 @@ public abstract class LivingEntityMixin extends Entity {
                 for (var hand : Hand.values()) {
                     var itemStack = this.getStackInHand(hand);
                     if (itemStack.isIn(PeculiarPieces.TOTEMS)) {
-                        useTotem(livingEntity, itemStack);
+                        this.useTotem(livingEntity, itemStack);
                         if (itemStack.isOf(PeculiarItems.EVERLASTING_EMBLEM)) {
                             if (livingEntity instanceof PlayerEntity player) {
                                 player.getItemCooldownManager().set(PeculiarItems.EVERLASTING_EMBLEM, (source.getAttacker() instanceof PlayerEntity ? 2 : 1) * 6 * 60 * 20);
@@ -162,14 +162,14 @@ public abstract class LivingEntityMixin extends Entity {
                     if (optionalComponent.get().isEquipped(PeculiarItems.TOKEN_OF_UNDYING)) {
                         var equipped = optionalComponent.get().getEquipped(PeculiarItems.TOKEN_OF_UNDYING);
                         var stack = equipped.get(0).getRight();
-                        useTotem(livingEntity, stack);
+                        this.useTotem(livingEntity, stack);
                         stack.decrement(1);
                         cir.setReturnValue(true);
                     } else if (optionalComponent.get().isEquipped(PeculiarItems.EVERLASTING_EMBLEM)) {
                         if (livingEntity instanceof PlayerEntity player && !player.getItemCooldownManager().isCoolingDown(PeculiarItems.EVERLASTING_EMBLEM)) {
                             var equipped = optionalComponent.get().getEquipped(PeculiarItems.EVERLASTING_EMBLEM);
                             var stack = equipped.get(0).getRight();
-                            useTotem(livingEntity, stack);
+                            this.useTotem(livingEntity, stack);
                             player.getItemCooldownManager().set(PeculiarItems.EVERLASTING_EMBLEM, (source.getAttacker() instanceof PlayerEntity ? 2 : 1) * 6 * 60 * 20);
                             cir.setReturnValue(true);
                         }

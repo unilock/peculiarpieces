@@ -74,10 +74,12 @@ public class CouriporterBlock extends BlockWithEntity {
         return BOTTOM_SHAPE;
     }
 
+    @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new CouriporterBlockEntity(pos, state);
     }
 
+    @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         if (itemStack.hasCustomName()) {
             var blockEntity = world.getBlockEntity(pos);
@@ -87,6 +89,7 @@ public class CouriporterBlock extends BlockWithEntity {
         }
     }
 
+    @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.isClient) {
             return ActionResult.SUCCESS;
@@ -177,6 +180,7 @@ public class CouriporterBlock extends BlockWithEntity {
         }
     }
 
+    @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }

@@ -43,10 +43,12 @@ public class PedestalBlock extends BlockWithEntity {
         return SHAPE;
     }
 
+    @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new PedestalBlockEntity(pos, state);
     }
 
+    @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         var blockEntity = world.getBlockEntity(pos);
         if (itemStack.hasCustomName()) {
@@ -56,10 +58,12 @@ public class PedestalBlock extends BlockWithEntity {
         }
     }
 
+    @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
 
+    @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.isClient) {
             return ActionResult.SUCCESS;
@@ -74,6 +78,7 @@ public class PedestalBlock extends BlockWithEntity {
         return ActionResult.CONSUME;
     }
 
+    @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
             var blockEntity = world.getBlockEntity(pos);

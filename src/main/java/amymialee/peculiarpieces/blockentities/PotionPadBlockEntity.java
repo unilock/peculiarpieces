@@ -38,7 +38,7 @@ public class PotionPadBlockEntity extends LockableContainerBlockEntity {
     }
 
     public void onEntityCollided(LivingEntity entity) {
-        var stack = getPotion();
+        var stack = this.getPotion();
         if (stack.getItem() instanceof MilkBucketItem) {
             entity.clearStatusEffects();
         } else {
@@ -61,12 +61,14 @@ public class PotionPadBlockEntity extends LockableContainerBlockEntity {
         return this.inventory.get(0);
     }
 
+    @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
         Inventories.readNbt(nbt, this.inventory);
     }
 
+    @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         Inventories.writeNbt(nbt, this.inventory);
@@ -90,10 +92,12 @@ public class PotionPadBlockEntity extends LockableContainerBlockEntity {
         return true;
     }
 
+    @Override
     protected Text getContainerName() {
         return Text.translatable("peculiarpieces.container.potion_pad");
     }
 
+    @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
         return new PotionPadScreenHandler(syncId, playerInventory, this);
     }
@@ -123,14 +127,14 @@ public class PotionPadBlockEntity extends LockableContainerBlockEntity {
     @Override
     public ItemStack removeStack(int slot, int amount) {
         var stack = Inventories.splitStack(this.inventory, slot, amount);
-        updateState();
+        this.updateState();
         return stack;
     }
 
     @Override
     public ItemStack removeStack(int slot) {
         var stack = Inventories.removeStack(this.inventory, slot);
-        updateState();
+        this.updateState();
         return stack;
     }
 
@@ -139,18 +143,18 @@ public class PotionPadBlockEntity extends LockableContainerBlockEntity {
         if (slot >= 0 && slot < this.inventory.size()) {
             this.inventory.set(slot, stack);
         }
-        updateState();
+        this.updateState();
     }
 
     @Override
     public void clear() {
         this.inventory.clear();
-        updateState();
+        this.updateState();
     }
 
     public void updateState() {
         var stack = this.inventory.get(0);
-        var blockState = getCachedState();
+        var blockState = this.getCachedState();
         if (!(blockState.getBlock() instanceof PotionPadBlock) || this.world == null) {
             return;
         }
@@ -167,7 +171,7 @@ public class PotionPadBlockEntity extends LockableContainerBlockEntity {
         }
         if (update) {
             this.world.setBlockState(this.pos, blockState, Block.NOTIFY_LISTENERS);
-            markDirty();
+            this.markDirty();
         }
     }
 }

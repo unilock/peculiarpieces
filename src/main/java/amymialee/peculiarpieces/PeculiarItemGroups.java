@@ -78,7 +78,7 @@ public class PeculiarItemGroups {
     private static void generatePotionEntries(ItemGroup.Entries entries, RegistryWrapper<Potion> potions, Item potion) {
         potions.streamEntries()
                 .filter(en -> !en.matchesKey(Potions.EMPTY_KEY))
-                .map(en -> PotionUtil.setPotion(new ItemStack(potion), (Potion) en.value()))
+                .map(en -> PotionUtil.setPotion(new ItemStack(potion), en.value()))
                 .forEach(stack -> entries.add(stack));
     }
 

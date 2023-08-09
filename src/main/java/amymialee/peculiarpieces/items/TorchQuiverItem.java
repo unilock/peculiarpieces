@@ -64,7 +64,7 @@ public class TorchQuiverItem extends RangedWeaponItem implements CustomCreativeI
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         var quiver = context.getStack();
-        if (context.getPlayer() != null && (quiver.getDamage() < getMaxDamage() || context.getPlayer().isCreative())) {
+        if (context.getPlayer() != null && (quiver.getDamage() < this.getMaxDamage() || context.getPlayer().isCreative())) {
             var setting = quiver.getOrCreateNbt().getInt("pp:setting");
             if (setting < torches.length) {
                 var item = torches[setting];

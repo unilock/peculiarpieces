@@ -18,7 +18,8 @@ public class EternalDoughnutItem extends Item {
 		super(settings);
 	}
 
-	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+	@Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		var itemStack = user.getStackInHand(hand);
 		if (user.canConsume(true)) {
 			user.setCurrentHand(hand);
@@ -28,7 +29,8 @@ public class EternalDoughnutItem extends Item {
 		}
 	}
 
-	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+	@Override
+    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (user instanceof PlayerEntity player) {
 			player.getHungerManager().add(4, 4);
 		}
@@ -37,15 +39,18 @@ public class EternalDoughnutItem extends Item {
 		return stack;
 	}
 
-	public UseAction getUseAction(ItemStack stack) {
+	@Override
+    public UseAction getUseAction(ItemStack stack) {
 		return UseAction.EAT;
 	}
 
-	public int getMaxUseTime(ItemStack stack) {
+	@Override
+    public int getMaxUseTime(ItemStack stack) {
 		return 12;
 	}
 
-	public boolean isFood() {
+	@Override
+    public boolean isFood() {
 		return false;
 	}
 }

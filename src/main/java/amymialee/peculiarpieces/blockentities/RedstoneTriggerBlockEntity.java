@@ -67,12 +67,14 @@ public class RedstoneTriggerBlockEntity extends LockableContainerBlockEntity {
         ++blockEntity.ticks;
     }
 
+    @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
         Inventories.readNbt(nbt, this.inventory);
     }
 
+    @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         Inventories.writeNbt(nbt, this.inventory);
@@ -96,10 +98,12 @@ public class RedstoneTriggerBlockEntity extends LockableContainerBlockEntity {
         return true;
     }
 
+    @Override
     protected Text getContainerName() {
         return Text.translatable("peculiarpieces.container.redstone_trigger");
     }
 
+    @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
         return new RedstoneTriggerScreenHandler(syncId, playerInventory, this);
     }

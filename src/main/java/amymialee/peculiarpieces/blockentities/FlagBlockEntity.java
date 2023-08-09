@@ -37,6 +37,7 @@ public class FlagBlockEntity extends BlockEntity implements Nameable {
         return null;
     }
 
+    @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         if (this.texture != null) {
@@ -47,6 +48,7 @@ public class FlagBlockEntity extends BlockEntity implements Nameable {
         }
     }
 
+    @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         if (nbt.contains("CustomName", 8)) {
@@ -57,10 +59,12 @@ public class FlagBlockEntity extends BlockEntity implements Nameable {
         }
     }
 
+    @Override
     public BlockEntityUpdateS2CPacket toUpdatePacket() {
         return BlockEntityUpdateS2CPacket.create(this);
     }
 
+    @Override
     public NbtCompound toInitialChunkDataNbt() {
         return this.createNbt();
     }
@@ -78,10 +82,12 @@ public class FlagBlockEntity extends BlockEntity implements Nameable {
         return itemStack;
     }
 
+    @Override
     public Text getName() {
         return this.customName != null ? this.customName : Text.translatable("block.minecraft.banner");
     }
 
+    @Override
     @Nullable
     public Text getCustomName() {
         return this.customName;

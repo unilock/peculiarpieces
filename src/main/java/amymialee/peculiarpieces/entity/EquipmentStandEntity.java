@@ -28,7 +28,7 @@ public class EquipmentStandEntity extends MobEntity {
 
     public EquipmentStandEntity(EntityType<? extends EquipmentStandEntity> entityType, World world) {
         super(entityType, world);
-        setStepHeight(0);
+        this.setStepHeight(0);
     }
 
     @Override

@@ -24,12 +24,13 @@ import net.minecraft.world.World;
 
 public class BigBarrelBlockEntity extends LootableContainerBlockEntity {
     private final ViewerCountManager stateManager = new BigBarrelViewerManager();
-    private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(size(), ItemStack.EMPTY);
+    private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
 
     public BigBarrelBlockEntity(BlockPos pos, BlockState state) {
         super(PeculiarBlocks.BIG_BARREL_ENTITY, pos, state);
     }
 
+    @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         if (!this.serializeLootTable(nbt)) {
@@ -37,6 +38,7 @@ public class BigBarrelBlockEntity extends LootableContainerBlockEntity {
         }
     }
 
+    @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
@@ -45,32 +47,39 @@ public class BigBarrelBlockEntity extends LootableContainerBlockEntity {
         }
     }
 
+    @Override
     public int size() {
         return 54;
     }
 
+    @Override
     protected DefaultedList<ItemStack> getInvStackList() {
         return this.inventory;
     }
 
+    @Override
     protected void setInvStackList(DefaultedList<ItemStack> list) {
         this.inventory = list;
     }
 
+    @Override
     protected Text getContainerName() {
         return Text.translatable("peculiarpieces.container.big_barrel");
     }
 
+    @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
         return GenericContainerScreenHandler.createGeneric9x6(syncId, playerInventory, this);
     }
 
+    @Override
     public void onOpen(PlayerEntity player) {
         if (!this.removed && !player.isSpectator()) {
             this.stateManager.openContainer(player, this.getWorld(), this.getPos(), this.getCachedState());
         }
     }
 
+    @Override
     public void onClose(PlayerEntity player) {
         if (!this.removed && !player.isSpectator()) {
             this.stateManager.closeContainer(player, this.getWorld(), this.getPos(), this.getCachedState());
@@ -100,18 +109,22 @@ public class BigBarrelBlockEntity extends LootableContainerBlockEntity {
     }
 
     private class BigBarrelViewerManager extends ViewerCountManager {
+        @Override
         protected void onContainerOpen(World world, BlockPos pos, BlockState state) {
             BigBarrelBlockEntity.this.playSound(state, SoundEvents.BLOCK_BARREL_OPEN);
             BigBarrelBlockEntity.this.setOpen(state, true);
         }
 
+        @Override
         protected void onContainerClose(World world, BlockPos pos, BlockState state) {
             BigBarrelBlockEntity.this.playSound(state, SoundEvents.BLOCK_BARREL_CLOSE);
             BigBarrelBlockEntity.this.setOpen(state, false);
         }
 
+        @Override
         protected void onViewerCountUpdate(World world, BlockPos pos, BlockState state, int oldViewerCount, int newViewerCount) {}
 
+        @Override
         protected boolean isPlayerViewing(PlayerEntity player) {
             if (player.currentScreenHandler instanceof GenericContainerScreenHandler) {
                 var inventory = ((GenericContainerScreenHandler)player.currentScreenHandler).getInventory();

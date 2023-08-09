@@ -24,7 +24,7 @@ public class CreativeBookItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
         var stack = playerIn.getStackInHand(handIn);
-        var book = getBook();
+        var book = this.getBook();
         if (book == null) {
             return new TypedActionResult<>(ActionResult.FAIL, stack);
         }

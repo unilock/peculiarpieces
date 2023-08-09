@@ -1,0 +1,4 @@
+- New Gradle Setup.
+- Code cleanup
+- Better scaffold compatability (Thanks to unascribed)
+- Better visible barriers compatability (Thanks to unascribed)

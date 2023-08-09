@@ -48,19 +48,20 @@ public class EquipmentStandBlockEntity extends LockableContainerBlockEntity {
 
     public EquipmentStandEntity getCachedEntity() {
         if (this.cachedEntity == null) {
-            this.cachedEntity = PeculiarEntities.EQUIPMENT_STAND_ENTITY.create(getWorld());
+            this.cachedEntity = PeculiarEntities.EQUIPMENT_STAND_ENTITY.create(this.getWorld());
         }
         if (this.cachedEntity != null) {
-            this.cachedEntity.setPosition(Vec3d.of(getPos()));
+            this.cachedEntity.setPosition(Vec3d.of(this.getPos()));
             for (var i = 0; i < EquipmentSlot.values().length; i++) {
                 var slot = EquipmentSlot.values()[i];
-                this.cachedEntity.equipStack(slot, getStack(i));
+                this.cachedEntity.equipStack(slot, this.getStack(i));
             }
-            this.cachedEntity.equipGliderStack(getStack(6));
+            this.cachedEntity.equipGliderStack(this.getStack(6));
         }
         return this.cachedEntity;
     }
 
+    @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
@@ -68,6 +69,7 @@ public class EquipmentStandBlockEntity extends LockableContainerBlockEntity {
         this.playerYaw = nbt.getFloat("pp:playeryaw");
     }
 
+    @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         Inventories.writeNbt(nbt, this.inventory);
@@ -93,10 +95,12 @@ public class EquipmentStandBlockEntity extends LockableContainerBlockEntity {
         return true;
     }
 
+    @Override
     protected Text getContainerName() {
         return Text.translatable("peculiarpieces.container.equipment_stand");
     }
 
+    @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
         return new EquipmentStandScreenHandler(syncId, playerInventory, this);
     }
@@ -126,14 +130,14 @@ public class EquipmentStandBlockEntity extends LockableContainerBlockEntity {
     @Override
     public ItemStack removeStack(int slot, int amount) {
         var stack = Inventories.splitStack(this.inventory, slot, amount);
-        updateState();
+        this.updateState();
         return stack;
     }
 
     @Override
     public ItemStack removeStack(int slot) {
         var stack = Inventories.removeStack(this.inventory, slot);
-        updateState();
+        this.updateState();
         return stack;
     }
 
@@ -142,13 +146,13 @@ public class EquipmentStandBlockEntity extends LockableContainerBlockEntity {
         if (slot >= 0 && slot < this.inventory.size()) {
             this.inventory.set(slot, stack);
         }
-        updateState();
+        this.updateState();
     }
 
     @Override
     public void clear() {
         this.inventory.clear();
-        updateState();
+        this.updateState();
     }
 
     public void updateState() {

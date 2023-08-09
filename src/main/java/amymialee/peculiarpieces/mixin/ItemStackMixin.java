@@ -23,14 +23,14 @@ public abstract class ItemStackMixin {
     @Inject(method = "setCustomName", at = @At("TAIL"))
     public void PeculiarPieces$TransPearlNameStorage(Text name, CallbackInfoReturnable<ItemStack> cir) {
         if (this.getItem() == PeculiarItems.TRANS_PEARL && name != null) {
-            getOrCreateNbt().putString("pp:target_name_%d".formatted(TransportPearlItem.getSlot((ItemStack) ((Object) this))), name.getString());
+            this.getOrCreateNbt().putString("pp:target_name_%d".formatted(TransportPearlItem.getSlot((ItemStack) ((Object) this))), name.getString());
         }
     }
 
     @Inject(method = "removeCustomName", at = @At("TAIL"))
     public void PeculiarPieces$TransPearlNameRemoval(CallbackInfo ci) {
-        if (this.getItem() == PeculiarItems.TRANS_PEARL && getNbt() != null) {
-            getNbt().remove("pp:target_name_%d".formatted(TransportPearlItem.getSlot((ItemStack) ((Object) this))));
+        if (this.getItem() == PeculiarItems.TRANS_PEARL && this.getNbt() != null) {
+            this.getNbt().remove("pp:target_name_%d".formatted(TransportPearlItem.getSlot((ItemStack) ((Object) this))));
         }
     }
 }

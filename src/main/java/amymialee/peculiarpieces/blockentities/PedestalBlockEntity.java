@@ -27,12 +27,14 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity {
         this.inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
     }
 
+    @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
         Inventories.readNbt(nbt, this.inventory);
     }
 
+    @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         Inventories.writeNbt(nbt, this.inventory);
@@ -56,10 +58,12 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity {
         return true;
     }
 
+    @Override
     protected Text getContainerName() {
         return Text.translatable("peculiarpieces.container.pedestal");
     }
 
+    @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
         return new PedestalScreenHandler(syncId, playerInventory, this);
     }
@@ -89,14 +93,14 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity {
     @Override
     public ItemStack removeStack(int slot, int amount) {
         var stack = Inventories.splitStack(this.inventory, slot, amount);
-        updateState();
+        this.updateState();
         return stack;
     }
 
     @Override
     public ItemStack removeStack(int slot) {
         var stack = Inventories.removeStack(this.inventory, slot);
-        updateState();
+        this.updateState();
         return stack;
     }
 
@@ -105,13 +109,13 @@ public class PedestalBlockEntity extends LockableContainerBlockEntity {
         if (slot >= 0 && slot < this.inventory.size()) {
             this.inventory.set(slot, stack);
         }
-        updateState();
+        this.updateState();
     }
 
     @Override
     public void clear() {
         this.inventory.clear();
-        updateState();
+        this.updateState();
     }
 
     public void updateState() {

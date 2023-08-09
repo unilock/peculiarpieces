@@ -58,7 +58,7 @@ public abstract class AbstractLegacyPressurePlateBlock extends Block {
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		var i = this.getRedstoneOutput(state);
 		if (i > 0) {
-			this.updatePlateState((Entity) null, world, pos, state, i);
+			this.updatePlateState(null, world, pos, state, i);
 		}
 
 	}
@@ -129,6 +129,7 @@ public abstract class AbstractLegacyPressurePlateBlock extends Block {
 		return direction == Direction.UP ? this.getRedstoneOutput(state) : 0;
 	}
 
+	@Override
 	public boolean emitsRedstonePower(BlockState state) {
 		return true;
 	}

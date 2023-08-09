@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 public class BigDropperBlockEntity extends DispenserBlockEntity {
     public BigDropperBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(PeculiarBlocks.BIG_DROPPER_ENTITY, blockPos, blockState);
-        setInvStackList(DefaultedList.ofSize(54, ItemStack.EMPTY));
+        this.setInvStackList(DefaultedList.ofSize(54, ItemStack.EMPTY));
     }
 
     @Override

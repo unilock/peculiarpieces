@@ -55,6 +55,7 @@ public class RedstoneMonoBlock extends AbstractRedstoneComparisonBlock {
         super.randomDisplayTick(state, world, pos, random);
     }
 
+    @Override
     protected int getOutputLevel(BlockView world, BlockPos pos, BlockState state) {
         return state.get(EXPIRED) ? 0 : getPower(world, pos, state);
     }

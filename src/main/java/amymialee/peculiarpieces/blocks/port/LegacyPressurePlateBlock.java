@@ -20,28 +20,33 @@ public class LegacyPressurePlateBlock extends AbstractLegacyPressurePlateBlock {
 
     protected LegacyPressurePlateBlock(ActivationRule type, Settings settings, SoundEvent depressSound, SoundEvent pressSound) {
         super(settings);
-        this.setDefaultState(getDefaultState().with(POWERED, false));
+        this.setDefaultState(this.getDefaultState().with(POWERED, false));
         this.type = type;
         this.depressSound = depressSound;
         this.pressSound = pressSound;
     }
 
+    @Override
     protected int getRedstoneOutput(BlockState state) {
         return state.get(POWERED) ? 15 : 0;
     }
 
+    @Override
     protected BlockState setRedstoneOutput(BlockState state, int rsOut) {
         return state.with(POWERED, rsOut > 0);
     }
 
+    @Override
     protected void playPressSound(WorldAccess world, BlockPos pos) {
         world.playSound(null, pos, this.pressSound, SoundCategory.BLOCKS, 0.3F, 0.6F);
     }
 
+    @Override
     protected void playDepressSound(WorldAccess world, BlockPos pos) {
         world.playSound(null, pos, this.depressSound, SoundCategory.BLOCKS, 0.3F, 0.6F);
     }
 
+    @Override
     protected int getRedstoneOutput(World world, BlockPos pos) {
         return 0;
     }

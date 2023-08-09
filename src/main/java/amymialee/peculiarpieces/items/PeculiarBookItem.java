@@ -24,7 +24,7 @@ public class PeculiarBookItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         var stack = player.getStackInHand(hand);
-        var book = getBook();
+        var book = this.getBook();
         if (book == null) {
             return new TypedActionResult<>(ActionResult.FAIL, stack);
         }

@@ -65,6 +65,7 @@ public class WarpScreenHandler extends ScreenHandler {
         return copy;
     }
 
+    @Override
     public void onClosed(PlayerEntity player) {
         super.onClosed(player);
         this.inventory.onClose(player);

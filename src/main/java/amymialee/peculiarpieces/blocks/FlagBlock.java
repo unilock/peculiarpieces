@@ -89,10 +89,10 @@ public class FlagBlock extends BlockWithEntity implements CustomCreativeItems {
     @Override
     public void appendStacks(Entries entries) {
         for (var color : NEW_DYE_ORDER) {
-            addStack(color.getName().toLowerCase(), entries);
+            this.addStack(color.getName().toLowerCase(), entries);
         }
         for (var flag : ExtraFlag.values()) {
-            addStack(flag.name().toLowerCase(), entries);
+            this.addStack(flag.name().toLowerCase(), entries);
         }
     }
 

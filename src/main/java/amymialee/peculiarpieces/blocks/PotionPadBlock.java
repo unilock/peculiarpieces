@@ -42,10 +42,12 @@ public class PotionPadBlock extends BlockWithEntity {
         this.setDefaultState(this.stateManager.getDefaultState().with(POWERED, false).with(POTION, PotionStates.EMPTY));
     }
 
+    @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new PotionPadBlockEntity(pos, state);
     }
 
+    @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         if (itemStack.hasCustomName()) {
             var blockEntity = world.getBlockEntity(pos);
@@ -55,6 +57,7 @@ public class PotionPadBlock extends BlockWithEntity {
         }
     }
 
+    @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
@@ -64,6 +67,7 @@ public class PotionPadBlock extends BlockWithEntity {
         return SHAPE;
     }
 
+    @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.isClient) {
             return ActionResult.SUCCESS;
@@ -79,6 +83,7 @@ public class PotionPadBlock extends BlockWithEntity {
         return ActionResult.CONSUME;
     }
 
+    @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
             var blockEntity = world.getBlockEntity(pos);

@@ -32,12 +32,12 @@ dependencies {
             </a>
         </th>
         <th>
-            <a href="https://www.curseforge.com/minecraft/mc-mods/peculiar-pieces">
+            <a href="https://www.curseforge.com/minecraft/mc-mods/peculiarpieces">
                 <img src="https://cdn.discordapp.com/attachments/793182374410059887/923990008543711282/anvil.svg" width="150" height="150" alt="Curseforge">
             </a>
         </th>
         <th>
-            <a href="https://modrinth.com/mod/peculiar-pieces">
+            <a href="https://modrinth.com/mod/peculiarpieces">
                 <img src="https://docs.modrinth.com/img/logo.svg" width="150" height="150" alt="Modrinth">
             </a>
         </th>

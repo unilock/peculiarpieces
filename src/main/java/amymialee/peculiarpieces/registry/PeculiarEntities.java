@@ -16,7 +16,7 @@ import net.minecraft.registry.Registry;
 
 public class PeculiarEntities {
     public static final EntityType<TeleportItemEntity> TELEPORT_ITEM_ENTITY = registerEntity("teleport_item_entity", FabricEntityTypeBuilder.<TeleportItemEntity>create(SpawnGroup.MISC, TeleportItemEntity::new).dimensions(EntityDimensions.fixed(0.5f, 0.5f)).trackRangeChunks(6).trackedUpdateRate(20).build());
-    public static final EntityType<EquipmentStandEntity> EQUIPMENT_STAND_ENTITY = registerEntity("equipment_stand_entity", FabricEntityTypeBuilder.<EquipmentStandEntity>create(SpawnGroup.MISC, EquipmentStandEntity::new).dimensions(EntityDimensions.fixed(0.5f, 1.8f)).trackRangeChunks(6).trackedUpdateRate(Integer.MAX_VALUE).build());
+    public static final EntityType<EquipmentStandEntity> EQUIPMENT_STAND_ENTITY = registerEntity("equipment_stand_entity", FabricEntityTypeBuilder.create(SpawnGroup.MISC, EquipmentStandEntity::new).dimensions(EntityDimensions.fixed(0.5f, 1.8f)).trackRangeChunks(6).trackedUpdateRate(Integer.MAX_VALUE).build());
 
     @SuppressWarnings("ConstantConditions")
     public static void init() {

@@ -38,10 +38,12 @@ public class FishTankBlock extends BlockWithEntity {
         this.setDefaultState(this.stateManager.getDefaultState().with(POWERED, false).with(FILLED, false));
     }
 
+    @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new FishTankBlockEntity(pos, state);
     }
 
+    @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         var blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof FishTankBlockEntity fishTank) {
@@ -53,10 +55,12 @@ public class FishTankBlock extends BlockWithEntity {
         }
     }
 
+    @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
 
+    @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.isClient) {
             return ActionResult.SUCCESS;
@@ -71,6 +75,7 @@ public class FishTankBlock extends BlockWithEntity {
         return ActionResult.CONSUME;
     }
 
+    @Override
     public FluidState getFluidState(BlockState state) {
         if (state.get(FILLED)) {
             return Fluids.WATER.getDefaultState();
@@ -78,6 +83,7 @@ public class FishTankBlock extends BlockWithEntity {
         return Fluids.EMPTY.getDefaultState();
     }
 
+    @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
             var blockEntity = world.getBlockEntity(pos);

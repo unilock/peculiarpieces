@@ -112,17 +112,17 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
     @Inject(method = "tickMovement", at = @At("TAIL"))
     public void PeculiarPieces$MovementTicks(CallbackInfo ci) {
         var this2 = ((PlayerEntity) ((Object) this));
-        var velocity = getVelocity();
-        if (getBouncePower() > 0) {
+        var velocity = this.getVelocity();
+        if (this.getBouncePower() > 0) {
             var f = this.headYaw * ((float)Math.PI / 180);
-            this.setVelocity(this.getVelocity().add(-MathHelper.sin(f) * (velocity.horizontalLength() * getBouncePower() * 4) * (this.isSprinting() ? 1.5f : 0.5f), getBouncePower(), MathHelper.cos(f) * (velocity.horizontalLength() * getBouncePower() * 4) * (isSprinting() ? 1.5f : 0.5f)));
-            setBouncePower(0);
+            this.setVelocity(this.getVelocity().add(-MathHelper.sin(f) * (velocity.horizontalLength() * this.getBouncePower() * 4) * (this.isSprinting() ? 1.5f : 0.5f), this.getBouncePower(), MathHelper.cos(f) * (velocity.horizontalLength() * this.getBouncePower() * 4) * (this.isSprinting() ? 1.5f : 0.5f)));
+            this.setBouncePower(0);
             this.velocityDirty = true;
         } else if (GliderItem.isGliding(this2)) {
-            var horizontalSpeed = !isSneaking() ? 0.03 : 0.1;
+            var horizontalSpeed = !this.isSneaking() ? 0.03 : 0.1;
             var xSpeed = Math.cos(Math.toRadians(this.headYaw + 90)) * horizontalSpeed;
             var zSpeed = Math.sin(Math.toRadians(this.headYaw + 90)) * horizontalSpeed;
-            this.setVelocity(velocity.x + xSpeed, !isSneaking() ? -0.052 : -0.176, velocity.z + zSpeed);
+            this.setVelocity(velocity.x + xSpeed, !this.isSneaking() ? -0.052 : -0.176, velocity.z + zSpeed);
             this.fallDistance = 0;
         }
     }

@@ -27,18 +27,21 @@ public class OpenPressurePlate extends LegacyPressurePlateBlock {
         this.weight = weight;
     }
 
+    @Override
     protected void playPressSound(WorldAccess world, BlockPos pos) {
         if (!this.invis) {
             super.playPressSound(world, pos);
         }
     }
 
+    @Override
     protected void playDepressSound(WorldAccess world, BlockPos pos) {
         if (!this.invis) {
             super.playDepressSound(world, pos);
         }
     }
 
+    @Override
     protected int getRedstoneOutput(World world, BlockPos pos) {
         var box = BOX.offset(pos);
         List<? extends Entity> list;

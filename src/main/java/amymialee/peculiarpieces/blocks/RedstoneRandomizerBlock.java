@@ -31,11 +31,12 @@ public class RedstoneRandomizerBlock extends AbstractRedstoneComparisonBlock {
         if (!bl2) {
             world.setBlockState(pos, state.with(POWERED, false), Block.NOTIFY_LISTENERS);
         } else if (!bl) {
-            world.setBlockState(pos, state.with(POWERED, true).with(OUTPUT, random.nextBetween(1, getPower(world, pos, state))), Block.NOTIFY_LISTENERS);
+            world.setBlockState(pos, state.with(POWERED, true).with(OUTPUT, random.nextBetween(1, this.getPower(world, pos, state))), Block.NOTIFY_LISTENERS);
             world.scheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);
         }
     }
 
+    @Override
     protected int getOutputLevel(BlockView world, BlockPos pos, BlockState state) {
         return state.get(OUTPUT);
     }

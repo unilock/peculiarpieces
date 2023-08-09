@@ -60,6 +60,7 @@ public class RedstoneTriggerBlock extends BlockWithEntity {
         }
     }
 
+    @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }

@@ -7,11 +7,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
-
 @SuppressWarnings({"UnusedReturnValue", "unused"})
 public class WarpInstance {
-    @Nonnull
     private final Entity entity;
     private boolean hasWorld = false;
     private RegistryKey<World> world;
@@ -58,7 +55,7 @@ public class WarpInstance {
     }
 
     public WarpInstance position(BlockPos position) {
-        return position(Vec3d.ofBottomCenter(position));
+        return this.position(Vec3d.ofBottomCenter(position));
     }
 
     public WarpInstance x(double x) {
@@ -137,7 +134,6 @@ public class WarpInstance {
         return new Vec3d(this.hasXVel ? this.xVel : entity.getX(), this.hasYVel ? this.yVel : entity.getY(), this.hasZVel ? this.zVel : entity.getZ());
     }
 
-    @Nonnull
     public Entity getEntity() {
         return this.entity;
     }

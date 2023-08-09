@@ -42,8 +42,8 @@ public abstract class InGameHudMixin {
         for (var hand : Hand.values()) {
             var itemStack = player.getStackInHand(hand);
             if (itemStack.isOf(Items.TOTEM_OF_UNDYING)) {
-                drawTotem(ctx, x, q, 0, blinking);
-                drawTotem(ctx, x, q, 1, false);
+                this.drawTotem(ctx, x, q, 0, blinking);
+                this.drawTotem(ctx, x, q, 1, false);
                 return;
             }
         }
@@ -52,14 +52,14 @@ public abstract class InGameHudMixin {
             var token = optionalComponent.get().isEquipped(PeculiarItems.TOKEN_OF_UNDYING);
             var emblem = optionalComponent.get().isEquipped(PeculiarItems.EVERLASTING_EMBLEM);
             if (token || emblem) {
-                drawTotem(ctx, x, q, 0, blinking);
+                this.drawTotem(ctx, x, q, 0, blinking);
                 if (token) {
-                    drawTotem(ctx, x, q, 2, false);
+                    this.drawTotem(ctx, x, q, 2, false);
                 } else {
                     if (!player.getItemCooldownManager().isCoolingDown(PeculiarItems.EVERLASTING_EMBLEM)) {
-                        drawTotem(ctx, x, q, 3, false);
+                        this.drawTotem(ctx, x, q, 3, false);
                     } else if (player.getItemCooldownManager().getCooldownProgress(PeculiarItems.EVERLASTING_EMBLEM, 1) < 0.5f) {
-                        drawTotem(ctx, x, q, 3, true);
+                        this.drawTotem(ctx, x, q, 3, true);
                     }
                 }
             }

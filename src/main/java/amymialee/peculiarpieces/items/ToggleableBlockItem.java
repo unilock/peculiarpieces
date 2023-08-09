@@ -22,7 +22,7 @@ public class ToggleableBlockItem extends BlockItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (user.isSneaking()) {
             var stack = user.getStackInHand(hand);
-            toggle(stack);
+            this.toggle(stack);
             return TypedActionResult.success(stack);
         }
         return super.use(world, user, hand);

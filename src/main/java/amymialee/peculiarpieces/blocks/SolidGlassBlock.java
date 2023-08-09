@@ -24,10 +24,10 @@ public class SolidGlassBlock extends AbstractGlassBlock {
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if (context instanceof EntityShapeContext entityShapeContext && entityShapeContext.getEntity() instanceof PlayerEntity playerEntity) {
             if (!playerEntity.isSneaking()) {
-                return getShape(false);
+                return this.getShape(false);
             }
         }
-        return getShape(true);
+        return this.getShape(true);
     }
 
     private VoxelShape getShape(boolean filled) {

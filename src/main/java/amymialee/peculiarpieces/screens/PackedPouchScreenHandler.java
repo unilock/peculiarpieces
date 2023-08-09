@@ -25,7 +25,7 @@ public class PackedPouchScreenHandler extends ScreenHandler {
         this.bundle = bundle;
         int k;
         int j;
-        readNBT();
+        this.readNBT();
         this.bundleInv.onOpen(playerInventory.player);
         playerInventory.player.getWorld().playSoundFromEntity(null, playerInventory.player, SoundEvents.BLOCK_BARREL_OPEN, SoundCategory.PLAYERS, 0.5f, playerInventory.player.getRandom().nextFloat() * 0.1f + 0.9f);
         for (j = 0; j < 6; ++j) {
@@ -108,7 +108,7 @@ public class PackedPouchScreenHandler extends ScreenHandler {
 
     @Override
     public void sendContentUpdates() {
-        writeNBT();
+        this.writeNBT();
         super.sendContentUpdates();
     }
 

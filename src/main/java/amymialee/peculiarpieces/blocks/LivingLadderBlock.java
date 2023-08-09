@@ -93,7 +93,7 @@ public class LivingLadderBlock extends Block implements Fertilizable, Waterlogga
         if (world.isInBuildLimit(pos.down())) {
             if (world.getBlockState(pos.down()).isAir()) {
                 world.setBlockState(pos.down(), PeculiarBlocks.LIVING_LADDER.getDefaultState()
-                        .with(SECURE, isSecurePlacement(world, pos.down(), state.get(FACING)))
+                        .with(SECURE, this.isSecurePlacement(world, pos.down(), state.get(FACING)))
                         .with(FACING, state.get(FACING))
                         .with(WATERLOGGED, world.isWater(pos.down())), Block.NOTIFY_ALL);
             }
@@ -131,12 +131,12 @@ public class LivingLadderBlock extends Block implements Fertilizable, Waterlogga
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        var secure = isSecurePlacement(world, pos, state.get(FACING));
+        var secure = this.isSecurePlacement(world, pos, state.get(FACING));
         if (state.get(SECURE) != secure) {
             return state.with(SECURE, secure);
         }
         if (!state.get(SECURE)) {
-            if (!secureNear(world, pos)) {
+            if (!this.secureNear(world, pos)) {
                 return Blocks.AIR.getDefaultState();
             }
         }
@@ -157,8 +157,8 @@ public class LivingLadderBlock extends Block implements Fertilizable, Waterlogga
         var world = ctx.getWorld();
         var pos = ctx.getBlockPos();
         var dir = ctx.getSide().getAxis() != Direction.Axis.Y ? ctx.getSide() : ctx.getHorizontalPlayerFacing();
-        if (!isSecurePlacement(world, pos, dir)) {
-            if (!secureNear(world, pos)) {
+        if (!this.isSecurePlacement(world, pos, dir)) {
+            if (!this.secureNear(world, pos)) {
                 return null;
             }
         }
@@ -168,7 +168,7 @@ public class LivingLadderBlock extends Block implements Fertilizable, Waterlogga
         }
         blockState = this.getDefaultState();
         var fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
-        return blockState.with(FACING, dir).with(SECURE, isSecurePlacement(world, pos, blockState.get(FACING).getOpposite())).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+        return blockState.with(FACING, dir).with(SECURE, this.isSecurePlacement(world, pos, blockState.get(FACING).getOpposite())).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
     }
 
     private boolean isSecurePlacement(BlockView world, BlockPos pos, Direction side) {
@@ -195,7 +195,7 @@ public class LivingLadderBlock extends Block implements Fertilizable, Waterlogga
                 ((Fertilizable) below.getBlock()).grow(world, random, pos.down(), below);
             } else {
                 world.setBlockState(pos.up(), PeculiarBlocks.LIVING_LADDER.getDefaultState()
-                        .with(SECURE, isSecurePlacement(world, pos.down(), state.get(FACING)))
+                        .with(SECURE, this.isSecurePlacement(world, pos.down(), state.get(FACING)))
                         .with(FACING, state.get(FACING))
                         .with(WATERLOGGED, world.isWater(pos.up())), Block.NOTIFY_ALL);
             }

@@ -19,7 +19,7 @@ public class GliderItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         var stack = user.getStackInHand(hand);
-        toggle(stack);
+        this.toggle(stack);
         return TypedActionResult.success(stack);
     }
 

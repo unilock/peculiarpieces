@@ -34,7 +34,7 @@ public class CreativeBarrelBlockEntity extends LootableContainerBlockEntity {
 
     public CreativeBarrelBlockEntity(BlockPos pos, BlockState state) {
         super(PeculiarBlocks.CREATIVE_BARREL_BLOCK_ENTITY, pos, state);
-        this.inventory = DefaultedList.ofSize(size(), ItemStack.EMPTY);
+        this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class CreativeBarrelBlockEntity extends LootableContainerBlockEntity {
     public ItemStack removeStack(int slot, int amount) {
         var stack = super.getStack(slot).copy();
         stack.setCount(amount);
-        updateState();
+        this.updateState();
         return stack;
     }
 
@@ -61,13 +61,13 @@ public class CreativeBarrelBlockEntity extends LootableContainerBlockEntity {
         if (slot >= 0 && slot < this.inventory.size()) {
             this.inventory.set(slot, stack);
         }
-        updateState();
+        this.updateState();
     }
 
     @Override
     public void clear() {
         this.inventory.clear();
-        updateState();
+        this.updateState();
     }
 
     public void updateState() {
@@ -77,11 +77,13 @@ public class CreativeBarrelBlockEntity extends LootableContainerBlockEntity {
         }
     }
 
+    @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         Inventories.writeNbt(nbt, this.inventory);
     }
 
+    @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
@@ -106,32 +108,39 @@ public class CreativeBarrelBlockEntity extends LootableContainerBlockEntity {
         return true;
     }
 
+    @Override
     public int size() {
         return 1;
     }
 
+    @Override
     protected DefaultedList<ItemStack> getInvStackList() {
         return this.inventory;
     }
 
+    @Override
     protected void setInvStackList(DefaultedList<ItemStack> list) {
         this.inventory = list;
     }
 
+    @Override
     protected Text getContainerName() {
         return Text.translatable("peculiarpieces.container.creative_barrel");
     }
 
+    @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
         return new CreativeBarrelScreenHandler(syncId, playerInventory, this);
     }
 
+    @Override
     public void onOpen(PlayerEntity player) {
         if (!this.removed && !player.isSpectator()) {
             this.stateManager.openContainer(player, this.getWorld(), this.getPos(), this.getCachedState());
         }
     }
 
+    @Override
     public void onClose(PlayerEntity player) {
         if (!this.removed && !player.isSpectator()) {
             this.stateManager.closeContainer(player, this.getWorld(), this.getPos(), this.getCachedState());
@@ -161,18 +170,22 @@ public class CreativeBarrelBlockEntity extends LootableContainerBlockEntity {
     }
 
     private class CreativeBarrelViewerManager extends ViewerCountManager {
+        @Override
         protected void onContainerOpen(World world, BlockPos pos, BlockState state) {
             CreativeBarrelBlockEntity.this.playSound(state, SoundEvents.BLOCK_BARREL_OPEN);
             CreativeBarrelBlockEntity.this.setOpen(state, true);
         }
 
+        @Override
         protected void onContainerClose(World world, BlockPos pos, BlockState state) {
             CreativeBarrelBlockEntity.this.playSound(state, SoundEvents.BLOCK_BARREL_CLOSE);
             CreativeBarrelBlockEntity.this.setOpen(state, false);
         }
 
+        @Override
         protected void onViewerCountUpdate(World world, BlockPos pos, BlockState state, int oldViewerCount, int newViewerCount) {}
 
+        @Override
         protected boolean isPlayerViewing(PlayerEntity player) {
             if (player.currentScreenHandler instanceof GenericContainerScreenHandler) {
                 var inventory = ((GenericContainerScreenHandler)player.currentScreenHandler).getInventory();

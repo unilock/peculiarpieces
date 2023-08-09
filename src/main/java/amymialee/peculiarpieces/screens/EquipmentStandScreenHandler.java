@@ -88,6 +88,7 @@ public class EquipmentStandScreenHandler extends ScreenHandler {
         return copy;
     }
 
+    @Override
     public void onClosed(PlayerEntity player) {
         super.onClosed(player);
         this.inventory.onClose(player);

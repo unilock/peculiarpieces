@@ -21,29 +21,35 @@ public class CouriporterBlockEntity extends LootableContainerBlockEntity {
         this.inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
     }
 
+    @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
         Inventories.readNbt(nbt, this.inventory);
     }
 
+    @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         Inventories.writeNbt(nbt, this.inventory);
     }
 
+    @Override
     protected Text getContainerName() {
         return Text.translatable("peculiarpieces.container.couriporter");
     }
 
+    @Override
     protected DefaultedList<ItemStack> getInvStackList() {
         return this.inventory;
     }
 
+    @Override
     protected void setInvStackList(DefaultedList<ItemStack> list) {
         this.inventory = list;
     }
 
+    @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
         return new WarpScreenHandler(syncId, playerInventory, this);
     }

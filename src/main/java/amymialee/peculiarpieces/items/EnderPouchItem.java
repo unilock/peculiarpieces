@@ -22,6 +22,7 @@ public class EnderPouchItem extends Item {
         super(settings);
     }
 
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         var enderChestInventory = user.getEnderChestInventory();
         if (enderChestInventory == null) {

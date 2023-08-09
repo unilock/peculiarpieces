@@ -123,7 +123,7 @@ public class TeleportItemEntity extends Entity {
         if (delay > 0 && delay != CANNOT_PICK_UP_DELAY) {
             this.setDelay(delay - 1);
             if (this.getDelay() == 0 && this.getWorld() instanceof ServerWorld serverWorld) {
-                serverWorld.spawnParticles(ParticleTypes.SMOKE, getX(), getY() + 0.1f, getZ(), 16, 0.1, 0.1, 0.1, 0.05f);
+                serverWorld.spawnParticles(ParticleTypes.SMOKE, this.getX(), this.getY() + 0.1f, this.getZ(), 16, 0.1, 0.1, 0.1, 0.05f);
             }
         }
         if (!this.getWorld().isClient && this.itemAge >= DESPAWN_AGE) {
@@ -152,7 +152,7 @@ public class TeleportItemEntity extends Entity {
             this.emitGameEvent(GameEvent.ENTITY_DAMAGE, source.getAttacker());
         }
         if (this.health <= 0) {
-            if (getWorld() instanceof ServerWorld serverWorld) {
+            if (this.getWorld() instanceof ServerWorld serverWorld) {
                 var r = this.getPos().getX();
                 var s = this.getPos().getY() + 0.1f;
                 var d = this.getPos().getZ();

@@ -40,20 +40,20 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
     }
 
     public FishEntity getCachedEntity() {
-        if (getStack(0) != this.cachedStack) {
+        if (this.getStack(0) != this.cachedStack) {
             this.cachedEntity = null;
-            this.cachedStack = getStack(0);
+            this.cachedStack = this.getStack(0);
         }
         if (this.cachedEntity == null) {
             if (this.cachedStack.getItem() instanceof EntityBucketItem bucket) {
-                var entity = ((EntityBucketItemAccessor) bucket).getEntityType().create(getWorld());
+                var entity = ((EntityBucketItemAccessor) bucket).getEntityType().create(this.getWorld());
                 if (entity instanceof FishEntity fish) {
                     this.cachedEntity = fish;
                 }
             } else {
                 return null;
             }
-            this.cachedEntity.setPosition(Vec3d.of(getPos()));
+            this.cachedEntity.setPosition(Vec3d.of(this.getPos()));
             ((EntityAccessor) this.cachedEntity).setTouchingWater(true);
             this.cachedEntity.setFromBucket(true);
             if (this.cachedEntity instanceof TropicalFishEntity tropicalFish) {
@@ -63,6 +63,7 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
         return this.cachedEntity;
     }
 
+    @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
@@ -70,6 +71,7 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
         this.yaw = nbt.getFloat("pp:yaw");
     }
 
+    @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         Inventories.writeNbt(nbt, this.inventory);
@@ -85,7 +87,7 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
     @Override
     public NbtCompound toInitialChunkDataNbt() {
         var nbtCompound = super.toInitialChunkDataNbt();
-        writeNbt(nbtCompound);
+        this.writeNbt(nbtCompound);
         return nbtCompound;
     }
 
@@ -94,10 +96,12 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
         return true;
     }
 
+    @Override
     protected Text getContainerName() {
         return Text.translatable("peculiarpieces.container.fish_tank");
     }
 
+    @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
         return new FishTankScreenHandler(syncId, playerInventory, this);
     }
@@ -127,14 +131,14 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
     @Override
     public ItemStack removeStack(int slot, int amount) {
         var stack = Inventories.splitStack(this.inventory, slot, amount);
-        updateState();
+        this.updateState();
         return stack;
     }
 
     @Override
     public ItemStack removeStack(int slot) {
         var stack = Inventories.removeStack(this.inventory, slot);
-        updateState();
+        this.updateState();
         return stack;
     }
 
@@ -143,13 +147,13 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
         if (slot >= 0 && slot < this.inventory.size()) {
             this.inventory.set(slot, stack);
         }
-        updateState();
+        this.updateState();
     }
 
     @Override
     public void clear() {
         this.inventory.clear();
-        updateState();
+        this.updateState();
     }
 
     public float getYaw() {
@@ -162,7 +166,7 @@ public class FishTankBlockEntity extends LockableContainerBlockEntity {
 
     public void updateState() {
         if (this.world != null && !this.world.isClient()) {
-            var present = !getStack(0).isEmpty();
+            var present = !this.getStack(0).isEmpty();
             var oldState = this.world.getBlockState(this.pos);
             if (oldState.get(FishTankBlock.FILLED) != present) {
                 this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).with(FishTankBlock.FILLED, present));

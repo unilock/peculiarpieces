@@ -20,12 +20,14 @@ public class EntangledScaffoldingBlockEntity extends BlockEntity {
         this.time = 200;
     }
 
+    @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         this.time = nbt.getInt("pp:time");
         this.owner = nbt.getUuid("pp:owner");
     }
 
+    @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         nbt.putInt("pp:time", this.time);

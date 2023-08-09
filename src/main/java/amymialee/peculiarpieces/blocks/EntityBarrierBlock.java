@@ -30,9 +30,9 @@ public class EntityBarrierBlock extends Block {
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if (context instanceof EntityShapeContext entityShapeContext && entityShapeContext.getEntity() instanceof PlayerEntity) {
-            return getShape(false);
+            return this.getShape(false);
         }
-        return getShape(true);
+        return this.getShape(true);
     }
 
     private VoxelShape getShape(boolean filled) {

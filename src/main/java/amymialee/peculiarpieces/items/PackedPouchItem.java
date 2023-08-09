@@ -20,8 +20,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,10 +30,11 @@ public class PackedPouchItem extends Item implements DyeableItem {
         super(settings);
     }
 
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         var stack = user.getStackInHand(hand);
         if (!world.isClient) {
-            openMenu((ServerPlayerEntity) user, new NamedScreenHandlerFactory() {
+            this.openMenu((ServerPlayerEntity) user, new NamedScreenHandlerFactory() {
                 @Override
                 public Text getDisplayName() {
                     return stack.getName();

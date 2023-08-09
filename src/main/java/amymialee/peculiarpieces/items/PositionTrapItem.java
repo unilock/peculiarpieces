@@ -44,7 +44,7 @@ public class PositionTrapItem extends Item {
         var pos = readStone(stack);
         if (pos.getSquaredDistance(0, 0, 0) > 1) {
             if (!world.isClient && !pos.equals(BlockPos.ORIGIN)) {
-                dropTrap(stack, user, hand);
+                this.dropTrap(stack, user, hand);
             }
             user.getItemCooldownManager().set(this, 20);
             stack.decrement(1);

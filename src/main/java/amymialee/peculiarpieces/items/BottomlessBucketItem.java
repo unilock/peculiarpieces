@@ -76,6 +76,7 @@ public class BottomlessBucketItem extends Item implements FluidModificationItem 
         return TypedActionResult.pass(itemStack);
     }
 
+    @Override
     public boolean placeFluid(@Nullable PlayerEntity player, World world, BlockPos pos, @Nullable BlockHitResult hitResult) {
         if (!(this.fluid instanceof FlowableFluid)) {
             return false;

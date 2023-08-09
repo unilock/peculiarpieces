@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 public class BigDispenserBlockEntity extends DispenserBlockEntity {
     public BigDispenserBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(PeculiarBlocks.BIG_DISPENSER_ENTITY, blockPos, blockState);
-        setInvStackList(DefaultedList.ofSize(54, ItemStack.EMPTY));
+        this.setInvStackList(DefaultedList.ofSize(54, ItemStack.EMPTY));
     }
 
     @Override

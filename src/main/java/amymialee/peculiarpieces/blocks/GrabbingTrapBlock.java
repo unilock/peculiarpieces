@@ -35,7 +35,7 @@ public class GrabbingTrapBlock extends AbstractFlatBlock {
         super.onEntityCollision(state, world, pos, entity);
         if (!state.get(POWERED) && !entity.isSneaking() && !entity.getType().isIn(PeculiarPieces.UNGRABBABLE)) {
             var trapPos = Vec3d.ofBottomCenter(pos).add(0, 0.0625, 0);
-            if (distanceTo(trapPos, entity) > 0.01) {
+            if (this.distanceTo(trapPos, entity) > 0.01) {
                 WarpManager.queueTeleport(WarpInstance.of(entity).position(trapPos));
             }
         }
