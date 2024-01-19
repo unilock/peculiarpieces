@@ -41,6 +41,8 @@ public class EntangledScaffoldingBlockEntity extends BlockEntity {
             var newOwner = world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 32, false);
             if (newOwner != null) {
                 blockEntity.owner = newOwner.getUuid();
+            } else {
+                blockEntity.owner = new UUID(0,0);
             }
         }
         blockEntity.time--;
