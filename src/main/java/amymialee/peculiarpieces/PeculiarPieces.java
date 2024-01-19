@@ -9,6 +9,7 @@ import amymialee.peculiarpieces.component.PeculiarComponentInitializer;
 import amymialee.peculiarpieces.component.WardingComponent;
 import amymialee.peculiarpieces.effects.FlightStatusEffect;
 import amymialee.peculiarpieces.effects.OpenStatusEffect;
+import amymialee.peculiarpieces.items.HiddenPotionItem;
 import amymialee.peculiarpieces.items.TorchQuiverItem;
 import amymialee.peculiarpieces.recipe.ShapedNbtRecipe;
 import amymialee.peculiarpieces.recipe.ShapelessNbtRecipe;
@@ -38,6 +39,7 @@ import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
+import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -58,9 +60,14 @@ import net.minecraft.item.ItemGroup.DisplayContext;
 import net.minecraft.item.ItemGroup.Entries;
 import net.minecraft.item.ItemGroup.EntryCollector;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.PotionItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.Potions;
+import net.minecraft.recipe.BrewingRecipeRegistry;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.ShapedRecipe;
@@ -307,6 +314,15 @@ public class PeculiarPieces implements ModInitializer {
                 }
             }
         });
+
+        BrewingRecipeRegistry.registerPotionType(PeculiarItems.HIDDEN_POTION);
+        FabricBrewingRecipeRegistry.registerItemRecipe((PotionItem) Items.POTION, Ingredient.ofItems(Items.AMETHYST_SHARD), (HiddenPotionItem) PeculiarItems.HIDDEN_POTION);
+        FabricBrewingRecipeRegistry.registerPotionRecipe(PeculiarPieces.FLIGHT, Ingredient.ofItems(Items.REDSTONE), PeculiarPieces.LONG_FLIGHT);
+        FabricBrewingRecipeRegistry.registerPotionRecipe(Potions.AWKWARD, Ingredient.ofItems(Items.GLOW_BERRIES), PeculiarPieces.GLOWING);
+        FabricBrewingRecipeRegistry.registerPotionRecipe(PeculiarPieces.GLOWING, Ingredient.ofItems(Items.REDSTONE), PeculiarPieces.LONG_GLOWING);
+        FabricBrewingRecipeRegistry.registerPotionRecipe(PeculiarPieces.GLOWING, Ingredient.ofItems(Items.FERMENTED_SPIDER_EYE), PeculiarPieces.CONCEALMENT);
+        FabricBrewingRecipeRegistry.registerPotionRecipe(PeculiarPieces.LONG_GLOWING, Ingredient.ofItems(Items.FERMENTED_SPIDER_EYE), PeculiarPieces.LONG_CONCEALMENT);
+        FabricBrewingRecipeRegistry.registerPotionRecipe(PeculiarPieces.CONCEALMENT, Ingredient.ofItems(Items.REDSTONE), PeculiarPieces.LONG_CONCEALMENT);
     }
 
     public static Identifier id(String path) {
