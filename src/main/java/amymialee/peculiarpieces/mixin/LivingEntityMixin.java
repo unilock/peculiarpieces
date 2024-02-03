@@ -104,7 +104,7 @@ public abstract class LivingEntityMixin extends Entity {
         }
     }
 
-    @ModifyVariable(method = "travel", at = @At("STORE"))
+    @ModifyVariable(method = "travel", at = @At("STORE"), index = 7)
     public float PeculiarPieces$SlipperyShoesSlipping(float p) {
         if (((Object) this) instanceof LivingEntity livingEntity) {
             var optionalComponent = TrinketsApi.getTrinketComponent(livingEntity);
