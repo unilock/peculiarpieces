@@ -1,12 +1,9 @@
 package amymialee.peculiarpieces.mixin;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
-
-import java.util.Optional;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,9 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import amymialee.peculiarpieces.PeculiarPieces;
 import amymialee.peculiarpieces.VisibleBarriersAccess;
-import amymialee.peculiarpieces.component.PeculiarComponentInitializer;
-import amymialee.peculiarpieces.component.WardingComponent;
-import amymialee.peculiarpieces.registry.PeculiarItems;
+import amymialee.peculiarpieces.component.PeculiarChunkComponentInitializer;
 
 @Mixin(ClientWorld.class)
 public class ClientWorldMixin {
@@ -25,7 +20,7 @@ public class ClientWorldMixin {
     public void randomBlockDisplayTick(int centerX, int centerY, int centerZ, int radius, Random random, Block block, BlockPos.Mutable pos, CallbackInfo ci) {
         if (VisibleBarriersAccess.isVisibilityEnabled()) {
             var world = ((ClientWorld) ((Object) this));
-            var component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
+            var component = PeculiarChunkComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
             if (component.isPresent()) {
                 var wardingComponent = component.get();
                 if (wardingComponent.getWard(pos)) {

@@ -23,7 +23,10 @@
       "amymialee.peculiarpieces.PeculiarPieces"
     ],
     "cardinal-components-chunk": [
-      "amymialee.peculiarpieces.component.PeculiarComponentInitializer"
+      "amymialee.peculiarpieces.component.PeculiarChunkComponentInitializer"
+    ],
+    "cardinal-components-entity": [
+      "amymialee.peculiarpieces.component.PeculiarEntityComponentInitializer"
     ]
   },
   "mixins": [
@@ -40,6 +43,7 @@
       }
     },
     "cardinal-components": [
+      "peculiarpieces:defused",
       "peculiarpieces:warding"
     ]
   }

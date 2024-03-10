@@ -1,8 +1,7 @@
 package amymialee.peculiarpieces.mixin;
 
 import amymialee.peculiarpieces.PeculiarPieces;
-import amymialee.peculiarpieces.component.PeculiarComponentInitializer;
-import amymialee.peculiarpieces.component.WardingComponent;
+import amymialee.peculiarpieces.component.PeculiarChunkComponentInitializer;
 import amymialee.peculiarpieces.util.WeakExplosionBehavior;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.entity.Entity;
@@ -18,8 +17,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Optional;
 
 @Mixin(Explosion.class)
 public class ExplosionMixin {
@@ -45,7 +42,7 @@ public class ExplosionMixin {
     public void PeculiarPieces$ExplosionResistWarding(CallbackInfo ci) {
         for (var i = 0; i < this.affectedBlocks.size(); i++) {
             var pos = this.affectedBlocks.get(i);
-            var component = PeculiarComponentInitializer.WARDING.maybeGet(this.world.getChunk(pos));
+            var component = PeculiarChunkComponentInitializer.WARDING.maybeGet(this.world.getChunk(pos));
             if (component.isPresent()) {
                 var wardingComponent = component.get();
                 if (wardingComponent.getWard(pos)) {

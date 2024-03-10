@@ -1,7 +1,6 @@
 package amymialee.peculiarpieces.component;
 
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -38,7 +37,7 @@ public class WardingComponent implements AutoSyncedComponent {
         } else {
             this.set.remove(pos);
         }
-        PeculiarComponentInitializer.WARDING.sync(this.chunk);
+        PeculiarChunkComponentInitializer.WARDING.sync(this.chunk);
         this.chunk.setNeedsSaving(true);
     }
 

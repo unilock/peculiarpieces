@@ -1,8 +1,7 @@
 package amymialee.peculiarpieces.mixin;
 
 import amymialee.peculiarpieces.callbacks.PlayerJumpCallback;
-import amymialee.peculiarpieces.component.PeculiarComponentInitializer;
-import amymialee.peculiarpieces.component.WardingComponent;
+import amymialee.peculiarpieces.component.PeculiarChunkComponentInitializer;
 import amymialee.peculiarpieces.items.GliderItem;
 import amymialee.peculiarpieces.util.ExtraPlayerDataWrapper;
 import net.minecraft.entity.EntityType;
@@ -41,7 +40,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ExtraPla
 
     @Inject(method = "isBlockBreakingRestricted", at = @At("HEAD"), cancellable = true)
     public void PeculiarPieces$RestrictWardedBlock(World world, BlockPos pos, GameMode gameMode, CallbackInfoReturnable<Boolean> cir) {
-        var component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
+        var component = PeculiarChunkComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
         if (component.isPresent()) {
             var wardingComponent = component.get();
             if (wardingComponent.getWard(pos)) {

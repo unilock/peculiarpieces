@@ -1,7 +1,6 @@
 package amymialee.peculiarpieces.mixin;
 
-import amymialee.peculiarpieces.component.PeculiarComponentInitializer;
-import amymialee.peculiarpieces.component.WardingComponent;
+import amymialee.peculiarpieces.component.PeculiarChunkComponentInitializer;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -20,8 +19,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Optional;
-
 @SuppressWarnings("CancellableInjectionUsage")
 @Mixin(AbstractBlock.class)
 public class AbstractBlockMixin {
@@ -30,7 +27,7 @@ public class AbstractBlockMixin {
 
     @Inject(method = "canPlaceAt", at = @At("HEAD"), cancellable = true)
     public void PeculiarPieces$WardCanAlwaysPlaceAt(BlockState state, WorldView world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        var component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
+        var component = PeculiarChunkComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
         if (component.isPresent()) {
             var wardingComponent = component.get();
             if (wardingComponent.getWard(pos)) {
@@ -46,7 +43,7 @@ public class AbstractBlockMixin {
 
         @Inject(method = "getStateForNeighborUpdate", at = @At("HEAD"), cancellable = true)
         public void PeculiarPieces$WardCantChange(Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos, CallbackInfoReturnable<BlockState> cir) {
-            var component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
+            var component = PeculiarChunkComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
             if (component.isPresent()) {
                 var wardingComponent = component.get();
                 if (wardingComponent.getWard(pos)) {
@@ -59,7 +56,7 @@ public class AbstractBlockMixin {
 
         @Inject(method = "canPlaceAt", at = @At("HEAD"), cancellable = true)
         public void canPlaceAt(WorldView world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-            var component = PeculiarComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
+            var component = PeculiarChunkComponentInitializer.WARDING.maybeGet(world.getChunk(pos));
             if (component.isPresent()) {
                 var wardingComponent = component.get();
                 if (wardingComponent.getWard(pos)) {

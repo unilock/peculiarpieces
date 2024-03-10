@@ -1,16 +1,13 @@
 package amymialee.peculiarpieces;
 
-import amymialee.peculiarpieces.blocks.FlagBlock;
 import amymialee.peculiarpieces.callbacks.PlayerCrouchCallback;
 import amymialee.peculiarpieces.callbacks.PlayerCrouchConsumingBlock;
 import amymialee.peculiarpieces.callbacks.PlayerJumpCallback;
 import amymialee.peculiarpieces.callbacks.PlayerJumpConsumingBlock;
-import amymialee.peculiarpieces.component.PeculiarComponentInitializer;
-import amymialee.peculiarpieces.component.WardingComponent;
+import amymialee.peculiarpieces.component.PeculiarChunkComponentInitializer;
 import amymialee.peculiarpieces.effects.FlightStatusEffect;
 import amymialee.peculiarpieces.effects.OpenStatusEffect;
 import amymialee.peculiarpieces.items.HiddenPotionItem;
-import amymialee.peculiarpieces.items.TorchQuiverItem;
 import amymialee.peculiarpieces.recipe.ShapedNbtRecipe;
 import amymialee.peculiarpieces.recipe.ShapelessNbtRecipe;
 import amymialee.peculiarpieces.registry.PeculiarBlocks;
@@ -31,7 +28,6 @@ import amymialee.peculiarpieces.util.WarpManager;
 
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -42,7 +38,6 @@ import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.Vec3ArgumentType;
@@ -54,22 +49,15 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemGroup.DisplayContext;
-import net.minecraft.item.ItemGroup.Entries;
-import net.minecraft.item.ItemGroup.EntryCollector;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.PotionItem;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.Potions;
 import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.recipe.ShapelessRecipe;
 import net.minecraft.registry.Registries;
@@ -77,22 +65,13 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.chunk.Chunk;
-
-import java.util.Collection;
-import java.util.Optional;
 
 @SuppressWarnings("unused")
 public class PeculiarPieces implements ModInitializer {
@@ -236,11 +215,11 @@ public class PeculiarPieces implements ModInitializer {
                                                                 continue;
                                                             }
                                                             var chunk = serverWorld.getChunk(blockPos);
-                                                            var component = PeculiarComponentInitializer.WARDING.maybeGet(chunk);
+                                                            var component = PeculiarChunkComponentInitializer.WARDING.maybeGet(chunk);
                                                             if (component.isPresent()) {
                                                                 var wardingComponent = component.get();
                                                                 wardingComponent.setWard(blockPos, ward);
-                                                                PeculiarComponentInitializer.WARDING.sync(chunk);
+                                                                PeculiarChunkComponentInitializer.WARDING.sync(chunk);
                                                                 j++;
                                                             }
                                                         }
@@ -257,12 +236,12 @@ public class PeculiarPieces implements ModInitializer {
                                                 var serverWorld = source.getWorld();
                                                 var pos = BlockPosArgumentType.getLoadedBlockPos(context, "pos");
                                                 var chunk = serverWorld.getChunk(pos);
-                                                var component = PeculiarComponentInitializer.WARDING.maybeGet(chunk);
+                                                var component = PeculiarChunkComponentInitializer.WARDING.maybeGet(chunk);
                                                 var ward = BoolArgumentType.getBool(context, "set");
                                                 if (component.isPresent()) {
                                                     var wardingComponent = component.get();
                                                     wardingComponent.setWard(pos, ward);
-                                                    PeculiarComponentInitializer.WARDING.sync(chunk);
+                                                    PeculiarChunkComponentInitializer.WARDING.sync(chunk);
                                                 } else {
                                                     source.sendFeedback(() -> Text.translatable("peculiar.commands.ward.failure"), true);
                                                 }
