@@ -3,6 +3,7 @@ package amymialee.peculiarpieces.mixin;
 import amymialee.peculiarpieces.PeculiarPieces;
 import amymialee.peculiarpieces.registry.PeculiarItems;
 import amymialee.peculiarpieces.util.ExtraPlayerDataWrapper;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
@@ -36,7 +37,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -104,7 +104,7 @@ public abstract class LivingEntityMixin extends Entity {
         }
     }
 
-    @ModifyVariable(method = "travel", at = @At("STORE"), index = 7)
+    @ModifyExpressionValue(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;getSlipperiness()F"))
     public float PeculiarPieces$SlipperyShoesSlipping(float p) {
         if (((Object) this) instanceof LivingEntity livingEntity) {
             var optionalComponent = TrinketsApi.getTrinketComponent(livingEntity);
